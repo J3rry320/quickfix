@@ -1,0 +1,39 @@
+{
+  "Common": {
+    "brand": "QuickFix.in",
+    "tagline": "Pune's Doorstep Mobile Repair",
+    "city": "Pune",
+    "puneBadge": "Pune, Maharashtra",
+    "nav": {
+      "services": "Services",
+      "pricing": "Pricing",
+      "whyUs": "Why Us",
+      "puneLocations": "Pune Areas",
+      "contact": "Contact"
+    },
+    "actions": {
+      "bookRepair": "Book Doorstep Repair",
+      "callNow": "Call Pune Hotline",
+      "whatsapp": "WhatsApp Support",
+      "phone": "+91 83086 86454"
+    },
+    "languageSwitcher": {
+      "label": "Language",
+      "en": "English",
+      "hi": "हिन्दी",
+      "mr": "मराठी"
+    },
+    "emptyState": {
+      "noServicesTitle": "No Repair Services Available",
+      "noServicesDesc": "Our service catalog is currently being updated. Please contact our Pune team for instant assistance.",
+      "noBrandsTitle": "No Brands Listed Yet",
+      "noBrandsDesc": "Supported smartphone brands will appear here shortly. We service all major smartphone brands in Pune.",
+      "noModelsTitle": "No Models Found",
+      "noModelsDesc": "No models available for the selected brand. Please contact us for custom model repair pricing.",
+      "noBlogsTitle": "No Articles Published Yet",
+      "noBlogsDesc": "Our smartphone repair guides and technical tips will be published here soon.",
+      "contactCta": "Contact Support",
+      "checkBackLater": "Check back soon"
+    }
+  }
+}
