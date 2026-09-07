@@ -1,5 +1,6 @@
+import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Wrench, Phone, Clock, MapPin, MessageSquare, ShieldCheck, Mail } from "lucide-react";
+import { Phone, Clock, MapPin, MessageSquare, ShieldCheck, Mail } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import contactConfig from "@/config/contact";
 
@@ -12,10 +13,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-zinc-800">
           {/* Brand Col */}
           <div className="lg:col-span-4">
-            <Link href="/" className="inline-flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-flash-orange text-clean-white shadow-md">
-                <Wrench className="h-5 w-5" />
-              </div>
+            <Link href="/" className="inline-flex items-center gap-3">
+              <Image
+                src="/logo.png"
+                alt="QuickFix.in Logo"
+                width={42}
+                height={42}
+                className="h-10 w-10 object-contain rounded-xl"
+              />
               <span className="font-heading text-xl font-black text-clean-white tracking-tight">
                 QuickFix<span className="text-flash-orange">.in</span>
               </span>
@@ -157,6 +162,11 @@ export default function Footer() {
               {t("quickLinks")}
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm text-zinc-400 font-medium">
+              <li>
+                <Link href="/about" className="hover:text-flash-orange transition-colors">
+                  About Us
+                </Link>
+              </li>
               <li>
                 <a href="#estimate" className="hover:text-flash-orange transition-colors">
                   Price Estimator

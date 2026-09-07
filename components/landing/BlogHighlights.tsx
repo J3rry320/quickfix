@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { BookOpen, Clock, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import SectionHeader from "@/components/landing/SectionHeader";
 import EmptyState from "@/components/ui/EmptyState";
 import { SkeletonGrid } from "@/components/ui/Skeleton";
 
@@ -51,20 +52,11 @@ export default function BlogHighlights() {
     <section className="py-10 sm:py-16 lg:py-20 bg-clean-white border-b border-zinc-200">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-12">
-          <div>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-flash-orange/10 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-flash-orange mb-3">
-              <BookOpen className="h-3.5 w-3.5" />
-              {t("badge")}
-            </span>
-            <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-extrabold text-tech-slate tracking-tight">
-              {t("title")}
-            </h2>
-            <p className="mt-2 text-xs sm:text-sm md:text-base text-zinc-600 font-body max-w-2xl">
-              {t("subtitle")}
-            </p>
-          </div>
-        </div>
+        <SectionHeader
+          title={t("title")}
+          subtitle={t("subtitle")}
+          className="mb-8 sm:mb-12"
+        />
 
         {/* Dynamic Content */}
         {isLoading ? (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Phone } from "lucide-react";
 import { Link } from "@/i18n/navigation";
@@ -16,22 +17,14 @@ export default function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand & City Tag */}
         <div className="flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-flash-orange text-clean-white shadow-xs group-hover:scale-105 transition-transform">
-              {/* Lightning / Mobile repair icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="h-5 w-5"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <Image
+              src="/logo.png"
+              alt="QuickFix.in Logo"
+              width={36}
+              height={36}
+              className="h-9 w-9 object-contain rounded-lg group-hover:scale-105 transition-transform"
+            />
             <div className="flex flex-col">
               <span className="font-heading text-lg font-extrabold tracking-tight text-tech-slate">
                 Quick<span className="text-flash-orange">Fix</span>
@@ -48,36 +41,42 @@ export default function Navbar() {
 
         {/* Desktop Nav Links */}
         <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-zinc-600">
-          <a
-            href="#services"
+          <Link
+            href="/#services"
             className="hover:text-flash-orange transition-colors"
           >
             {t("nav.services")}
-          </a>
-          <a
-            href="#why-us"
+          </Link>
+          <Link
+            href="/#why-us"
             className="hover:text-flash-orange transition-colors"
           >
             {t("nav.whyUs")}
-          </a>
-          <a
-            href="#pune-locations"
+          </Link>
+          <Link
+            href="/#pune-locations"
             className="hover:text-flash-orange transition-colors"
           >
             {t("nav.puneLocations")}
-          </a>
-          <a
-            href="#pricing"
+          </Link>
+          <Link
+            href="/about"
+            className="hover:text-flash-orange transition-colors"
+          >
+            {t("nav.about")}
+          </Link>
+          <Link
+            href="/#pricing"
             className="hover:text-flash-orange transition-colors"
           >
             {t("nav.pricing")}
-          </a>
-          <a
-            href="#contact"
+          </Link>
+          <Link
+            href="/#contact"
             className="hover:text-flash-orange transition-colors"
           >
             {t("nav.contact")}
-          </a>
+          </Link>
         </nav>
 
         {/* Desktop Right Controls (Language Switcher + CTA) */}
@@ -151,41 +150,48 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="border-b border-zinc-200 bg-clean-white px-4 py-4 md:hidden space-y-3 animate-in slide-in-from-top-2">
           <nav className="flex flex-col space-y-2 text-sm font-medium text-zinc-700">
-            <a
-              href="#services"
+            <Link
+              href="/#services"
               onClick={() => setMobileMenuOpen(false)}
               className="px-2 py-1.5 rounded-md hover:bg-mist-gray"
             >
               {t("nav.services")}
-            </a>
-            <a
-              href="#why-us"
+            </Link>
+            <Link
+              href="/#why-us"
               onClick={() => setMobileMenuOpen(false)}
               className="px-2 py-1.5 rounded-md hover:bg-mist-gray"
             >
               {t("nav.whyUs")}
-            </a>
-            <a
-              href="#pune-locations"
+            </Link>
+            <Link
+              href="/#pune-locations"
               onClick={() => setMobileMenuOpen(false)}
               className="px-2 py-1.5 rounded-md hover:bg-mist-gray"
             >
               {t("nav.puneLocations")}
-            </a>
-            <a
-              href="#pricing"
+            </Link>
+            <Link
+              href="/about"
+              onClick={() => setMobileMenuOpen(false)}
+              className="px-2 py-1.5 rounded-md hover:bg-mist-gray"
+            >
+              {t("nav.about")}
+            </Link>
+            <Link
+              href="/#pricing"
               onClick={() => setMobileMenuOpen(false)}
               className="px-2 py-1.5 rounded-md hover:bg-mist-gray"
             >
               {t("nav.pricing")}
-            </a>
-            <a
-              href="#contact"
+            </Link>
+            <Link
+              href="/#contact"
               onClick={() => setMobileMenuOpen(false)}
               className="px-2 py-1.5 rounded-md hover:bg-mist-gray"
             >
               {t("nav.contact")}
-            </a>
+            </Link>
           </nav>
 
           <div className="pt-2 border-t border-zinc-100 flex flex-col gap-2">

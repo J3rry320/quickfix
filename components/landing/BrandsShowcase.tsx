@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Sparkles, Smartphone } from "lucide-react";
+import { Smartphone } from "lucide-react";
+import SectionHeader from "@/components/landing/SectionHeader";
 import EmptyState from "@/components/ui/EmptyState";
 import { SkeletonBrandStrip } from "@/components/ui/Skeleton";
 
@@ -46,24 +47,16 @@ export default function BrandsShowcase() {
   return (
     <section className="py-10 sm:py-16 lg:py-20 bg-clean-white border-b border-zinc-200">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-10">
-          <div>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-flash-orange/10 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-flash-orange mb-3">
-              <Sparkles className="h-3.5 w-3.5" />
-              {t("badge")}
+        <SectionHeader
+          title={t("title")}
+          subtitle={t("subtitle")}
+          className="mb-8 sm:mb-10"
+          action={
+            <span className="rounded-xl bg-mist-gray px-3.5 py-2 text-xs font-bold text-tech-slate border border-zinc-200 shrink-0">
+              {t("supportedCount")}
             </span>
-            <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
-              {t("title")}
-            </h2>
-            <p className="mt-2 text-xs sm:text-sm md:text-base text-zinc-600 font-body max-w-xl">
-              {t("subtitle")}
-            </p>
-          </div>
-
-          <span className="rounded-xl bg-mist-gray px-3.5 py-2 text-xs font-bold text-tech-slate border border-zinc-200 shrink-0">
-            {t("supportedCount")}
-          </span>
-        </div>
+          }
+        />
 
         {/* Dynamic Content */}
         {isLoading ? (

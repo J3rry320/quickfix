@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { PhoneCall, Send, CheckCircle2, AlertCircle, Phone } from "lucide-react";
+import { Send, CheckCircle2, AlertCircle, Phone } from "lucide-react";
+import SectionHeader from "@/components/landing/SectionHeader";
 import contactConfig from "@/config/contact";
 
 export default function QuickContactForm() {
@@ -63,16 +64,12 @@ export default function QuickContactForm() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Info Column */}
           <div className="lg:col-span-6">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-flash-orange/10 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-flash-orange mb-3">
-              <PhoneCall className="h-3.5 w-3.5" />
-              {t("badge")}
-            </span>
-            <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-extrabold text-tech-slate tracking-tight">
-              {t("title")}
-            </h2>
-            <p className="mt-3 text-xs sm:text-sm md:text-base text-zinc-600 font-body leading-relaxed">
-              {t("subtitle")}
-            </p>
+            <SectionHeader
+              title={t("title")}
+              subtitle={t("subtitle")}
+              align="left"
+              className="mb-0"
+            />
 
             <div className="mt-6 sm:mt-8 p-5 sm:p-6 rounded-2xl bg-tech-slate text-clean-white shadow-xl max-w-md">
               <p className="text-xs font-bold uppercase tracking-wider text-electric-amber">

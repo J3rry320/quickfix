@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
-import { Star, Quote, CheckCircle2 } from "lucide-react";
+import { Quote, CheckCircle2 } from "lucide-react";
+import SectionHeader from "@/components/landing/SectionHeader";
 
 export default function Testimonials() {
   const t = useTranslations("Testimonials");
@@ -34,26 +35,12 @@ export default function Testimonials() {
   return (
     <section className="py-10 sm:py-16 lg:py-20 bg-clean-white border-b border-zinc-200">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Header with Star Rating Pill */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-2 rounded-full bg-mist-gray border border-zinc-200 px-3.5 py-1.5 mb-3 shadow-2xs">
-            <div className="flex text-amber-500">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-3.5 w-3.5 fill-current" />
-              ))}
-            </div>
-            <span className="text-xs font-bold text-tech-slate">
-              {t("rating")}
-            </span>
-          </div>
-
-          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-extrabold text-tech-slate tracking-tight">
-            {t("title")}
-          </h2>
-          <p className="mt-2 text-xs sm:text-sm md:text-base text-zinc-500 font-medium">
-            {t("reviewsCount")}
-          </p>
-        </div>
+        {/* Header */}
+        <SectionHeader
+          title={t("title")}
+          subtitle={t("reviewsCount")}
+          className="mb-10 sm:mb-14"
+        />
 
         {/* Reviews Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">

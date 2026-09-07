@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
-import { ShieldCheck, Check, X, Award, Sparkles } from "lucide-react";
+import { ShieldCheck, Check, X, Sparkles } from "lucide-react";
+import SectionHeader from "@/components/landing/SectionHeader";
 
 export default function WhyQuickFix() {
   const t = useTranslations("WhyQuickFix");
@@ -44,18 +45,11 @@ export default function WhyQuickFix() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-flash-orange/10 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-flash-orange mb-3">
-            <Award className="h-3.5 w-3.5" />
-            {t("badge")}
-          </span>
-          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-extrabold text-tech-slate tracking-tight">
-            {t("title")}
-          </h2>
-          <p className="mt-3 text-sm sm:text-base text-zinc-600 font-body">
-            {t("subtitle")}
-          </p>
-        </div>
+        <SectionHeader
+          title={t("title")}
+          subtitle={t("subtitle")}
+          className="mb-10 sm:mb-14"
+        />
 
         {/* Mobile View: Dedicated High-Impact Comparison Cards (< md) */}
         <div className="block md:hidden space-y-4">

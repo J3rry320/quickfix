@@ -1,4 +1,6 @@
+import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
+import { getSeoMetadata } from "@/config/seo";
 import Hero from "@/components/Hero";
 import TrustBadges from "@/components/landing/TrustBadges";
 import ServicesCatalog from "@/components/landing/ServicesCatalog";
@@ -11,6 +13,15 @@ import Testimonials from "@/components/landing/Testimonials";
 import FaqSection from "@/components/landing/FaqSection";
 import BlogHighlights from "@/components/landing/BlogHighlights";
 import QuickContactForm from "@/components/landing/QuickContactForm";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return getSeoMetadata({ page: "landing", locale, path: "/" });
+}
 
 export default async function MarketingPage({
   params,

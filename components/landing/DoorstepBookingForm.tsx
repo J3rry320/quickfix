@@ -13,6 +13,7 @@ import {
   AlertCircle,
   RefreshCw,
 } from "lucide-react";
+import SectionHeader from "@/components/landing/SectionHeader";
 import contactConfig from "@/config/contact";
 
 export default function DoorstepBookingForm() {
@@ -107,18 +108,11 @@ export default function DoorstepBookingForm() {
     <section id="book" className="py-16 lg:py-24 bg-clean-white border-b border-zinc-200">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-flash-orange/10 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-flash-orange mb-3">
-            <Wrench className="h-3.5 w-3.5" />
-            {t("badge")}
-          </span>
-          <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-tech-slate tracking-tight">
-            {t("title")}
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-zinc-600 font-body">
-            {t("subtitle")}
-          </p>
-        </div>
+        <SectionHeader
+          title={t("title")}
+          subtitle={t("subtitle")}
+          className="mb-12"
+        />
 
         {/* Success Card */}
         {bookingSuccess ? (

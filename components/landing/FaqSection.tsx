@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { HelpCircle, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+import SectionHeader from "@/components/landing/SectionHeader";
 
 export default function FaqSection() {
   const t = useTranslations("Faq");
@@ -43,18 +44,11 @@ export default function FaqSection() {
 
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-flash-orange/10 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-flash-orange mb-3">
-            <HelpCircle className="h-3.5 w-3.5" />
-            {t("badge")}
-          </span>
-          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-extrabold text-tech-slate tracking-tight">
-            {t("title")}
-          </h2>
-          <p className="mt-3 text-xs sm:text-sm md:text-base text-zinc-600 font-body">
-            {t("subtitle")}
-          </p>
-        </div>
+        <SectionHeader
+          title={t("title")}
+          subtitle={t("subtitle")}
+          className="mb-8 sm:mb-12"
+        />
 
         {/* Accordion */}
         <div className="space-y-3 sm:space-y-4">
