@@ -1,9 +1,10 @@
 import { NextRequest } from "next/server";
-import { adminAuth } from "@/lib/firebase/admin";
+import { getAdminAuth } from "@/lib/firebase/admin";
 import { apiSuccess, apiError, withApiProtection } from "@/lib/api/response";
 
 async function loginHandler(request: NextRequest) {
-  if (!adminAuth) {
+  const auth = getAdminAuth();
+  if (!auth) {
     console.error("Firebase Auth Admin SDK is not initialized.");
     return apiError(
       "Authentication service unavailable",
@@ -22,7 +23,7 @@ async function loginHandler(request: NextRequest) {
 
   try {
     // 1. Verify Google ID token with Firebase Admin
-    const decodedToken = await adminAuth.verifyIdToken(idToken);
+    const decodedToken = await auth.verifyIdToken(idToken);
     const email = decodedToken.email?.toLowerCase();
 
     if (!email) {
@@ -51,7 +52,7 @@ async function loginHandler(request: NextRequest) {
     let sessionToken = idToken;
 
     try {
-      sessionToken = await adminAuth.createSessionCookie(idToken, {
+      sessionToken = await auth.createSessionCookie(idToken, {
         expiresIn,
       });
     } catch {

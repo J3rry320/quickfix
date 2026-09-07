@@ -1,9 +1,10 @@
 import { NextRequest } from "next/server";
-import { adminAuth } from "@/lib/firebase/admin";
+import { getAdminAuth } from "@/lib/firebase/admin";
 import { apiSuccess, apiError } from "@/lib/api/response";
 
 export async function GET(request: NextRequest) {
-  if (!adminAuth) {
+  const auth = getAdminAuth();
+  if (!auth) {
     return apiError("Authentication service unavailable", 503, "AUTH_UNAVAILABLE");
   }
 
@@ -16,9 +17,9 @@ export async function GET(request: NextRequest) {
   try {
     let decoded;
     try {
-      decoded = await adminAuth.verifySessionCookie(sessionCookie, true);
+      decoded = await auth.verifySessionCookie(sessionCookie, true);
     } catch {
-      decoded = await adminAuth.verifyIdToken(sessionCookie);
+      decoded = await auth.verifyIdToken(sessionCookie);
     }
 
     const email = decoded.email?.toLowerCase();

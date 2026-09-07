@@ -1,32 +1,78 @@
-import { cert, getApp, getApps, initializeApp } from "firebase-admin/app";
-import { getAuth } from "firebase-admin/auth";
+/* eslint-disable @typescript-eslint/no-require-imports */
+import type { Auth } from "firebase-admin/auth";
+import type { App } from "firebase-admin/app";
 
-const projectId = process.env.FIREBASE_PROJECT_ID;
-const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
-const privateKey = process.env.FIREBASE_PRIVATE_KEY;
+let cachedApp: App | null = null;
+let cachedAuth: Auth | null = null;
 
-if (!projectId || !clientEmail || !privateKey) {
-  // Graceful fallback for build step or initial development before env config
-  throw new Error("Firebase Admin environment variables are not fully set.");
-}
+/**
+ * Lazily initializes and returns the Firebase Admin Auth instance.
+ * Avoids executing firebase-admin or throwing unhandled errors at module load time.
+ */
+export function getAdminAuth(): Auth | null {
+  if (cachedAuth) {
+    return cachedAuth;
+  }
 
-let app;
+  const projectId =
+    process.env.FIREBASE_PROJECT_ID ||
+    process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+  const rawPrivateKey = process.env.FIREBASE_PRIVATE_KEY;
 
-if (projectId && clientEmail && privateKey) {
+  if (!projectId || !clientEmail || !rawPrivateKey) {
+    console.warn(
+      "[Firebase Admin] Missing required environment variables: FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, or FIREBASE_PRIVATE_KEY."
+    );
+    return null;
+  }
+
   try {
-    app =
+    // Dynamically require to avoid loading firebase-admin unless explicitly invoked
+    const { initializeApp, getApps, getApp, cert } = require("firebase-admin/app");
+    const { getAuth } = require("firebase-admin/auth");
+
+    // Clean and normalize the private key
+    let privateKey = rawPrivateKey.trim();
+    if (
+      (privateKey.startsWith('"') && privateKey.endsWith('"')) ||
+      (privateKey.startsWith("'") && privateKey.endsWith("'"))
+    ) {
+      privateKey = privateKey.slice(1, -1);
+    }
+    privateKey = privateKey.replace(/\\n/g, "\n");
+
+    cachedApp =
       getApps().length === 0
         ? initializeApp({
             credential: cert({
               projectId,
               clientEmail,
-              privateKey: privateKey.replace(/\\n/g, "\n"),
+              privateKey,
             }),
+            projectId,
           })
         : getApp();
+
+    cachedAuth = getAuth(cachedApp);
+    return cachedAuth;
   } catch (error) {
-    console.error("Failed to initialize Firebase Admin SDK:", error);
+    console.error("[Firebase Admin] Failed to initialize Firebase Admin SDK:", error);
+    return null;
   }
 }
 
-export const adminAuth = app ? getAuth(app) : null;
+/**
+ * Proxy object for adminAuth that initializes on demand.
+ * Maintains full backward compatibility with `adminAuth.verifyIdToken(...)`, etc.
+ */
+export const adminAuth: Auth | null = new Proxy({} as Auth, {
+  get(_target, prop: string | symbol) {
+    const auth = getAdminAuth();
+    if (!auth) {
+      return undefined;
+    }
+    const value = (auth as unknown as Record<string | symbol, unknown>)[prop];
+    return typeof value === "function" ? value.bind(auth) : value;
+  },
+});

@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { RepairRequest } from "@/models/RepairRequest";
-import { withPublicApi } from "@/lib/api/auth";
+import { withPublicApi } from "@/lib/api/public";
 import { apiSuccess } from "@/lib/api/response";
 import {
   createRepairRequestSchema,

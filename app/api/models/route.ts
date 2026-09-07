@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { DeviceModel } from "@/models/DeviceModel";
 import { Brand } from "@/models/Brand";
-import { withPublicApi } from "@/lib/api/auth";
+import { withPublicApi } from "@/lib/api/public";
 import { apiSuccess } from "@/lib/api/response";
 import mongoose from "mongoose";
 

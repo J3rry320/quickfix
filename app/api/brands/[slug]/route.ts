@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { Brand } from "@/models/Brand";
-import { withPublicApi } from "@/lib/api/auth";
+import { withPublicApi } from "@/lib/api/public";
 import { apiSuccess, apiError } from "@/lib/api/response";
 
 export const GET = withPublicApi<{ slug: string }>(

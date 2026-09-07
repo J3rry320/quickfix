@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { ContactSubmission } from "@/models/ContactSubmission";
-import { withPublicApi } from "@/lib/api/auth";
+import { withPublicApi } from "@/lib/api/public";
 import { apiSuccess } from "@/lib/api/response";
 import { createContactSchema } from "@/lib/api/validators";
 

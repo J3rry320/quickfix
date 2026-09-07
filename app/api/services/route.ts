@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { RepairService } from "@/models/RepairService";
-import { withPublicApi } from "@/lib/api/auth";
+import { withPublicApi } from "@/lib/api/public";
 import { apiSuccess } from "@/lib/api/response";
 
 export const GET = withPublicApi(async (request: NextRequest) => {

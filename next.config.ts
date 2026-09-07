@@ -4,8 +4,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  // serverExternalPackages: ["firebase-admin"],
+  serverExternalPackages: ["firebase-admin"],
   compress: true,
   poweredByHeader: false,
   images: {
