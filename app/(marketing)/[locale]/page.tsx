@@ -1,15 +1,15 @@
 import { setRequestLocale } from "next-intl/server";
 import Hero from "@/components/Hero";
-import PriceEstimator from "@/components/landing/PriceEstimator";
+import TrustBadges from "@/components/landing/TrustBadges";
 import ServicesCatalog from "@/components/landing/ServicesCatalog";
-import BrandsShowcase from "@/components/landing/BrandsShowcase";
+import PriceEstimator from "@/components/landing/PriceEstimator";
 import HowItWorks from "@/components/landing/HowItWorks";
 import WhyQuickFix from "@/components/landing/WhyQuickFix";
-import DoorstepBookingForm from "@/components/landing/DoorstepBookingForm";
-import Testimonials from "@/components/landing/Testimonials";
+import BrandsShowcase from "@/components/landing/BrandsShowcase";
 import LocalitiesDirectory from "@/components/landing/LocalitiesDirectory";
-import BlogHighlights from "@/components/landing/BlogHighlights";
+import Testimonials from "@/components/landing/Testimonials";
 import FaqSection from "@/components/landing/FaqSection";
+import BlogHighlights from "@/components/landing/BlogHighlights";
 import QuickContactForm from "@/components/landing/QuickContactForm";
 
 export default async function MarketingPage({
@@ -23,41 +23,41 @@ export default async function MarketingPage({
   setRequestLocale(locale);
 
   return (
-    <div className="flex flex-col w-full">
-      {/* 1. Hero Section & Initial Trust Bar */}
+    <div className="flex flex-col w-full overflow-hidden">
+      {/* 1. Hero Section: Minimal & Punchy */}
       <Hero />
 
-      {/* 2. Interactive Instant Price Estimator */}
-      <PriceEstimator />
+      {/* 2. Independent Reusable Trust Badges Strip */}
+      <TrustBadges />
 
-      {/* 3. Popular Repair Services Catalog Grid */}
+      {/* 3. Popular Repair Services Catalog */}
       <ServicesCatalog />
 
-      {/* 4. Supported Brands & Device Models Strip */}
-      <BrandsShowcase />
+      {/* 4. Interactive Instant Price Estimator */}
+      <PriceEstimator />
 
-      {/* 5. How It Works: 4-Step Doorstep Process & Video Demo */}
+      {/* 5. How Doorstep Repair Works: 4-Step Process */}
       <HowItWorks />
 
-      {/* 6. Why QuickFix: Comparison vs Service Center vs Local Shop */}
+      {/* 6. Why QuickFix: Mobile Responsive Comparison */}
       <WhyQuickFix />
 
-      {/* 7. Book a Doorstep Repair Wizard Form */}
-      <DoorstepBookingForm />
+      {/* 7. Supported Smartphone Brands & Models */}
+      <BrandsShowcase />
 
-      {/* 8. Pune Customer Testimonials & Social Proof */}
-      <Testimonials />
-
-      {/* 9. Pune Localities & Doorstep Dispatch Coverage */}
+      {/* 8. Pune Localities & Doorstep Dispatch Coverage */}
       <LocalitiesDirectory />
 
-      {/* 10. Latest Smartphone Care Guides & Blog Articles */}
-      <BlogHighlights />
+      {/* 9. Verified Pune Customer Reviews */}
+      <Testimonials />
 
-      {/* 11. Frequently Asked Questions (FAQPage SEO Schema) */}
+      {/* 10. Frequently Asked Questions */}
       <FaqSection />
 
-      {/* 12. 5-Minute Callback / Quick Contact Form */}
+      {/* 11. Smartphone Care Guides & Blog Articles */}
+      <BlogHighlights />
+
+      {/* 12. General Enquiry / 5-Minute Callback Form */}
       <QuickContactForm />
     </div>
   );

@@ -58,38 +58,38 @@ export default function QuickContactForm() {
   }
 
   return (
-    <section id="contact" className="py-16 lg:py-24 bg-clean-white border-b border-zinc-200">
+    <section id="contact" className="py-10 sm:py-16 lg:py-20 bg-clean-white border-b border-zinc-200">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Info Column */}
           <div className="lg:col-span-6">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-flash-orange/10 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-flash-orange mb-3">
               <PhoneCall className="h-3.5 w-3.5" />
               {t("badge")}
             </span>
-            <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-tech-slate tracking-tight">
+            <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-extrabold text-tech-slate tracking-tight">
               {t("title")}
             </h2>
-            <p className="mt-4 text-base sm:text-lg text-zinc-600 font-body leading-relaxed">
+            <p className="mt-3 text-xs sm:text-sm md:text-base text-zinc-600 font-body leading-relaxed">
               {t("subtitle")}
             </p>
 
-            <div className="mt-8 p-6 rounded-2xl bg-tech-slate text-clean-white shadow-xl max-w-md">
+            <div className="mt-6 sm:mt-8 p-5 sm:p-6 rounded-2xl bg-tech-slate text-clean-white shadow-xl max-w-md">
               <p className="text-xs font-bold uppercase tracking-wider text-electric-amber">
                 {t("directCall")}
               </p>
-              <div className="mt-2 flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-flash-orange text-clean-white shadow-md">
-                  <Phone className="h-6 w-6" />
+              <div className="mt-2.5 flex items-center gap-3">
+                <div className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-flash-orange text-clean-white shadow-md shrink-0">
+                  <Phone className="h-5 w-5 sm:h-6 sm:w-6" />
                 </div>
                 <div>
                   <a
                     href={`tel:${contactConfig.phone.value}`}
-                    className="font-heading text-2xl font-black text-clean-white hover:text-flash-orange transition-colors"
+                    className="font-heading text-xl sm:text-2xl font-black text-clean-white hover:text-flash-orange transition-colors"
                   >
                     {contactConfig.phone.display}
                   </a>
-                  <p className="text-xs text-zinc-400 font-medium">
+                  <p className="text-[11px] sm:text-xs text-zinc-400 font-medium">
                     {contactConfig.hours.display}
                   </p>
                 </div>
@@ -99,28 +99,28 @@ export default function QuickContactForm() {
 
           {/* Right Form Card */}
           <div className="lg:col-span-6">
-            <div className="rounded-3xl bg-mist-gray border border-zinc-200 p-6 sm:p-8 shadow-xl">
+            <div className="rounded-3xl bg-mist-gray/90 border border-zinc-200/90 p-5 sm:p-8 shadow-lg">
               {isSuccess ? (
-                <div className="text-center py-8">
-                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-flash-orange/10 text-flash-orange mb-4">
-                    <CheckCircle2 className="h-8 w-8" />
+                <div className="text-center py-6 sm:py-8">
+                  <div className="mx-auto flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-flash-orange/10 text-flash-orange mb-4">
+                    <CheckCircle2 className="h-7 w-7 sm:h-8 sm:w-8" />
                   </div>
-                  <h3 className="font-heading text-xl font-bold text-tech-slate">
+                  <h3 className="font-heading text-lg sm:text-xl font-bold text-tech-slate">
                     Request Received!
                   </h3>
-                  <p className="mt-2 text-sm text-zinc-600 font-body">
+                  <p className="mt-2 text-xs sm:text-sm text-zinc-600 font-body max-w-sm mx-auto">
                     {t("successMsg")}
                   </p>
                   <button
                     type="button"
                     onClick={() => setIsSuccess(false)}
-                    className="mt-6 rounded-xl bg-tech-slate px-6 py-2.5 text-xs font-bold text-clean-white hover:bg-black transition-all"
+                    className="mt-6 rounded-xl bg-tech-slate px-6 py-2.5 text-xs font-bold text-clean-white hover:bg-black transition-all cursor-pointer"
                   >
                     Send Another Request
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-3.5 sm:space-y-4">
                   {errorMessage && (
                     <div className="rounded-xl bg-red-50 border border-red-200 p-3.5 flex items-center gap-2 text-xs text-red-700 font-medium">
                       <AlertCircle className="h-4 w-4 shrink-0 text-red-600" />
@@ -128,7 +128,7 @@ export default function QuickContactForm() {
                     </div>
                   )}
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div>
                       <label className="block text-xs font-bold text-tech-slate mb-1">
                         {t("nameLabel")} *
@@ -139,7 +139,7 @@ export default function QuickContactForm() {
                         placeholder={t("namePlaceholder")}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20"
+                        className="w-full rounded-xl border border-zinc-300 bg-clean-white px-3.5 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20"
                       />
                     </div>
                     <div>
@@ -150,10 +150,11 @@ export default function QuickContactForm() {
                         type="tel"
                         required
                         maxLength={10}
+                        inputMode="tel"
                         placeholder={t("phonePlaceholder")}
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20"
+                        className="w-full rounded-xl border border-zinc-300 bg-clean-white px-3.5 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20"
                       />
                     </div>
                   </div>
@@ -167,7 +168,7 @@ export default function QuickContactForm() {
                       placeholder={t("areaPlaceholder")}
                       value={area}
                       onChange={(e) => setArea(e.target.value)}
-                      className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20"
+                      className="w-full rounded-xl border border-zinc-300 bg-clean-white px-3.5 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20"
                     />
                   </div>
 
@@ -180,7 +181,7 @@ export default function QuickContactForm() {
                       placeholder={t("messagePlaceholder")}
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
-                      className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20 resize-none"
+                      className="w-full rounded-xl border border-zinc-300 bg-clean-white px-3.5 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20 resize-none"
                     />
                   </div>
 

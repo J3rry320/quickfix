@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
@@ -7,7 +7,14 @@ import { routing, type Locale } from "@/i18n/routing";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppFab from "@/components/WhatsAppFab";
+import MobileActionBar from "@/components/MobileActionBar";
 import "@/app/globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -81,6 +88,7 @@ export default async function MarketingLayout({
           <main className="flex-1">{children}</main>
           <Footer />
           <WhatsAppFab />
+          <MobileActionBar />
         </NextIntlClientProvider>
       </body>
     </html>

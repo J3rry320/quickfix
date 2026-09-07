@@ -1,0 +1,100 @@
+{
+  "RepairPage": {
+    "metaTitle": "Book 30-Minute Doorstep Mobile Repair in Pune | QuickFix.in",
+    "metaDescription": "Schedule an on-spot phone repair at your home or office in Pune. Certified technician arrives with genuine parts, 90-day warranty, and zero upfront payment.",
+    "badge": "Express Doorstep Booking",
+    "title": "Book Your Doorstep Mobile Repair",
+    "subtitle": "Certified technician arrives at your home or office in Pune with genuine parts and sterile precision tools.",
+    "steps": {
+      "step1": "Device",
+      "step2": "Slot",
+      "step3": "Location",
+      "step4": "Contact"
+    },
+    "step1": {
+      "title": "Which device needs repair?",
+      "description": "Tell us the brand, model, and what seems to be the issue.",
+      "brandLabel": "Phone Brand",
+      "brandPlaceholder": "e.g., Apple, Samsung, OnePlus",
+      "modelLabel": "Model Name / Number",
+      "modelPlaceholder": "e.g., iPhone 14 Pro, OnePlus 11, Galaxy S23",
+      "issueLabel": "Describe the Issue",
+      "issuePlaceholder": "e.g., Screen glass cracked, touch working; or battery drains in 3 hours...",
+      "commonIssuesTitle": "Or pick a common issue:",
+      "issueScreen": "Broken Screen / Glass",
+      "issueBattery": "Fast Battery Drain / Swelling",
+      "issueCharging": "Charging Port Problem",
+      "issueCamera": "Camera / Lens Issue",
+      "issueBackGlass": "Back Glass Cracked",
+      "issueWater": "Water Damage / Power Issue"
+    },
+    "step2": {
+      "title": "When should our technician arrive?",
+      "description": "Select your preferred repair date and convenient time window.",
+      "dateLabel": "Preferred Date",
+      "slotLabel": "Preferred Time Window",
+      "slotMorning": "Morning (10:00 AM - 1:00 PM)",
+      "slotAfternoon": "Afternoon (1:00 PM - 4:00 PM)",
+      "slotEvening": "Evening (4:00 PM - 8:00 PM)",
+      "expressNote": "Average turnaround is 30 minutes from technician arrival."
+    },
+    "step3": {
+      "title": "Where in Pune should we dispatch?",
+      "description": "We provide doorstep service across all neighborhoods and IT corridors in Pune.",
+      "areaLabel": "Pune Locality / Area",
+      "areaSelect": "Select your locality...",
+      "addressLabel": "Flat / House / Building & Street Address",
+      "addressPlaceholder": "Flat/House no., building name, street",
+      "pincodeLabel": "Pincode",
+      "pincodePlaceholder": "e.g., 411038",
+      "landmarkLabel": "Landmark (Optional)",
+      "landmarkPlaceholder": "Near metro station, tech park, school..."
+    },
+    "step4": {
+      "title": "Confirm your contact details",
+      "description": "Technician will call you 30 minutes before reaching your doorstep.",
+      "nameLabel": "Your Full Name",
+      "namePlaceholder": "e.g., Rohit Patil",
+      "phoneLabel": "10-Digit Mobile Number",
+      "phonePlaceholder": "e.g., 9876543210",
+      "emailLabel": "Email Address (Optional)",
+      "emailPlaceholder": "For warranty card & invoice copy",
+      "reviewTitle": "Booking Summary",
+      "reviewDevice": "Device",
+      "reviewSlot": "Slot",
+      "reviewLocation": "Location"
+    },
+    "navigation": {
+      "btnNext": "Continue",
+      "btnBack": "Back",
+      "btnSubmit": "Confirm Doorstep Booking",
+      "btnSubmitting": "Scheduling Technician..."
+    },
+    "trustPoints": {
+      "payAfter": "Pay only after repair & thorough testing",
+      "warranty": "90-Day hassle-free warranty card on spot",
+      "privacy": "100% Data privacy: repaired right in front of you",
+      "freeDoorstep": "Zero travel: technician comes to your home/office"
+    },
+    "success": {
+      "title": "Doorstep Repair Scheduled Successfully!",
+      "subtitle": "Our Pune dispatch team has assigned your request. Our technician will contact you prior to arrival.",
+      "refLabel": "Your Booking Reference",
+      "whatsappCta": "Chat on WhatsApp for Live Updates",
+      "bookAnother": "Book Another Repair",
+      "backHome": "Return to Homepage"
+    },
+    "errors": {
+      "brandRequired": "Please enter your phone brand",
+      "modelRequired": "Please enter your device model",
+      "issueRequired": "Please describe the problem with your device",
+      "dateRequired": "Please select a preferred date",
+      "areaRequired": "Please select your locality in Pune",
+      "addressRequired": "Please provide your street or building address",
+      "pincodeRequired": "Please enter a valid 6-digit Pune pincode",
+      "nameRequired": "Please enter your full name",
+      "phoneRequired": "Please enter a valid 10-digit mobile number",
+      "submissionFailed": "Unable to schedule repair. Please try again or call us directly."
+    }
+  }
+}

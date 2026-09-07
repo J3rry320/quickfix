@@ -7,7 +7,7 @@ export default function Footer() {
   const t = useTranslations("Footer");
 
   return (
-    <footer className="bg-tech-slate text-clean-white pt-16 pb-12 border-t border-zinc-800">
+    <footer className="bg-tech-slate text-clean-white pt-12 sm:pt-16 pb-24 md:pb-12 border-t border-zinc-800">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-zinc-800">
           {/* Brand Col */}
@@ -87,9 +87,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#book" className="hover:text-flash-orange transition-colors">
+                <Link href="/book-repair" className="hover:text-flash-orange transition-colors">
                   Book Doorstep
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#faq" className="hover:text-flash-orange transition-colors">

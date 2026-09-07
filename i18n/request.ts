@@ -10,9 +10,10 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
 
   // Load and merge modular translation files
-  const [common, landing] = await Promise.all([
+  const [common, landing, repair] = await Promise.all([
     import(`../messages/${locale}/common.json`).then((m) => m.default),
     import(`../messages/${locale}/landing.json`).then((m) => m.default),
+    import(`../messages/${locale}/repair.json`).then((m) => m.default),
   ]);
 
   return {
@@ -20,6 +21,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
     messages: {
       ...common,
       ...landing,
+      ...repair,
     },
   };
 });

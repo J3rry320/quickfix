@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed:data": "node --env-file=.env --experimental-strip-types scripts/seed-data.ts"
   },
   "dependencies": {
     "@upstash/ratelimit": "^2.0.8",

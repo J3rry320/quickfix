@@ -41,11 +41,9 @@ export default function Navbar() {
           </Link>
 
           {/* Pune City Pill */}
-          <span className="inline-flex items-center rounded-full bg-mist-gray px-2.5 py-0.5 text-xs font-semibold text-tech-slate border border-zinc-200">
+          <span className="hidden sm:inline-flex items-center rounded-full bg-mist-gray px-2.5 py-0.5 text-xs font-semibold text-tech-slate border border-zinc-200">
             {t("city")}
           </span>
-
-
         </div>
 
         {/* Desktop Nav Links */}
@@ -105,12 +103,12 @@ export default function Navbar() {
             <span>{contactConfig.phone.display}</span>
           </a>
 
-          <a
-            href="#book"
+          <Link
+            href="/book-repair"
             className="inline-flex items-center justify-center rounded-lg bg-flash-orange px-4 py-2 text-xs font-bold text-clean-white shadow-xs hover:bg-[#e64a19] active:scale-95 transition-all"
           >
             {t("actions.bookRepair")}
-          </a>
+          </Link>
         </div>
 
         {/* Mobile menu button */}
@@ -199,13 +197,13 @@ export default function Navbar() {
               <span>{contactConfig.phone.display}</span>
             </a>
 
-            <a
-              href="#book"
+            <Link
+              href="/book-repair"
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center justify-center rounded-lg bg-flash-orange py-2.5 text-sm font-bold text-clean-white shadow-xs"
             >
               {t("actions.bookRepair")}
-            </a>
+            </Link>
           </div>
         </div>
       )}

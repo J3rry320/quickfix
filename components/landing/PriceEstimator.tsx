@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import EmptyState from "@/components/ui/EmptyState";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { Link } from "@/i18n/navigation";
 
 interface BrandItem {
   _id: string;
@@ -168,7 +169,7 @@ export default function PriceEstimator() {
   const hasData = brands.length > 0 && services.length > 0;
 
   return (
-    <section id="estimate" className="relative py-16 lg:py-24 bg-clean-white border-b border-zinc-200">
+    <section id="estimate" className="relative py-10 sm:py-16 lg:py-20 bg-clean-white border-b border-zinc-200">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
@@ -309,13 +310,13 @@ export default function PriceEstimator() {
                 </div>
               </div>
 
-              <a
-                href="#book"
+              <Link
+                href="/book-repair"
                 className="w-full md:w-auto inline-flex items-center justify-center rounded-xl bg-flash-orange px-8 py-4 text-base font-extrabold text-clean-white shadow-lg hover:bg-orange-600 active:scale-[0.98] transition-all shrink-0"
               >
                 <span>{t("bookThisRepair")}</span>
                 <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
+              </Link>
             </div>
 
             <p className="mt-4 text-center text-xs text-zinc-500 font-medium">
