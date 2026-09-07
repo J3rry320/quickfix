@@ -95,6 +95,24 @@ export default function QuickContactForm() {
                 </div>
               </div>
             </div>
+
+            {/* WhatsApp Quick Chat & Hub Info */}
+            <div className="mt-3.5 flex flex-col sm:flex-row gap-2.5 max-w-md">
+              <a
+                href={contactConfig.whatsapp.getDefaultUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold text-clean-white hover:bg-emerald-700 shadow-sm transition-all"
+              >
+                <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.423-14.416c-6.627 0-12 5.373-12 12 0 2.159.57 4.19 1.564 5.946l-1.664 6.082 6.221-1.632c1.707.935 3.666 1.465 5.751 1.465 6.627 0 12-5.373 12-12s-5.373-12-12-12z" />
+                </svg>
+                <span>WhatsApp Support</span>
+              </a>
+              <div className="flex-1 rounded-xl bg-clean-white border border-zinc-200 px-3 py-2 text-2xs font-semibold text-zinc-600 flex items-center justify-center text-center">
+                📍 {contactConfig.address.locality}, {contactConfig.address.city}
+              </div>
+            </div>
           </div>
 
           {/* Right Form Card */}
@@ -151,7 +169,9 @@ export default function QuickContactForm() {
                         required
                         maxLength={10}
                         inputMode="tel"
-                        placeholder={t("phonePlaceholder")}
+                        placeholder={t("phonePlaceholder", {
+                          phone: contactConfig.phone.tenDigit,
+                        })}
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         className="w-full rounded-xl border border-zinc-300 bg-clean-white px-3.5 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20"
@@ -165,7 +185,9 @@ export default function QuickContactForm() {
                     </label>
                     <input
                       type="text"
-                      placeholder={t("areaPlaceholder")}
+                      placeholder={t("areaPlaceholder", {
+                        areas: contactConfig.serviceAreas.popular.slice(0, 2).join(", "),
+                      })}
                       value={area}
                       onChange={(e) => setArea(e.target.value)}
                       className="w-full rounded-xl border border-zinc-300 bg-clean-white px-3.5 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import {
   Smartphone,
@@ -16,9 +16,51 @@ import {
   RefreshCw,
   Home,
   Check,
+  Clock,
+  Edit3,
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import contactConfig from "@/config/contact";
+import { Skeleton } from "@/components/ui/Skeleton";
+import EmptyState from "@/components/ui/EmptyState";
+
+interface BrandItem {
+  _id: string;
+  name: string;
+  slug: string;
+  isPopular?: boolean;
+}
+
+interface ServicePricingItem {
+  service: {
+    _id: string;
+    name: string;
+    slug: string;
+    startingPrice: number;
+    warrantyDays: number;
+  };
+  price: number;
+  estimatedTimeMinutes?: number;
+}
+
+interface ModelItem {
+  _id: string;
+  name: string;
+  slug: string;
+  isPopular?: boolean;
+  servicePricing?: ServicePricingItem[];
+}
+
+interface ServiceItem {
+  _id: string;
+  name: string;
+  slug: string;
+  description: string;
+  startingPrice: number;
+  estimatedTimeMinutes: number;
+  warrantyDays: number;
+  isPopular?: boolean;
+}
 
 interface BookingSuccessData {
   bookingReference: string;
@@ -27,14 +69,33 @@ interface BookingSuccessData {
 
 export default function StepByStepBookingWizard() {
   const t = useTranslations("RepairPage");
+  const tCommon = useTranslations("Common");
   const locale = useLocale();
 
+  // Step state
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [bookingSuccess, setBookingSuccess] =
     useState<BookingSuccessData | null>(null);
 
+  // Dynamic API state
+  const [brands, setBrands] = useState<BrandItem[]>([]);
+  const [models, setModels] = useState<ModelItem[]>([]);
+  const [services, setServices] = useState<ServiceItem[]>([]);
+
+  const [selectedBrandId, setSelectedBrandId] = useState<string>("");
+  const [selectedModelId, setSelectedModelId] = useState<string>("");
+  const [selectedServiceId, setSelectedServiceId] = useState<string>("");
+  const [isManualModel, setIsManualModel] = useState<boolean>(false);
+  const [manualModelName, setManualModelName] = useState<string>("");
+  const [additionalNotes, setAdditionalNotes] = useState<string>("");
+
+  const [isLoadingInitial, setIsLoadingInitial] = useState<boolean>(true);
+  const [isLoadingModels, setIsLoadingModels] = useState<boolean>(false);
+  const [apiError, setApiError] = useState<string>("");
+
+  // Form payload state
   const [formData, setFormData] = useState({
     brand: "",
     model: "",
@@ -52,52 +113,178 @@ export default function StepByStepBookingWizard() {
     email: "",
   });
 
-  const popularBrands = [
-    "Apple iPhone",
-    "Samsung Galaxy",
-    "OnePlus",
-    "Xiaomi",
-    "Vivo",
-    "Oppo",
-    "Google Pixel",
-    "Realme",
-  ];
+  const puneAreas = contactConfig.serviceAreas.all;
 
-  const commonIssues = [
-    { key: "issueScreen", label: t("step1.issueScreen") },
-    { key: "issueBattery", label: t("step1.issueBattery") },
-    { key: "issueCharging", label: t("step1.issueCharging") },
-    { key: "issueCamera", label: t("step1.issueCamera") },
-    { key: "issueBackGlass", label: t("step1.issueBackGlass") },
-    { key: "issueWater", label: t("step1.issueWater") },
-  ];
+  // 1. Load Brands and Services on Mount
+  useEffect(() => {
+    let isSubscribed = true;
 
-  const puneAreas = [
-    "Kothrud",
-    "Baner",
-    "Balewadi",
-    "Aundh",
-    "Wakad",
-    "Hinjawadi Phase 1",
-    "Hinjawadi Phase 2",
-    "Hinjawadi Phase 3",
-    "Viman Nagar",
-    "Kalyani Nagar",
-    "Kharadi",
-    "Magarpatta City",
-    "Hadapsar",
-    "Shivajinagar",
-    "FC Road / Deccan",
-    "Camp / MG Road",
-    "Bavdhan",
-    "Pimple Saudagar",
-    "Pashan",
-    "Bibwewadi",
-    "Katraj",
-    "Kondhwa",
-    "Other Pune Locality",
-  ];
+    async function loadInitialData() {
+      setIsLoadingInitial(true);
+      setApiError("");
+      try {
+        const [brandRes, serviceRes] = await Promise.all([
+          fetch("/api/brands"),
+          fetch("/api/services"),
+        ]);
+        const brandData = await brandRes.json();
+        const serviceData = await serviceRes.json();
 
+        if (isSubscribed) {
+          if (brandData.success && Array.isArray(brandData.data?.brands)) {
+            setBrands(brandData.data.brands);
+          }
+          if (serviceData.success && Array.isArray(serviceData.data?.services)) {
+            setServices(serviceData.data.services);
+          }
+        }
+      } catch (err) {
+        if (isSubscribed) {
+          console.error("Failed to load initial booking data", err);
+          setApiError(
+            err instanceof Error ? err.message : "Failed to load repair catalog"
+          );
+        }
+      } finally {
+        if (isSubscribed) {
+          setIsLoadingInitial(false);
+        }
+      }
+    }
+
+    loadInitialData();
+
+    return () => {
+      isSubscribed = false;
+    };
+  }, []);
+
+  // 2. Load Models whenever selected brand changes
+  useEffect(() => {
+    if (!selectedBrandId) {
+      return;
+    }
+
+    let isSubscribed = true;
+
+    async function loadModels() {
+      setIsLoadingModels(true);
+      try {
+        const res = await fetch(`/api/models?brand=${selectedBrandId}`);
+        const data = await res.json();
+        if (isSubscribed) {
+          if (data.success && Array.isArray(data.data?.models)) {
+            setModels(data.data.models);
+          } else {
+            setModels([]);
+          }
+        }
+      } catch (err) {
+        if (isSubscribed) {
+          console.error("Failed to load models", err);
+          setModels([]);
+        }
+      } finally {
+        if (isSubscribed) {
+          setIsLoadingModels(false);
+        }
+      }
+    }
+
+    loadModels();
+
+    return () => {
+      isSubscribed = false;
+    };
+  }, [selectedBrandId]);
+
+  // Handle Brand selection
+  const handleBrandSelect = (brandId: string) => {
+    setSelectedBrandId(brandId);
+    setSelectedModelId("");
+    setModels([]);
+    setManualModelName("");
+    setIsManualModel(false);
+
+    const b = brands.find((x) => x._id === brandId);
+    setFormData((prev) => ({
+      ...prev,
+      brand: b ? b.name : "",
+      model: "",
+    }));
+  };
+
+  // Handle Model selection
+  const handleModelSelect = (modelId: string) => {
+    setSelectedModelId(modelId);
+    setIsManualModel(false);
+    setManualModelName("");
+
+    const m = models.find((x) => x._id === modelId);
+    setFormData((prev) => ({
+      ...prev,
+      model: m ? m.name : "",
+    }));
+  };
+
+  // Handle Manual Model input
+  const handleManualModelChange = (name: string) => {
+    setManualModelName(name);
+    setSelectedModelId("");
+    setFormData((prev) => ({
+      ...prev,
+      model: name,
+    }));
+  };
+
+  // Handle Service selection
+  const handleServiceSelect = (serviceId: string) => {
+    setSelectedServiceId(serviceId);
+    const s = services.find((x) => x._id === serviceId);
+    const fullIssue = s
+      ? additionalNotes.trim()
+        ? `${s.name}: ${additionalNotes.trim()}`
+        : s.name
+      : additionalNotes.trim();
+
+    setFormData((prev) => ({
+      ...prev,
+      issueDescription: fullIssue,
+    }));
+  };
+
+  // Handle Additional notes change
+  const handleAdditionalNotesChange = (notes: string) => {
+    setAdditionalNotes(notes);
+    const s = services.find((x) => x._id === selectedServiceId);
+    const fullIssue = s
+      ? notes.trim()
+        ? `${s.name}: ${notes.trim()}`
+        : s.name
+      : notes.trim();
+
+    setFormData((prev) => ({
+      ...prev,
+      issueDescription: fullIssue,
+    }));
+  };
+
+  // Active Model & Service Price Calculation
+  const activeModel = models.find((m) => m._id === selectedModelId);
+
+  const getServicePrice = (service: ServiceItem) => {
+    if (activeModel?.servicePricing) {
+      const custom = activeModel.servicePricing.find(
+        (sp) => sp.service && (sp.service._id === service._id || (sp.service as unknown as string) === service._id)
+      );
+      if (custom?.price) {
+        return custom.price;
+      }
+    }
+    return service.startingPrice;
+  };
+
+  // Validation
   const validateStep = (step: number): boolean => {
     setErrorMessage("");
     if (step === 1) {
@@ -224,6 +411,12 @@ export default function StepByStepBookingWizard() {
   const resetForm = () => {
     setBookingSuccess(null);
     setCurrentStep(1);
+    setSelectedBrandId("");
+    setSelectedModelId("");
+    setSelectedServiceId("");
+    setIsManualModel(false);
+    setManualModelName("");
+    setAdditionalNotes("");
     setFormData({
       brand: "",
       model: "",
@@ -372,7 +565,7 @@ export default function StepByStepBookingWizard() {
         )}
 
         <form onSubmit={handleSubmit}>
-          {/* STEP 1: Device & Issue */}
+          {/* STEP 1: Dynamic Device, Model & Service Selection */}
           {currentStep === 1 && (
             <div className="space-y-6">
               <div>
@@ -384,100 +577,231 @@ export default function StepByStepBookingWizard() {
                 </p>
               </div>
 
-              {/* Popular Brand Chips */}
-              <div>
-                <label className="block text-xs font-bold text-tech-slate mb-2">
-                  {t("step1.brandLabel")} *
-                </label>
-                <div className="flex flex-wrap gap-2 mb-3">
-                  {popularBrands.map((b) => (
-                    <button
-                      type="button"
-                      key={b}
-                      onClick={() => setFormData({ ...formData, brand: b })}
-                      className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer ${
-                        formData.brand === b
-                          ? "bg-flash-orange text-clean-white shadow-xs"
-                          : "bg-mist-gray text-zinc-700 hover:bg-zinc-200 border border-zinc-200"
-                      }`}
-                    >
-                      {b}
-                    </button>
-                  ))}
+              {/* Dynamic Content: Loading Skeleton */}
+              {isLoadingInitial ? (
+                <div className="space-y-6 py-2">
+                  <div>
+                    <Skeleton className="h-4 w-32 mb-2" />
+                    <Skeleton className="h-12 w-full rounded-xl" />
+                  </div>
+                  <div>
+                    <Skeleton className="h-4 w-32 mb-2" />
+                    <Skeleton className="h-12 w-full rounded-xl" />
+                  </div>
+                  <div>
+                    <Skeleton className="h-4 w-40 mb-2" />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <Skeleton className="h-20 w-full rounded-xl" />
+                      <Skeleton className="h-20 w-full rounded-xl" />
+                      <Skeleton className="h-20 w-full rounded-xl" />
+                      <Skeleton className="h-20 w-full rounded-xl" />
+                    </div>
+                  </div>
                 </div>
-                <input
-                  type="text"
-                  required
-                  placeholder={t("step1.brandPlaceholder")}
-                  value={formData.brand}
-                  onChange={(e) =>
-                    setFormData({ ...formData, brand: e.target.value })
-                  }
-                  className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-3 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20"
+              ) : apiError && brands.length === 0 ? (
+                /* Fallback State if API had an issue */
+                <EmptyState
+                  icon={Smartphone}
+                  title={tCommon("emptyState.noBrandsTitle")}
+                  description={tCommon("emptyState.noBrandsDesc")}
+                  actionLabel={tCommon("emptyState.contactCta")}
+                  actionHref={`tel:${contactConfig.phone.value}`}
                 />
-              </div>
+              ) : (
+                <>
+                  {/* Step 1.1: Brand Selection */}
+                  <div>
+                    <label className="block text-xs font-bold text-tech-slate mb-2">
+                      {t("step1.brandLabel")} *
+                    </label>
 
-              {/* Model Name */}
-              <div>
-                <label className="block text-xs font-bold text-tech-slate mb-1">
-                  {t("step1.modelLabel")} *
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder={t("step1.modelPlaceholder")}
-                  value={formData.model}
-                  onChange={(e) =>
-                    setFormData({ ...formData, model: e.target.value })
-                  }
-                  className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-3 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20"
-                />
-              </div>
-
-              {/* Common Issue Chips & Textarea */}
-              <div>
-                <label className="block text-xs font-bold text-tech-slate mb-2">
-                  {t("step1.commonIssuesTitle")}
-                </label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
-                  {commonIssues.map((issue) => (
-                    <button
-                      type="button"
-                      key={issue.key}
-                      onClick={() =>
-                        setFormData({
-                          ...formData,
-                          issueDescription: issue.label,
-                        })
-                      }
-                      className={`p-2.5 rounded-xl text-left text-xs font-bold border transition-colors cursor-pointer ${
-                        formData.issueDescription === issue.label
-                          ? "border-flash-orange bg-flash-orange/10 text-flash-orange shadow-2xs"
-                          : "border-zinc-200 bg-mist-gray/80 text-zinc-700 hover:bg-zinc-100"
-                      }`}
+                    {/* Brand Select Dropdown */}
+                    <select
+                      required
+                      value={selectedBrandId}
+                      onChange={(e) => handleBrandSelect(e.target.value)}
+                      className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-3 text-sm font-bold text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20 cursor-pointer"
                     >
-                      {issue.label}
-                    </button>
-                  ))}
-                </div>
+                      <option value="">{t("step1.brandSelectPlaceholder")}</option>
+                      {brands.map((b) => (
+                        <option key={b._id} value={b._id}>
+                          {b.name}
+                        </option>
+                      ))}
+                    </select>
 
-                <label className="block text-xs font-bold text-tech-slate mb-1">
-                  {t("step1.issueLabel")} *
-                </label>
-                <textarea
-                  rows={2}
-                  required
-                  placeholder={t("step1.issuePlaceholder")}
-                  value={formData.issueDescription}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      issueDescription: e.target.value,
-                    })
-                  }
-                  className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-3 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20 resize-none"
-                />
-              </div>
+                    {/* Popular Brand Quick Chips */}
+                    {brands.some((b) => b.isPopular) && (
+                      <div className="mt-3 flex flex-wrap gap-1.5 sm:gap-2">
+                        {brands
+                          .filter((b) => b.isPopular)
+                          .slice(0, 6)
+                          .map((b) => (
+                            <button
+                              type="button"
+                              key={b._id}
+                              onClick={() => handleBrandSelect(b._id)}
+                              className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
+                                selectedBrandId === b._id
+                                  ? "bg-flash-orange text-clean-white shadow-xs"
+                                  : "bg-mist-gray text-zinc-700 hover:bg-zinc-200 border border-zinc-200"
+                              }`}
+                            >
+                              {b.name}
+                            </button>
+                          ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Step 1.2: Model Selection */}
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block text-xs font-bold text-tech-slate">
+                        {t("step1.modelLabel")} *
+                      </label>
+                      {selectedBrandId && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsManualModel(!isManualModel);
+                            setSelectedModelId("");
+                            setManualModelName("");
+                            setFormData((prev) => ({ ...prev, model: "" }));
+                          }}
+                          className="text-[11px] font-bold text-flash-orange hover:underline cursor-pointer inline-flex items-center gap-1"
+                        >
+                          <Edit3 className="h-3 w-3" />
+                          <span>
+                            {isManualModel
+                              ? t("step1.chooseFromList")
+                              : t("step1.enterManualModel")}
+                          </span>
+                        </button>
+                      )}
+                    </div>
+
+                    {!selectedBrandId ? (
+                      <div className="rounded-xl border border-dashed border-zinc-200 p-3.5 bg-mist-gray/60 text-xs text-zinc-500 font-medium">
+                        {t("step1.selectBrandFirst")}
+                      </div>
+                    ) : isManualModel ? (
+                      <input
+                        type="text"
+                        required
+                        placeholder={t("step1.manualModelPlaceholder")}
+                        value={manualModelName}
+                        onChange={(e) => handleManualModelChange(e.target.value)}
+                        className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-3 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20"
+                      />
+                    ) : isLoadingModels ? (
+                      <div className="w-full rounded-xl border border-zinc-200 bg-mist-gray/60 px-4 py-3 text-xs text-zinc-500 font-medium flex items-center gap-2">
+                        <Skeleton className="h-4 w-4 rounded-full" />
+                        <span>{t("step1.loadingModels")}</span>
+                      </div>
+                    ) : models.length > 0 ? (
+                      <select
+                        required
+                        value={selectedModelId}
+                        onChange={(e) => handleModelSelect(e.target.value)}
+                        className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-3 text-sm font-bold text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20 cursor-pointer"
+                      >
+                        <option value="">{t("step1.modelSelectPlaceholder")}</option>
+                        {models.map((m) => (
+                          <option key={m._id} value={m._id}>
+                            {m.name}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      /* If brand has no models yet in DB, allow manual typing */
+                      <div className="space-y-2">
+                        <p className="text-xs text-zinc-500 font-medium">
+                          {tCommon("emptyState.noModelsTitle")} — {t("step1.manualModelPlaceholder")}
+                        </p>
+                        <input
+                          type="text"
+                          required
+                          placeholder={t("step1.manualModelPlaceholder")}
+                          value={manualModelName}
+                          onChange={(e) => handleManualModelChange(e.target.value)}
+                          className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-3 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20"
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Step 1.3: Dynamic Repair Services Grid */}
+                  <div>
+                    <label className="block text-xs font-bold text-tech-slate mb-2">
+                      {t("step1.serviceLabel")} *
+                    </label>
+
+                    {services.length === 0 ? (
+                      <div className="rounded-xl border border-zinc-200 p-4 bg-mist-gray text-xs text-zinc-500 font-medium">
+                        {tCommon("emptyState.noServicesTitle")}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                        {services.map((service) => {
+                          const isSelected = selectedServiceId === service._id;
+                          const dynamicPrice = getServicePrice(service);
+
+                          return (
+                            <button
+                              type="button"
+                              key={service._id}
+                              onClick={() => handleServiceSelect(service._id)}
+                              className={`p-3.5 rounded-2xl text-left border-2 transition-all cursor-pointer flex flex-col justify-between ${
+                                isSelected
+                                  ? "border-flash-orange bg-flash-orange/5 text-tech-slate shadow-xs"
+                                  : "border-zinc-200 bg-clean-white text-zinc-600 hover:border-zinc-300 hover:bg-zinc-50/50"
+                              }`}
+                            >
+                              <div className="flex items-start justify-between gap-2 mb-1.5">
+                                <span className="font-heading text-xs sm:text-sm font-bold text-tech-slate leading-snug">
+                                  {service.name}
+                                </span>
+                                {isSelected && (
+                                  <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-flash-orange text-clean-white">
+                                    <Check className="h-3 w-3" />
+                                  </div>
+                                )}
+                              </div>
+
+                              <div className="mt-2 pt-2 border-t border-zinc-100 flex items-center justify-between text-[11px] font-semibold text-zinc-500">
+                                <div className="flex items-center gap-1">
+                                  <Clock className="h-3 w-3 text-flash-orange" />
+                                  <span>
+                                    {service.estimatedTimeMinutes} {t("step1.minsTurnaround")}
+                                  </span>
+                                </div>
+                                <span className="font-heading text-xs font-black text-tech-slate">
+                                  ₹{dynamicPrice.toLocaleString("en-IN")}
+                                </span>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {/* Additional Notes Textarea */}
+                    <div>
+                      <label className="block text-xs font-bold text-tech-slate mb-1">
+                        {t("step1.additionalNotesLabel")}
+                      </label>
+                      <textarea
+                        rows={2}
+                        placeholder={t("step1.additionalNotesPlaceholder")}
+                        value={additionalNotes}
+                        onChange={(e) => handleAdditionalNotesChange(e.target.value)}
+                        className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-2.5 text-xs sm:text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20 resize-none"
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           )}
 
@@ -687,7 +1011,9 @@ export default function StepByStepBookingWizard() {
                     required
                     maxLength={10}
                     inputMode="tel"
-                    placeholder={t("step4.phonePlaceholder")}
+                    placeholder={t("step4.phonePlaceholder", {
+                      phone: contactConfig.phone.tenDigit,
+                    })}
                     value={formData.phone}
                     onChange={(e) =>
                       setFormData({ ...formData, phone: e.target.value })
@@ -775,7 +1101,8 @@ export default function StepByStepBookingWizard() {
               <button
                 type="button"
                 onClick={handleNext}
-                className="inline-flex items-center justify-center rounded-xl bg-flash-orange px-7 py-3 text-xs sm:text-sm font-extrabold text-clean-white shadow-md hover:bg-orange-600 active:scale-[0.98] transition-all cursor-pointer"
+                disabled={isLoadingInitial}
+                className="inline-flex items-center justify-center rounded-xl bg-flash-orange px-7 py-3 text-xs sm:text-sm font-extrabold text-clean-white shadow-md hover:bg-orange-600 active:scale-[0.98] transition-all disabled:opacity-60 cursor-pointer"
               >
                 <span>{t("navigation.btnNext")}</span>
                 <ArrowRight className="ml-2 h-4 w-4" />

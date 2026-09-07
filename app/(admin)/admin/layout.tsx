@@ -1,6 +1,12 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "@/app/globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -35,7 +41,7 @@ export default function AdminLayout({
       lang="en"
       className={`${plusJakartaSans.variable} ${inter.variable}`}
     >
-      <body className="antialiased min-h-screen bg-mist-gray text-tech-slate font-body flex flex-col">
+      <body className="antialiased min-h-screen bg-mist-gray text-tech-slate font-body flex flex-col w-full max-w-full overflow-x-hidden">
         {children}
       </body>
     </html>

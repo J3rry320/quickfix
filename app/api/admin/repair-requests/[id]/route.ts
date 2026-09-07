@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import mongoose from "mongoose";
 import { RepairRequest } from "@/models/RepairRequest";
+import "@/models/RepairService";
 import { withAdminAuth } from "@/lib/api/auth";
 import { apiSuccess, apiError } from "@/lib/api/response";
 import { updateRepairRequestSchema } from "@/lib/api/validators";
@@ -13,7 +14,9 @@ export const GET = withAdminAuth<{ id: string }>(
       return apiError("Invalid repair request ID", 400, "INVALID_ID");
     }
 
-    const requestDoc = await RepairRequest.findById(id).lean();
+    const requestDoc = await RepairRequest.findById(id)
+      .populate("service", "name slug startingPrice image icon")
+      .lean();
     if (!requestDoc) {
       return apiError("Repair request not found", 404, "NOT_FOUND");
     }

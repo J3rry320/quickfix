@@ -43,31 +43,7 @@ export default function DoorstepBookingForm() {
     message: string;
   } | null>(null);
 
-  const puneAreas = [
-    "Kothrud",
-    "Baner",
-    "Balewadi",
-    "Aundh",
-    "Wakad",
-    "Hinjawadi Phase 1",
-    "Hinjawadi Phase 2",
-    "Hinjawadi Phase 3",
-    "Viman Nagar",
-    "Kalyani Nagar",
-    "Kharadi",
-    "Magarpatta City",
-    "Hadapsar",
-    "Shivajinagar",
-    "FC Road / Deccan",
-    "Camp / MG Road",
-    "Bavdhan",
-    "Pimple Saudagar",
-    "Pashan",
-    "Bibwewadi",
-    "Katraj",
-    "Kondhwa",
-    "Other Pune Locality",
-  ];
+  const puneAreas = contactConfig.serviceAreas.all;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -422,7 +398,9 @@ export default function DoorstepBookingForm() {
                     type="tel"
                     required
                     maxLength={10}
-                    placeholder={t("phonePlaceholder")}
+                    placeholder={t("phonePlaceholder", {
+                      phone: contactConfig.phone.tenDigit,
+                    })}
                     value={formData.phone}
                     onChange={(e) =>
                       setFormData({ ...formData, phone: e.target.value })
@@ -450,7 +428,7 @@ export default function DoorstepBookingForm() {
             {/* Submit CTA */}
             <div className="pt-4 border-t border-zinc-200 flex flex-col sm:flex-row items-center justify-between gap-4">
               <span className="text-xs text-zinc-500 font-medium text-center sm:text-left">
-                ✓ Pay only after repair • 90-day warranty card issued on spot
+                ✓ {contactConfig.guarantees.pricing} • {contactConfig.guarantees.warranty}
               </span>
 
               <button

@@ -26,9 +26,10 @@ if (!global.mongooseCache) {
  * Prevents multiple connections during Next.js hot reloads and serverless executions.
  */
 export async function connectToDatabase(): Promise<typeof mongoose> {
-  if (!MONGODB_URI) {
+  const uri = process.env.MONGODB_URI || MONGODB_URI;
+  if (!uri) {
     throw new Error(
-      "Please define the MONGODB_URI environment variable inside .env.local"
+      "Please define the MONGODB_URI environment variable inside .env.local or process.env"
     );
   }
 
@@ -41,7 +42,7 @@ export async function connectToDatabase(): Promise<typeof mongoose> {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((m) => {
+    cached.promise = mongoose.connect(uri, opts).then((m) => {
       return m;
     });
   }
@@ -56,4 +57,5 @@ export async function connectToDatabase(): Promise<typeof mongoose> {
   return cached.conn;
 }
 
+export const connectDb = connectToDatabase;
 export default connectToDatabase;

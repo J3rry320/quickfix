@@ -1,10 +1,10 @@
 "use client";
 
-import { Suspense, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { signInWithGoogle, clientSignOut } from "@/lib/firebase/client";
-import { ShieldAlert, ArrowLeft, Loader2 } from "lucide-react";
+import { clientSignOut, signInWithGoogle } from "@/lib/firebase/client";
+import { ArrowLeft, Loader2, ShieldAlert } from "lucide-react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 
 function AdminLoginForm() {
   const router = useRouter();
@@ -138,9 +138,6 @@ function AdminLoginForm() {
       </div>
 
       {/* Security Notice */}
-      <p className="mt-6 text-center text-xs text-zinc-500">
-        Access is restricted to authorized email addresses configured in the QuickFix system allowlist.
-      </p>
 
       {/* Return to website */}
       <div className="mt-8 pt-4 border-t border-zinc-200 text-center">

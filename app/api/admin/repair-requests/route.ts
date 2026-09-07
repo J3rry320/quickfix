@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { RepairRequest } from "@/models/RepairRequest";
+import "@/models/RepairService";
 import { withAdminAuth } from "@/lib/api/auth";
 import { apiSuccess } from "@/lib/api/response";
 
@@ -43,6 +44,7 @@ export const GET = withAdminAuth(async (request: NextRequest) => {
 
   const [requests, total] = await Promise.all([
     RepairRequest.find(filter)
+      .populate("service", "name slug startingPrice image icon")
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
