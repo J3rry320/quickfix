@@ -1,8 +1,17 @@
 import { NextRequest } from "next/server";
-import { adminAuth, isAuthorizedAdmin } from "@/lib/firebase/admin";
+import { adminAuth } from "@/lib/firebase/admin";
 import { apiSuccess, apiError, withApiProtection } from "@/lib/api/response";
 
 async function loginHandler(request: NextRequest) {
+  if (!adminAuth) {
+    console.error("Firebase Auth Admin SDK is not initialized.");
+    return apiError(
+      "Authentication service unavailable",
+      503,
+      "AUTH_UNAVAILABLE"
+    );
+  }
+
   const body = await request.json().catch(() => null);
 
   if (!body || !body.idToken) {
@@ -14,14 +23,22 @@ async function loginHandler(request: NextRequest) {
   try {
     // 1. Verify Google ID token with Firebase Admin
     const decodedToken = await adminAuth.verifyIdToken(idToken);
-    const email = decodedToken.email;
+    const email = decodedToken.email?.toLowerCase();
 
     if (!email) {
       return apiError("Token does not contain an email", 400, "INVALID_TOKEN");
     }
 
     // 2. Check email against authorized admin emails
-    if (!isAuthorizedAdmin(email)) {
+    const adminEmailsEnv =
+      process.env.AUTH_EMAILS || process.env.ADMIN_EMAILS || "";
+    const authorizedEmails = adminEmailsEnv
+      .split(",")
+      .map((e) => e.trim().toLowerCase())
+      .filter((e) => e.length > 0);
+
+    if (!authorizedEmails.includes(email)) {
+      console.warn(`Unauthorized login attempt by: ${email}`);
       return apiError(
         `Access denied: ${email} is not authorized for admin access.`,
         403,

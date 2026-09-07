@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
-import { adminAuth, isAuthorizedAdmin } from "@/lib/firebase/admin";
+import { adminAuth } from "@/lib/firebase/admin";
 import { apiError, getClientIp } from "./response";
 import { validateCsrf } from "./csrf";
 import { checkRateLimit } from "./rate-limit";
@@ -20,6 +20,11 @@ export interface AdminUser {
 export async function getAuthenticatedAdmin(
   request: NextRequest
 ): Promise<AdminUser | null> {
+  if (!adminAuth) {
+    console.error("Firebase Auth Admin SDK is not initialized.");
+    return null;
+  }
+
   const sessionCookie =
     request.cookies.get("admin_session")?.value ||
     request.headers.get("authorization")?.replace(/^Bearer\s+/i, "");
@@ -34,14 +39,26 @@ export async function getAuthenticatedAdmin(
       decoded = await adminAuth.verifyIdToken(sessionCookie);
     }
 
-    if (!decoded.email || !isAuthorizedAdmin(decoded.email)) {
+    const email = decoded.email?.toLowerCase();
+    if (!email) return null;
+
+    // Check against authorized admin emails
+    const adminEmailsEnv =
+      process.env.AUTH_EMAILS || process.env.ADMIN_EMAILS || "";
+    const authorizedEmails = adminEmailsEnv
+      .split(",")
+      .map((e) => e.trim().toLowerCase())
+      .filter((e) => e.length > 0);
+
+    if (!authorizedEmails.includes(email)) {
+      console.warn(`Unauthorized admin access attempt by: ${email}`);
       return null;
     }
 
     return {
       uid: decoded.uid,
-      email: decoded.email,
-      name: decoded.name || decoded.email.split("@")[0],
+      email: decoded.email!,
+      name: decoded.name || decoded.email!.split("@")[0],
       picture: decoded.picture || null,
     };
   } catch {

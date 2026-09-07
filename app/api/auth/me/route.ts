@@ -1,8 +1,12 @@
 import { NextRequest } from "next/server";
-import { adminAuth, isAuthorizedAdmin } from "@/lib/firebase/admin";
+import { adminAuth } from "@/lib/firebase/admin";
 import { apiSuccess, apiError } from "@/lib/api/response";
 
 export async function GET(request: NextRequest) {
+  if (!adminAuth) {
+    return apiError("Authentication service unavailable", 503, "AUTH_UNAVAILABLE");
+  }
+
   const sessionCookie = request.cookies.get("admin_session")?.value;
 
   if (!sessionCookie) {
@@ -17,14 +21,27 @@ export async function GET(request: NextRequest) {
       decoded = await adminAuth.verifyIdToken(sessionCookie);
     }
 
-    if (!decoded.email || !isAuthorizedAdmin(decoded.email)) {
+    const email = decoded.email?.toLowerCase();
+    if (!email) {
+      return apiError("Unauthorized admin email", 403, "FORBIDDEN");
+    }
+
+    // Check against authorized admin emails
+    const adminEmailsEnv =
+      process.env.AUTH_EMAILS || process.env.ADMIN_EMAILS || "";
+    const authorizedEmails = adminEmailsEnv
+      .split(",")
+      .map((e) => e.trim().toLowerCase())
+      .filter((e) => e.length > 0);
+
+    if (!authorizedEmails.includes(email)) {
       return apiError("Unauthorized admin email", 403, "FORBIDDEN");
     }
 
     return apiSuccess({
       user: {
         email: decoded.email,
-        name: decoded.name || decoded.email.split("@")[0],
+        name: decoded.name || decoded.email!.split("@")[0],
         picture: decoded.picture || null,
         uid: decoded.uid,
       },
