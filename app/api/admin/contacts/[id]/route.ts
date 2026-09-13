@@ -33,9 +33,17 @@ export const PATCH = withAdminAuth<{ id: string }>(
     const body = await request.json();
     const validated = updateContactStatusSchema.parse(body);
 
+    const updateFields: Record<string, unknown> = {};
+    if (validated.status !== undefined) {
+      updateFields.status = validated.status;
+    }
+    if (validated.internalNotes !== undefined) {
+      updateFields.internalNotes = validated.internalNotes;
+    }
+
     const updated = await ContactSubmission.findByIdAndUpdate(
       id,
-      { $set: { status: validated.status } },
+      { $set: updateFields },
       { new: true }
     ).lean();
 

@@ -262,7 +262,10 @@ export default function ServicesCatalog() {
                   >
                     <div>
                       {/* Visual: Image or Stylized Feature Icon */}
-                      <div className="relative mb-5 aspect-16/9 w-full overflow-hidden rounded-xl bg-gradient-to-br from-mist-gray to-zinc-200 flex items-center justify-center border border-zinc-100">
+                      <Link
+                        href={`/services/${service.slug}`}
+                        className="relative mb-5 aspect-16/9 w-full overflow-hidden rounded-xl bg-gradient-to-br from-mist-gray to-zinc-200 flex items-center justify-center border border-zinc-100 block"
+                      >
                         {service.image ? (
                           <Image
                             src={service.image}
@@ -280,13 +283,15 @@ export default function ServicesCatalog() {
                             </span>
                           </div>
                         )}
-                      </div>
+                      </Link>
 
                       {/* Popular Badge & Title */}
                       <div className="flex items-center justify-between gap-2 mb-2">
-                        <h3 className="font-heading text-base sm:text-lg font-bold text-tech-slate group-hover:text-flash-orange transition-colors">
-                          {service.name}
-                        </h3>
+                        <Link href={`/services/${service.slug}`}>
+                          <h3 className="font-heading text-base sm:text-lg font-bold text-tech-slate group-hover:text-flash-orange transition-colors">
+                            {service.name}
+                          </h3>
+                        </Link>
                         {service.isPopular && (
                           <span className="rounded-md bg-flash-orange/10 px-2 py-0.5 text-[11px] font-extrabold text-flash-orange shrink-0">
                             Popular
@@ -325,7 +330,7 @@ export default function ServicesCatalog() {
 
                       <Link
                         href="/book-repair"
-                        className="inline-flex items-center justify-center rounded-xl bg-flash-orange px-4 py-2.5 text-xs font-extrabold text-clean-white shadow-xs hover:bg-orange-600 active:scale-95 transition-all"
+                        className="inline-flex items-center justify-center rounded-xl bg-flash-orange px-4 py-2.5 text-xs font-extrabold text-clean-white shadow-xs hover:bg-flash-orange-hover active:scale-95 transition-all"
                       >
                         <span>{t("bookService")}</span>
                         <ArrowRight className="ml-1.5 h-3.5 w-3.5" />

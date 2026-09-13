@@ -161,7 +161,10 @@ export const createContactSchema = z.object({
 });
 
 export const updateContactStatusSchema = z.object({
-  status: z.enum(["new", "in_progress", "contacted", "resolved", "archived"]),
+  status: z
+    .enum(["new", "in_progress", "contacted", "resolved", "archived"])
+    .optional(),
+  internalNotes: z.string().optional(),
 });
 
 // -------------------------------------------------------------
@@ -184,12 +187,15 @@ export const deviceSchema = z.object({
 });
 
 export const addressSchema = z.object({
-  area: z.string().min(2, "Pune area/locality is required").trim(),
-  streetAddress: z.string().min(3, "Street address is required").trim(),
+  area: z.string().trim().default("Pune"),
+  streetAddress: z.string().min(3, "Doorstep address is required").trim(),
   pincode: z
     .string()
     .trim()
-    .regex(/^411\d{3}$/, "Please provide a valid 6-digit Pune pincode (411xxx)"),
+    .regex(/^411\d{3}$/, "Please provide a valid 6-digit Pune pincode (411xxx)")
+    .optional()
+    .or(z.literal(""))
+    .default("411030"),
   landmark: z.string().optional(),
   city: z.string().default("Pune"),
 });

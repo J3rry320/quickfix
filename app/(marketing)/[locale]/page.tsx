@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { getSeoMetadata } from "@/config/seo";
+import { getFaqPageSchema } from "@/config/jsonld";
+import JsonLd from "@/components/seo/JsonLd";
 import Hero from "@/components/Hero";
 import TrustBadges from "@/components/landing/TrustBadges";
 import ServicesCatalog from "@/components/landing/ServicesCatalog";
-import PriceEstimator from "@/components/landing/PriceEstimator";
 import HowItWorks from "@/components/landing/HowItWorks";
 import WhyQuickFix from "@/components/landing/WhyQuickFix";
 import BrandsShowcase from "@/components/landing/BrandsShowcase";
@@ -33,8 +34,20 @@ export default async function MarketingPage({
   // Enable static rendering
   setRequestLocale(locale);
 
+  const tFaq = await getTranslations({ locale, namespace: "Faq" });
+
+  const faqSchema = getFaqPageSchema([
+    { question: tFaq("q1"), answer: tFaq("a1") },
+    { question: tFaq("q2"), answer: tFaq("a2") },
+    { question: tFaq("q3"), answer: tFaq("a3") },
+    { question: tFaq("q4"), answer: tFaq("a4") },
+    { question: tFaq("q5"), answer: tFaq("a5") },
+  ]);
+
   return (
     <div className="flex flex-col w-full overflow-hidden">
+      <JsonLd schema={faqSchema} id="landing-faq-structured-data" />
+
       {/* 1. Hero Section: Minimal & Punchy */}
       <Hero />
 
@@ -44,10 +57,7 @@ export default async function MarketingPage({
       {/* 3. Popular Repair Services Catalog */}
       <ServicesCatalog />
 
-      {/* 4. Interactive Instant Price Estimator */}
-      <PriceEstimator />
-
-      {/* 5. How Doorstep Repair Works: 4-Step Process */}
+      {/* 4. How Doorstep Repair Works: 4-Step Process */}
       <HowItWorks />
 
       {/* 6. Why QuickFix: Mobile Responsive Comparison */}

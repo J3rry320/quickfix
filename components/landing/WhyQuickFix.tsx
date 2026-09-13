@@ -169,42 +169,55 @@ export default function WhyQuickFix() {
             </table>
           </div>
 
-          {/* Side Guarantee Card */}
-          <div className="md:col-span-4 rounded-2xl bg-clean-white border border-zinc-200 p-6 shadow-md flex flex-col justify-between">
+          {/* Side Guarantee Card with 4:3 Media Box */}
+          <div className="md:col-span-4 rounded-2xl bg-clean-white border border-border-default p-6 shadow-md flex flex-col justify-between">
             <div>
+              {/* 4:3 Aspect Ratio Media Box for Toolkit Image */}
+              <div className="relative mb-4 aspect-4/3 w-full rounded-xl bg-mist-gray border border-border-default/80 overflow-hidden flex flex-col items-center justify-center text-center p-4 shadow-2xs select-none">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-flash-orange/10 text-flash-orange mb-2">
+                  <ShieldCheck className="h-5 w-5" />
+                </div>
+                <span className="text-xs font-bold text-tech-slate">
+                  {t("mediaTitle")}
+                </span>
+                <span className="text-[11px] text-text-muted mt-0.5">
+                  Grounded Workstation • OEM Parts
+                </span>
+              </div>
+
               <div className="flex items-center gap-2 mb-2">
                 <ShieldCheck className="h-5 w-5 text-flash-orange" />
-                <h3 className="font-heading text-lg font-bold text-tech-slate">
+                <h3 className="font-heading text-base sm:text-lg font-bold text-tech-slate">
                   {t("mediaTitle")}
                 </h3>
               </div>
-              <p className="text-xs text-zinc-500 font-body mb-5 leading-relaxed">
-                Our technicians travel with ESD-safe antistatic kits, laser debonding tools, and calibrated screwdrivers.
+              <p className="text-xs text-text-muted font-body mb-4 leading-relaxed">
+                Our doorstep technicians carry brand-certified screwdrivers, suction lifters, and genuine adhesive seals for on-the-spot repairs.
               </p>
 
-              <div className="space-y-3 pt-4 border-t border-zinc-100 text-xs">
+              <div className="space-y-2.5 pt-3 border-t border-border-default/60 text-xs">
                 <div className="flex items-center gap-2 text-tech-slate font-semibold">
                   <Check className="h-4 w-4 text-flash-orange shrink-0" />
-                  <span>ESD-Safe antistatic grounded mats</span>
+                  <span>Grounded work mat & surface protection</span>
                 </div>
                 <div className="flex items-center gap-2 text-tech-slate font-semibold">
                   <Check className="h-4 w-4 text-flash-orange shrink-0" />
-                  <span>Precision micro-screwdrivers & suction</span>
+                  <span>Precision micro-screwdrivers & suction openers</span>
                 </div>
                 <div className="flex items-center gap-2 text-tech-slate font-semibold">
                   <Check className="h-4 w-4 text-flash-orange shrink-0" />
-                  <span>Zero passcode required for screen fixes</span>
+                  <span>Zero passcode or pattern lock required</span>
                 </div>
                 <div className="flex items-center gap-2 text-tech-slate font-semibold">
                   <Check className="h-4 w-4 text-flash-orange shrink-0" />
-                  <span>On-spot warranty registration receipt</span>
+                  <span>Instant 90-day warranty card & digital invoice</span>
                 </div>
               </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-zinc-100 flex items-center gap-2 text-xs font-bold text-flash-orange">
+            <div className="mt-5 pt-3 border-t border-border-default/60 flex items-center gap-2 text-xs font-bold text-flash-orange">
               <ShieldCheck className="h-4 w-4 shrink-0" />
-              <span>ESD-Safe & Data-Zero-Access Guaranteed</span>
+              <span>100% Privacy & Zero Data Access Guaranteed</span>
             </div>
           </div>
         </div>

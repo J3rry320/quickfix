@@ -9,7 +9,7 @@ export function getOrganizationAndLocalBusinessSchema(locale: string = "en") {
 
   return {
     "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "ProfessionalService", "MobilePhoneStore"],
+    "@type": ["RepairBusiness", "LocalBusiness", "MobilePhoneStore"],
     "@id": `${siteUrl}/#business`,
     name: contactConfig.brand,
     legalName: contactConfig.legalName,
@@ -23,6 +23,13 @@ export function getOrganizationAndLocalBusinessSchema(locale: string = "en") {
     priceRange: "₹₹",
     paymentAccepted: ["Cash", "Credit Card", "Debit Card", "UPI", "Google Pay", "PhonePe", "Paytm"],
     currenciesAccepted: "INR",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "1450",
+      bestRating: "5",
+      worstRating: "1",
+    },
     address: {
       "@type": "PostalAddress",
       streetAddress: contactConfig.address.shop,
@@ -195,3 +202,75 @@ export function getAboutPageSchema(locale: string = "en") {
     },
   };
 }
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+export function getFaqPageSchema(items: FaqItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+}
+
+export function getServiceDetailPageSchema({
+  serviceName,
+  description,
+  startingPrice,
+  warrantyDays = 90,
+  estimatedTimeMinutes = 30,
+  slug,
+  locale = "en",
+}: {
+  serviceName: string;
+  description: string;
+  startingPrice: number;
+  warrantyDays?: number;
+  estimatedTimeMinutes?: number;
+  slug: string;
+  locale?: string;
+}) {
+  const siteUrl = siteConfig.url.replace(/\/$/, "");
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${siteUrl}/${locale}/services/${slug}#service`,
+    name: serviceName,
+    description,
+    provider: {
+      "@type": "LocalBusiness",
+      name: contactConfig.brand,
+      telephone: contactConfig.phone.display,
+      address: contactConfig.address.full,
+    },
+    areaServed: {
+      "@type": "City",
+      name: "Pune",
+    },
+    offers: {
+      "@type": "Offer",
+      price: startingPrice,
+      priceCurrency: "INR",
+      priceValidUntil: "2027-12-31",
+      availability: "https://schema.org/InStock",
+      url: `${siteUrl}/${locale}/services/${slug}`,
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "820",
+    },
+  };
+}
+

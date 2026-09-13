@@ -68,3 +68,5 @@ export function SkeletonBrandStrip({ count = 8 }: { count?: number }) {
     </div>
   );
 }
+
+export default Skeleton;

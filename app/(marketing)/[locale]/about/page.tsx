@@ -179,10 +179,10 @@ export default async function AboutPage({
                   </div>
                   <div>
                     <p className="text-xs font-bold uppercase tracking-wider text-electric-amber">
-                      Central Dispatch Hub
+                      {t("dispatchHubBadge")}
                     </p>
                     <p className="text-2xs sm:text-xs text-zinc-300">
-                      Sadashiv Peth • Serving all 35+ Pune pin codes
+                      {t("dispatchHubSubtext")}
                     </p>
                   </div>
                 </div>
@@ -207,10 +207,10 @@ export default async function AboutPage({
               {/* Guarantees Bullet Points */}
               <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 pt-6 border-t border-zinc-100">
                 {[
-                  "No password or data wipe required",
-                  "Watch the entire repair live in front of you",
-                  "Pay only after inspecting touch & camera",
-                  "90-Day warranty with free replacement",
+                  t("guarantee1"),
+                  t("guarantee2"),
+                  t("guarantee3"),
+                  t("guarantee4"),
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-center gap-2">
                     <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />

@@ -17,31 +17,11 @@ export default function FaqSection() {
     { q: t("q5"), a: t("a5") },
   ];
 
-  // Structured JSON-LD FAQ schema for Google Search
-  const jsonLdFaq = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: f.a,
-      },
-    })),
-  };
-
   return (
     <section
       id="faq"
-      className="py-10 sm:py-16 lg:py-20 bg-mist-gray/60 border-b border-zinc-200"
+      className="py-10 sm:py-16 lg:py-20 bg-mist-gray/60 border-b border-border-default"
     >
-      {/* Inject Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }}
-      />
-
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <SectionHeader
@@ -57,7 +37,7 @@ export default function FaqSection() {
             return (
               <div
                 key={idx}
-                className="rounded-2xl bg-clean-white border border-zinc-200 overflow-hidden shadow-2xs transition-colors"
+                className="rounded-2xl bg-clean-white border border-border-default overflow-hidden shadow-2xs transition-colors"
               >
                 <button
                   type="button"
@@ -67,14 +47,14 @@ export default function FaqSection() {
                 >
                   <span>{faq.q}</span>
                   <ChevronDown
-                    className={`h-4 w-4 sm:h-5 sm:w-5 text-zinc-400 shrink-0 transition-transform duration-200 ${
+                    className={`h-4 w-4 sm:h-5 sm:w-5 text-text-muted shrink-0 transition-transform duration-200 ${
                       isOpen ? "rotate-180 text-flash-orange" : ""
                     }`}
                   />
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-1 text-zinc-600 font-body text-xs sm:text-sm leading-relaxed border-t border-zinc-100">
+                  <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-1 text-text-secondary font-body text-xs sm:text-sm leading-relaxed border-t border-border-default/60">
                     {faq.a}
                   </div>
                 )}

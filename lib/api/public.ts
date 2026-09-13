@@ -32,7 +32,7 @@ export function withPublicApi<P = Record<string, string>>(
 ) {
   return async (
     request: NextRequest,
-    context?: { params: Promise<P> }
+    context: { params: Promise<P> }
   ): Promise<NextResponse> => {
     // 1. CSRF Check on POST
     if (options.csrf && request.method === "POST") {

@@ -38,7 +38,7 @@ export default function TrustBadges({
   return (
     <section
       aria-label="Service Guarantees"
-      className={`py-6 sm:py-8 border-b border-zinc-200 ${
+      className={`py-6 sm:py-8 border-b border-border-default ${
         variant === "surface" ? "bg-clean-white" : "bg-mist-gray/80"
       } ${className}`}
     >
@@ -49,7 +49,7 @@ export default function TrustBadges({
             return (
               <div
                 key={i}
-                className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3.5 p-3 sm:p-4 rounded-xl bg-clean-white border border-zinc-200/80 shadow-2xs hover:border-flash-orange/40 hover:shadow-xs transition-all"
+                className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3.5 p-3 sm:p-4 rounded-xl bg-clean-white border border-border-default shadow-2xs hover:border-flash-orange/40 hover:shadow-xs transition-all"
               >
                 <div className="flex h-9 w-9 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-lg bg-flash-orange/10 text-flash-orange">
                   <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -58,7 +58,7 @@ export default function TrustBadges({
                   <p className="text-xs sm:text-sm font-bold text-tech-slate leading-tight">
                     {b.title}
                   </p>
-                  <p className="text-[11px] sm:text-xs text-zinc-500 mt-0.5 font-medium hidden sm:block">
+                  <p className="text-[11px] sm:text-xs text-text-muted mt-0.5 font-medium hidden sm:block">
                     {b.desc}
                   </p>
                 </div>

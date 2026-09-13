@@ -1,0 +1,326 @@
+[
+  {
+    "slug": "kothrud",
+    "name": "Kothrud",
+    "zone": "West Pune",
+    "dispatchTime": "25 Mins",
+    "pincode": "411038",
+    "landmark": "Near MIT College / Karve Statue",
+    "popularNeighborhoods": ["Karve Nagar", "Paud Road", "Mayur Colony", "Dahanukar Colony", "Vanaz"]
+  },
+  {
+    "slug": "karve-nagar",
+    "name": "Karve Nagar",
+    "zone": "West Pune",
+    "dispatchTime": "25 Mins",
+    "pincode": "411052",
+    "landmark": "Near Cummins College / Alankar Police Station",
+    "popularNeighborhoods": ["Hingne Budruk", "Warje Malwadi", "Dahanukar Colony", "Pratibha Nagar"]
+  },
+  {
+    "slug": "baner",
+    "name": "Baner",
+    "zone": "West Pune",
+    "dispatchTime": "30 Mins",
+    "pincode": "411045",
+    "landmark": "Near Balewadi High Street",
+    "popularNeighborhoods": ["Balewadi", "Baner-Pashan Link Road", "Aundh", "Pashan", "Sutarwadi"]
+  },
+  {
+    "slug": "balewadi",
+    "name": "Balewadi",
+    "zone": "West Pune",
+    "dispatchTime": "30 Mins",
+    "pincode": "411045",
+    "landmark": "Near Balewadi High Street & Shiv Chhatrapati Sports Complex",
+    "popularNeighborhoods": ["High Street", "Balewadi Stadium Road", "Laxmi Nagar", "Mhalunge"]
+  },
+  {
+    "slug": "pashan",
+    "name": "Pashan",
+    "zone": "West Pune",
+    "dispatchTime": "25 Mins",
+    "pincode": "411021",
+    "landmark": "Near Pashan Lake / Abhinav School",
+    "popularNeighborhoods": ["Sutarwadi", "Pashan Circle", "Sus Road", "Someshwarwadi"]
+  },
+  {
+    "slug": "aundh",
+    "name": "Aundh",
+    "zone": "West Pune",
+    "dispatchTime": "25 Mins",
+    "pincode": "411007",
+    "landmark": "Near Bremen Chowk / Westend Mall",
+    "popularNeighborhoods": ["Parihar Chowk", "Sindh Colony", "Chavan Nagar", "Spicer College Road"]
+  },
+  {
+    "slug": "bavdhan",
+    "name": "Bavdhan",
+    "zone": "West Pune",
+    "dispatchTime": "30 Mins",
+    "pincode": "411021",
+    "landmark": "Near Chandani Chowk / Windmill Village",
+    "popularNeighborhoods": ["Bavdhan Khurd", "Bavdhan Budruk", "NDA Road", "Pashan Lake Area"]
+  },
+  {
+    "slug": "wakad",
+    "name": "Wakad",
+    "zone": "West Pune",
+    "dispatchTime": "30 Mins",
+    "pincode": "411057",
+    "landmark": "Near Dange Chowk / Datta Mandir",
+    "popularNeighborhoods": ["Hinjawadi Link Road", "Pimple Saudagar", "Thergaon", "Bhujbal Chowk"]
+  },
+  {
+    "slug": "hinjawadi",
+    "name": "Hinjawadi IT Park",
+    "zone": "West Pune",
+    "dispatchTime": "35 Mins",
+    "pincode": "411057",
+    "landmark": "Phase 1, 2 & 3 Tech Parks (Wipro / Infosys Circle)",
+    "popularNeighborhoods": ["Phase 1 Tech Hub", "Phase 2 Quadron", "Phase 3 Megapolis", "Maan", "Marunji"]
+  },
+  {
+    "slug": "pimple-saudagar",
+    "name": "Pimple Saudagar",
+    "zone": "West Pune",
+    "dispatchTime": "35 Mins",
+    "pincode": "411027",
+    "landmark": "Near Govind Garden / Roseland Residency",
+    "popularNeighborhoods": ["Pimple Nilakh", "Rahatani", "Shitole Nagar", "Kunhal Park"]
+  },
+  {
+    "slug": "viman-nagar",
+    "name": "Viman Nagar",
+    "zone": "East Pune",
+    "dispatchTime": "30 Mins",
+    "pincode": "411014",
+    "landmark": "Near Phoenix Marketcity / Symbiosis",
+    "popularNeighborhoods": ["Kalyani Nagar", "Tingre Nagar", "Airport Road", "Sakore Nagar"]
+  },
+  {
+    "slug": "kalyani-nagar",
+    "name": "Kalyani Nagar",
+    "zone": "East Pune",
+    "dispatchTime": "30 Mins",
+    "pincode": "411006",
+    "landmark": "Near Bishop's School / Jogger's Park",
+    "popularNeighborhoods": ["Cerebrum IT Park", "East Avenue", "Shastri Nagar", "Yerawada"]
+  },
+  {
+    "slug": "kharadi",
+    "name": "Kharadi IT Hub",
+    "zone": "East Pune",
+    "dispatchTime": "35 Mins",
+    "pincode": "411014",
+    "landmark": "Near EON Free Zone / World Trade Center",
+    "popularNeighborhoods": ["EON IT Park", "Chandan Nagar", "Thite Nagar", "Yashwant Nagar"]
+  },
+  {
+    "slug": "magarpatta",
+    "name": "Magarpatta City",
+    "zone": "East Pune",
+    "dispatchTime": "35 Mins",
+    "pincode": "411028",
+    "landmark": "Near Cybercity Towers / Seasons Mall",
+    "popularNeighborhoods": ["Cybercity", "Destination Centre", "Mundhwa", "Keshav Nagar"]
+  },
+  {
+    "slug": "hadapsar",
+    "name": "Hadapsar",
+    "zone": "East Pune",
+    "dispatchTime": "35 Mins",
+    "pincode": "411028",
+    "landmark": "Near Gadital / Gliding Centre",
+    "popularNeighborhoods": ["Magarpatta City", "Amanora Park Town", "Fatima Nagar", "Sasane Nagar"]
+  },
+  {
+    "slug": "dhanori",
+    "name": "Dhanori",
+    "zone": "East Pune",
+    "dispatchTime": "35 Mins",
+    "pincode": "411015",
+    "landmark": "Near Tingre Nagar / Dhanori Jakat Naka",
+    "popularNeighborhoods": ["Tingre Nagar", "Vishrantwadi Road", "Gokul Nagar", "Lohegaon Link"]
+  },
+  {
+    "slug": "vishrantwadi",
+    "name": "Vishrantwadi",
+    "zone": "East Pune",
+    "dispatchTime": "30 Mins",
+    "pincode": "411015",
+    "landmark": "Near Vishrantwadi Chowk / Alandi Road",
+    "popularNeighborhoods": ["Shanti Nagar", "Tingre Nagar", "Kasturba Housing", "Phule Nagar"]
+  },
+  {
+    "slug": "wagholi",
+    "name": "Wagholi",
+    "zone": "East Pune",
+    "dispatchTime": "40 Mins",
+    "pincode": "412207",
+    "landmark": "Near Lexicon School / Wagheshwar Temple",
+    "popularNeighborhoods": ["Bakori Road", "Ivy Estate", "Ubale Nagar", "Kesnand Road"]
+  },
+  {
+    "slug": "shivajinagar",
+    "name": "Shivajinagar",
+    "zone": "Central Pune",
+    "dispatchTime": "20 Mins",
+    "pincode": "411005",
+    "landmark": "Near Pune Station / COEP Hostel",
+    "popularNeighborhoods": ["FC Road", "Model Colony", "JM Road", "Deccan Gymkhana"]
+  },
+  {
+    "slug": "fc-road-deccan",
+    "name": "FC Road / Deccan",
+    "zone": "Central Pune",
+    "dispatchTime": "20 Mins",
+    "pincode": "411004",
+    "landmark": "Near Fergusson College / Goodluck Cafe",
+    "popularNeighborhoods": ["Fergusson College Road", "Deccan Gymkhana", "Ghole Road", "Bhandarkar Road"]
+  },
+  {
+    "slug": "sadashiv-peth",
+    "name": "Sadashiv Peth",
+    "zone": "Central Pune",
+    "dispatchTime": "15 Mins",
+    "pincode": "411030",
+    "landmark": "Shop No. 3, Purva Plaza, Near SP College (Dispatch Hub)",
+    "popularNeighborhoods": ["Navi Peth", "Shukrawar Peth", "Swargate", "Tilak Road", "Kumthekar Road"]
+  },
+  {
+    "slug": "camp-mg-road",
+    "name": "Camp / MG Road",
+    "zone": "Central Pune",
+    "dispatchTime": "25 Mins",
+    "pincode": "411001",
+    "landmark": "Near Aurora Towers / West End / East Street",
+    "popularNeighborhoods": ["MG Road", "East Street", "Dastur Meher Road", "Cantonment"]
+  },
+  {
+    "slug": "swargate",
+    "name": "Swargate",
+    "zone": "Central Pune",
+    "dispatchTime": "20 Mins",
+    "pincode": "411042",
+    "landmark": "Near Swargate Bus Station / Jedhe Chowk",
+    "popularNeighborhoods": ["Sarasbaug", "Parvati", "Mukund Nagar", "Laxmi Road"]
+  },
+  {
+    "slug": "sb-road",
+    "name": "Senapati Bapat Road",
+    "zone": "Central Pune",
+    "dispatchTime": "20 Mins",
+    "pincode": "411016",
+    "landmark": "Near Symbiosis College / ICC Tech Towers / JW Marriott",
+    "popularNeighborhoods": ["Model Colony", "Gokhale Nagar", "Chaturshringi", "Bahiratwadi"]
+  },
+  {
+    "slug": "bibwewadi",
+    "name": "Bibwewadi",
+    "zone": "South Pune",
+    "dispatchTime": "30 Mins",
+    "pincode": "411037",
+    "landmark": "Near K K Market / Chintamani Dnyanpeeth",
+    "popularNeighborhoods": ["Salunke Vihar", "Lower Indira Nagar", "Chintamani Nagar", "Lullanagar"]
+  },
+  {
+    "slug": "katraj",
+    "name": "Katraj",
+    "zone": "South Pune",
+    "dispatchTime": "35 Mins",
+    "pincode": "411046",
+    "landmark": "Near Rajiv Gandhi Zoological Park / Bharati Vidyapeeth",
+    "popularNeighborhoods": ["Bharati Vidyapeeth Campus", "Katraj Chowk", "Ambegaon", "Mangdewadi"]
+  },
+  {
+    "slug": "kondhwa",
+    "name": "Kondhwa",
+    "zone": "South Pune",
+    "dispatchTime": "35 Mins",
+    "pincode": "411048",
+    "landmark": "Near NIBM Road / Kausar Baug",
+    "popularNeighborhoods": ["NIBM Post Office", "Salunke Vihar Road", "Kondhwa Budruk", "Lullanagar"]
+  },
+  {
+    "slug": "market-yard",
+    "name": "Market Yard",
+    "zone": "South Pune",
+    "dispatchTime": "25 Mins",
+    "pincode": "411037",
+    "landmark": "Near Gangadham Chowk / Shree Shiv Chhatrapati Market Yard",
+    "popularNeighborhoods": ["Gangadham", "Salisbury Park", "Gultekdi", "Bibwewadi Link"]
+  },
+  {
+    "slug": "dhankawadi",
+    "name": "Dhankawadi",
+    "zone": "South Pune",
+    "dispatchTime": "30 Mins",
+    "pincode": "411043",
+    "landmark": "Near Mohan Nagar / Pune-Satara Road",
+    "popularNeighborhoods": ["Mohan Nagar", "Chavan Nagar", "Padmavati", "Sambhajinagar"]
+  },
+  {
+    "slug": "undri",
+    "name": "Undri",
+    "zone": "South Pune",
+    "dispatchTime": "35 Mins",
+    "pincode": "411060",
+    "landmark": "Near Corinthians Club / Bishop's Undri",
+    "popularNeighborhoods": ["Mohammed Wadi", "Pisoli", "Kad Nagar", "Handewadi Road"]
+  },
+  {
+    "slug": "pimpri",
+    "name": "Pimpri",
+    "zone": "PCMC / North",
+    "dispatchTime": "35 Mins",
+    "pincode": "411017",
+    "landmark": "Near Dr. D.Y. Patil Hospital / Finolex Chowk",
+    "popularNeighborhoods": ["Nehrunagar", "Sant Tukaram Nagar", "Morwadi", "Masulkar Colony"]
+  },
+  {
+    "slug": "chinchwad",
+    "name": "Chinchwad",
+    "zone": "PCMC / North",
+    "dispatchTime": "35 Mins",
+    "pincode": "411033",
+    "landmark": "Near Chinchwad Station / Elpro City Square",
+    "popularNeighborhoods": ["Thergaon", "Kunal Icon Road", "Walhekarwadi", "Bijlinagar"]
+  },
+  {
+    "slug": "ravet",
+    "name": "Ravet",
+    "zone": "PCMC / North",
+    "dispatchTime": "40 Mins",
+    "pincode": "412101",
+    "landmark": "Near DY Patil College of Engineering / Punawale Bridge",
+    "popularNeighborhoods": ["Shinde Vasti", "Kiwale", "Mukai Chowk", "Punawale"]
+  },
+  {
+    "slug": "nigdi",
+    "name": "Nigdi",
+    "zone": "PCMC / North",
+    "dispatchTime": "40 Mins",
+    "pincode": "411044",
+    "landmark": "Near Bhakti Shakti Chowk / Pradhikaran",
+    "popularNeighborhoods": ["Pradhikaran", "Yamunanagar", "Rupinagar", "Sector 24"]
+  },
+  {
+    "slug": "akurdi",
+    "name": "Akurdi",
+    "zone": "PCMC / North",
+    "dispatchTime": "40 Mins",
+    "pincode": "411035",
+    "landmark": "Near Akurdi Railway Station / Khandoba Mandir",
+    "popularNeighborhoods": ["Gurav Pimple", "Ganga Nagar", "Vivekanand Nagar", "Pradhikaran Extension"]
+  },
+  {
+    "slug": "bhosari",
+    "name": "Bhosari",
+    "zone": "PCMC / North",
+    "dispatchTime": "40 Mins",
+    "pincode": "411039",
+    "landmark": "Near Landewadi Chowk / Bhosari MIDC",
+    "popularNeighborhoods": ["Landewadi", "Dighi Road", "Indrayani Nagar", "Gawli Matha"]
+  }
+]

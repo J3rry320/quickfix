@@ -16,7 +16,7 @@ export default function WhatsAppFab({ message }: WhatsAppFabProps) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with QuickFix on WhatsApp"
-        className="hidden md:flex fixed bottom-6 right-6 z-40 items-center justify-center gap-2.5 rounded-full bg-[#25D366] p-3.5 sm:py-3 sm:px-5 text-clean-white shadow-lg shadow-black/15 hover:bg-[#20bd5a] hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200 select-none"
+        className="hidden md:flex fixed bottom-6 right-6 z-40 items-center justify-center gap-2.5 rounded-full bg-whatsapp-dark p-3.5 sm:py-3 sm:px-5 text-clean-white shadow-lg shadow-black/15 hover:bg-whatsapp-hover hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200 select-none"
       >
         {/* Clean Official WhatsApp Icon */}
         <div className="flex h-6 w-6 items-center justify-center shrink-0">

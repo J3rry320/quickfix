@@ -8,6 +8,7 @@ export interface IContactSubmission extends Document {
   message: string;
   area?: string;
   status: "new" | "in_progress" | "contacted" | "resolved" | "archived";
+  internalNotes?: string;
   source: string;
   locale: "en" | "hi" | "mr";
   createdAt: Date;
@@ -50,6 +51,10 @@ const ContactSubmissionSchema = new Schema<IContactSubmission>(
       enum: ["new", "in_progress", "contacted", "resolved", "archived"],
       default: "new",
       index: true,
+    },
+    internalNotes: {
+      type: String,
+      trim: true,
     },
     source: {
       type: String,

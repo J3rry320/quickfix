@@ -48,7 +48,7 @@ export default function Hero() {
             <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
               <Link
                 href="/book-repair"
-                className="inline-flex items-center justify-center rounded-xl bg-clean-white px-7 py-3.5 text-base font-extrabold text-tech-slate shadow-xl hover:bg-zinc-100 hover:shadow-2xl active:scale-[0.98] transition-all"
+                className="inline-flex items-center justify-center rounded-xl bg-clean-white px-7 py-3.5 text-base font-extrabold text-tech-slate shadow-xl hover:bg-mist-gray hover:shadow-2xl active:scale-[0.98] transition-all"
               >
                 <span>{t("ctaPrimary")}</span>
                 <ArrowRight className="ml-2 h-5 w-5 text-flash-orange" />
@@ -56,7 +56,7 @@ export default function Hero() {
 
               <a
                 href={`tel:${contactConfig.phone.value}`}
-                className="inline-flex items-center justify-center rounded-xl bg-tech-slate px-7 py-3.5 text-base font-extrabold text-clean-white shadow-xl hover:bg-black hover:shadow-2xl active:scale-[0.98] transition-all border border-tech-slate"
+                className="inline-flex items-center justify-center rounded-xl bg-tech-slate px-7 py-3.5 text-base font-extrabold text-clean-white shadow-xl hover:bg-tech-slate-hover hover:shadow-2xl active:scale-[0.98] transition-all border border-tech-slate"
               >
                 <Phone className="mr-2 h-5 w-5 text-flash-orange" />
                 <span>{t("ctaSecondary")}</span>
@@ -70,24 +70,27 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right Column: Clean Media Placeholder */}
+          {/* Right Column: Hero Media Container with 4:3 Aspect Ratio */}
           <div className="lg:col-span-5 flex justify-center w-full">
-            <div className="relative w-full max-w-md lg:max-w-lg aspect-4/3 overflow-hidden rounded-2xl sm:rounded-3xl bg-white/10 backdrop-blur-md border-2 border-dashed border-white/30 shadow-2xl flex items-center justify-center">
+            <div className="relative w-full max-w-md lg:max-w-lg aspect-4/3 overflow-hidden rounded-2xl sm:rounded-3xl bg-clean-white/10 backdrop-blur-md border border-clean-white/20 shadow-2xl flex items-center justify-center">
               {heroImageSrc ? (
                 <Image
                   src={heroImageSrc}
                   alt="QuickFix Pune mobile repair service"
                   fill
+                  preload={true}
                   className="object-cover"
-                  priority
                 />
               ) : (
-                <div className="flex flex-col items-center justify-center p-6 text-center select-none text-white/70">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 border border-white/20 text-white/90 mb-3 shadow-inner">
-                    <ImageIcon className="h-7 w-7 text-clean-white" />
+                <div className="flex flex-col items-center justify-center p-6 text-center select-none text-clean-white">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-clean-white/15 border border-clean-white/30 text-clean-white mb-3 shadow-inner">
+                    <ImageIcon className="h-8 w-8 text-clean-white" />
                   </div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-clean-white/80">
-                    Media Placeholder
+                  <span className="text-sm font-bold text-clean-white tracking-wide">
+                    Doorstep Repair in Pune
+                  </span>
+                  <span className="text-xs text-clean-white/80 mt-1 max-w-xs">
+                    Live 30-min repair right at your doorstep
                   </span>
                 </div>
               )}

@@ -4,7 +4,7 @@
     "metaDescription": "Schedule an on-spot phone repair at your home or office in Pune. Certified technician arrives with genuine parts, 90-day warranty, and zero upfront payment.",
     "badge": "Express Doorstep Booking",
     "title": "Book Your Doorstep Mobile Repair",
-    "subtitle": "Certified technician arrives at your home or office in Pune with genuine parts and sterile precision tools.",
+    "subtitle": "Certified technician arrives at your home or office in Pune with genuine replacement parts and professional tools.",
     "steps": {
       "step1": "Device",
       "step2": "Slot",
@@ -45,7 +45,7 @@
     },
     "step3": {
       "title": "Where in Pune should we dispatch?",
-      "description": "We provide doorstep service across all neighborhoods and IT corridors in Pune.",
+      "description": "We provide doorstep service across Hinjawadi, Magarpatta, Kothrud, Baner, and all neighborhoods in Pune.",
       "areaLabel": "Pune Locality / Area",
       "areaSelect": "Select your locality...",
       "addressLabel": "Flat / House / Building & Street Address",

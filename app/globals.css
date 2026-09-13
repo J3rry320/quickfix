@@ -3,10 +3,32 @@
 @theme {
   /* Color Palette - Direct Names */
   --color-flash-orange: #FF5722;
+  --color-flash-orange-hover: #E64A19;
   --color-tech-slate: #181B20;
+  --color-tech-slate-hover: #0F1114;
   --color-electric-amber: #FFA000;
   --color-mist-gray: #F4F5F7;
   --color-clean-white: #FFFFFF;
+  --color-success-green: #00C853;
+  --color-elevated-surface: #FAFAFA;
+  --color-caption: #71717A;
+  --color-border-subtle: #E4E4E7;
+
+  /* Error & Status */
+  --color-error: #DC2626;
+  --color-error-light: #FEF2F2;
+  --color-error-border: #FECACA;
+
+  /* WhatsApp Brand */
+  --color-whatsapp: #25D366;
+  --color-whatsapp-hover: #20BD5A;
+  --color-whatsapp-dark: #075E54;
+
+  /* Neutral Scale */
+  --color-text-muted: #71717A;
+  --color-text-secondary: #52525B;
+  --color-border-default: #E4E4E7;
+  --color-surface-hover: #F4F4F5;
 
   /* Color Palette - Semantic Roles */
   --color-primary-accent: #FF5722;
@@ -16,9 +38,9 @@
   --color-base-surface: #FFFFFF;
 
   /* Fonts */
-  --font-heading: var(--font-plus-jakarta-sans), sans-serif;
-  --font-body: var(--font-inter), sans-serif;
-  --font-sans: var(--font-inter), sans-serif;
+  --font-heading: var(--font-space-grotesk), system-ui, -apple-system, sans-serif;
+  --font-body: var(--font-plus-jakarta-sans), system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-plus-jakarta-sans), system-ui, -apple-system, sans-serif;
 }
 
 @layer base {

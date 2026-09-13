@@ -124,34 +124,34 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm text-zinc-400 font-medium">
               <li>
-                <a href="#services" className="hover:text-flash-orange transition-colors">
+                <Link href="/services/screen-replacement" className="hover:text-flash-orange transition-colors">
                   {t("screenRepair")}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#services" className="hover:text-flash-orange transition-colors">
+                <Link href="/services/battery-replacement" className="hover:text-flash-orange transition-colors">
                   {t("batteryReplacement")}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#services" className="hover:text-flash-orange transition-colors">
+                <Link href="/services/charging-port" className="hover:text-flash-orange transition-colors">
                   {t("chargingPort")}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#services" className="hover:text-flash-orange transition-colors">
+                <Link href="/services/front-rear-camera" className="hover:text-flash-orange transition-colors">
                   {t("cameraRepair")}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#services" className="hover:text-flash-orange transition-colors">
+                <Link href="/services/motherboard-chip-level" className="hover:text-flash-orange transition-colors">
                   {t("motherboardRepair")}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#services" className="hover:text-flash-orange transition-colors">
+                <Link href="/services/water-damage-rescue" className="hover:text-flash-orange transition-colors">
                   {t("waterDamage")}
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -168,14 +168,9 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="#estimate" className="hover:text-flash-orange transition-colors">
-                  Price Estimator
-                </a>
-              </li>
-              <li>
-                <a href="#how-it-works" className="hover:text-flash-orange transition-colors">
+                <Link href="/#how-it-works" className="hover:text-flash-orange transition-colors">
                   How It Works
-                </a>
+                </Link>
               </li>
               <li>
                 <Link href="/book-repair" className="hover:text-flash-orange transition-colors">
@@ -183,14 +178,14 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="#faq" className="hover:text-flash-orange transition-colors">
+                <Link href="/#faq" className="hover:text-flash-orange transition-colors">
                   FAQ
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#contact" className="hover:text-flash-orange transition-colors">
+                <Link href="/contact" className="hover:text-flash-orange transition-colors">
                   Contact Us
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -251,12 +246,12 @@ export default function Footer() {
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-400">
           <p>{t("copyright")}</p>
           <div className="flex items-center gap-6">
-            <span className="hover:text-clean-white transition-colors cursor-pointer">
+            <Link href="/privacy" className="hover:text-clean-white transition-colors">
               {t("privacyPolicy")}
-            </span>
-            <span className="hover:text-clean-white transition-colors cursor-pointer">
+            </Link>
+            <Link href="/terms" className="hover:text-clean-white transition-colors">
               {t("termsOfService")}
-            </span>
+            </Link>
           </div>
         </div>
       </div>

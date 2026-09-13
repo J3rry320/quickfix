@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import AdminShell from "@/components/admin/AdminShell";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { adminFetch } from "@/lib/admin/api";
+import AdminStatusBadge from "@/components/admin/ui/AdminStatusBadge";
 
 interface StatsData {
   repairs: {
@@ -75,21 +77,19 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     // 1. Fetch authenticated user info
-    fetch("/api/auth/me")
-      .then((res) => (res.ok ? res.json() : null))
+    adminFetch<{ user: AdminUser }>("/api/auth/me")
       .then((data) => {
-        if (data?.success && data?.data?.user) {
-          setUser(data.data.user);
+        if (data?.user) {
+          setUser(data.user);
         }
       })
       .catch(() => {});
 
     // 2. Fetch live stats from protected API
-    fetch("/api/admin/stats")
-      .then((res) => (res.ok ? res.json() : null))
+    adminFetch<{ stats: StatsData }>("/api/admin/stats")
       .then((data) => {
-        if (data?.success && data?.data?.stats) {
-          setStats(data.data.stats);
+        if (data?.stats) {
+          setStats(data.stats);
         }
       })
       .catch((err) => {
@@ -106,24 +106,6 @@ export default function AdminDashboardPage() {
     month: "short",
     day: "numeric",
   });
-
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "pending":
-        return "bg-amber-100 text-amber-800 border-amber-200";
-      case "confirmed":
-      case "in_progress":
-      case "technician_assigned":
-        return "bg-blue-100 text-blue-800 border-blue-200";
-      case "completed":
-      case "resolved":
-        return "bg-emerald-100 text-emerald-800 border-emerald-200";
-      case "cancelled":
-        return "bg-zinc-100 text-zinc-600 border-zinc-200";
-      default:
-        return "bg-zinc-100 text-zinc-700 border-zinc-200";
-    }
-  };
 
   return (
     <AdminShell
@@ -382,13 +364,7 @@ export default function AdminDashboardPage() {
                     </div>
 
                     <div className="flex items-center gap-2 shrink-0">
-                      <span
-                        className={`inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider border ${getStatusBadge(
-                          req.status
-                        )}`}
-                      >
-                        {req.status.replace("_", " ")}
-                      </span>
+                      <AdminStatusBadge status={req.status} />
                     </div>
                   </div>
                 ))}
@@ -452,13 +428,7 @@ export default function AdminDashboardPage() {
                     </div>
 
                     <div className="shrink-0">
-                      <span
-                        className={`inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider border ${getStatusBadge(
-                          c.status
-                        )}`}
-                      >
-                        {c.status.replace("_", " ")}
-                      </span>
+                      <AdminStatusBadge status={c.status} />
                     </div>
                   </div>
                 ))}

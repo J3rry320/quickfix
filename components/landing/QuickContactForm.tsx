@@ -2,9 +2,20 @@
 
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Send, CheckCircle2, AlertCircle, Phone } from "lucide-react";
+import {
+  Send,
+  CheckCircle2,
+  AlertCircle,
+  Phone,
+  MessageSquare,
+  Loader2,
+  Clock,
+  ShieldCheck,
+  Zap,
+} from "lucide-react";
 import SectionHeader from "@/components/landing/SectionHeader";
 import contactConfig from "@/config/contact";
+import GoogleMapEmbed from "@/components/contact/GoogleMapEmbed";
 
 export default function QuickContactForm() {
   const t = useTranslations("ContactSection");
@@ -24,6 +35,13 @@ export default function QuickContactForm() {
     setIsSubmitting(true);
     setErrorMessage("");
 
+    const cleanPhone = phone.replace(/\D/g, "");
+    if (!/^[6-9]\d{9}$/.test(cleanPhone)) {
+      setErrorMessage("Please enter a valid 10-digit mobile number (e.g. 8308686454)");
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const res = await fetch("/api/contacts", {
         method: "POST",
@@ -33,7 +51,7 @@ export default function QuickContactForm() {
         },
         body: JSON.stringify({
           name: name.trim(),
-          phone: phone.trim(),
+          phone: cleanPhone,
           area: area.trim() || undefined,
           message: message.trim() || "5-Minute Callback Request from Landing Page",
           source: "landing_callback_card",
@@ -52,101 +70,167 @@ export default function QuickContactForm() {
       setArea("");
       setMessage("");
     } catch (err) {
-      setErrorMessage(err instanceof Error ? err.message : "An error occurred.");
+      setErrorMessage(err instanceof Error ? err.message : "An error occurred. Please call or WhatsApp us.");
     } finally {
       setIsSubmitting(false);
     }
   }
 
   return (
-    <section id="contact" className="py-10 sm:py-16 lg:py-20 bg-clean-white border-b border-zinc-200">
+    <section id="contact" className="py-12 sm:py-16 lg:py-24 bg-mist-gray/30 border-b border-zinc-200/80">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Left Info Column */}
-          <div className="lg:col-span-6">
-            <SectionHeader
-              title={t("title")}
-              subtitle={t("subtitle")}
-              align="left"
-              className="mb-0"
-            />
-
-            <div className="mt-6 sm:mt-8 p-5 sm:p-6 rounded-2xl bg-tech-slate text-clean-white shadow-xl max-w-md">
-              <p className="text-xs font-bold uppercase tracking-wider text-electric-amber">
-                {t("directCall")}
-              </p>
-              <div className="mt-2.5 flex items-center gap-3">
-                <div className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-flash-orange text-clean-white shadow-md shrink-0">
-                  <Phone className="h-5 w-5 sm:h-6 sm:w-6" />
-                </div>
-                <div>
-                  <a
-                    href={`tel:${contactConfig.phone.value}`}
-                    className="font-heading text-xl sm:text-2xl font-black text-clean-white hover:text-flash-orange transition-colors"
-                  >
-                    {contactConfig.phone.display}
-                  </a>
-                  <p className="text-[11px] sm:text-xs text-zinc-400 font-medium">
-                    {contactConfig.hours.display}
-                  </p>
-                </div>
-              </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          {/* Left Column: Header, Quick Direct Contact & Interactive Google Map */}
+          <div className="lg:col-span-6 space-y-6">
+            <div>
+              <SectionHeader
+                badge={t("badge")}
+                title={t("title")}
+                subtitle={t("subtitle")}
+                align="left"
+                className="mb-0"
+              />
             </div>
 
-            {/* WhatsApp Quick Chat & Hub Info */}
-            <div className="mt-3.5 flex flex-col sm:flex-row gap-2.5 max-w-md">
+            {/* Quick Action Contact Channels */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {/* Helpline Call Card */}
               <a
-                href={contactConfig.whatsapp.getDefaultUrl()}
+                href={`tel:${contactConfig.phone.value}`}
+                className="group flex items-center gap-3.5 p-4 rounded-2xl border border-zinc-200/80 bg-clean-white hover:border-flash-orange/40 hover:shadow-xs transition-all"
+              >
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-flash-orange/10 text-flash-orange group-hover:bg-flash-orange group-hover:text-clean-white transition-colors shrink-0">
+                  <Phone className="h-5 w-5" />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
+                    {t("directCall")}
+                  </div>
+                  <div className="text-sm font-black text-tech-slate truncate font-mono">
+                    {contactConfig.phone.display}
+                  </div>
+                  <div className="text-2xs text-zinc-400 mt-0.5">
+                    {contactConfig.hours.time}
+                  </div>
+                </div>
+              </a>
+
+              {/* WhatsApp Support Card */}
+              <a
+                href={contactConfig.whatsapp.getDefaultUrl("Hello QuickFix, I need advice regarding a mobile repair in Pune.")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold text-clean-white hover:bg-emerald-700 shadow-sm transition-all"
+                className="group flex items-center gap-3.5 p-4 rounded-2xl border border-border-default bg-clean-white hover:border-whatsapp/40 hover:shadow-xs transition-all"
               >
-                <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.423-14.416c-6.627 0-12 5.373-12 12 0 2.159.57 4.19 1.564 5.946l-1.664 6.082 6.221-1.632c1.707.935 3.666 1.465 5.751 1.465 6.627 0 12-5.373 12-12s-5.373-12-12-12z" />
-                </svg>
-                <span>WhatsApp Support</span>
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-mist-gray text-whatsapp group-hover:bg-whatsapp group-hover:text-clean-white transition-colors shrink-0 border border-border-default">
+                  <MessageSquare className="h-5 w-5" />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-[11px] font-bold text-text-muted uppercase tracking-wider">
+                    WhatsApp Chat
+                  </div>
+                  <div className="text-sm font-black text-tech-slate truncate">
+                    Instant Quote
+                  </div>
+                  <div className="text-2xs text-whatsapp font-semibold mt-0.5 flex items-center gap-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-whatsapp animate-pulse" />
+                    Online Now
+                  </div>
+                </div>
               </a>
-              <div className="flex-1 rounded-xl bg-clean-white border border-zinc-200 px-3 py-2 text-2xs font-semibold text-zinc-600 flex items-center justify-center text-center">
-                📍 {contactConfig.address.locality}, {contactConfig.address.city}
+            </div>
+
+            {/* Google Maps Hub Embed Card */}
+            <div className="rounded-2xl border border-border-default bg-clean-white p-4 shadow-xs">
+              <div className="flex items-center justify-between mb-3 text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="inline-flex h-2 w-2 rounded-full bg-flash-orange" />
+                  <span className="font-extrabold text-tech-slate">
+                    Sadashiv Peth Central Hub
+                  </span>
+                </div>
+                <span className="text-2xs text-text-muted font-medium">
+                  Doorstep Dispatch: 30-45 Mins
+                </span>
+              </div>
+
+              <GoogleMapEmbed
+                heightClass="h-44 sm:h-52"
+                showCardHeader={false}
+                title="QuickFix Sadashiv Peth Hub Google Map"
+              />
+
+              <div className="mt-3 flex items-center justify-between pt-3 border-t border-border-default/60 text-xs">
+                <span className="text-2xs text-text-muted font-medium truncate pr-2">
+                  📍 {contactConfig.address.short} ({contactConfig.address.landmark})
+                </span>
+                <a
+                  href={contactConfig.mapUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-2xs font-bold text-flash-orange hover:text-flash-orange-hover hover:underline shrink-0"
+                >
+                  <span>Open in Maps</span>
+                  <span aria-hidden="true">↗</span>
+                </a>
               </div>
             </div>
           </div>
 
-          {/* Right Form Card */}
+          {/* Right Column: Clean, High-Conversion Callback Form */}
           <div className="lg:col-span-6">
-            <div className="rounded-3xl bg-mist-gray/90 border border-zinc-200/90 p-5 sm:p-8 shadow-lg">
+            <div className="rounded-3xl border border-zinc-200/90 bg-clean-white p-6 sm:p-8 lg:p-9 shadow-sm">
               {isSuccess ? (
-                <div className="text-center py-6 sm:py-8">
-                  <div className="mx-auto flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-flash-orange/10 text-flash-orange mb-4">
-                    <CheckCircle2 className="h-7 w-7 sm:h-8 sm:w-8" />
+                <div className="text-center py-8 sm:py-10">
+                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 mb-4 ring-8 ring-emerald-50/50">
+                    <CheckCircle2 className="h-8 w-8" />
                   </div>
-                  <h3 className="font-heading text-lg sm:text-xl font-bold text-tech-slate">
+                  <h3 className="font-heading text-xl sm:text-2xl font-black text-tech-slate">
                     Request Received!
                   </h3>
-                  <p className="mt-2 text-xs sm:text-sm text-zinc-600 font-body max-w-sm mx-auto">
+                  <p className="mt-2 text-xs sm:text-sm text-zinc-600 font-body max-w-sm mx-auto leading-relaxed">
                     {t("successMsg")}
                   </p>
+                  <div className="mt-6 p-4 rounded-2xl bg-mist-gray/60 border border-zinc-200/80 max-w-sm mx-auto flex items-center justify-between text-xs">
+                    <span className="text-zinc-600 font-medium">Need urgent help?</span>
+                    <a
+                      href={`tel:${contactConfig.phone.value}`}
+                      className="font-bold text-flash-orange hover:underline inline-flex items-center gap-1"
+                    >
+                      <Phone className="h-3 w-3" />
+                      <span>Call Now</span>
+                    </a>
+                  </div>
                   <button
                     type="button"
                     onClick={() => setIsSuccess(false)}
-                    className="mt-6 rounded-xl bg-tech-slate px-6 py-2.5 text-xs font-bold text-clean-white hover:bg-black transition-all cursor-pointer"
+                    className="mt-6 inline-flex items-center justify-center rounded-xl bg-tech-slate px-6 py-2.5 text-xs font-bold text-clean-white hover:bg-black transition-all cursor-pointer"
                   >
                     Send Another Request
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-3.5 sm:space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="mb-2">
+                    <h3 className="font-heading text-lg sm:text-xl font-black text-tech-slate">
+                      Request a 5-Minute Callback
+                    </h3>
+                    <p className="text-xs text-zinc-500 font-body mt-0.5">
+                      Share your issue and our certified technician will call you back shortly.
+                    </p>
+                  </div>
+
                   {errorMessage && (
-                    <div className="rounded-xl bg-red-50 border border-red-200 p-3.5 flex items-center gap-2 text-xs text-red-700 font-medium">
-                      <AlertCircle className="h-4 w-4 shrink-0 text-red-600" />
+                    <div className="rounded-xl bg-error-light border border-error-border p-3.5 flex items-center gap-2.5 text-xs text-error font-medium animate-in fade-in">
+                      <AlertCircle className="h-4 w-4 shrink-0 text-error" />
                       <span>{errorMessage}</span>
                     </div>
                   )}
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
-                      <label className="block text-xs font-bold text-tech-slate mb-1">
-                        {t("nameLabel")} *
+                      <label className="block text-xs font-bold text-tech-slate mb-1.5">
+                        {t("nameLabel")} <span className="text-flash-orange">*</span>
                       </label>
                       <input
                         type="text"
@@ -154,12 +238,12 @@ export default function QuickContactForm() {
                         placeholder={t("namePlaceholder")}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="w-full rounded-xl border border-zinc-300 bg-clean-white px-3.5 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20"
+                        className="w-full rounded-xl border border-border-default bg-surface-hover/50 px-3.5 py-2.5 text-sm font-medium text-tech-slate placeholder:text-text-muted focus:bg-clean-white focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/15 transition-all"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-tech-slate mb-1">
-                        {t("phoneLabel")} *
+                      <label className="block text-xs font-bold text-tech-slate mb-1.5">
+                        {t("phoneLabel")} <span className="text-flash-orange">*</span>
                       </label>
                       <input
                         type="tel"
@@ -170,14 +254,14 @@ export default function QuickContactForm() {
                           phone: contactConfig.phone.tenDigit,
                         })}
                         value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        className="w-full rounded-xl border border-zinc-300 bg-clean-white px-3.5 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20"
+                        onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
+                        className="w-full rounded-xl border border-border-default bg-surface-hover/50 px-3.5 py-2.5 text-sm font-medium text-tech-slate placeholder:text-text-muted focus:bg-clean-white focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/15 transition-all"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-tech-slate mb-1">
+                    <label className="block text-xs font-bold text-tech-slate mb-1.5">
                       {t("areaLabel")}
                     </label>
                     <input
@@ -187,12 +271,12 @@ export default function QuickContactForm() {
                       })}
                       value={area}
                       onChange={(e) => setArea(e.target.value)}
-                      className="w-full rounded-xl border border-zinc-300 bg-clean-white px-3.5 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20"
+                      className="w-full rounded-xl border border-border-default bg-surface-hover/50 px-3.5 py-2.5 text-sm font-medium text-tech-slate placeholder:text-text-muted focus:bg-clean-white focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/15 transition-all"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-tech-slate mb-1">
+                    <label className="block text-xs font-bold text-tech-slate mb-1.5">
                       {t("messageLabel")}
                     </label>
                     <textarea
@@ -200,18 +284,45 @@ export default function QuickContactForm() {
                       placeholder={t("messagePlaceholder")}
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
-                      className="w-full rounded-xl border border-zinc-300 bg-clean-white px-3.5 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20 resize-none"
+                      className="w-full rounded-xl border border-border-default bg-surface-hover/50 px-3.5 py-2.5 text-sm font-medium text-tech-slate placeholder:text-text-muted focus:bg-clean-white focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/15 resize-none transition-all"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full inline-flex items-center justify-center rounded-xl bg-flash-orange px-6 py-3.5 text-sm font-extrabold text-clean-white shadow-md hover:bg-orange-600 active:scale-[0.98] transition-all disabled:opacity-60 cursor-pointer"
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-6 py-3.5 text-sm font-black text-clean-white shadow-md shadow-flash-orange/20 hover:bg-flash-orange-hover active:scale-[0.99] transition-all disabled:opacity-60 cursor-pointer"
                   >
-                    <span>{isSubmitting ? t("submitting") : t("submitBtn")}</span>
-                    <Send className="ml-2 h-4 w-4" />
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <span>{t("submitting")}</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>{t("submitBtn")}</span>
+                        <Send className="h-4 w-4" />
+                      </>
+                    )}
                   </button>
+
+                  {/* Trust Signals Footer */}
+                  <div className="pt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-2xs text-text-muted font-medium">
+                    <span className="flex items-center gap-1">
+                      <Zap className="h-3 w-3 text-electric-amber" />
+                      <span>15-Min Response</span>
+                    </span>
+                    <span className="text-border-default">•</span>
+                    <span className="flex items-center gap-1">
+                      <ShieldCheck className="h-3 w-3 text-success-green" />
+                      <span>Zero Obligation Quote</span>
+                    </span>
+                    <span className="text-border-default">•</span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="h-3 w-3 text-flash-orange" />
+                      <span>Pune 9 AM - 9 PM</span>
+                    </span>
+                  </div>
                 </form>
               )}
             </div>

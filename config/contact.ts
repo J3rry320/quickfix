@@ -239,6 +239,7 @@ export const contactConfig = {
   },
 
   mapUrl: "https://maps.google.com/?q=Purva+Plaza+Sadashiv+Peth+Pune+411030",
+  mapEmbedUrl: "https://maps.google.com/maps?q=Purva+Plaza+Sadashiv+Peth+Pune+411030&t=&z=15&ie=UTF8&iwloc=&output=embed",
 } as const;
 
 export default contactConfig;
