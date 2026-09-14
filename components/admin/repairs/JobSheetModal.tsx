@@ -290,8 +290,7 @@ function JobSheetModalContent({
   const handleDownloadPdf = async () => {
     setIsDownloadingPdf(true);
     try {
-      const elementId = `jobsheet-preview-${jobSheetData.jobSheetNumber}`;
-      await downloadJobSheetPdf(elementId, jobSheetData.jobSheetNumber);
+      await downloadJobSheetPdf(jobSheetData);
     } catch (err) {
       console.error("PDF download failed:", err);
       alert(
@@ -366,117 +365,133 @@ function JobSheetModalContent({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 overflow-y-auto bg-black/60 backdrop-blur-xs">
-      <div className="relative w-full max-w-5xl rounded-2xl bg-white shadow-2xl border border-zinc-200 overflow-hidden my-auto max-h-[94vh] flex flex-col">
-        {/* Modal Top Bar */}
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-200 bg-zinc-50/80 shrink-0">
-          <div className="flex items-center gap-2.5">
-            <div className="h-8 w-8 rounded-lg bg-orange-100 border border-orange-200 flex items-center justify-center text-orange-600">
-              <FileText className="h-4 w-4" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-5 overflow-y-auto bg-black/60 backdrop-blur-xs">
+      <div className="relative w-full max-w-5xl rounded-xl sm:rounded-2xl bg-white shadow-2xl border border-zinc-200 overflow-hidden my-auto max-h-[96vh] sm:max-h-[94vh] flex flex-col">
+        {/* Modal Top Bar (Responsive 2-tier layout) */}
+        <div className="flex flex-col border-b border-zinc-200 bg-zinc-50/90 shrink-0">
+          {/* Top Row: Title, Job Sheet No, Close */}
+          <div className="flex items-center justify-between px-3.5 sm:px-5 py-2.5 sm:py-3 border-b border-zinc-200/70 sm:border-b-0">
+            <div className="flex items-center gap-2.5 min-w-0 flex-1 mr-2">
+              <div className="h-8 w-8 shrink-0 rounded-lg bg-orange-100 border border-orange-200 flex items-center justify-center text-orange-600">
+                <FileText className="h-4 w-4" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <h2 className="font-heading font-extrabold text-xs sm:text-base text-zinc-900 leading-tight truncate">
+                  Job Sheet • {jobSheetNo}
+                </h2>
+                <p className="text-[10px] sm:text-[11px] text-zinc-500 truncate">
+                  {brand} {model} • Pune Service
+                </p>
+              </div>
             </div>
-            <div>
-              <h2 className="font-heading font-extrabold text-sm sm:text-base text-zinc-900 leading-tight">
-                Mobile Repair Job Sheet • {jobSheetNo}
-              </h2>
-              <p className="text-[11px] text-zinc-500">
-                Standard Pune Service Card for {brand} {model}
-              </p>
+
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+              {/* Standalone link if booking exists */}
+              {repair?._id && (
+                <a
+                  href={`/admin/repairs/${repair._id}/jobsheet`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hidden md:inline-flex items-center gap-1 rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 cursor-pointer"
+                  title="Open in new window"
+                >
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              )}
+
+              <button
+                type="button"
+                onClick={onClose}
+                className="rounded-lg p-1.5 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 cursor-pointer"
+                aria-label="Close modal"
+              >
+                <X className="h-5 w-5" />
+              </button>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          {/* Sub Row: Tab switchers & Action buttons */}
+          <div className="flex flex-col xs:flex-row items-stretch xs:items-center justify-between gap-2 px-3.5 sm:px-5 py-2 bg-white sm:bg-transparent">
             {/* Tab switchers */}
-            <div className="flex items-center rounded-lg border border-zinc-200 bg-white p-0.5 text-xs font-bold">
+            <div className="flex items-center rounded-lg border border-zinc-200 bg-zinc-100/90 p-0.5 text-xs font-bold w-full xs:w-auto">
               <button
                 type="button"
                 onClick={() => setActiveTab("preview")}
-                className={`flex items-center gap-1.5 px-3 py-1 rounded-md transition-all cursor-pointer ${
+                className={`flex-1 xs:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md transition-all cursor-pointer ${
                   activeTab === "preview"
                     ? "bg-zinc-900 text-white shadow-xs"
                     : "text-zinc-600 hover:text-zinc-950"
                 }`}
               >
                 <Eye className="h-3.5 w-3.5" />
-                <span>A4 Preview</span>
+                <span>Preview</span>
               </button>
               <button
                 type="button"
                 onClick={() => setActiveTab("customize")}
-                className={`flex items-center gap-1.5 px-3 py-1 rounded-md transition-all cursor-pointer ${
+                className={`flex-1 xs:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md transition-all cursor-pointer ${
                   activeTab === "customize"
                     ? "bg-zinc-900 text-white shadow-xs"
                     : "text-zinc-600 hover:text-zinc-950"
                 }`}
               >
                 <Edit3 className="h-3.5 w-3.5" />
-                <span>Customize & Edit</span>
+                <span>Edit Data</span>
               </button>
             </div>
 
-            {/* Download PDF Button */}
-            <button
-              type="button"
-              onClick={handleDownloadPdf}
-              disabled={isDownloadingPdf}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-orange-600 px-3.5 py-1.5 text-xs font-bold text-white hover:bg-orange-700 transition-all shadow-xs cursor-pointer disabled:opacity-50"
-            >
-              {isDownloadingPdf ? (
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
-              ) : (
-                <Download className="h-3.5 w-3.5" />
-              )}
-              <span>{isDownloadingPdf ? "Downloading..." : "Download PDF"}</span>
-            </button>
-
-            {/* Print Button */}
-            <button
-              type="button"
-              onClick={handlePrint}
-              className="hidden sm:inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 transition-all shadow-xs cursor-pointer"
-            >
-              <Printer className="h-3.5 w-3.5" />
-              <span>Print</span>
-            </button>
-
-            {/* Standalone link if booking exists */}
-            {repair?._id && (
-              <a
-                href={`/admin/repairs/${repair._id}/jobsheet`}
-                target="_blank"
-                rel="noreferrer"
-                className="hidden sm:inline-flex items-center gap-1 rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 cursor-pointer"
-                title="Open in new window"
+            {/* Action Buttons */}
+            <div className="flex items-center gap-1.5 w-full xs:w-auto justify-end">
+              <button
+                type="button"
+                onClick={handleDownloadPdf}
+                disabled={isDownloadingPdf}
+                className="flex-1 xs:flex-initial inline-flex items-center justify-center gap-1.5 rounded-lg bg-orange-600 px-3.5 py-1.5 text-xs font-bold text-white hover:bg-orange-700 transition-all shadow-xs cursor-pointer disabled:opacity-50"
               >
-                <ExternalLink className="h-3.5 w-3.5" />
-              </a>
-            )}
+                {isDownloadingPdf ? (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <Download className="h-3.5 w-3.5" />
+                )}
+                <span>{isDownloadingPdf ? "Downloading..." : "Download PDF"}</span>
+              </button>
 
-            <button
-              type="button"
-              onClick={onClose}
-              className="rounded-lg p-1.5 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 cursor-pointer"
-            >
-              <X className="h-4 w-4" />
-            </button>
+              <button
+                type="button"
+                onClick={handlePrint}
+                className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 transition-all shadow-xs cursor-pointer"
+              >
+                <Printer className="h-3.5 w-3.5" />
+                <span className="hidden xs:inline">Print</span>
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Modal Body */}
-        <div className="overflow-y-auto p-4 sm:p-6 grow bg-zinc-100/60">
-          {/* Live A4 Preview Container - Always mounted in DOM for reliable PDF generation */}
+        <div className="overflow-y-auto p-2.5 sm:p-6 grow bg-zinc-100/60 min-h-0">
+          {/* Live A4 Preview Container */}
           <div
             aria-hidden={activeTab !== "preview"}
             className={
               activeTab === "preview"
-                ? "flex flex-col items-center"
+                ? "flex flex-col items-center w-full min-w-0"
                 : "fixed -left-[99999px] top-0 pointer-events-none opacity-0"
             }
           >
-            <div className="w-[210mm] max-w-[210mm] bg-white shadow-lg rounded-md overflow-hidden">
-              <RepairJobSheet
-                data={jobSheetData}
-                id={`jobsheet-preview-${jobSheetData.jobSheetNumber}`}
-              />
+            {/* Mobile Swipe Hint */}
+            <div className="w-full max-w-[210mm] flex items-center justify-between pb-2 px-1 text-[11px] text-zinc-500 sm:hidden">
+              <span>Swipe horizontally to inspect A4 document</span>
+              <span className="font-semibold text-orange-600">A4 Preview</span>
+            </div>
+
+            <div className="w-full max-w-full overflow-x-auto p-1 pb-4 flex justify-center [scrollbar-width:thin] touch-pan-x">
+              <div className="w-full max-w-[210mm] min-w-[320px] sm:min-w-[650px] md:min-w-[210mm] bg-white shadow-lg rounded-lg overflow-hidden border border-zinc-200 shrink-0">
+                <RepairJobSheet
+                  data={jobSheetData}
+                  id={`jobsheet-preview-${jobSheetData.jobSheetNumber}`}
+                />
+              </div>
             </div>
           </div>
 
@@ -930,59 +945,78 @@ function JobSheetModalContent({
                   </button>
                 </div>
 
-                <div className="space-y-2 mb-4">
+                <div className="space-y-2.5 mb-4">
                   {items.map((item, idx) => (
                     <div
                       key={idx}
-                      className="grid grid-cols-12 gap-2 items-center bg-zinc-50 p-2 rounded-lg border border-zinc-200"
+                      className="flex flex-col sm:grid sm:grid-cols-12 gap-2 sm:items-center bg-zinc-50 p-2.5 sm:p-2 rounded-xl border border-zinc-200"
                     >
-                      <div className="col-span-6 space-y-0.5">
+                      <div className="w-full sm:col-span-5 md:col-span-6">
+                        <label className="text-[10px] font-bold text-zinc-500 sm:hidden block mb-0.5">
+                          Item Description
+                        </label>
                         <input
                           type="text"
                           value={item.description}
                           onChange={(e) => handleItemChange(idx, "description", e.target.value)}
                           placeholder="Service or part description"
-                          className="w-full rounded border border-zinc-200 bg-white px-2 py-1 text-xs"
+                          className="w-full rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 sm:py-1 text-xs"
                         />
                       </div>
-                      <div className="col-span-2">
-                        <select
-                          value={item.type}
-                          onChange={(e) => handleItemChange(idx, "type", e.target.value)}
-                          className="w-full rounded border border-zinc-200 bg-white p-1 text-xs capitalize"
-                        >
-                          <option value="service">Service</option>
-                          <option value="part">Part</option>
-                          <option value="inspection">Inspection</option>
-                        </select>
-                      </div>
-                      <div className="col-span-1">
-                        <input
-                          type="number"
-                          min="1"
-                          value={item.quantity}
-                          onChange={(e) => handleItemChange(idx, "quantity", Number(e.target.value))}
-                          className="w-full rounded border border-zinc-200 bg-white p-1 text-xs text-center"
-                        />
-                      </div>
-                      <div className="col-span-2">
-                        <input
-                          type="number"
-                          min="0"
-                          value={item.unitPrice}
-                          onChange={(e) => handleItemChange(idx, "unitPrice", Number(e.target.value))}
-                          placeholder="Price (₹)"
-                          className="w-full rounded border border-zinc-200 bg-white p-1 text-xs font-mono text-right"
-                        />
-                      </div>
-                      <div className="col-span-1 text-right">
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveItem(idx)}
-                          className="text-zinc-400 hover:text-red-600 p-1 cursor-pointer"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </button>
+                      <div className="grid grid-cols-12 gap-2 items-center sm:contents">
+                        <div className="col-span-5 sm:col-span-2">
+                          <label className="text-[10px] font-bold text-zinc-500 sm:hidden block mb-0.5">
+                            Type
+                          </label>
+                          <select
+                            value={item.type}
+                            onChange={(e) => handleItemChange(idx, "type", e.target.value)}
+                            className="w-full rounded-lg border border-zinc-200 bg-white p-1.5 sm:p-1 text-xs capitalize"
+                          >
+                            <option value="service">Service</option>
+                            <option value="part">Part</option>
+                            <option value="inspection">Inspection</option>
+                          </select>
+                        </div>
+                        <div className="col-span-3 sm:col-span-1">
+                          <label className="text-[10px] font-bold text-zinc-500 sm:hidden block mb-0.5">
+                            Qty
+                          </label>
+                          <input
+                            type="number"
+                            min="1"
+                            value={item.quantity}
+                            onChange={(e) => handleItemChange(idx, "quantity", Number(e.target.value))}
+                            className="w-full rounded-lg border border-zinc-200 bg-white p-1.5 sm:p-1 text-xs text-center"
+                          />
+                        </div>
+                        <div className="col-span-4 sm:col-span-2 md:col-span-2">
+                          <label className="text-[10px] font-bold text-zinc-500 sm:hidden block mb-0.5">
+                            Unit Price (₹)
+                          </label>
+                          <input
+                            type="number"
+                            min="0"
+                            value={item.unitPrice}
+                            onChange={(e) => handleItemChange(idx, "unitPrice", Number(e.target.value))}
+                            placeholder="Price (₹)"
+                            className="w-full rounded-lg border border-zinc-200 bg-white p-1.5 sm:p-1 text-xs font-mono text-right"
+                          />
+                        </div>
+                        <div className="col-span-12 sm:col-span-1 flex items-center justify-between sm:justify-end pt-1 sm:pt-0 border-t sm:border-t-0 border-zinc-200/60">
+                          <span className="sm:hidden text-xs font-bold text-zinc-700">
+                            Line Total: ₹{(Number(item.quantity || 1) * Number(item.unitPrice || 0)).toLocaleString("en-IN")}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveItem(idx)}
+                            className="inline-flex items-center gap-1 text-zinc-400 hover:text-red-600 p-1.5 rounded-md hover:bg-red-50 cursor-pointer"
+                            title="Remove line item"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                            <span className="text-[11px] sm:hidden text-red-600 font-semibold">Delete</span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -1071,23 +1105,23 @@ function JobSheetModalContent({
         </div>
 
         {/* Modal Footer */}
-        <div className="flex items-center justify-between px-5 py-3 border-t border-zinc-200 bg-zinc-50 shrink-0">
-          <div className="text-[11px] text-zinc-500 font-medium">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-3.5 sm:px-5 py-3 border-t border-zinc-200 bg-zinc-50 shrink-0">
+          <div className="text-[11px] text-zinc-500 font-medium text-center sm:text-left">
             Standard Mobile Repair Sheet • Hub: Sadashiv Peth, Pune
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-2 w-full sm:w-auto">
             <button
               type="button"
               onClick={() => setActiveTab(activeTab === "preview" ? "customize" : "preview")}
-              className="rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs font-bold text-zinc-700 hover:bg-zinc-50 cursor-pointer"
+              className="flex-1 sm:flex-initial rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs font-bold text-zinc-700 hover:bg-zinc-50 cursor-pointer"
             >
-              {activeTab === "preview" ? "Edit Data" : "View A4 Preview"}
+              {activeTab === "preview" ? "Edit Data" : "View Preview"}
             </button>
             <button
               type="button"
               onClick={handleDownloadPdf}
               disabled={isDownloadingPdf}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-orange-600 px-4 py-1.5 text-xs font-bold text-white hover:bg-orange-700 transition-all shadow-xs cursor-pointer disabled:opacity-50"
+              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-lg bg-orange-600 px-4 py-1.5 text-xs font-bold text-white hover:bg-orange-700 transition-all shadow-xs cursor-pointer disabled:opacity-50"
             >
               {isDownloadingPdf ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -1099,7 +1133,7 @@ function JobSheetModalContent({
             <button
               type="button"
               onClick={handlePrint}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 transition-all shadow-xs cursor-pointer"
+              className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 transition-all shadow-xs cursor-pointer"
             >
               <Printer className="h-3.5 w-3.5" />
               <span>Print</span>

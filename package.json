@@ -10,12 +10,11 @@
     "seed:data": "node --env-file=.env --experimental-strip-types scripts/seed-data.ts"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^4.9.0",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.38.4",
     "firebase": "^12.16.0",
     "firebase-admin": "^14.1.0",
-    "html2canvas": "^1.4.1",
-    "jspdf": "^4.2.1",
     "lenis": "^1.3.26",
     "lucide-react": "^1.42.0",
     "mongoose": "^9.9.5",

@@ -42,9 +42,12 @@ export default function AdminModal({
   cancelText = "Cancel",
   error,
 }: AdminModalProps) {
-  // Listen for Escape key
+  // Listen for Escape key and lock body scroll
   useEffect(() => {
     if (!isOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && !isSubmitting) {
@@ -53,7 +56,10 @@ export default function AdminModal({
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [isOpen, isSubmitting, onClose]);
 
   if (!isOpen) return null;
@@ -72,19 +78,19 @@ export default function AdminModal({
       {footer !== undefined ? (
         footer
       ) : onSubmit ? (
-        <div className="flex items-center justify-end gap-2.5 pt-4 border-t border-zinc-200">
+        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 pt-4 border-t border-zinc-200">
           <button
             type="button"
             onClick={onClose}
             disabled={isSubmitting}
-            className="rounded-xl px-4 py-2 text-xs font-bold text-zinc-600 hover:bg-zinc-100 transition-colors cursor-pointer disabled:opacity-50"
+            className="w-full sm:w-auto text-center rounded-xl px-4 py-2.5 sm:py-2 text-xs font-bold text-zinc-600 hover:bg-zinc-100 transition-colors cursor-pointer disabled:opacity-50"
           >
             {cancelText}
           </button>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="inline-flex items-center gap-2 rounded-xl bg-flash-orange px-5 py-2 text-xs font-bold text-clean-white hover:bg-orange-600 shadow-md shadow-orange-500/20 active:scale-95 transition-all cursor-pointer disabled:opacity-50"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-5 py-2.5 sm:py-2 text-xs font-bold text-clean-white hover:bg-orange-600 shadow-md shadow-orange-500/20 active:scale-95 transition-all cursor-pointer disabled:opacity-50"
           >
             {isSubmitting && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
             <span>{submitText}</span>
@@ -96,7 +102,7 @@ export default function AdminModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-3 sm:p-4 backdrop-blur-xs overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-2 sm:p-4 backdrop-blur-xs overflow-y-auto"
       onClick={(e) => {
         if (e.target === e.currentTarget && !isSubmitting) {
           onClose();
@@ -106,7 +112,7 @@ export default function AdminModal({
       role="dialog"
     >
       <div
-        className={`w-full ${maxWidthClasses[maxWidth]} rounded-2xl bg-clean-white p-5 sm:p-6 shadow-2xl space-y-4 my-auto max-h-[90vh] flex flex-col`}
+        className={`w-full ${maxWidthClasses[maxWidth]} rounded-2xl bg-clean-white p-4 sm:p-6 shadow-2xl space-y-4 my-auto max-h-[92vh] flex flex-col`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

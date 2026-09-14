@@ -21,6 +21,7 @@ interface AdminTableProps {
   skeletonRows?: number;
   children: React.ReactNode;
   className?: string;
+  tableClassName?: string;
 }
 
 export default function AdminTable({
@@ -32,19 +33,20 @@ export default function AdminTable({
   skeletonRows = 5,
   children,
   className = "",
+  tableClassName = "",
 }: AdminTableProps) {
   return (
     <div
       className={`rounded-2xl border border-zinc-200 bg-clean-white shadow-xs overflow-hidden ${className}`}
     >
-      <div className="overflow-x-auto">
-        <table className="w-full text-left text-xs">
+      <div className="overflow-x-auto [scrollbar-width:thin] touch-pan-x">
+        <table className={`w-full text-left text-xs ${tableClassName}`}>
           <thead className="border-b border-zinc-200 bg-zinc-50/80 text-[11px] font-extrabold uppercase tracking-wider text-zinc-500">
             <tr>
               {columns.map((col) => (
                 <th
                   key={col.key}
-                  className={`px-5 py-3.5 ${
+                  className={`px-3 sm:px-5 py-3.5 whitespace-nowrap ${
                     col.align === "right"
                       ? "text-right"
                       : col.align === "center"

@@ -67,14 +67,14 @@ export default function RepairJobSheet({
       `}</style>
 
       {/* Main A4 Document Sheet */}
-      <div className="border border-zinc-300 print:border-zinc-400 p-6 sm:p-7 space-y-4 rounded-lg print:rounded-none bg-white">
+      <div className="border border-zinc-300 print:border-zinc-400 p-4 sm:p-6 md:p-7 space-y-4 rounded-lg print:rounded-none bg-white">
         {/* =========================================================
             1. HEADER SECTION (Branding, Logo, Contact from config, Meta)
         ========================================================= */}
-        <div className="flex items-start justify-between border-b-2 border-zinc-800 pb-4 gap-4">
+        <div className="flex flex-col sm:flex-row print:flex-row items-start justify-between border-b-2 border-zinc-800 pb-4 gap-4">
           {/* Logo & Company Branding */}
           <div className="flex items-start gap-3.5">
-            <div className="relative h-16 w-16 shrink-0 rounded-lg overflow-hidden border border-zinc-200 bg-zinc-50 p-1 flex items-center justify-center">
+            <div className="relative h-14 w-14 sm:h-16 sm:w-16 shrink-0 rounded-lg overflow-hidden border border-zinc-200 bg-zinc-50 p-1 flex items-center justify-center">
               <Image
                 src="/logo.png"
                 alt="QuickFix.in Logo"
@@ -85,8 +85,8 @@ export default function RepairJobSheet({
               />
             </div>
             <div>
-              <div className="flex items-baseline gap-2">
-                <h1 className="text-xl font-extrabold tracking-tight text-zinc-950 font-heading">
+              <div className="flex flex-wrap items-baseline gap-2">
+                <h1 className="text-lg sm:text-xl font-extrabold tracking-tight text-zinc-950 font-heading">
                   {contactConfig.brand}
                 </h1>
                 <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-orange-100 text-orange-800 print:border print:border-orange-300">
@@ -99,7 +99,7 @@ export default function RepairJobSheet({
               <p className="text-[11px] text-zinc-600 max-w-sm mt-0.5 leading-tight">
                 {contactConfig.address.full}
               </p>
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-zinc-600 mt-1 font-medium">
+              <div className="flex flex-wrap items-center gap-x-2.5 sm:gap-x-3 gap-y-0.5 text-[10px] sm:text-[11px] text-zinc-600 mt-1 font-medium">
                 <span>
                   <strong>Helpline:</strong> {contactConfig.phone.display}
                 </span>
@@ -107,8 +107,8 @@ export default function RepairJobSheet({
                 <span>
                   <strong>Email:</strong> {contactConfig.email}
                 </span>
-                <span>•</span>
-                <span>
+                <span className="hidden xs:inline">•</span>
+                <span className="hidden xs:inline">
                   <strong>Support:</strong> {contactConfig.supportEmail}
                 </span>
                 <span>•</span>
@@ -120,11 +120,11 @@ export default function RepairJobSheet({
           </div>
 
           {/* Job Sheet Meta Badge */}
-          <div className="text-right shrink-0">
+          <div className="text-left sm:text-right print:text-right shrink-0 w-full sm:w-auto print:w-auto flex flex-col items-start sm:items-end print:items-end pt-2 sm:pt-0 border-t sm:border-t-0 print:border-t-0 border-zinc-200">
             <div className="inline-block bg-zinc-900 text-white px-3 py-1 text-xs font-black uppercase tracking-wider rounded print:bg-black">
               Mobile Repair Job Sheet
             </div>
-            <div className="mt-2 text-right">
+            <div className="mt-2 text-left sm:text-right print:text-right">
               <div className="text-[11px] text-zinc-500 font-medium uppercase">
                 Job Sheet No.
               </div>
@@ -154,9 +154,9 @@ export default function RepairJobSheet({
         </div>
 
         {/* =========================================================
-            2. CUSTOMER & DEVICE INFORMATION BLOCK (2 Columns)
+            2. CUSTOMER & DEVICE INFORMATION BLOCK (Responsive)
         ========================================================= */}
-        <div className="grid grid-cols-2 gap-4 text-xs">
+        <div className="grid grid-cols-1 md:grid-cols-2 print:grid-cols-2 gap-3 sm:gap-4 text-xs">
           {/* Customer Details */}
           <div className="border border-zinc-200 rounded-md p-3 bg-zinc-50/60 print:bg-white space-y-1">
             <div className="font-bold text-zinc-700 uppercase tracking-wider text-[10px] border-b border-zinc-200 pb-1 flex justify-between items-center">
@@ -280,7 +280,7 @@ export default function RepairJobSheet({
             )}
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-1.5 text-[10px]">
+          <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-5 print:grid-cols-5 gap-1.5 text-[10px]">
             {/* 1. Power On */}
             <div className="border border-zinc-200 rounded p-1.5 bg-white flex flex-col justify-between space-y-1">
               <div className="font-bold text-[10px] text-zinc-800 border-b border-zinc-100 pb-0.5 flex items-center justify-between">
@@ -902,7 +902,7 @@ export default function RepairJobSheet({
         {/* =========================================================
             4. REPORTED FAULT & WORKSHOP INSPECTION NOTES
         ========================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+        <div className="grid grid-cols-1 md:grid-cols-2 print:grid-cols-2 gap-3 sm:gap-4 text-xs">
           {/* Customer Reported Problem */}
           <div className="border border-zinc-200 rounded-md p-2.5 bg-zinc-50/40 print:bg-white flex flex-col justify-between space-y-1.5">
             <div>
@@ -949,145 +949,147 @@ export default function RepairJobSheet({
             5. ITEMIZED PRICING & PAYMENT BREAKDOWN
         ========================================================= */}
         <div className="border border-zinc-200 rounded-md overflow-hidden text-xs">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-zinc-800 text-white font-bold text-[10px] uppercase tracking-wider">
-                <th className="py-1.5 px-3 w-10 text-center">#</th>
-                <th className="py-1.5 px-3">Service / Spare Part Description</th>
-                <th className="py-1.5 px-3 w-20 text-center">Type</th>
-                <th className="py-1.5 px-3 w-16 text-center">Qty</th>
-                <th className="py-1.5 px-3 w-24 text-right">Price (₹)</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-zinc-200 text-[11px]">
-              {data.items.length > 0 ? (
-                data.items.map((item, idx) => (
-                  <tr key={idx} className="hover:bg-zinc-50">
-                    <td className="py-1.5 px-3 text-center text-zinc-500">{idx + 1}</td>
+          <div className="overflow-x-auto print:overflow-visible">
+            <table className="w-full min-w-[500px] print:min-w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-zinc-800 text-white font-bold text-[10px] uppercase tracking-wider">
+                  <th className="py-1.5 px-3 w-10 text-center">#</th>
+                  <th className="py-1.5 px-3">Service / Spare Part Description</th>
+                  <th className="py-1.5 px-3 w-20 text-center">Type</th>
+                  <th className="py-1.5 px-3 w-16 text-center">Qty</th>
+                  <th className="py-1.5 px-3 w-24 text-right">Price (₹)</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-zinc-200 text-[11px]">
+                {data.items.length > 0 ? (
+                  data.items.map((item, idx) => (
+                    <tr key={idx} className="hover:bg-zinc-50">
+                      <td className="py-1.5 px-3 text-center text-zinc-500">{idx + 1}</td>
+                      <td className="py-1.5 px-3 font-medium text-zinc-900">
+                        {item.description}
+                      </td>
+                      <td className="py-1.5 px-3 text-center capitalize text-zinc-600 text-[10px]">
+                        {item.type}
+                      </td>
+                      <td className="py-1.5 px-3 text-center text-zinc-600">{item.quantity}</td>
+                      <td className="py-1.5 px-3 text-right font-mono font-semibold text-zinc-900">
+                        {formatCurrency(item.totalPrice)}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td className="py-1.5 px-3 text-center text-zinc-500">1</td>
                     <td className="py-1.5 px-3 font-medium text-zinc-900">
-                      {item.description}
+                      {data.primaryServiceName} ({data.device.brand} {data.device.model})
                     </td>
-                    <td className="py-1.5 px-3 text-center capitalize text-zinc-600 text-[10px]">
-                      {item.type}
+                    <td className="py-1.5 px-3 text-center text-zinc-600 text-[10px]">
+                      Service
                     </td>
-                    <td className="py-1.5 px-3 text-center text-zinc-600">{item.quantity}</td>
+                    <td className="py-1.5 px-3 text-center text-zinc-600">1</td>
                     <td className="py-1.5 px-3 text-right font-mono font-semibold text-zinc-900">
-                      {formatCurrency(item.totalPrice)}
+                      {formatCurrency(data.totalAmount)}
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td className="py-1.5 px-3 text-center text-zinc-500">1</td>
-                  <td className="py-1.5 px-3 font-medium text-zinc-900">
-                    {data.primaryServiceName} ({data.device.brand} {data.device.model})
+                )}
+
+                {/* Subtotals & Payment Calculation */}
+                <tr className="bg-zinc-50/70 font-medium">
+                  <td colSpan={3} className="py-1.5 px-3 text-right text-zinc-600 text-[10px]">
+                    Doorstep Convenience & Travel Charge:
                   </td>
-                  <td className="py-1.5 px-3 text-center text-zinc-600 text-[10px]">
-                    Service
+                  <td colSpan={2} className="py-1.5 px-3 text-right font-bold text-emerald-700 text-[11px]">
+                    FREE (Zero Pune Travel Fee)
                   </td>
-                  <td className="py-1.5 px-3 text-center text-zinc-600">1</td>
-                  <td className="py-1.5 px-3 text-right font-mono font-semibold text-zinc-900">
+                </tr>
+
+                {data.diagnosticFee > 0 && (
+                  <tr className="bg-zinc-50/70">
+                    <td colSpan={3} className="py-1 px-3 text-right text-zinc-600 text-[10px]">
+                      Inspection / Diagnostic Fee:
+                    </td>
+                    <td colSpan={2} className="py-1 px-3 text-right font-mono font-semibold text-zinc-900">
+                      {formatCurrency(data.diagnosticFee)}
+                    </td>
+                  </tr>
+                )}
+
+                {data.discount > 0 && (
+                  <tr className="bg-zinc-50/70 text-emerald-700">
+                    <td colSpan={3} className="py-1 px-3 text-right text-[10px]">
+                      Promotional Discount:
+                    </td>
+                    <td colSpan={2} className="py-1 px-3 text-right font-mono font-bold">
+                      -{formatCurrency(data.discount)}
+                    </td>
+                  </tr>
+                )}
+
+                {/* Net Payable & Advance Row */}
+                <tr className="border-t-2 border-zinc-800 bg-zinc-100 font-bold text-xs">
+                  <td colSpan={3} className="py-2 px-3">
+                    <div className="flex items-center gap-3">
+                      <span className="uppercase text-[10px] tracking-wider text-zinc-700">
+                        Payment Status:
+                      </span>
+                      <span
+                        className={`px-2 py-0.5 rounded text-[10px] uppercase font-black tracking-wider ${
+                          data.paymentStatus === "paid"
+                            ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
+                            : "bg-amber-100 text-amber-800 border border-amber-300"
+                        }`}
+                      >
+                        {data.paymentStatus === "paid"
+                          ? "PAID IN FULL"
+                          : data.paymentStatus === "cod"
+                          ? "CASH ON DELIVERY (COD)"
+                          : "UNPAID (DUE ON DELIVERY)"}
+                      </span>
+                      {data.paymentMethod && (
+                        <span className="text-[10px] text-zinc-500 font-normal capitalize">
+                          ({data.paymentMethod})
+                        </span>
+                      )}
+                    </div>
+                  </td>
+                  <td className="py-2 px-3 text-right uppercase text-[10px] text-zinc-600">
+                    Total Estimate:
+                  </td>
+                  <td className="py-2 px-3 text-right font-mono text-sm font-extrabold text-zinc-950">
                     {formatCurrency(data.totalAmount)}
                   </td>
                 </tr>
-              )}
 
-              {/* Subtotals & Payment Calculation */}
-              <tr className="bg-zinc-50/70 font-medium">
-                <td colSpan={3} className="py-1.5 px-3 text-right text-zinc-600 text-[10px]">
-                  Doorstep Convenience & Travel Charge:
-                </td>
-                <td colSpan={2} className="py-1.5 px-3 text-right font-bold text-emerald-700 text-[11px]">
-                  FREE (Zero Pune Travel Fee)
-                </td>
-              </tr>
-
-              {data.diagnosticFee > 0 && (
-                <tr className="bg-zinc-50/70">
-                  <td colSpan={3} className="py-1 px-3 text-right text-zinc-600 text-[10px]">
-                    Inspection / Diagnostic Fee:
+                {/* Advance Paid & Balance Due */}
+                <tr className="bg-white text-[11px] font-semibold border-t border-zinc-200">
+                  <td colSpan={3} className="py-1 px-3 text-zinc-500 text-[10px]">
+                    Warranty:{" "}
+                    <strong className="text-orange-600">
+                      {data.warrantyPeriod || "90-Day QuickFix Guarantee"}
+                    </strong>{" "}
+                    on replaced components.
                   </td>
-                  <td colSpan={2} className="py-1 px-3 text-right font-mono font-semibold text-zinc-900">
-                    {formatCurrency(data.diagnosticFee)}
+                  <td className="py-1 px-3 text-right text-zinc-600 text-[10px]">
+                    Advance Paid:
+                  </td>
+                  <td className="py-1 px-3 text-right font-mono text-zinc-800">
+                    {formatCurrency(data.advancePaid)}
                   </td>
                 </tr>
-              )}
-
-              {data.discount > 0 && (
-                <tr className="bg-zinc-50/70 text-emerald-700">
-                  <td colSpan={3} className="py-1 px-3 text-right text-[10px]">
-                    Promotional Discount:
+                <tr className="bg-orange-50/70 text-orange-950 font-bold text-xs">
+                  <td colSpan={3} className="py-1.5 px-3 text-[10px] text-zinc-600">
+                    *Transparent pricing policy • No hidden fees • No Fix, No Fee promise.
                   </td>
-                  <td colSpan={2} className="py-1 px-3 text-right font-mono font-bold">
-                    -{formatCurrency(data.discount)}
+                  <td className="py-1.5 px-3 text-right uppercase tracking-wider text-[10px] text-orange-900 font-black">
+                    Balance Due:
+                  </td>
+                  <td className="py-1.5 px-3 text-right font-mono text-sm font-black text-orange-700">
+                    {formatCurrency(data.balanceDue)}
                   </td>
                 </tr>
-              )}
-
-              {/* Net Payable & Advance Row */}
-              <tr className="border-t-2 border-zinc-800 bg-zinc-100 font-bold text-xs">
-                <td colSpan={3} className="py-2 px-3">
-                  <div className="flex items-center gap-3">
-                    <span className="uppercase text-[10px] tracking-wider text-zinc-700">
-                      Payment Status:
-                    </span>
-                    <span
-                      className={`px-2 py-0.5 rounded text-[10px] uppercase font-black tracking-wider ${
-                        data.paymentStatus === "paid"
-                          ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
-                          : "bg-amber-100 text-amber-800 border border-amber-300"
-                      }`}
-                    >
-                      {data.paymentStatus === "paid"
-                        ? "PAID IN FULL"
-                        : data.paymentStatus === "cod"
-                        ? "CASH ON DELIVERY (COD)"
-                        : "UNPAID (DUE ON DELIVERY)"}
-                    </span>
-                    {data.paymentMethod && (
-                      <span className="text-[10px] text-zinc-500 font-normal capitalize">
-                        ({data.paymentMethod})
-                      </span>
-                    )}
-                  </div>
-                </td>
-                <td className="py-2 px-3 text-right uppercase text-[10px] text-zinc-600">
-                  Total Estimate:
-                </td>
-                <td className="py-2 px-3 text-right font-mono text-sm font-extrabold text-zinc-950">
-                  {formatCurrency(data.totalAmount)}
-                </td>
-              </tr>
-
-              {/* Advance Paid & Balance Due */}
-              <tr className="bg-white text-[11px] font-semibold border-t border-zinc-200">
-                <td colSpan={3} className="py-1 px-3 text-zinc-500 text-[10px]">
-                  Warranty:{" "}
-                  <strong className="text-orange-600">
-                    {data.warrantyPeriod || "90-Day QuickFix Guarantee"}
-                  </strong>{" "}
-                  on replaced components.
-                </td>
-                <td className="py-1 px-3 text-right text-zinc-600 text-[10px]">
-                  Advance Paid:
-                </td>
-                <td className="py-1 px-3 text-right font-mono text-zinc-800">
-                  {formatCurrency(data.advancePaid)}
-                </td>
-              </tr>
-              <tr className="bg-orange-50/70 text-orange-950 font-bold text-xs">
-                <td colSpan={3} className="py-1.5 px-3 text-[10px] text-zinc-600">
-                  *Transparent pricing policy • No hidden fees • No Fix, No Fee promise.
-                </td>
-                <td className="py-1.5 px-3 text-right uppercase tracking-wider text-[10px] text-orange-900 font-black">
-                  Balance Due:
-                </td>
-                <td className="py-1.5 px-3 text-right font-mono text-sm font-black text-orange-700">
-                  {formatCurrency(data.balanceDue)}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* =========================================================
@@ -1099,7 +1101,7 @@ export default function RepairJobSheet({
             <span className="font-semibold text-zinc-500">QuickFix.in Policy</span>
           </div>
 
-          <div className="grid grid-cols-2 gap-x-4 gap-y-1 leading-tight pt-0.5">
+          <div className="grid grid-cols-1 md:grid-cols-2 print:grid-cols-2 gap-x-4 gap-y-1.5 leading-tight pt-0.5">
             {STANDARD_REPAIR_TERMS.map((term, i) => (
               <div key={i} className="flex items-start gap-1">
                 <span className="font-bold text-zinc-800 shrink-0">{i + 1}.</span>
@@ -1119,7 +1121,7 @@ export default function RepairJobSheet({
             Customer Declaration: I hereby acknowledge the physical condition checklist, verify the device intake state, and consent to the repair terms and conditions outlined above.
           </div>
 
-          <div className="grid grid-cols-3 gap-6 pt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-3 print:grid-cols-3 gap-4 sm:gap-6 pt-2">
             {/* Customer Signature */}
             <div className="space-y-4">
               <div className="h-10 border-b border-dashed border-zinc-400 flex items-end">

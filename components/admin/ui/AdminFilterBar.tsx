@@ -36,7 +36,7 @@ export default function AdminFilterBar({
     >
       {/* Tabs */}
       {tabs && tabs.length > 0 && onTabChange && (
-        <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-clean-white border border-zinc-200 shadow-2xs">
+        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-clean-white border border-zinc-200 shadow-2xs overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden touch-pan-x max-w-full">
           {tabs.map((tab) => {
             const active = activeTab === tab.value;
             return (
@@ -44,7 +44,7 @@ export default function AdminFilterBar({
                 key={tab.value}
                 type="button"
                 onClick={() => onTabChange(tab.value)}
-                className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
+                className={`flex items-center gap-1.5 shrink-0 whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
                   active
                     ? "bg-tech-slate text-clean-white shadow-2xs"
                     : "text-zinc-600 hover:bg-zinc-100 hover:text-tech-slate"

@@ -186,7 +186,7 @@ export default function StandaloneJobSheetPage({
   const handleDownloadPdf = async () => {
     setIsDownloadingPdf(true);
     try {
-      await downloadJobSheetPdf(`jobsheet-doc-${jobSheetNo}`, jobSheetNo);
+      await downloadJobSheetPdf(sheetData);
     } catch (err) {
       console.error("PDF download failed:", err);
       alert(
@@ -199,64 +199,66 @@ export default function StandaloneJobSheetPage({
   };
 
   return (
-    <div className="min-h-screen bg-zinc-100/80 py-6 sm:py-8 px-3 sm:px-6 flex flex-col items-center">
+    <div className="min-h-screen bg-zinc-100/80 py-3 sm:py-8 px-2 sm:px-6 flex flex-col items-center">
       {/* Floating Action Header (Hidden on Print) */}
-      <div className="no-print w-full max-w-[210mm] mb-4 flex flex-wrap items-center justify-between gap-3 bg-white p-3.5 rounded-xl border border-zinc-200 shadow-sm">
-        <div className="flex items-center gap-3">
+      <div className="no-print w-full max-w-[210mm] mb-3 sm:mb-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 bg-white p-3 sm:p-3.5 rounded-xl border border-zinc-200 shadow-sm">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <Link
             href="/admin/repairs"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-zinc-600 hover:text-zinc-950 transition-colors"
+            className="inline-flex items-center gap-1 text-xs font-bold text-zinc-600 hover:text-zinc-950 transition-colors shrink-0"
           >
             <ArrowLeft className="h-4 w-4" />
-            <span>Repairs</span>
+            <span className="hidden xs:inline">Repairs</span>
           </Link>
           <span className="text-zinc-300">|</span>
-          <span className="font-mono text-xs font-bold text-zinc-800">
+          <span className="font-mono text-xs font-bold text-zinc-800 truncate">
             {repair.bookingReference}
           </span>
-          <span className="text-[11px] text-zinc-500">
+          <span className="text-[11px] text-zinc-500 truncate hidden xs:inline">
             ({repair.device.brand} {repair.device.model})
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <button
             type="button"
             onClick={() => setIsEditModalOpen(true)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs font-bold text-zinc-700 hover:bg-zinc-50 cursor-pointer"
+            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-2.5 sm:px-3 py-1.5 text-xs font-bold text-zinc-700 hover:bg-zinc-50 cursor-pointer"
           >
             <Edit3 className="h-3.5 w-3.5" />
-            <span>Edit / Customize</span>
+            <span>Edit</span>
           </button>
 
           <button
             type="button"
             onClick={handleDownloadPdf}
             disabled={isDownloadingPdf}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-orange-600 px-4 py-1.5 text-xs font-bold text-white hover:bg-orange-700 shadow-xs transition-all cursor-pointer disabled:opacity-50"
+            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-lg bg-orange-600 px-3 sm:px-4 py-1.5 text-xs font-bold text-white hover:bg-orange-700 shadow-xs transition-all cursor-pointer disabled:opacity-50"
           >
             {isDownloadingPdf ? (
               <Loader2 className="h-3.5 w-3.5 animate-spin" />
             ) : (
               <Download className="h-3.5 w-3.5" />
             )}
-            <span>{isDownloadingPdf ? "Generating PDF..." : "Download PDF"}</span>
+            <span>{isDownloadingPdf ? "Generating..." : "Download PDF"}</span>
           </button>
 
           <button
             type="button"
             onClick={() => triggerJobSheetPrint(jobSheetNo)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 shadow-xs transition-all cursor-pointer"
+            className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 shadow-xs transition-all cursor-pointer"
           >
             <Printer className="h-3.5 w-3.5" />
-            <span>Print</span>
+            <span className="hidden xs:inline">Print</span>
           </button>
         </div>
       </div>
 
       {/* Printable Sheet */}
-      <div className="w-full max-w-[210mm] bg-white shadow-md rounded-lg overflow-hidden">
-        <RepairJobSheet data={sheetData} id={`jobsheet-doc-${jobSheetNo}`} />
+      <div className="w-full max-w-full overflow-x-auto p-1 pb-4 flex justify-center [scrollbar-width:thin] touch-pan-x">
+        <div className="w-full max-w-[210mm] min-w-[320px] sm:min-w-[650px] md:min-w-[210mm] bg-white shadow-md rounded-lg overflow-hidden border border-zinc-200 shrink-0">
+          <RepairJobSheet data={sheetData} id={`jobsheet-doc-${jobSheetNo}`} />
+        </div>
       </div>
 
       {/* Editor Modal */}

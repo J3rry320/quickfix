@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface JobSheetItem {
   description: string;
   type: "service" | "part" | "inspection" | "other";
@@ -187,241 +189,57 @@ export function triggerBlobDownload(blob: Blob, filename: string): void {
 }
 
 /**
- * Normalizes any modern CSS color functions (lab, oklab, oklch, lch, color) to standard rgb/rgba
- * so html2canvas's color parser never encounters unsupported color functions.
- */
-function createColorSanitizer(): (str: string) => string {
-  const canvas = typeof document !== "undefined" ? document.createElement("canvas") : null;
-  const ctx = canvas ? canvas.getContext("2d") : null;
-  const colorCache = new Map<string, string>();
-
-  return function sanitizeColor(colorStr: string): string {
-    if (!colorStr || typeof colorStr !== "string") return colorStr;
-    if (!/(?:lab|oklab|oklch|lch|color)\(/i.test(colorStr)) {
-      return colorStr;
-    }
-
-    return colorStr.replace(/(?:lab|oklab|oklch|lch|color)\([^)]+\)/gi, (match) => {
-      const cached = colorCache.get(match);
-      if (cached) return cached;
-
-      if (ctx) {
-        try {
-          ctx.fillStyle = "#000000";
-          ctx.fillStyle = match;
-          const resolved = ctx.fillStyle;
-          if (resolved && resolved !== "#000000") {
-            colorCache.set(match, resolved);
-            return resolved;
-          }
-        } catch {
-          // fallback below
-        }
-      }
-
-      const fallback = "rgba(24, 24, 27, 0.9)";
-      colorCache.set(match, fallback);
-      return fallback;
-    });
-  };
-}
-
-/**
- * Creates a Proxy around CSSStyleDeclaration to sanitize modern color values on the fly
- */
-function createStyleDeclarationProxy(
-  declaration: CSSStyleDeclaration,
-  sanitizeColor: (str: string) => string
-): CSSStyleDeclaration {
-  return new Proxy(declaration, {
-    get(target, prop, receiver) {
-      if (prop === "getPropertyValue") {
-        return (propertyName: string) => {
-          const val = target.getPropertyValue(propertyName);
-          return sanitizeColor(val);
-        };
-      }
-      const val = Reflect.get(target, prop, receiver);
-      if (typeof val === "string") {
-        return sanitizeColor(val);
-      }
-      if (typeof val === "function") {
-        return val.bind(target);
-      }
-      return val;
-    },
-  });
-}
-
-/**
- * Downloads an HTML element as a PDF file directly on the client using jsPDF
+ * Downloads a Job Sheet as a crisp vector PDF directly on the client using @react-pdf/renderer
  */
 export async function downloadJobSheetPdf(
-  elementOrId: HTMLElement | string,
-  jobSheetNumber: string
+  dataOrElement: JobSheetData | HTMLElement | string,
+  jobSheetNumber?: string,
+  fallbackData?: JobSheetData
 ): Promise<void> {
   if (typeof window === "undefined") return;
 
-  const targetElement =
-    typeof elementOrId === "string"
-      ? document.getElementById(elementOrId)
-      : elementOrId;
+  // Resolve JobSheetData
+  let jobData: JobSheetData | undefined;
+  if (
+    typeof dataOrElement === "object" &&
+    dataOrElement !== null &&
+    "jobSheetNumber" in dataOrElement
+  ) {
+    jobData = dataOrElement as JobSheetData;
+  } else if (fallbackData) {
+    jobData = fallbackData;
+  }
 
-  if (!targetElement) {
+  if (!jobData) {
     throw new Error(
-      `Target element for PDF generation not found (${typeof elementOrId === "string" ? elementOrId : "HTMLElement"}).`
+      "JobSheetData is required to generate the PDF."
     );
   }
 
-  // Dynamically import jsPDF and html2canvas for client-side execution
-  const { jsPDF } = await import("jspdf");
-  const html2canvasModule = await import("html2canvas");
-  const html2canvas = html2canvasModule.default || html2canvasModule;
+  const jsNumber = jobSheetNumber || jobData.jobSheetNumber;
+  const filename = `QuickFix_JobSheet_${jsNumber}.pdf`;
 
-  const filename = `QuickFix_JobSheet_${jobSheetNumber}.pdf`;
+  // Dynamically import @react-pdf/renderer and JobSheetPdfDocument for client-side execution
+  const { pdf } = await import("@react-pdf/renderer");
+  const { JobSheetPdfDocument } = await import(
+    "@/components/admin/repairs/JobSheetPdfDocument"
+  );
 
-  const sanitizeColor = createColorSanitizer();
+  const logoUrl =
+    typeof window !== "undefined"
+      ? `${window.location.origin}/logo.png`
+      : undefined;
 
-  // Intercept window.getComputedStyle during html2canvas traversal so any modern CSS color functions
-  // (e.g. lab, oklab, oklch, color) are transparently returned as standard rgb/rgba strings
-  const originalWindowGetComputedStyle = window.getComputedStyle;
-  window.getComputedStyle = function (
-    elt: Element,
-    pseudoElt?: string | null
-  ): CSSStyleDeclaration {
-    const realDecl = originalWindowGetComputedStyle.call(window, elt, pseudoElt);
-    return createStyleDeclarationProxy(realDecl, sanitizeColor);
-  };
+  // Generate vector PDF Blob
+  const docElement = React.createElement(JobSheetPdfDocument, {
+    data: jobData,
+    logoSrc: logoUrl,
+  }) as unknown as Parameters<typeof pdf>[0];
 
-  let canvas: HTMLCanvasElement;
-  try {
-    canvas = await html2canvas(targetElement, {
-      scale: 2,
-      useCORS: true,
-      allowTaint: false,
-      logging: false,
-      backgroundColor: "#ffffff",
-      scrollY: 0,
-      scrollX: 0,
-      imageTimeout: 15000,
-      onclone: (clonedDoc) => {
-        // Also proxy getComputedStyle in the cloned iframe document
-        if (clonedDoc.defaultView) {
-          const originalClonedGetComputedStyle = clonedDoc.defaultView.getComputedStyle;
-          clonedDoc.defaultView.getComputedStyle = function (
-            elt: Element,
-            pseudoElt?: string | null
-          ): CSSStyleDeclaration {
-            const realDecl = originalClonedGetComputedStyle.call(
-              clonedDoc.defaultView,
-              elt,
-              pseudoElt
-            );
-            return createStyleDeclarationProxy(realDecl, sanitizeColor);
-          };
-        }
+  const instance = pdf(docElement);
+  const blob = await instance.toBlob();
 
-        // Clean out extension nodes (Grammarly, etc.) that may inject unsupported CSS
-        try {
-          clonedDoc
-            .querySelectorAll(
-              "grammarly-extension, [data-grammarly-part], #grammarly-shadow-root, [class*='grammarly'], [id*='grammarly']"
-            )
-            .forEach((el) => el.remove());
-        } catch {
-          // ignore
-        }
-
-        // Sanitize stylesheets in cloned document: replace modern color functions
-        try {
-          const styleTags = clonedDoc.querySelectorAll("style");
-          styleTags.forEach((styleTag) => {
-            if (
-              styleTag.textContent &&
-              /(?:lab|oklab|oklch|lch|color)\(/i.test(styleTag.textContent)
-            ) {
-              styleTag.textContent = styleTag.textContent.replace(
-                /(?:lab|oklab|oklch|lch|color)\([^)]+\)/gi,
-                (match) => sanitizeColor(match)
-              );
-            }
-          });
-        } catch (e) {
-          console.warn("Error sanitizing stylesheets for PDF:", e);
-        }
-      },
-    });
-  } finally {
-    // Always restore the original getComputedStyle on the host window
-    window.getComputedStyle = originalWindowGetComputedStyle;
-  }
-
-  // Calculate A4 dimensions (210mm x 297mm)
-  const pdf = new jsPDF({
-    orientation: "portrait",
-    unit: "mm",
-    format: "a4",
-    compress: true,
-  });
-
-  const pageWidth = 210;
-  const pageHeight = 297;
-  const margin = 6; // 6mm margin
-  const printableWidth = pageWidth - margin * 2; // 198mm
-  const printableHeight = pageHeight - margin * 2; // 285mm
-
-  const imgWidth = printableWidth;
-  const imgHeight = (canvas.height * printableWidth) / canvas.width;
-
-  const imgData = canvas.toDataURL("image/jpeg", 0.98);
-
-  if (imgHeight <= printableHeight) {
-    // Fits neatly on a single page
-    pdf.addImage(
-      imgData,
-      "JPEG",
-      margin,
-      margin,
-      imgWidth,
-      imgHeight,
-      undefined,
-      "FAST"
-    );
-  } else {
-    // Multi-page handling with page breaks
-    let heightLeft = imgHeight;
-    let position = margin;
-
-    pdf.addImage(
-      imgData,
-      "JPEG",
-      margin,
-      position,
-      imgWidth,
-      imgHeight,
-      undefined,
-      "FAST"
-    );
-    heightLeft -= printableHeight;
-
-    while (heightLeft > 0) {
-      position = position - printableHeight;
-      pdf.addPage();
-      pdf.addImage(
-        imgData,
-        "JPEG",
-        margin,
-        position,
-        imgWidth,
-        imgHeight,
-        undefined,
-        "FAST"
-      );
-      heightLeft -= printableHeight;
-    }
-  }
-
-  // Generate Blob and trigger native browser file download
-  const blob = pdf.output("blob");
+  // Trigger browser download
   triggerBlobDownload(blob, filename);
 }
+

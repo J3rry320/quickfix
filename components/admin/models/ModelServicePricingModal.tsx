@@ -94,6 +94,16 @@ export default function ModelServicePricingModal({
   const [addServicePrice, setAddServicePrice] = useState<number | string>("");
   const [addServiceTime, setAddServiceTime] = useState<number | string>(30);
 
+  // Lock body scroll when modal is open
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const orig = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = orig;
+    };
+  }, [isOpen]);
+
   if (!isOpen || !model) return null;
 
   const handleSelectServiceToAdd = (serviceId: string) => {
@@ -234,34 +244,34 @@ export default function ModelServicePricingModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-2 sm:p-4 backdrop-blur-xs overflow-y-auto"
       onClick={(e) => {
         if (e.target === e.currentTarget && !isSaving) onClose();
       }}
     >
       <div
-        className="w-full max-w-2xl rounded-2xl bg-clean-white p-6 shadow-2xl space-y-5 max-h-[90vh] flex flex-col"
+        className="w-full max-w-3xl rounded-2xl bg-clean-white p-4 sm:p-6 shadow-2xl space-y-4 sm:space-y-5 max-h-[94vh] my-auto flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="flex items-start justify-between border-b border-zinc-200 pb-4 shrink-0">
-          <div className="flex items-center gap-3">
+        <div className="flex items-start justify-between border-b border-zinc-200 pb-3 sm:pb-4 shrink-0 gap-2">
+          <div className="flex items-center gap-3 min-w-0">
             <AdminImage
               src={model.imageUrl}
               alt={model.name}
               fallbackIcon={Smartphone}
-              containerClassName="h-11 w-11 rounded-xl bg-zinc-50 border border-zinc-200 p-1 flex items-center justify-center shrink-0"
+              containerClassName="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-zinc-50 border border-zinc-200 p-1 flex items-center justify-center shrink-0"
             />
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="font-heading text-lg font-bold text-tech-slate">
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="font-heading text-base sm:text-lg font-bold text-tech-slate truncate">
                   {model.name}
                 </h3>
-                <span className="rounded-md bg-zinc-100 px-2 py-0.5 text-2xs font-bold text-tech-slate">
+                <span className="rounded-md bg-zinc-100 px-2 py-0.5 text-2xs font-bold text-tech-slate shrink-0">
                   {model.brand?.name}
                 </span>
               </div>
-              <p className="text-xs text-zinc-500 mt-0.5">
+              <p className="text-xs text-zinc-500 mt-0.5 truncate sm:whitespace-normal">
                 Configure custom repair prices and turnaround times for this
                 phone model.
               </p>
@@ -271,7 +281,7 @@ export default function ModelServicePricingModal({
             type="button"
             onClick={onClose}
             disabled={isSaving}
-            className="rounded-lg p-1.5 text-zinc-400 hover:bg-zinc-100 cursor-pointer disabled:opacity-50"
+            className="rounded-lg p-1.5 text-zinc-400 hover:bg-zinc-100 cursor-pointer disabled:opacity-50 shrink-0"
           >
             <X className="h-5 w-5" />
           </button>
@@ -293,16 +303,16 @@ export default function ModelServicePricingModal({
         )}
 
         {/* Quick Actions Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-zinc-50 border border-zinc-200/80 text-xs shrink-0">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-3 rounded-xl bg-zinc-50 border border-zinc-200/80 text-xs shrink-0">
           <span className="font-bold text-tech-slate">
             {modelServiceList.length} Repair Services Configured
           </span>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
             <button
               type="button"
               onClick={handleQuickAddAllServices}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-tech-slate px-3 py-1.5 text-xs font-bold text-clean-white hover:bg-black transition-all cursor-pointer"
+              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-lg bg-tech-slate px-3 py-2 sm:py-1.5 text-xs font-bold text-clean-white hover:bg-black transition-all cursor-pointer"
               title="Populate all active catalogue services with default starting rates"
             >
               <Sparkles className="h-3.5 w-3.5 text-electric-amber" />
@@ -313,7 +323,7 @@ export default function ModelServicePricingModal({
               <button
                 type="button"
                 onClick={() => setModelServiceList([])}
-                className="rounded-lg border border-zinc-200 bg-clean-white px-2.5 py-1.5 text-xs font-semibold text-zinc-600 hover:bg-red-50 hover:text-red-600 transition-colors cursor-pointer"
+                className="rounded-lg border border-zinc-200 bg-clean-white px-2.5 py-2 sm:py-1.5 text-xs font-semibold text-zinc-600 hover:bg-red-50 hover:text-red-600 transition-colors cursor-pointer"
               >
                 Clear All
               </button>
