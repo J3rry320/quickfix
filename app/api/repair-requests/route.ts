@@ -19,7 +19,8 @@ export const POST = withPublicApi(
       bookingReference,
       status: "pending",
       pricing: {
-        paymentStatus: "unpaid",
+        estimatedPrice: validatedData.pricing?.estimatedPrice,
+        paymentStatus: validatedData.pricing?.paymentStatus || "unpaid",
       },
     });
 

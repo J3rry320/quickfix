@@ -6,7 +6,6 @@ import { XCircle, Clock, Check } from "lucide-react";
 export type AdminStatusType =
   | "pending"
   | "confirmed"
-  | "technician_assigned"
   | "in_progress"
   | "completed"
   | "cancelled"
@@ -52,7 +51,6 @@ export default function AdminStatusBadge({
       break;
 
     case "confirmed":
-    case "technician_assigned":
     case "in_progress":
     case "cod":
       colorClasses = "bg-blue-100 text-blue-800 border-blue-200";

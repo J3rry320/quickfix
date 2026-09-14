@@ -1,0 +1,54 @@
+{
+  "ServiceDetail": {
+    "breadcrumbs": {
+      "home": "Home",
+      "services": "Services"
+    },
+    "highlights": {
+      "startingFrom": "Starting From",
+      "turnaround": "Turnaround",
+      "turnaroundValue": "{minutes} Mins",
+      "warranty": "Warranty",
+      "warrantyValue": "{days} Days",
+      "serviceMode": "Service Mode",
+      "serviceModeValue": "Doorstep Anywhere in Pune"
+    },
+    "actions": {
+      "bookService": "Book {serviceName}",
+      "callNow": "Call {phone}"
+    },
+    "heroMedia": {
+      "badge": "Pune Lab Verified",
+      "fallbackLabel": "Professional on-site repair setup for {serviceName} in Pune"
+    },
+    "issues": {
+      "title": "Symptoms Indicating You Need This Repair",
+      "subtitle": "If your smartphone exhibits any of the symptoms below, our certified technicians can fix it in under {minutes} minutes."
+    },
+    "process": {
+      "title": "How Our Doorstep Repair Operates in Pune",
+      "subtitle": "Transparent, upfront, and fully executed in your physical presence."
+    },
+    "brands": {
+      "title": "Supported Smartphone Brands for {serviceName}",
+      "subtitle": "Select your smartphone brand to view exact model pricing and reserve doorstep service.",
+      "viewModels": "View Models →"
+    },
+    "faqs": {
+      "title": "Frequently Asked Questions About {serviceName}",
+      "subtitle": "Everything you need to know about our certified doorstep procedure in Pune.",
+      "dataSecurityQ": "Will my personal data remain 100% safe during {serviceName}?",
+      "dataSecurityA": "Yes. Our technician collects your device with an official job sheet and sealed transit pouch. You never have to share passcodes, unlock patterns, or wipe data. Repairs are performed in our ESD-safe central Pune lab with zero access to your private files.",
+      "warrantyQ": "What warranty do you provide on this repair?",
+      "warrantyA": "Every {serviceName} includes a {warrantyDays}-day hassle-free replacement warranty with a digital invoice sent directly to your email and phone.",
+      "partsQ": "Are replacement components OEM grade?",
+      "partsA": "Yes. We source verified, factory-tested OEM-grade components that match original factory specifications for refresh rates, touch sensitivity, thermal stability, and battery capacity.",
+      "timeQ": "How long does the repair and doorstep delivery take?",
+      "timeA": "Most repairs are completed within {minutes} minutes in our lab and delivered back to your doorstep on the very same day across Pune."
+    },
+    "cta": {
+      "title": "Schedule Your {serviceName} Today",
+      "subtitle": "Technician dispatched anywhere across Pune in 30 minutes. 90-day warranty included."
+    }
+  }
+}

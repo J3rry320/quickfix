@@ -209,12 +209,18 @@ export const createRepairRequestSchema = z.object({
   customer: customerSchema,
   device: deviceSchema,
   service: z.string().optional(),
-  issueDescription: z.string().min(5, "Please describe the issue").trim(),
+  issueDescription: z.string().min(2, "Please select or describe the repair issue").trim(),
   serviceMode: z
     .enum(["doorstep", "pickup_drop", "walk_in"])
     .default("doorstep"),
   address: addressSchema,
   preferredSlot: preferredSlotSchema,
+  pricing: z
+    .object({
+      estimatedPrice: z.coerce.number().min(0).optional(),
+      paymentStatus: z.enum(["unpaid", "paid", "cod"]).default("unpaid").optional(),
+    })
+    .optional(),
   locale: z.enum(["en", "hi", "mr"]).default("en"),
 });
 
@@ -223,17 +229,10 @@ export const updateRepairRequestSchema = z.object({
     .enum([
       "pending",
       "confirmed",
-      "technician_assigned",
       "in_progress",
       "completed",
       "cancelled",
     ])
-    .optional(),
-  technician: z
-    .object({
-      name: z.string().optional(),
-      phone: z.string().optional(),
-    })
     .optional(),
   pricing: z
     .object({

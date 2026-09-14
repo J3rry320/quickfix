@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Smartphone, ArrowRight, Phone, ShieldCheck, Clock, CheckCircle2, Lock, Sparkles, Zap } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { siteConfig, getBrandSeoMetadata } from "@/config/seo";
@@ -8,7 +9,7 @@ import { getBreadcrumbSchema } from "@/config/jsonld";
 import { getDbBrandBySlug, getStaticBrandSlugs, getDbModelsForBrand, getDbServices } from "@/lib/db/catalogue";
 import contactConfig from "@/config/contact";
 import JsonLd from "@/components/seo/JsonLd";
-import { Container, Section, AspectBox, CTABlock, PageHero } from "@/components/ui";
+import { Container, Section, CTABlock, PageHero, BrandLogo } from "@/components/ui";
 
 export async function generateStaticParams() {
   const slugs = await getStaticBrandSlugs();
@@ -49,10 +50,11 @@ export default async function BrandDetailPage({
 }) {
   const { locale, slug } = await params;
 
-  const [brand, models, services] = await Promise.all([
+  const [brand, models, services, t] = await Promise.all([
     getDbBrandBySlug(slug),
     getDbModelsForBrand(slug),
     getDbServices(),
+    getTranslations({ locale, namespace: "BrandDetail" }),
   ]);
 
   if (!brand) {
@@ -61,31 +63,31 @@ export default async function BrandDetailPage({
 
   const siteUrl = siteConfig.url.replace(/\/$/, "");
   const breadcrumbSchema = getBreadcrumbSchema([
-    { name: "Home", url: `${siteUrl}/${locale}` },
-    { name: "Brands", url: `${siteUrl}/${locale}/brands` },
+    { name: t("breadcrumbs.home"), url: `${siteUrl}/${locale}` },
+    { name: t("breadcrumbs.brands"), url: `${siteUrl}/${locale}/brands` },
     { name: brand.name, url: `${siteUrl}/${locale}/brands/${brand.slug}` },
   ]);
 
   const guarantees = [
     {
       icon: ShieldCheck,
-      title: "Genuine OEM-Grade Components",
-      desc: `Every replacement display, battery, and flex board used for ${brand.name} matches original equipment manufacturer specs.`,
+      title: t("standards.oemTitle"),
+      desc: t("standards.oemDesc", { brandName: brand.name }),
     },
     {
       icon: Lock,
-      title: "Zero Passwords or Data Risk",
-      desc: "Repaired right in your living room or office desk. You never give away passwords or leave your device unattended.",
+      title: t("standards.dataTitle"),
+      desc: t("standards.dataDesc"),
     },
     {
       icon: Clock,
-      title: "30-Minute Live Service",
-      desc: "Fast precision disassembly and reassembly executed on antistatic mats with specialized thermal tools.",
+      title: t("standards.liveTitle"),
+      desc: t("standards.liveDesc"),
     },
     {
       icon: Sparkles,
-      title: "90-Day Replacement Warranty",
-      desc: "Instant digital warranty card provided. If any touch or battery malfunction occurs, we replace it at no charge.",
+      title: t("standards.warrantyTitle"),
+      desc: t("standards.warrantyDesc"),
     },
   ];
 
@@ -93,48 +95,65 @@ export default async function BrandDetailPage({
     <div className="flex flex-col w-full bg-clean-white">
       <JsonLd schema={breadcrumbSchema} id={`brand-${brand.slug}-structured-data`} />
 
-      {/* 1. Unified Page Hero */}
+      {/* 1. Unified Page Hero with Small Brand Logo from DB */}
       <PageHero
         breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "Brands", href: "/brands" },
+          { label: t("breadcrumbs.home"), href: "/" },
+          { label: t("breadcrumbs.brands"), href: "/brands" },
           { label: brand.name },
         ]}
-        title={`${brand.name} Doorstep Repair in Pune`}
-        subtitle={`Professional on-site hardware repair for all ${brand.name} smartphones across Pune. Certified technicians arrive at your home or workplace equipped with antistatic workstations, OEM displays, and high-capacity battery units.`}
+        title={
+          <div className="space-y-3">
+            {/* Small Brand Logo Badge Fetched from DB */}
+            <div className="flex items-center gap-3">
+              <BrandLogo
+                src={brand.logoUrl}
+                brandName={brand.name}
+                size="md"
+                className="shadow-md"
+              />
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-100 text-orange-800 px-3 py-1 text-xs font-extrabold uppercase tracking-wider">
+                <span className="h-1.5 w-1.5 rounded-full bg-flash-orange animate-pulse" />
+                <span>{t("hero.badge")}</span>
+              </span>
+            </div>
+            <span>{t("hero.title", { brandName: brand.name })}</span>
+          </div>
+        }
+        subtitle={t("hero.subtitle", { brandName: brand.name })}
         highlights={[
           {
             icon: Clock,
-            label: "Turnaround",
-            value: "30 Mins On-Site",
+            label: t("hero.highlights.turnaround"),
+            value: t("hero.highlights.turnaroundVal"),
             color: "text-flash-orange",
           },
           {
             icon: Lock,
-            label: "Privacy",
-            value: "100% Data Safe",
+            label: t("hero.highlights.privacy"),
+            value: t("hero.highlights.privacyVal"),
             color: "text-emerald-500",
           },
           {
             icon: ShieldCheck,
-            label: "Warranty",
-            value: "90-Day Guarantee",
+            label: t("hero.highlights.warranty"),
+            value: t("hero.highlights.warrantyVal"),
             color: "text-blue-500",
           },
           {
             icon: Zap,
-            label: "Dispatch",
-            value: "Within 30 Mins",
+            label: t("hero.highlights.dispatch"),
+            value: t("hero.highlights.dispatchVal"),
             color: "text-electric-amber",
           },
         ]}
         actions={
           <>
             <Link
-              href="/book-repair"
+              href={`/book-repair?brand=${encodeURIComponent(brand.slug)}`}
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-orange-600 active:scale-95 transition-all"
             >
-              <span>Book {brand.name} Repair</span>
+              <span>{t("hero.actions.bookBrand", { brandName: brand.name })}</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
 
@@ -143,17 +162,56 @@ export default async function BrandDetailPage({
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-zinc-300 text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
             >
               <Phone className="h-4 w-4 text-flash-orange" />
-              <span>Call {contactConfig.phone.display}</span>
+              <span>{t("hero.actions.callUs", { phone: contactConfig.phone.display })}</span>
             </a>
           </>
         }
         media={
-          <AspectBox
-            aspectRatio="4/3"
-            badge={`${brand.name} Lab`}
-            label={`Mobile repair toolkit and genuine components for ${brand.name}`}
-            className="shadow-md"
-          />
+          /* Redesigned Brand Showcase Hero Card with Small Brand Logo from DB */
+          <div className="relative w-full rounded-3xl bg-gradient-to-br from-mist-gray via-clean-white to-orange-50/50 p-6 sm:p-8 border border-border-default/80 shadow-md flex flex-col justify-between overflow-hidden">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <BrandLogo
+                  src={brand.logoUrl}
+                  brandName={brand.name}
+                  size="lg"
+                  className="shadow-sm"
+                />
+                <div>
+                  <h3 className="font-heading text-lg font-black text-tech-slate leading-tight">
+                    {brand.name}
+                  </h3>
+                  <span className="text-xs text-text-muted font-medium">
+                    {models.length} {t("models.viewModels")}
+                  </span>
+                </div>
+              </div>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider">
+                <CheckCircle2 className="h-3.5 w-3.5" />
+                <span>Verified OEM</span>
+              </span>
+            </div>
+
+            <div className="my-6 space-y-2 text-xs text-text-secondary bg-clean-white/80 p-4 rounded-2xl border border-border-default/60">
+              <div className="flex items-center justify-between">
+                <span>Certified On-Site Turnaround:</span>
+                <strong className="text-tech-slate font-bold">30 Mins Express</strong>
+              </div>
+              <div className="flex items-center justify-between">
+                <span>Replacement Warranty:</span>
+                <strong className="text-emerald-600 font-bold">90 Days Full Replacement</strong>
+              </div>
+              <div className="flex items-center justify-between">
+                <span>Pune Service Areas:</span>
+                <strong className="text-flash-orange font-bold">All Pune Localities</strong>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between text-[11px] text-text-muted border-t border-border-default/60 pt-3">
+              <span>QuickFix Sadashiv Peth Hub</span>
+              <span className="font-bold text-tech-slate">Zero Doorstep Travel Fee</span>
+            </div>
+          </div>
         }
       />
 
@@ -162,36 +220,48 @@ export default async function BrandDetailPage({
         <Container>
           <div className="max-w-3xl mb-8">
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
-              Select Your {brand.name} Model
+              {t("models.title", { brandName: brand.name })}
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-zinc-600">
-              Choose your device model to view exact replacement pricing for displays, batteries, and camera lenses.
+              {t("models.subtitle")}
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-            {models.map((model) => (
-              <Link
-                key={model.slug}
-                href={`/brands/${brand.slug}/${model.slug}`}
-                className="p-4 rounded-xl bg-clean-white border border-zinc-200 hover:border-flash-orange hover:shadow-xs transition-all group flex items-center gap-3"
-              >
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-mist-gray text-zinc-600 group-hover:text-flash-orange transition-colors">
-                  <Smartphone className="h-4 w-4" />
-                </div>
-                <div className="overflow-hidden">
-                  <span className="text-xs sm:text-sm font-bold text-tech-slate group-hover:text-flash-orange transition-colors truncate block">
-                    {model.name}
-                  </span>
-                  {model.releaseYear && (
-                    <span className="text-3xs text-text-muted font-mono">
-                      {model.releaseYear}
+          {models.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              {models.map((model) => (
+                <Link
+                  key={model.slug}
+                  href={`/brands/${brand.slug}/${model.slug}`}
+                  className="p-4 rounded-xl bg-clean-white border border-zinc-200 hover:border-flash-orange hover:shadow-xs transition-all group flex items-center gap-3"
+                >
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-mist-gray text-zinc-600 group-hover:text-flash-orange group-hover:bg-orange-50 transition-colors">
+                    <Smartphone className="h-4 w-4" />
+                  </div>
+                  <div className="overflow-hidden">
+                    <span className="text-xs sm:text-sm font-bold text-tech-slate group-hover:text-flash-orange transition-colors truncate block">
+                      {model.name}
                     </span>
-                  )}
-                </div>
-              </Link>
-            ))}
-          </div>
+                    {model.releaseYear && (
+                      <span className="text-3xs text-text-muted font-mono">
+                        {model.releaseYear}
+                      </span>
+                    )}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="p-8 text-center bg-clean-white rounded-2xl border border-zinc-200">
+              <Smartphone className="h-8 w-8 text-zinc-400 mx-auto mb-2" />
+              <h3 className="font-heading font-bold text-sm text-tech-slate">
+                {t("models.emptyTitle", { brandName: brand.name })}
+              </h3>
+              <p className="text-xs text-zinc-500 mt-1">
+                {t("models.emptySubtitle", { brandName: brand.name })}
+              </p>
+            </div>
+          )}
         </Container>
       </Section>
 
@@ -200,10 +270,10 @@ export default async function BrandDetailPage({
         <Container>
           <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
-              Our {brand.name} Service Standards
+              {t("standards.title", { brandName: brand.name })}
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-zinc-600">
-              Why thousands of smartphone owners across Pune trust QuickFix for certified repairs.
+              {t("standards.subtitle")}
             </p>
           </div>
 
@@ -233,57 +303,59 @@ export default async function BrandDetailPage({
         </Container>
       </Section>
 
-      {/* 4. Common Repairs for this Brand */}
-      <Section variant="muted" padding="default">
-        <Container>
-          <div className="max-w-3xl mb-8">
-            <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
-              Popular Repairs for {brand.name} Phones
-            </h2>
-            <p className="mt-2 text-xs sm:text-sm text-zinc-600">
-              All services performed live on-site with zero hidden diagnostic fees.
-            </p>
-          </div>
+      {/* 4. Common Repairs for this Brand (Loaded from DB) */}
+      {services && services.length > 0 && (
+        <Section variant="muted" padding="default">
+          <Container>
+            <div className="max-w-3xl mb-8">
+              <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
+                Popular Repairs for {brand.name} Phones
+              </h2>
+              <p className="mt-2 text-xs sm:text-sm text-zinc-600">
+                All services performed live on-site with zero hidden diagnostic fees.
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {services.slice(0, 6).map((service) => (
-              <Link
-                key={service.slug}
-                href={`/services/${service.slug}`}
-                className="p-5 rounded-2xl bg-clean-white border border-zinc-200/90 hover:border-flash-orange/50 hover:shadow-md transition-all flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <span className="text-xs font-bold text-flash-orange uppercase tracking-wider">
-                      {service.name.split("&")[0].trim()}
-                    </span>
-                    <span className="text-xs font-bold text-zinc-500">
-                      from ₹{service.startingPrice}
-                    </span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {services.slice(0, 6).map((service) => (
+                <Link
+                  key={service.slug}
+                  href={`/services/${service.slug}`}
+                  className="p-5 rounded-2xl bg-clean-white border border-zinc-200/90 hover:border-flash-orange/50 hover:shadow-md transition-all flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-2 mb-2">
+                      <span className="text-xs font-bold text-flash-orange uppercase tracking-wider">
+                        {service.name.split("&")[0].trim()}
+                      </span>
+                      <span className="text-xs font-bold text-zinc-500">
+                        from ₹{service.startingPrice}
+                      </span>
+                    </div>
+                    <h3 className="font-heading text-base font-bold text-tech-slate group-hover:text-flash-orange transition-colors">
+                      {service.name}
+                    </h3>
+                    <p className="mt-1.5 text-xs text-zinc-600 leading-relaxed line-clamp-2">
+                      {service.description}
+                    </p>
                   </div>
-                  <h3 className="font-heading text-base font-bold text-tech-slate group-hover:text-flash-orange transition-colors">
-                    {service.name}
-                  </h3>
-                  <p className="mt-1.5 text-xs text-zinc-600 leading-relaxed line-clamp-2">
-                    {service.description}
-                  </p>
-                </div>
-                <div className="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between text-xs font-bold text-flash-orange">
-                  <span>View Details & Pricing</span>
-                  <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </Link>
-            ))}
-          </div>
-        </Container>
-      </Section>
+                  <div className="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between text-xs font-bold text-flash-orange">
+                    <span>View Details & Pricing</span>
+                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </Container>
+        </Section>
+      )}
 
       {/* 5. CTA Block */}
       <Section variant="white" padding="default">
         <Container>
           <CTABlock
-            title={`Get Your ${brand.name} Repaired Today`}
-            subtitle="Doorstep technicians ready across Pune. Book in 60 seconds with no upfront fee."
+            title={t("cta.title", { brandName: brand.name })}
+            subtitle={t("cta.subtitle")}
           />
         </Container>
       </Section>

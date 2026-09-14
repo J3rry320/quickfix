@@ -13,13 +13,9 @@ import {
   ArrowRight,
   ArrowLeft,
   Check,
-  CheckCircle2,
-  Lock,
   ShieldCheck,
-  BadgeIndianRupee,
 } from "lucide-react";
 import { useBookingWizard } from "./BookingWizardContext";
-import { ServiceItem } from "./types";
 
 function getServiceIcon(slug: string, name: string) {
   const s = `${slug} ${name}`.toLowerCase();
@@ -68,7 +64,11 @@ export default function StageServiceSelect() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="font-heading text-xl sm:text-2xl font-black text-tech-slate tracking-tight">
+        <h2
+          id="stage-heading"
+          tabIndex={-1}
+          className="font-heading text-xl sm:text-2xl font-black text-tech-slate tracking-tight outline-hidden"
+        >
           2. What needs to be repaired?
         </h2>
         <p className="mt-1 text-xs sm:text-sm text-text-muted font-body">
@@ -86,12 +86,16 @@ export default function StageServiceSelect() {
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
-              className="h-20 rounded-2xl bg-zinc-100 animate-pulse border border-zinc-200"
+              className="h-20 rounded-xl bg-zinc-100 animate-pulse border border-zinc-200"
             />
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+        <div
+          role="radiogroup"
+          aria-label="Select repair service"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3"
+        >
           {services.map((service) => {
             const isSelected =
               selectedService?.slug === service.slug ||
@@ -102,8 +106,10 @@ export default function StageServiceSelect() {
               <button
                 type="button"
                 key={service.slug}
+                role="radio"
+                aria-checked={isSelected}
                 onClick={() => handleSelectService(service)}
-                className={`p-3.5 rounded-2xl text-left border transition-all cursor-pointer flex items-center justify-between gap-3 focus-visible:ring-2 focus-visible:ring-flash-orange focus-visible:outline-hidden ${
+                className={`p-3.5 rounded-xl text-left border transition-all cursor-pointer flex items-center justify-between gap-3 focus-visible:ring-2 focus-visible:ring-flash-orange focus-visible:outline-hidden ${
                   isSelected
                     ? "border-flash-orange bg-flash-orange/5 text-tech-slate shadow-xs ring-2 ring-flash-orange/20"
                     : "border-border-default bg-clean-white text-zinc-700 hover:border-zinc-300 hover:bg-zinc-50"
@@ -136,7 +142,7 @@ export default function StageServiceSelect() {
                   {isSelected ? (
                     <div className="mt-1 flex justify-end">
                       <div className="h-4 w-4 rounded-full bg-flash-orange text-clean-white flex items-center justify-center">
-                        <Check className="h-2.5 w-2.5 stroke-[3]" />
+                        <Check className="h-2.5 w-2.5 stroke-[3]" aria-hidden="true" />
                       </div>
                     </div>
                   ) : (
@@ -150,14 +156,14 @@ export default function StageServiceSelect() {
       )}
 
       {/* Optional Issue Description / Notes */}
-      <div className="pt-2">
+      <div className="pt-1">
         {!showNotes ? (
           <button
             type="button"
             onClick={() => setShowNotes(true)}
             className="text-xs font-semibold text-flash-orange hover:underline cursor-pointer flex items-center gap-1"
           >
-            <span>+ Add specific notes or problem details (optional)</span>
+            <span>+ Add specific problem notes (optional)</span>
           </button>
         ) : (
           <div className="space-y-1.5 animate-in fade-in duration-200">
@@ -170,10 +176,10 @@ export default function StageServiceSelect() {
             <textarea
               id="additionalNotes"
               rows={2}
-              placeholder="e.g., Happened after dropping in water, touch works intermittently, lines on screen..."
+              placeholder="e.g., Happened after dropping, touch works intermittently, lines on screen..."
               value={formData.additionalNotes || ""}
               onChange={(e) => updateFormData({ additionalNotes: e.target.value })}
-              className="w-full rounded-2xl border border-border-default bg-zinc-50/70 p-3 text-xs sm:text-sm font-medium text-tech-slate placeholder:text-zinc-400 focus:bg-clean-white focus-visible:ring-2 focus-visible:ring-flash-orange focus-visible:outline-hidden transition-all"
+              className="w-full rounded-xl border border-border-default bg-zinc-50/70 p-3 text-xs sm:text-sm font-medium text-tech-slate placeholder:text-zinc-400 focus:bg-clean-white focus-visible:ring-2 focus-visible:ring-flash-orange focus-visible:outline-hidden transition-all"
             />
           </div>
         )}
@@ -181,25 +187,25 @@ export default function StageServiceSelect() {
 
       {/* Estimate Box (Only when service is chosen) */}
       {selectedService && (
-        <div className="rounded-2xl bg-zinc-50/80 border border-border-default/80 p-4 sm:p-5 animate-in fade-in slide-in-from-top-2 duration-200">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <div>
-              <span className="text-2xs font-bold uppercase tracking-wider text-flash-orange block mb-0.5">
-                Estimated Price
-              </span>
-              <h3 className="font-heading text-base font-black text-tech-slate">
-                {selectedService.name}
-              </h3>
-              <p className="text-xs text-text-muted mt-0.5">
-                {formData.brand} {formData.model} • Includes parts & labor
-              </p>
+        <div className="rounded-xl bg-zinc-50 border border-border-default/80 p-3.5 sm:p-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-200">
+                <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+              </div>
+              <div className="min-w-0">
+                <p className="font-heading text-xs sm:text-sm font-bold text-tech-slate truncate">
+                  {selectedService.name} • 90-Day Warranty
+                </p>
+                <p className="text-2xs text-text-muted">Includes genuine parts, labor & free doorstep pickup</p>
+              </div>
             </div>
-            <div className="sm:text-right">
-              <span className="font-heading text-2xl font-black text-tech-slate tabular-nums block">
+            <div className="text-right shrink-0">
+              <span className="font-heading text-base sm:text-lg font-black text-tech-slate tabular-nums block">
                 ₹{(dynamicPrice || selectedService.startingPrice).toLocaleString("en-IN")}
               </span>
-              <span className="text-2xs text-text-muted">
-                90-day warranty included
+              <span className="text-2xs text-emerald-600 font-medium block">
+                Pay after service
               </span>
             </div>
           </div>
@@ -234,3 +240,4 @@ export default function StageServiceSelect() {
     </div>
   );
 }
+

@@ -13,6 +13,7 @@ import {
   Plus,
   Layers,
   BookOpen,
+  FileText,
 } from "lucide-react";
 import AdminShell from "@/components/admin/AdminShell";
 import { Skeleton } from "@/components/ui/Skeleton";
@@ -47,9 +48,9 @@ interface StatsData {
   recentRequests: Array<{
     _id: string;
     bookingReference: string;
-    customer: { name: string; phone: string };
-    device: { brand: string; model: string };
-    service: { name: string };
+    customer?: { name?: string; phone?: string };
+    device?: { brand?: string; model?: string };
+    service?: { name?: string } | string | null;
     pricing?: { estimatedPrice?: number; finalPrice?: number };
     status: string;
     createdAt: string;
@@ -355,16 +356,29 @@ export default function AdminDashboardPage() {
                         </span>
                         <span className="text-zinc-400">•</span>
                         <span className="text-zinc-600 truncate">
-                          {req.customer.name}
+                          {req.customer?.name || "Customer"}
                         </span>
                       </div>
                       <p className="text-[11px] text-zinc-500 truncate">
-                        {req.device.brand} {req.device.model} ({req.service.name})
+                        {req.device?.brand || "Device"} {req.device?.model || ""}
+                        {typeof req.service === "object" && req.service?.name
+                          ? ` (${req.service.name})`
+                          : typeof req.service === "string"
+                          ? ` (${req.service})`
+                          : ""}
                       </p>
                     </div>
 
                     <div className="flex items-center gap-2 shrink-0">
                       <AdminStatusBadge status={req.status} />
+                      <Link
+                        href={`/admin/repairs/${req._id}/jobsheet`}
+                        target="_blank"
+                        className="p-1 rounded-md text-zinc-400 hover:text-flash-orange hover:bg-orange-50 transition-colors"
+                        title="Job Sheet PDF"
+                      >
+                        <FileText className="h-3.5 w-3.5" />
+                      </Link>
                     </div>
                   </div>
                 ))}

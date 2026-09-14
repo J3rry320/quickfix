@@ -87,11 +87,19 @@ export function withPublicApi<P = Record<string, string>>(
     } catch (error) {
       console.error("[Public API Handler Error]", error);
       if (error instanceof ZodError) {
+        const fieldErrors: Record<string, string> = {};
+        for (const issue of error.issues) {
+          const path = issue.path.join(".");
+          if (!fieldErrors[path]) {
+            fieldErrors[path] = issue.message;
+          }
+        }
+        const firstMessage = error.issues[0]?.message || "Validation failed";
         return apiError(
-          "Validation error",
+          firstMessage,
           400,
           "VALIDATION_ERROR",
-          error.issues
+          fieldErrors
         );
       }
       const message =

@@ -20,7 +20,6 @@ export const GET = withAdminAuth(async (request: NextRequest) => {
     [
       "pending",
       "confirmed",
-      "technician_assigned",
       "in_progress",
       "completed",
       "cancelled",

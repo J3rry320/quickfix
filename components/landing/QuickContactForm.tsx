@@ -17,6 +17,7 @@ import SectionHeader from "@/components/landing/SectionHeader";
 import contactConfig from "@/config/contact";
 import GoogleMapEmbed from "@/components/contact/GoogleMapEmbed";
 import { FormLoadingState, FormSuccessState } from "@/components/ui/form-states";
+import { quickContactSchema } from "@/lib/validations/contact";
 
 export default function QuickContactForm() {
   const t = useTranslations("ContactSection");
@@ -30,18 +31,45 @@ export default function QuickContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  const clearFieldError = (fieldName: string) => {
+    setFieldErrors((prev) => {
+      if (!prev[fieldName]) return prev;
+      const next = { ...prev };
+      delete next[fieldName];
+      return next;
+    });
+  };
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setIsSubmitting(true);
     setErrorMessage("");
+    setFieldErrors({});
 
     const cleanPhone = phone.replace(/\D/g, "");
-    if (!/^[6-9]\d{9}$/.test(cleanPhone)) {
-      setErrorMessage("Please enter a valid 10-digit mobile number (e.g. 8308686454)");
-      setIsSubmitting(false);
+
+    const result = quickContactSchema.safeParse({
+      name: name.trim(),
+      phone: cleanPhone,
+      area: area.trim() || undefined,
+      message: message.trim() || undefined,
+    });
+
+    if (!result.success) {
+      const errors: Record<string, string> = {};
+      for (const issue of result.error.issues) {
+        const key = issue.path[issue.path.length - 1] as string;
+        if (key && !errors[key]) {
+          errors[key] = issue.message;
+        }
+      }
+      setFieldErrors(errors);
+      setErrorMessage(result.error.issues[0]?.message || "Please check the highlighted fields.");
       return;
     }
+
+    setIsSubmitting(true);
 
     try {
       const res = await fetch("/api/contacts", {
@@ -62,6 +90,14 @@ export default function QuickContactForm() {
 
       const data = await res.json();
       if (!res.ok || !data.success) {
+        if (data.error?.details && typeof data.error.details === "object") {
+          const sErrors: Record<string, string> = {};
+          for (const [k, v] of Object.entries(data.error.details)) {
+            const field = k.split(".").pop() || k;
+            sErrors[field] = String(v);
+          }
+          setFieldErrors(sErrors);
+        }
         throw new Error(data.error?.message || "Failed to submit request.");
       }
 
@@ -206,7 +242,7 @@ export default function QuickContactForm() {
                     </p>
                   </div>
 
-                  {errorMessage && (
+                  {errorMessage && Object.keys(fieldErrors).length === 0 && (
                     <div className="rounded-xl bg-error-light border border-error-border p-3.5 flex items-center gap-2.5 text-xs text-error font-medium animate-in fade-in">
                       <AlertCircle className="h-4 w-4 shrink-0 text-error" />
                       <span>{errorMessage}</span>
@@ -223,9 +259,24 @@ export default function QuickContactForm() {
                         required
                         placeholder={t("namePlaceholder")}
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="w-full rounded-xl border border-border-default bg-surface-hover/50 px-3.5 py-2.5 text-sm font-medium text-tech-slate placeholder:text-text-muted focus:bg-clean-white focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/15 transition-all"
+                        onChange={(e) => {
+                          setName(e.target.value);
+                          clearFieldError("name");
+                        }}
+                        aria-invalid={Boolean(fieldErrors.name)}
+                        aria-describedby={fieldErrors.name ? "quick-name-error" : undefined}
+                        className={`w-full rounded-xl border bg-surface-hover/50 px-3.5 py-2.5 text-sm font-medium text-tech-slate placeholder:text-text-muted focus:bg-clean-white focus:outline-hidden focus:ring-2 transition-all ${
+                          fieldErrors.name
+                            ? "border-red-500 focus:ring-red-500/15"
+                            : "border-border-default focus:border-flash-orange focus:ring-flash-orange/15"
+                        }`}
                       />
+                      {fieldErrors.name && (
+                        <p id="quick-name-error" className="mt-1 text-2xs text-red-600 flex items-center gap-1 font-medium animate-in fade-in duration-150">
+                          <AlertCircle className="h-3 w-3 shrink-0" aria-hidden="true" />
+                          <span>{fieldErrors.name}</span>
+                        </p>
+                      )}
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-tech-slate mb-1.5">
@@ -240,9 +291,24 @@ export default function QuickContactForm() {
                           phone: contactConfig.phone.tenDigit,
                         })}
                         value={phone}
-                        onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
-                        className="w-full rounded-xl border border-border-default bg-surface-hover/50 px-3.5 py-2.5 text-sm font-medium text-tech-slate placeholder:text-text-muted focus:bg-clean-white focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/15 transition-all"
+                        onChange={(e) => {
+                          setPhone(e.target.value.replace(/\D/g, ""));
+                          clearFieldError("phone");
+                        }}
+                        aria-invalid={Boolean(fieldErrors.phone)}
+                        aria-describedby={fieldErrors.phone ? "quick-phone-error" : undefined}
+                        className={`w-full rounded-xl border bg-surface-hover/50 px-3.5 py-2.5 text-sm font-medium text-tech-slate placeholder:text-text-muted focus:bg-clean-white focus:outline-hidden focus:ring-2 transition-all ${
+                          fieldErrors.phone
+                            ? "border-red-500 focus:ring-red-500/15"
+                            : "border-border-default focus:border-flash-orange focus:ring-flash-orange/15"
+                        }`}
                       />
+                      {fieldErrors.phone && (
+                        <p id="quick-phone-error" className="mt-1 text-2xs text-red-600 flex items-center gap-1 font-medium animate-in fade-in duration-150">
+                          <AlertCircle className="h-3 w-3 shrink-0" aria-hidden="true" />
+                          <span>{fieldErrors.phone}</span>
+                        </p>
+                      )}
                     </div>
                   </div>
 

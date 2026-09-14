@@ -32,11 +32,6 @@ export interface IRepairRequestPricing {
   paymentMethod?: "cash" | "upi" | "card" | "online";
 }
 
-export interface IRepairRequestTechnician {
-  name?: string;
-  phone?: string;
-}
-
 export interface IRepairRequestWarranty {
   warrantyExpiry?: Date;
   notes?: string;
@@ -54,11 +49,9 @@ export interface IRepairRequest extends Document {
   status:
     | "pending"
     | "confirmed"
-    | "technician_assigned"
     | "in_progress"
     | "completed"
     | "cancelled";
-  technician?: IRepairRequestTechnician;
   pricing: IRepairRequestPricing;
   warranty?: IRepairRequestWarranty;
   locale: "en" | "hi" | "mr";
@@ -166,17 +159,12 @@ const RepairRequestSchema = new Schema<IRepairRequest>(
       enum: [
         "pending",
         "confirmed",
-        "technician_assigned",
         "in_progress",
         "completed",
         "cancelled",
       ],
       default: "pending",
       index: true,
-    },
-    technician: {
-      name: { type: String, trim: true },
-      phone: { type: String, trim: true },
     },
     pricing: {
       estimatedPrice: { type: Number, min: 0 },

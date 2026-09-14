@@ -15,8 +15,19 @@ import StageConfirmBooking from "./StageConfirmBooking";
 import { FormLoadingState, FormSuccessState } from "@/components/ui/form-states";
 
 function BookingWizardContent() {
-  const { currentStage, errorMessage, isSubmitting, bookingSuccess, formData, resetWizard } =
-    useBookingWizard();
+  const {
+    currentStage,
+    errorMessage,
+    fieldErrors,
+    isSubmitting,
+    bookingSuccess,
+    formData,
+    dynamicPrice,
+    selectedService,
+    resetWizard,
+  } = useBookingWizard();
+
+  const showTopError = Boolean(errorMessage && Object.keys(fieldErrors).length === 0);
 
   if (isSubmitting) {
     return (
@@ -28,6 +39,7 @@ function BookingWizardContent() {
   }
 
   if (bookingSuccess) {
+    const estimatedCost = dynamicPrice || selectedService?.startingPrice || 0;
     return (
       <FormSuccessState
         title="Doorstep Pickup Scheduled!"
@@ -43,6 +55,14 @@ function BookingWizardContent() {
             label: "Doorstep Address",
             value: `${formData.streetAddress}${formData.area ? ` (${formData.area})` : ""}`,
           },
+          ...(estimatedCost > 0
+            ? [
+                {
+                  label: "Estimated Cost",
+                  value: `₹${estimatedCost.toLocaleString("en-IN")}`,
+                },
+              ]
+            : []),
         ]}
         onReset={resetWizard}
         resetLabel="Book Another Repair"
@@ -56,13 +76,13 @@ function BookingWizardContent() {
       <WizardProgress />
 
       {/* Main Booking Card */}
-      <div className="rounded-3xl border border-border-default/90 bg-clean-white p-5 sm:p-8 shadow-xs">
-        {/* Error Alert */}
-        {errorMessage && (
+      <div className="rounded-2xl border border-border-default/90 bg-clean-white p-5 sm:p-7 shadow-xs">
+        {/* Error Alert (only for non-field general errors) */}
+        {showTopError && (
           <div
             role="alert"
             aria-live="polite"
-            className="mb-6 rounded-2xl bg-red-50 border border-red-200 p-3.5 flex items-center gap-2.5 text-xs sm:text-sm text-red-700 font-medium animate-in fade-in"
+            className="mb-5 rounded-xl bg-red-50 border border-red-200 p-3.5 flex items-center gap-2.5 text-xs sm:text-sm text-red-700 font-medium animate-in fade-in"
           >
             <AlertCircle className="h-4 w-4 shrink-0 text-red-600" aria-hidden="true" />
             <span>{errorMessage}</span>

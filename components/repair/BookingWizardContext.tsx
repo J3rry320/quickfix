@@ -11,6 +11,12 @@ import {
   BookingFormData,
   QuickSlot,
 } from "./types";
+import {
+  stageDeviceSchema,
+  stageServiceSchema,
+  stageConfirmSchema,
+  formatZodIssues,
+} from "@/lib/validations/booking";
 
 export const QUICK_SLOTS: QuickSlot[] = [
   {
@@ -81,9 +87,10 @@ interface BookingWizardContextType {
   getSlotDisabledReason: (slotId: string) => string | null;
   isTimeWindowAvailableForDate: (timeWindow: string, dateStr: string) => boolean;
 
-  // Status
+  // Status & Validation
   errorMessage: string;
   setErrorMessage: (msg: string) => void;
+  fieldErrors: Record<string, string>;
   isSubmitting: boolean;
   bookingSuccess: BookingSuccessData | null;
 
@@ -112,6 +119,7 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
   // 3-Stage flow: 1 = Device (Brand + Model), 2 = Service, 3 = Details & Schedule
   const [currentStage, setCurrentStage] = useState<1 | 2 | 3>(1);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [bookingSuccess, setBookingSuccess] = useState<BookingSuccessData | null>(null);
 
@@ -255,7 +263,7 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
 
   // Auto-switch to earliest available slot based on current time
   useEffect(() => {
-    if (currentTimeInMinutes === null) return;
+    if (currentTimeInMinutes === null || useCustomSlot) return;
 
     const isExpressAvail = currentTimeInMinutes <= 1215;
     const isAfternoonAvail = currentTimeInMinutes < 930;
@@ -275,8 +283,11 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
       (selectedSlotId === "today-evening" && isEveningAvail) ||
       selectedSlotId === "tomorrow-morning";
 
-    if (!isCurrentlySelectedValid && !useCustomSlot) {
-      handleSelectQuickSlot(earliestAvailableSlot);
+    if (!isCurrentlySelectedValid) {
+      const timer = setTimeout(() => {
+        handleSelectQuickSlot(earliestAvailableSlot);
+      }, 0);
+      return () => clearTimeout(timer);
     }
   }, [currentTimeInMinutes, selectedSlotId, useCustomSlot, handleSelectQuickSlot]);
 
@@ -503,69 +514,130 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
 
   const updateFormData = useCallback((partial: Partial<BookingFormData>) => {
     setFormData((prev) => ({ ...prev, ...partial }));
+    // Instantly clear field-level error when user updates a field
+    setFieldErrors((prev) => {
+      const keys = Object.keys(partial);
+      let hasChanged = false;
+      const next = { ...prev };
+      for (const k of keys) {
+        if (next[k]) {
+          delete next[k];
+          hasChanged = true;
+        }
+      }
+      return hasChanged ? next : prev;
+    });
+  }, []);
+
+  // Focus management helper for accessible stage transitions
+  const focusStageHeading = useCallback(() => {
+    setTimeout(() => {
+      const heading = document.getElementById("stage-heading");
+      if (heading) {
+        heading.focus();
+      }
+    }, 60);
   }, []);
 
   // Stage Navigation
   const setStage = useCallback((stage: 1 | 2 | 3) => {
     setErrorMessage("");
+    setFieldErrors({});
     setCurrentStage(stage);
     window.scrollTo({ top: 80, behavior: "smooth" });
-  }, []);
+    focusStageHeading();
+  }, [focusStageHeading]);
 
   const goToNextStage = useCallback(() => {
     setErrorMessage("");
+    setFieldErrors({});
+
     if (currentStage === 1) {
-      if (!formData.brand.trim()) {
-        setErrorMessage("Please select your phone brand.");
+      const parseRes = stageDeviceSchema.safeParse({
+        brand: formData.brand,
+        model: formData.model,
+      });
+
+      if (!parseRes.success) {
+        const issues = formatZodIssues(parseRes.error.issues);
+        setFieldErrors(issues);
+        setErrorMessage(parseRes.error.issues[0]?.message || "Please complete device selection.");
         return;
       }
-      if (!formData.model.trim()) {
-        setErrorMessage("Please select or enter your device model.");
-        return;
-      }
+
       setCurrentStage(2);
       window.scrollTo({ top: 80, behavior: "smooth" });
+      focusStageHeading();
     } else if (currentStage === 2) {
-      if (!formData.issueDescription.trim()) {
-        setErrorMessage("Please select the repair service or issue needed.");
+      const parseRes = stageServiceSchema.safeParse({
+        issueDescription: formData.issueDescription,
+        additionalNotes: formData.additionalNotes,
+      });
+
+      if (!parseRes.success) {
+        const issues = formatZodIssues(parseRes.error.issues);
+        setFieldErrors(issues);
+        setErrorMessage(parseRes.error.issues[0]?.message || "Please select a repair service.");
         return;
       }
+
       setCurrentStage(3);
       window.scrollTo({ top: 80, behavior: "smooth" });
+      focusStageHeading();
     }
-  }, [currentStage, formData.brand, formData.model, formData.issueDescription]);
+  }, [currentStage, formData.brand, formData.model, formData.issueDescription, formData.additionalNotes, focusStageHeading]);
 
   const goToPrevStage = useCallback(() => {
     setErrorMessage("");
+    setFieldErrors({});
     if (currentStage > 1) {
       setCurrentStage((prev) => (prev - 1) as 1 | 2 | 3);
       window.scrollTo({ top: 80, behavior: "smooth" });
+      focusStageHeading();
     }
-  }, [currentStage]);
+  }, [currentStage, focusStageHeading]);
 
-  // Submission handler
+  // Submission handler with Zod validation
   const submitBooking = useCallback(async () => {
     setErrorMessage("");
-
-    if (!formData.name.trim() || formData.name.trim().length < 2) {
-      setErrorMessage("Please enter your full name.");
-      return;
-    }
+    setFieldErrors({});
 
     const cleanPhone = formData.phone.replace(/\D/g, "");
-    if (!/^[6-9]\d{9}$/.test(cleanPhone)) {
-      setErrorMessage("Please enter a valid 10-digit mobile number (e.g. 8308686454).");
-      return;
-    }
+    const cleanPincode = formData.pincode.replace(/\D/g, "");
 
-    if (!formData.streetAddress.trim() || formData.streetAddress.trim().length < 3) {
-      setErrorMessage("Please enter your doorstep address (Flat/Society/Street).");
+    // 1. Client-side Zod validation
+    const parseRes = stageConfirmSchema.safeParse({
+      name: formData.name,
+      phone: cleanPhone,
+      area: formData.area,
+      streetAddress: formData.streetAddress,
+      pincode: cleanPincode,
+      date: formData.date,
+      timeSlot: formData.timeSlot,
+    });
+
+    if (!parseRes.success) {
+      const issues = formatZodIssues(parseRes.error.issues);
+      setFieldErrors(issues);
+      setErrorMessage(parseRes.error.issues[0]?.message || "Please complete all required fields.");
+
+      // Focus first invalid input
+      const firstKey = parseRes.error.issues[0]?.path[0];
+      if (typeof firstKey === "string") {
+        setTimeout(() => {
+          const el = document.querySelector(
+            `#${firstKey}Input, #${firstKey}, input[name="${firstKey}"]`
+          ) as HTMLElement;
+          el?.focus?.();
+        }, 50);
+      }
       return;
     }
 
     setIsSubmitting(true);
 
     try {
+      const finalPrice = dynamicPrice || selectedService?.startingPrice || 0;
       const payload = {
         customer: {
           name: formData.name.trim(),
@@ -575,6 +647,11 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
           brand: formData.brand.trim() || "Smartphone",
           model: formData.model.trim(),
         },
+        service: selectedService?._id ? String(selectedService._id) : undefined,
+        pricing: {
+          estimatedPrice: finalPrice > 0 ? finalPrice : undefined,
+          paymentStatus: "unpaid" as const,
+        },
         issueDescription: formData.additionalNotes?.trim()
           ? `${formData.issueDescription.trim()} - Notes: ${formData.additionalNotes.trim()}`
           : formData.issueDescription.trim(),
@@ -582,7 +659,7 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
         address: {
           area: formData.area.trim() || "Pune",
           streetAddress: formData.streetAddress.trim(),
-          pincode: formData.pincode.trim() || "411030",
+          pincode: cleanPincode || "411030",
           city: "Pune",
         },
         preferredSlot: {
@@ -604,6 +681,14 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
       const data = await res.json();
 
       if (!res.ok || !data.success) {
+        if (data.error?.details && typeof data.error.details === "object") {
+          const serverErrors: Record<string, string> = {};
+          for (const [key, msg] of Object.entries(data.error.details)) {
+            const fieldName = key.split(".").pop() || key;
+            serverErrors[fieldName] = String(msg);
+          }
+          setFieldErrors(serverErrors);
+        }
         throw new Error(
           data.error?.message || "Failed to schedule repair. Please call our helpline."
         );
@@ -621,7 +706,7 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
     } finally {
       setIsSubmitting(false);
     }
-  }, [formData, locale]);
+  }, [formData, locale, selectedService, dynamicPrice]);
 
   const resetWizard = useCallback(() => {
     setBookingSuccess(null);
@@ -633,6 +718,7 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
     setHasPreFilled(false);
     setModelInput("");
     setErrorMessage("");
+    setFieldErrors({});
     setUseCustomSlot(false);
 
     const isAllTodayClosed = currentTimeInMinutes !== null && currentTimeInMinutes > 1215;
@@ -689,6 +775,7 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
       isTimeWindowAvailableForDate,
       errorMessage,
       setErrorMessage,
+      fieldErrors,
       isSubmitting,
       bookingSuccess,
       handleSelectBrand,
@@ -732,13 +819,17 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
       getSlotDisabledReason,
       isTimeWindowAvailableForDate,
       errorMessage,
+      setErrorMessage,
+      fieldErrors,
       isSubmitting,
       bookingSuccess,
       handleSelectBrand,
       handleSelectModel,
       handleSelectService,
+      setModelInput,
       updateFormData,
       handleSelectQuickSlot,
+      setUseCustomSlot,
       submitBooking,
       resetWizard,
     ]

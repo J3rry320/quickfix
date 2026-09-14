@@ -36,3 +36,6 @@ export type { CoverageMapViewProps } from "./CoverageMapView";
 
 export { FormLoadingState, FormSuccessState, FormErrorState } from "./form-states";
 export type { FormLoadingStateProps, FormSuccessStateProps, FormErrorStateProps } from "./form-states";
+
+export { default as HeroMediaImage } from "./HeroMediaImage";
+export { default as BrandLogo } from "./BrandLogo";

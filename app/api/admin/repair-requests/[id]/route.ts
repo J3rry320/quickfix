@@ -42,15 +42,6 @@ export const PATCH = withAdminAuth<{ id: string }>(
       updateFields.status = validated.status;
     }
 
-    if (validated.technician) {
-      if (validated.technician.name !== undefined) {
-        updateFields["technician.name"] = validated.technician.name;
-      }
-      if (validated.technician.phone !== undefined) {
-        updateFields["technician.phone"] = validated.technician.phone;
-      }
-    }
-
     if (validated.pricing) {
       if (validated.pricing.estimatedPrice !== undefined) {
         updateFields["pricing.estimatedPrice"] = validated.pricing.estimatedPrice;

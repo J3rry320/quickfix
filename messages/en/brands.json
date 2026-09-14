@@ -1,0 +1,102 @@
+{
+  "BrandDetail": {
+    "breadcrumbs": {
+      "home": "Home",
+      "brands": "Brands"
+    },
+    "hero": {
+      "title": "{brandName} Doorstep Repair in Pune",
+      "subtitle": "Professional on-site hardware repair for all {brandName} smartphones across Pune. Certified technicians arrive at your home or workplace equipped with antistatic workstations, OEM displays, and high-capacity battery units.",
+      "badge": "Certified Brand Support",
+      "highlights": {
+        "turnaround": "Turnaround",
+        "turnaroundVal": "30 Mins On-Site",
+        "privacy": "Privacy",
+        "privacyVal": "100% Data Safe",
+        "warranty": "Warranty",
+        "warrantyVal": "90-Day Guarantee",
+        "dispatch": "Dispatch",
+        "dispatchVal": "Within 30 Mins"
+      },
+      "actions": {
+        "bookBrand": "Book {brandName} Repair",
+        "callUs": "Call {phone}"
+      },
+      "logoAlt": "{brandName} Official Logo",
+      "logoFallback": "{brandName}"
+    },
+    "models": {
+      "title": "Select Your {brandName} Model",
+      "subtitle": "Choose your device model to view exact replacement pricing for displays, batteries, and camera lenses.",
+      "viewModels": "View Models",
+      "emptyTitle": "No Models Found for {brandName}",
+      "emptySubtitle": "Contact our Pune helpline for custom {brandName} model repair quotes."
+    },
+    "standards": {
+      "title": "Our {brandName} Service Standards",
+      "subtitle": "Why thousands of smartphone owners across Pune trust QuickFix for certified repairs.",
+      "oemTitle": "Genuine OEM-Grade Components",
+      "oemDesc": "Every replacement display, battery, and flex board used for {brandName} matches original equipment manufacturer specs.",
+      "dataTitle": "Zero Passwords or Data Risk",
+      "dataDesc": "Repaired right in your living room or office desk. You never give away passwords or leave your device unattended.",
+      "liveTitle": "30-Minute Live Service",
+      "liveDesc": "Fast precision disassembly and reassembly executed on antistatic mats with specialized thermal tools.",
+      "warrantyTitle": "90-Day Replacement Warranty",
+      "warrantyDesc": "Instant digital warranty card provided. If any touch or battery malfunction occurs, we replace it at no charge."
+    },
+    "process": {
+      "title": "Our 4-Step Repair Experience in Pune",
+      "subtitle": "From doorstep dispatch to functional handover in 30 minutes."
+    },
+    "cta": {
+      "title": "Ready to Fix Your {brandName} Today?",
+      "subtitle": "Doorstep technician arrives within 30 minutes anywhere across Pune. Pay only after service satisfaction."
+    }
+  },
+  "ModelDetail": {
+    "breadcrumbs": {
+      "home": "Home",
+      "brands": "Brands"
+    },
+    "hero": {
+      "title": "{modelName} Doorstep Pickup & Lab Repair in Pune",
+      "subtitle": "Professional hardware repair for your {modelName}. Secure doorstep pickup across Pune, precision cleanroom repair in our Sadashiv Peth lab with OEM-grade components, and safe same-day return.",
+      "badge": "Genuine Parts Guaranteed",
+      "highlights": {
+        "turnaround": "Turnaround",
+        "turnaroundVal": "Same-Day Return",
+        "warranty": "Warranty",
+        "warrantyVal": "90 Days Hassle-Free",
+        "privacy": "Privacy",
+        "privacyVal": "Zero Data Risk",
+        "startingFrom": "Starting From"
+      },
+      "actions": {
+        "bookModel": "Book {modelName} Repair",
+        "callHelpline": "Call Helpline: {phone}"
+      },
+      "media": {
+        "badge": "{modelName}",
+        "fallbackLabel": "OEM-grade components and precision repair setup for {modelName}"
+      }
+    },
+    "pricing": {
+      "title": "Repair Services & Pricing for {modelName}",
+      "subtitle": "Upfront, model-specific repair costs. Pricing includes doorstep technician visit and 90-day warranty.",
+      "bookService": "Book This Repair →",
+      "estTime": "Est. Time",
+      "mins": "{minutes} mins",
+      "warranty": "Warranty",
+      "daysWarranty": "{days} Days"
+    },
+    "siblings": {
+      "title": "Other {brandName} Models We Repair",
+      "subtitle": "Select another device model for specific repair pricing and technical details.",
+      "viewPricing": "View Pricing →"
+    },
+    "cta": {
+      "title": "Schedule Your {modelName} Repair Today",
+      "subtitle": "Doorstep technician dispatched in 30 minutes across Pune with 100% genuine parts."
+    }
+  }
+}

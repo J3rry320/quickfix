@@ -57,52 +57,27 @@ export default async function BookRepairPage({
           className="max-w-2xl mb-6 text-center mx-auto"
         />
 
-        {/* Clean & Creative Trust Capsule */}
-        <div className="mb-8 mx-auto max-w-3xl rounded-2xl bg-clean-white border border-border-default/80 p-2 sm:p-2.5 shadow-xs">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2 text-center sm:text-left">
-            {/* Trust Item 1 */}
-            <div className="flex items-center gap-2 rounded-xl p-2 bg-mist-gray/40 hover:bg-mist-gray/70 transition-colors">
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-flash-orange/10 text-flash-orange">
-                <Clock className="h-3.5 w-3.5" aria-hidden="true" />
-              </div>
-              <div className="min-w-0">
-                <p className="font-heading text-xs font-bold text-tech-slate leading-tight truncate">Fast Pickup</p>
-                <p className="text-[10px] text-text-muted leading-tight truncate">At your doorstep</p>
-              </div>
-            </div>
-
-            {/* Trust Item 2 */}
-            <div className="flex items-center gap-2 rounded-xl p-2 bg-mist-gray/40 hover:bg-mist-gray/70 transition-colors">
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600">
-                <Lock className="h-3.5 w-3.5" aria-hidden="true" />
-              </div>
-              <div className="min-w-0">
-                <p className="font-heading text-xs font-bold text-tech-slate leading-tight truncate">Data Protected</p>
-                <p className="text-[10px] text-text-muted leading-tight truncate">Tamper-proof transit</p>
-              </div>
-            </div>
-
-            {/* Trust Item 3 */}
-            <div className="flex items-center gap-2 rounded-xl p-2 bg-mist-gray/40 hover:bg-mist-gray/70 transition-colors">
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-flash-orange/10 text-flash-orange">
-                <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
-              </div>
-              <div className="min-w-0">
-                <p className="font-heading text-xs font-bold text-tech-slate leading-tight truncate">90-Day Warranty</p>
-                <p className="text-[10px] text-text-muted leading-tight truncate">Official warranty card</p>
-              </div>
-            </div>
-
-            {/* Trust Item 4 */}
-            <div className="flex items-center gap-2 rounded-xl p-2 bg-mist-gray/40 hover:bg-mist-gray/70 transition-colors">
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600">
-                <BadgeIndianRupee className="h-3.5 w-3.5" aria-hidden="true" />
-              </div>
-              <div className="min-w-0">
-                <p className="font-heading text-xs font-bold text-tech-slate leading-tight truncate">Free Visit</p>
-                <p className="text-[10px] text-text-muted leading-tight truncate">No travel charges</p>
-              </div>
-            </div>
+        {/* Streamlined Trust Strip */}
+        <div className="mb-6 mx-auto max-w-2xl flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-text-muted">
+          <div className="flex items-center gap-1.5">
+            <Clock className="h-3.5 w-3.5 text-flash-orange shrink-0" aria-hidden="true" />
+            <span className="font-semibold text-tech-slate">Fast Pickup</span>
+            <span className="text-2xs text-text-muted">• Pune-wide</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <Lock className="h-3.5 w-3.5 text-emerald-600 shrink-0" aria-hidden="true" />
+            <span className="font-semibold text-tech-slate">Data Protected</span>
+            <span className="text-2xs text-text-muted">• Safe transit</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <ShieldCheck className="h-3.5 w-3.5 text-flash-orange shrink-0" aria-hidden="true" />
+            <span className="font-semibold text-tech-slate">90-Day Warranty</span>
+            <span className="text-2xs text-text-muted">• Genuine parts</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <BadgeIndianRupee className="h-3.5 w-3.5 text-emerald-600 shrink-0" aria-hidden="true" />
+            <span className="font-semibold text-tech-slate">Free Visit</span>
+            <span className="text-2xs text-text-muted">• Zero travel fee</span>
           </div>
         </div>
 

@@ -18,19 +18,29 @@ export default function FormLoadingState({
     <div
       role="status"
       aria-live="polite"
-      className={`mx-auto max-w-lg rounded-3xl bg-clean-white border border-border-default p-8 sm:p-12 text-center shadow-lg animate-in fade-in duration-300 ${className}`}
+      className={`mx-auto w-full max-w-md rounded-3xl bg-clean-white border border-border-default/90 p-6 sm:p-8 text-center shadow-lg animate-in fade-in zoom-in-95 duration-200 ${className}`}
     >
-      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-flash-orange/10 text-flash-orange mb-4 shadow-2xs">
-        <Loader2 className="h-7 w-7 animate-spin" aria-hidden="true" />
+      <div className="relative mx-auto flex h-14 w-14 items-center justify-center mb-3.5">
+        <div className="absolute inset-0 rounded-2xl bg-flash-orange/15 animate-ping opacity-60" />
+        <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-flash-orange/10 border border-flash-orange/20 text-flash-orange shadow-2xs">
+          <Loader2 className="h-6 w-6 animate-spin stroke-[2.5]" aria-hidden="true" />
+        </div>
       </div>
-      <h3 className="font-heading text-xl sm:text-2xl font-black text-tech-slate tracking-tight">
+
+      <h3 className="font-heading text-lg sm:text-xl font-black text-tech-slate tracking-tight">
         {title}
       </h3>
+
       {subtitle && (
-        <p className="mt-2 text-xs sm:text-sm text-text-muted font-body max-w-sm mx-auto leading-relaxed">
+        <p className="mt-1 text-xs sm:text-sm text-text-muted font-body max-w-xs mx-auto leading-relaxed">
           {subtitle}
         </p>
       )}
+
+      <div className="mt-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-50 border border-zinc-200/70 text-2xs font-semibold text-zinc-500">
+        <span className="w-1.5 h-1.5 rounded-full bg-flash-orange animate-pulse" />
+        <span>QuickFix Live Dispatch</span>
+      </div>
     </div>
   );
 }

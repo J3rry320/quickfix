@@ -35,7 +35,7 @@ export const GET = withAdminAuth(async () => {
     RepairRequest.countDocuments(),
     RepairRequest.countDocuments({ status: "pending" }),
     RepairRequest.countDocuments({
-      status: { $in: ["confirmed", "technician_assigned", "in_progress"] },
+      status: { $in: ["confirmed", "in_progress"] },
     }),
     RepairRequest.countDocuments({ status: "completed" }),
     RepairRequest.countDocuments({ status: "cancelled" }),
@@ -58,6 +58,7 @@ export const GET = withAdminAuth(async () => {
     BlogPost.countDocuments({ status: "published" }),
 
     RepairRequest.find()
+      .populate("service", "name slug startingPrice")
       .sort({ createdAt: -1 })
       .limit(5)
       .select("bookingReference customer device service pricing status createdAt")

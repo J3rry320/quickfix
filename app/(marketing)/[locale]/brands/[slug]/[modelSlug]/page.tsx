@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Clock, ShieldCheck, ArrowRight, Phone, Smartphone, Zap, CheckCircle2, Lock } from "lucide-react";
+import { Clock, ShieldCheck, ArrowRight, Phone, Smartphone, Zap, Lock } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { siteConfig, getModelSeoMetadata } from "@/config/seo";
@@ -13,7 +14,7 @@ import {
 } from "@/lib/db/catalogue";
 import contactConfig from "@/config/contact";
 import JsonLd from "@/components/seo/JsonLd";
-import { Container, Section, AspectBox, CTABlock, PageHero, ProcessStepGrid } from "@/components/ui";
+import { Container, Section, CTABlock, PageHero, ProcessStepGrid, HeroMediaImage } from "@/components/ui";
 
 export async function generateStaticParams() {
   const modelParams = await getStaticModelParams();
@@ -58,17 +59,18 @@ export default async function ModelDetailPage({
 }) {
   const { locale, slug, modelSlug } = await params;
 
-  const match = await getDbModelBySlug(slug, modelSlug);
+  const [match, allServices, brandModels, t] = await Promise.all([
+    getDbModelBySlug(slug, modelSlug),
+    getDbServices(),
+    getDbModelsForBrand(slug),
+    getTranslations({ locale, namespace: "ModelDetail" }),
+  ]);
+
   if (!match) {
     notFound();
   }
 
   const { brand, model } = match;
-
-  const [allServices, brandModels] = await Promise.all([
-    getDbServices(),
-    getDbModelsForBrand(slug),
-  ]);
 
   // Combine model's explicit service pricing with all global services
   const pricingMap = new Map<string, { price: number; time: number }>();
@@ -100,8 +102,8 @@ export default async function ModelDetailPage({
 
   const siteUrl = siteConfig.url.replace(/\/$/, "");
   const breadcrumbSchema = getBreadcrumbSchema([
-    { name: "Home", url: `${siteUrl}/${locale}` },
-    { name: "Brands", url: `${siteUrl}/${locale}/brands` },
+    { name: t("breadcrumbs.home"), url: `${siteUrl}/${locale}` },
+    { name: t("breadcrumbs.brands"), url: `${siteUrl}/${locale}/brands` },
     { name: brand.name, url: `${siteUrl}/${locale}/brands/${brand.slug}` },
     { name: model.name, url: `${siteUrl}/${locale}/brands/${brand.slug}/${model.slug}` },
   ]);
@@ -119,38 +121,38 @@ export default async function ModelDetailPage({
     <div className="flex flex-col w-full bg-clean-white">
       <JsonLd schema={[breadcrumbSchema, productSchema]} id={`model-${model.slug}-structured-data`} />
 
-      {/* 1. Unified Page Hero */}
+      {/* 1. Unified Page Hero with Model Image from DB & Fallback */}
       <PageHero
         breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "Brands", href: "/brands" },
+          { label: t("breadcrumbs.home"), href: "/" },
+          { label: t("breadcrumbs.brands"), href: "/brands" },
           { label: brand.name, href: `/brands/${brand.slug}` },
           { label: model.name },
         ]}
-        title={`${model.name} Doorstep Pickup & Lab Repair in Pune`}
-        subtitle={`Professional hardware repair for your ${model.name}. Secure doorstep pickup across Pune, precision cleanroom repair in our Sadashiv Peth lab with OEM-grade components, and safe same-day return.`}
+        title={t("hero.title", { modelName: model.name })}
+        subtitle={t("hero.subtitle", { modelName: model.name })}
         highlights={[
           {
             icon: Clock,
-            label: "Turnaround",
-            value: "Same-Day Return",
+            label: t("hero.highlights.turnaround"),
+            value: t("hero.highlights.turnaroundVal"),
             color: "text-flash-orange",
           },
           {
             icon: ShieldCheck,
-            label: "Warranty",
-            value: "90 Days Hassle-Free",
+            label: t("hero.highlights.warranty"),
+            value: t("hero.highlights.warrantyVal"),
             color: "text-blue-500",
           },
           {
             icon: Lock,
-            label: "Privacy",
-            value: "Zero Data Risk",
+            label: t("hero.highlights.privacy"),
+            value: t("hero.highlights.privacyVal"),
             color: "text-emerald-500",
           },
           {
             icon: Zap,
-            label: "Starting From",
+            label: t("hero.highlights.startingFrom"),
             value: `₹${minPrice}`,
             color: "text-electric-amber",
           },
@@ -161,7 +163,7 @@ export default async function ModelDetailPage({
               href={`/book-repair?brand=${brand.slug}&model=${encodeURIComponent(model.name)}`}
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-orange-600 active:scale-95 transition-all"
             >
-              <span>Book {model.name} Repair</span>
+              <span>{t("hero.actions.bookModel", { modelName: model.name })}</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
 
@@ -170,15 +172,19 @@ export default async function ModelDetailPage({
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-zinc-300 text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
             >
               <Phone className="h-4 w-4 text-flash-orange" />
-              <span>Call Helpline: {contactConfig.phone.display}</span>
+              <span>{t("hero.actions.callHelpline", { phone: contactConfig.phone.display })}</span>
             </a>
           </>
         }
         media={
-          <AspectBox
+          <HeroMediaImage
+            src={model.imageUrl}
+            alt={`${brand.name} ${model.name}`}
+            badge={t("hero.media.badge", { modelName: model.name })}
+            fallbackType="model"
+            title={`${brand.name} ${model.name}`}
+            subtitle={t("hero.media.fallbackLabel", { modelName: model.name })}
             aspectRatio="4/3"
-            badge={model.name}
-            label={`OEM-grade components and precision repair setup for ${model.name}`}
             className="shadow-md"
           />
         }
@@ -189,10 +195,10 @@ export default async function ModelDetailPage({
         <Container>
           <div className="max-w-3xl mb-8">
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
-              Repair Services & Pricing for {model.name}
+              {t("pricing.title", { modelName: model.name })}
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-zinc-600">
-              Upfront, model-specific repair costs. Pricing includes doorstep technician visit and 90-day warranty.
+              {t("pricing.subtitle")}
             </p>
           </div>
 
@@ -223,11 +229,11 @@ export default async function ModelDetailPage({
                   <div className="flex items-center gap-3 text-[11px] text-zinc-500 font-semibold">
                     <span className="flex items-center gap-1">
                       <Clock className="h-3 w-3" />
-                      {service.time} mins
+                      {t("pricing.mins", { minutes: service.time })}
                     </span>
                     <span className="flex items-center gap-1">
                       <ShieldCheck className="h-3 w-3" />
-                      {service.warrantyDays}d warranty
+                      {t("pricing.daysWarranty", { days: service.warrantyDays })}
                     </span>
                   </div>
 
@@ -235,8 +241,7 @@ export default async function ModelDetailPage({
                     href={`/book-repair?brand=${brand.slug}&model=${encodeURIComponent(model.name)}&service=${service.slug}`}
                     className="text-xs font-bold text-flash-orange hover:underline inline-flex items-center gap-0.5"
                   >
-                    <span>Book</span>
-                    <ArrowRight className="h-3 w-3" />
+                    <span>{t("pricing.bookService")}</span>
                   </Link>
                 </div>
               </div>
@@ -255,16 +260,16 @@ export default async function ModelDetailPage({
         </Container>
       </Section>
 
-      {/* 4. Other Models by Brand */}
+      {/* 4. Other Models by Brand (Loaded from DB) */}
       {siblingModels.length > 0 && (
         <Section variant="muted" padding="default">
           <Container>
             <div className="max-w-3xl mb-8">
               <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
-                Other {brand.name} Models We Repair
+                {t("siblings.title", { brandName: brand.name })}
               </h2>
               <p className="mt-2 text-xs sm:text-sm text-zinc-600">
-                Explore doorstep service details for other popular {brand.name} devices.
+                {t("siblings.subtitle")}
               </p>
             </div>
 
@@ -290,8 +295,8 @@ export default async function ModelDetailPage({
       <Section variant="white" padding="default">
         <Container>
           <CTABlock
-            title={`Get Your ${model.name} Fixed in 30 Minutes`}
-            subtitle="Technician dispatched directly to your location in Pune. Pay only after you test your repaired device."
+            title={t("cta.title", { modelName: model.name })}
+            subtitle={t("cta.subtitle")}
           />
         </Container>
       </Section>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { RefreshCw, Smartphone } from "lucide-react";
+import { RefreshCw, Smartphone, FileText, Plus } from "lucide-react";
 import AdminShell from "@/components/admin/AdminShell";
 import AdminImage from "@/components/admin/AdminImage";
 import { adminFetch } from "@/lib/admin/api";
@@ -10,6 +10,7 @@ import AdminFilterBar, { FilterTab } from "@/components/admin/ui/AdminFilterBar"
 import AdminPagination from "@/components/admin/ui/AdminPagination";
 import AdminStatusBadge from "@/components/admin/ui/AdminStatusBadge";
 import AdminModal from "@/components/admin/ui/AdminModal";
+import JobSheetModal from "@/components/admin/repairs/JobSheetModal";
 
 interface RepairItem {
   _id: string;
@@ -48,14 +49,9 @@ interface RepairItem {
     paymentStatus?: "unpaid" | "paid" | "cod";
     paymentMethod?: string;
   };
-  technician?: {
-    name?: string;
-    phone?: string;
-  };
   status:
     | "pending"
     | "confirmed"
-    | "technician_assigned"
     | "in_progress"
     | "completed"
     | "cancelled";
@@ -97,10 +93,12 @@ export default function AdminRepairsPage() {
   const [isUpdating, setIsUpdating] = useState(false);
   const [updateError, setUpdateError] = useState("");
 
+  // Job Sheet Modal State
+  const [isJobSheetOpen, setIsJobSheetOpen] = useState(false);
+  const [jobSheetRepair, setJobSheetRepair] = useState<RepairItem | null>(null);
+
   // Edit fields for modal
   const [newStatus, setNewStatus] = useState<string>("pending");
-  const [techName, setTechName] = useState("");
-  const [techPhone, setTechPhone] = useState("");
   const [finalPrice, setFinalPrice] = useState<number | string>("");
   const [paymentStatus, setPaymentStatus] = useState<"unpaid" | "paid" | "cod">("unpaid");
 
@@ -149,8 +147,6 @@ export default function AdminRepairsPage() {
   const openDetailModal = (repair: RepairItem) => {
     setSelectedRepair(repair);
     setNewStatus(repair.status);
-    setTechName(repair.technician?.name || "");
-    setTechPhone(repair.technician?.phone || "");
     setFinalPrice(repair.pricing?.finalPrice ?? repair.pricing?.estimatedPrice ?? "");
     setPaymentStatus(repair.pricing?.paymentStatus || "unpaid");
     setUpdateError("");
@@ -166,13 +162,6 @@ export default function AdminRepairsPage() {
       const payload: Record<string, unknown> = {
         status: newStatus,
       };
-
-      if (techName.trim() || techPhone.trim()) {
-        payload.technician = {
-          name: techName.trim(),
-          phone: techPhone.trim(),
-        };
-      }
 
       const parsedPrice = Number(finalPrice);
       if (!isNaN(parsedPrice) && parsedPrice >= 0) {
@@ -215,15 +204,28 @@ export default function AdminRepairsPage() {
       title="Repair Management"
       subtitle="View, track and dispatch doorstep repair requests across Pune"
       actions={
-        <button
-          type="button"
-          onClick={() => setRefreshIndex((k) => k + 1)}
-          disabled={loading}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-clean-white px-3 py-1.5 text-xs font-bold text-zinc-600 hover:bg-zinc-50 cursor-pointer"
-        >
-          <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
-          <span className="hidden sm:inline">Refresh</span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              setJobSheetRepair(null);
+              setIsJobSheetOpen(true);
+            }}
+            className="inline-flex items-center gap-1.5 rounded-lg bg-flash-orange px-3 py-1.5 text-xs font-bold text-clean-white hover:bg-flash-orange-hover shadow-2xs transition-all cursor-pointer"
+          >
+            <Plus className="h-3.5 w-3.5" />
+            <span>Create Job Sheet</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setRefreshIndex((k) => k + 1)}
+            disabled={loading}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-clean-white px-3 py-1.5 text-xs font-bold text-zinc-600 hover:bg-zinc-50 cursor-pointer"
+          >
+            <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
+            <span className="hidden sm:inline">Refresh</span>
+          </button>
+        </div>
       }
     >
       <div className="space-y-6">
@@ -315,13 +317,27 @@ export default function AdminRepairsPage() {
 
               {/* Action */}
               <td className="px-5 py-4 text-right whitespace-nowrap">
-                <button
-                  type="button"
-                  onClick={() => openDetailModal(r)}
-                  className="rounded-lg bg-zinc-100 px-3 py-1.5 text-xs font-bold text-zinc-700 hover:bg-tech-slate hover:text-clean-white transition-all cursor-pointer"
-                >
-                  Manage
-                </button>
+                <div className="flex items-center justify-end gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setJobSheetRepair(r);
+                      setIsJobSheetOpen(true);
+                    }}
+                    className="inline-flex items-center gap-1 rounded-lg border border-zinc-200 bg-clean-white px-2.5 py-1.5 text-xs font-bold text-tech-slate hover:bg-orange-50 hover:text-flash-orange hover:border-orange-200 transition-all cursor-pointer shadow-2xs"
+                    title="Generate Job Sheet PDF"
+                  >
+                    <FileText className="h-3.5 w-3.5" />
+                    <span>Job Sheet</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => openDetailModal(r)}
+                    className="rounded-lg bg-zinc-100 px-3 py-1.5 text-xs font-bold text-zinc-700 hover:bg-tech-slate hover:text-clean-white transition-all cursor-pointer"
+                  >
+                    Manage
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
@@ -430,7 +446,6 @@ export default function AdminRepairsPage() {
                     >
                       <option value="pending">Pending Review</option>
                       <option value="confirmed">Confirmed</option>
-                      <option value="technician_assigned">Technician Assigned</option>
                       <option value="in_progress">In Progress</option>
                       <option value="completed">Completed</option>
                       <option value="cancelled">Cancelled</option>
@@ -452,30 +467,6 @@ export default function AdminRepairsPage() {
                     </select>
                   </div>
 
-                  <div className="space-y-1">
-                    <label className="font-bold text-zinc-600">Assigned Technician</label>
-                    <input
-                      type="text"
-                      placeholder="e.g. Rajesh Shinde"
-                      value={techName}
-                      onChange={(e) => setTechName(e.target.value)}
-                      className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
-                    >
-                    </input>
-                  </div>
-
-                  <div className="space-y-1">
-                    <label className="font-bold text-zinc-600">Technician Phone</label>
-                    <input
-                      type="text"
-                      placeholder="e.g. 9876543210"
-                      value={techPhone}
-                      onChange={(e) => setTechPhone(e.target.value)}
-                      className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
-                    >
-                    </input>
-                  </div>
-
                   <div className="sm:col-span-2 space-y-1">
                     <label className="font-bold text-zinc-600">Final Price (₹ INR)</label>
                     <input
@@ -484,14 +475,41 @@ export default function AdminRepairsPage() {
                       value={finalPrice}
                       onChange={(e) => setFinalPrice(e.target.value)}
                       className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs font-bold text-tech-slate focus:border-flash-orange focus:outline-hidden"
-                    >
-                    </input>
+                    />
+                  </div>
+
+                  <div className="sm:col-span-2 pt-2 flex items-center justify-between border-t border-zinc-200">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setJobSheetRepair(selectedRepair);
+                          setIsJobSheetOpen(true);
+                        }}
+                        className="inline-flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 text-xs font-bold text-tech-slate hover:bg-orange-50 hover:text-flash-orange hover:border-orange-200 transition-all cursor-pointer"
+                      >
+                        <FileText className="h-4 w-4 text-flash-orange" />
+                        <span>Generate Job Sheet PDF</span>
+                      </button>
+                      <span className="text-[11px] text-zinc-400">
+                        Printable Pune mobile service sheet
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </AdminModal>
+            </AdminModal>
         )}
+
+        {/* Job Sheet Generator Modal */}
+        <JobSheetModal
+          isOpen={isJobSheetOpen}
+          onClose={() => {
+            setIsJobSheetOpen(false);
+            setJobSheetRepair(null);
+          }}
+          repair={jobSheetRepair}
+          onUpdate={() => setRefreshIndex((k) => k + 1)}
+        />
       </div>
     </AdminShell>
   );

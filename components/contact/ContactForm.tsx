@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Send, CheckCircle2, AlertCircle, Phone, MessageSquare, Loader2, ArrowRight } from "lucide-react";
+import { Send, AlertCircle, Loader2 } from "lucide-react";
 import contactConfig from "@/config/contact";
+import { contactFormSchema } from "@/lib/validations/contact";
 
-import { FormLoadingState, FormSuccessState, FormErrorState } from "@/components/ui/form-states";
+import { FormLoadingState, FormSuccessState } from "@/components/ui/form-states";
 
 export default function ContactForm() {
   const t = useTranslations("ContactPage.form");
@@ -21,20 +22,50 @@ export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const puneAreas = contactConfig.serviceAreas.all;
 
+  const clearFieldError = (fieldName: string) => {
+    setFieldErrors((prev) => {
+      if (!prev[fieldName]) return prev;
+      const next = { ...prev };
+      delete next[fieldName];
+      return next;
+    });
+  };
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setIsSubmitting(true);
     setErrorMessage("");
+    setFieldErrors({});
 
     const cleanPhone = phone.replace(/\D/g, "");
-    if (!/^[6-9]\d{9}$/.test(cleanPhone)) {
-      setErrorMessage("Please enter a valid 10-digit Indian mobile number (e.g. 8308686454)");
-      setIsSubmitting(false);
+
+    // Client-side Zod validation
+    const result = contactFormSchema.safeParse({
+      name: name.trim(),
+      phone: cleanPhone,
+      email: email.trim() || undefined,
+      subject: subject.trim(),
+      area: area.trim() || undefined,
+      message: message.trim(),
+    });
+
+    if (!result.success) {
+      const errors: Record<string, string> = {};
+      for (const issue of result.error.issues) {
+        const key = issue.path[issue.path.length - 1] as string;
+        if (key && !errors[key]) {
+          errors[key] = issue.message;
+        }
+      }
+      setFieldErrors(errors);
+      setErrorMessage(result.error.issues[0]?.message || "Please correct the highlighted fields.");
       return;
     }
+
+    setIsSubmitting(true);
 
     try {
       const res = await fetch("/api/contacts", {
@@ -57,6 +88,14 @@ export default function ContactForm() {
 
       const data = await res.json();
       if (!res.ok || !data.success) {
+        if (data.error?.details && typeof data.error.details === "object") {
+          const sErrors: Record<string, string> = {};
+          for (const [k, v] of Object.entries(data.error.details)) {
+            const field = k.split(".").pop() || k;
+            sErrors[field] = String(v);
+          }
+          setFieldErrors(sErrors);
+        }
         throw new Error(data.error?.message || "Failed to send your inquiry. Please try calling directly.");
       }
 
@@ -121,14 +160,14 @@ export default function ContactForm() {
         </p>
       </div>
 
-      {errorMessage && (
+      {errorMessage && Object.keys(fieldErrors).length === 0 && (
         <div className="mb-6 rounded-xl bg-error-light border border-error-border p-4 flex items-center gap-3 text-xs sm:text-sm text-error font-medium">
           <AlertCircle className="h-5 w-5 shrink-0 text-error" />
           <span>{errorMessage}</span>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4" noValidate>
         {/* Name & Phone in 2 cols */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
@@ -140,9 +179,24 @@ export default function ContactForm() {
               required
               placeholder={t("namePlaceholder")}
               value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20"
+              onChange={(e) => {
+                setName(e.target.value);
+                clearFieldError("name");
+              }}
+              aria-invalid={Boolean(fieldErrors.name)}
+              aria-describedby={fieldErrors.name ? "contact-name-error" : undefined}
+              className={`w-full rounded-xl border bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:outline-hidden focus:ring-2 ${
+                fieldErrors.name
+                  ? "border-red-500 focus:ring-red-500/20"
+                  : "border-zinc-300 focus:border-flash-orange focus:ring-flash-orange/20"
+              }`}
             />
+            {fieldErrors.name && (
+              <p id="contact-name-error" className="mt-1 text-2xs text-red-600 flex items-center gap-1 font-medium animate-in fade-in duration-150">
+                <AlertCircle className="h-3 w-3 shrink-0" aria-hidden="true" />
+                <span>{fieldErrors.name}</span>
+              </p>
+            )}
           </div>
 
           <div>
@@ -156,9 +210,24 @@ export default function ContactForm() {
               inputMode="tel"
               placeholder={t("phonePlaceholder")}
               value={phone}
-              onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
-              className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20"
+              onChange={(e) => {
+                setPhone(e.target.value.replace(/\D/g, ""));
+                clearFieldError("phone");
+              }}
+              aria-invalid={Boolean(fieldErrors.phone)}
+              aria-describedby={fieldErrors.phone ? "contact-phone-error" : undefined}
+              className={`w-full rounded-xl border bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:outline-hidden focus:ring-2 ${
+                fieldErrors.phone
+                  ? "border-red-500 focus:ring-red-500/20"
+                  : "border-zinc-300 focus:border-flash-orange focus:ring-flash-orange/20"
+              }`}
             />
+            {fieldErrors.phone && (
+              <p id="contact-phone-error" className="mt-1 text-2xs text-red-600 flex items-center gap-1 font-medium animate-in fade-in duration-150">
+                <AlertCircle className="h-3 w-3 shrink-0" aria-hidden="true" />
+                <span>{fieldErrors.phone}</span>
+              </p>
+            )}
           </div>
         </div>
 
@@ -172,9 +241,24 @@ export default function ContactForm() {
               type="email"
               placeholder={t("emailPlaceholder")}
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20"
+              onChange={(e) => {
+                setEmail(e.target.value);
+                clearFieldError("email");
+              }}
+              aria-invalid={Boolean(fieldErrors.email)}
+              aria-describedby={fieldErrors.email ? "contact-email-error" : undefined}
+              className={`w-full rounded-xl border bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:outline-hidden focus:ring-2 ${
+                fieldErrors.email
+                  ? "border-red-500 focus:ring-red-500/20"
+                  : "border-zinc-300 focus:border-flash-orange focus:ring-flash-orange/20"
+              }`}
             />
+            {fieldErrors.email && (
+              <p id="contact-email-error" className="mt-1 text-2xs text-red-600 flex items-center gap-1 font-medium animate-in fade-in duration-150">
+                <AlertCircle className="h-3 w-3 shrink-0" aria-hidden="true" />
+                <span>{fieldErrors.email}</span>
+              </p>
+            )}
           </div>
 
           <div>
@@ -183,7 +267,10 @@ export default function ContactForm() {
             </label>
             <select
               value={area}
-              onChange={(e) => setArea(e.target.value)}
+              onChange={(e) => {
+                setArea(e.target.value);
+                clearFieldError("area");
+              }}
               className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20 cursor-pointer"
             >
               <option value="">{t("areaSelect")}</option>
@@ -223,9 +310,24 @@ export default function ContactForm() {
             rows={3}
             placeholder={t("messagePlaceholder")}
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20 resize-none"
+            onChange={(e) => {
+              setMessage(e.target.value);
+              clearFieldError("message");
+            }}
+            aria-invalid={Boolean(fieldErrors.message)}
+            aria-describedby={fieldErrors.message ? "contact-message-error" : undefined}
+            className={`w-full rounded-xl border bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:outline-hidden focus:ring-2 resize-none ${
+              fieldErrors.message
+                ? "border-red-500 focus:ring-red-500/20"
+                : "border-zinc-300 focus:border-flash-orange focus:ring-flash-orange/20"
+            }`}
           />
+          {fieldErrors.message && (
+            <p id="contact-message-error" className="mt-1 text-2xs text-red-600 flex items-center gap-1 font-medium animate-in fade-in duration-150">
+              <AlertCircle className="h-3 w-3 shrink-0" aria-hidden="true" />
+              <span>{fieldErrors.message}</span>
+            </p>
+          )}
         </div>
 
         {/* Submit Button with Loader */}
