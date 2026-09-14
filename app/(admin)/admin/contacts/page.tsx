@@ -184,6 +184,7 @@ export default function AdminContactsPage() {
         {/* Contacts Table */}
         <AdminTable
           columns={COLUMNS}
+          tableClassName="min-w-[640px]"
           loading={loading}
           empty={contacts.length === 0}
           emptyTitle="No contact inquiries found"

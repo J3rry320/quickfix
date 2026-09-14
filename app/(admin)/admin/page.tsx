@@ -115,13 +115,13 @@ export default function AdminDashboardPage() {
     >
       <div className="space-y-8">
         {/* Welcome Greeting Banner */}
-        <div className="rounded-2xl bg-tech-slate p-6 sm:p-8 text-clean-white shadow-xl shadow-slate-900/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-slate-800">
+        <div className="rounded-2xl bg-tech-slate p-5 sm:p-8 text-clean-white shadow-xl shadow-slate-900/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 sm:gap-6 border border-slate-800">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-amber-300 backdrop-blur-xs border border-white/15">
               <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>System Live • Pune Central Control</span>
             </div>
-            <h2 className="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight">
+            <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight">
               Welcome, {user?.name || user?.email?.split("@")[0] || "User"}!
             </h2>
             <p className="text-xs sm:text-sm text-zinc-300 max-w-xl">
@@ -129,10 +129,10 @@ export default function AdminDashboardPage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 w-full sm:w-auto">
             <Link
               href="/admin/repairs"
-              className="inline-flex items-center gap-2 rounded-xl bg-flash-orange px-4 py-2.5 text-xs font-bold text-clean-white hover:bg-orange-600 shadow-md shadow-orange-500/20 active:scale-95 transition-all"
+              className="w-full sm:w-auto justify-center inline-flex items-center gap-2 rounded-xl bg-flash-orange px-4 py-2.5 text-xs font-bold text-clean-white hover:bg-orange-600 shadow-md shadow-orange-500/20 active:scale-95 transition-all"
             >
               <Wrench className="h-4 w-4" />
               <span>Manage Bookings</span>
@@ -275,34 +275,34 @@ export default function AdminDashboardPage() {
           <h3 className="font-heading text-sm font-bold uppercase tracking-wider text-zinc-500">
             Quick Actions
           </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-3">
             <Link
               href="/admin/repairs?status=pending"
               className="flex items-center justify-between rounded-xl border border-zinc-200 bg-clean-white p-3.5 text-xs font-bold text-tech-slate hover:bg-zinc-50 hover:border-flash-orange/40 transition-all shadow-2xs"
             >
               <span>Review Pending Repairs</span>
-              <ArrowUpRight className="h-4 w-4 text-zinc-400" />
+              <ArrowUpRight className="h-4 w-4 text-zinc-400 shrink-0 ml-1" />
             </Link>
             <Link
               href="/admin/catalogue/services"
               className="flex items-center justify-between rounded-xl border border-zinc-200 bg-clean-white p-3.5 text-xs font-bold text-tech-slate hover:bg-zinc-50 hover:border-flash-orange/40 transition-all shadow-2xs"
             >
               <span>Add / Edit Services</span>
-              <Plus className="h-4 w-4 text-zinc-400" />
+              <Plus className="h-4 w-4 text-zinc-400 shrink-0 ml-1" />
             </Link>
             <Link
               href="/admin/catalogue/models"
               className="flex items-center justify-between rounded-xl border border-zinc-200 bg-clean-white p-3.5 text-xs font-bold text-tech-slate hover:bg-zinc-50 hover:border-flash-orange/40 transition-all shadow-2xs"
             >
               <span>Configure Model Pricing</span>
-              <ArrowUpRight className="h-4 w-4 text-zinc-400" />
+              <ArrowUpRight className="h-4 w-4 text-zinc-400 shrink-0 ml-1" />
             </Link>
             <Link
               href="/admin/blogs"
               className="flex items-center justify-between rounded-xl border border-zinc-200 bg-clean-white p-3.5 text-xs font-bold text-tech-slate hover:bg-zinc-50 hover:border-flash-orange/40 transition-all shadow-2xs"
             >
               <span>Write Blog Article</span>
-              <BookOpen className="h-4 w-4 text-zinc-400" />
+              <BookOpen className="h-4 w-4 text-zinc-400 shrink-0 ml-1" />
             </Link>
           </div>
         </section>
@@ -349,7 +349,7 @@ export default function AdminDashboardPage() {
                     key={req._id}
                     className="py-3 flex items-center justify-between gap-3 text-xs"
                   >
-                    <div className="min-w-0 space-y-0.5">
+                    <div className="min-w-0 flex-1 space-y-0.5">
                       <div className="flex items-center gap-2">
                         <span className="font-bold text-tech-slate font-mono">
                           {req.bookingReference}
@@ -426,7 +426,7 @@ export default function AdminDashboardPage() {
                     key={c._id}
                     className="py-3 flex items-center justify-between gap-3 text-xs"
                   >
-                    <div className="min-w-0 space-y-0.5">
+                    <div className="min-w-0 flex-1 space-y-0.5">
                       <div className="flex items-center gap-2">
                         <span className="font-bold text-tech-slate truncate">
                           {c.name}

@@ -214,7 +214,8 @@ export default function AdminRepairsPage() {
             className="inline-flex items-center gap-1.5 rounded-lg bg-flash-orange px-3 py-1.5 text-xs font-bold text-clean-white hover:bg-flash-orange-hover shadow-2xs transition-all cursor-pointer"
           >
             <Plus className="h-3.5 w-3.5" />
-            <span>Create Job Sheet</span>
+            <span className="hidden sm:inline">Create Job Sheet</span>
+            <span className="sm:hidden">Job Sheet</span>
           </button>
           <button
             type="button"
@@ -248,6 +249,7 @@ export default function AdminRepairsPage() {
         {/* Requests Table */}
         <AdminTable
           columns={COLUMNS}
+          tableClassName="min-w-[840px]"
           loading={loading}
           empty={repairs.length === 0}
           emptyTitle="No repair requests found"
@@ -478,22 +480,22 @@ export default function AdminRepairsPage() {
                     />
                   </div>
 
-                  <div className="sm:col-span-2 pt-2 flex items-center justify-between border-t border-zinc-200">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setJobSheetRepair(selectedRepair);
-                          setIsJobSheetOpen(true);
-                        }}
-                        className="inline-flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 text-xs font-bold text-tech-slate hover:bg-orange-50 hover:text-flash-orange hover:border-orange-200 transition-all cursor-pointer"
-                      >
-                        <FileText className="h-4 w-4 text-flash-orange" />
-                        <span>Generate Job Sheet PDF</span>
-                      </button>
-                      <span className="text-[11px] text-zinc-400">
-                        Printable Pune mobile service sheet
-                      </span>
-                    </div>
+                  <div className="sm:col-span-2 pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 border-t border-zinc-200">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setJobSheetRepair(selectedRepair);
+                        setIsJobSheetOpen(true);
+                      }}
+                      className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 text-xs font-bold text-tech-slate hover:bg-orange-50 hover:text-flash-orange hover:border-orange-200 transition-all cursor-pointer"
+                    >
+                      <FileText className="h-4 w-4 text-flash-orange" />
+                      <span>Generate Job Sheet PDF</span>
+                    </button>
+                    <span className="text-[11px] text-zinc-400 text-center sm:text-left">
+                      Printable Pune mobile service sheet
+                    </span>
+                  </div>
                   </div>
                 </div>
               </div>

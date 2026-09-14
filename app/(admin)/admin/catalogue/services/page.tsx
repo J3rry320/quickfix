@@ -249,6 +249,7 @@ export default function AdminServicesPage() {
         {/* Services Table */}
         <AdminTable
           columns={COLUMNS}
+          tableClassName="min-w-[680px]"
           loading={loading}
           empty={services.length === 0}
           emptyTitle="No services found"

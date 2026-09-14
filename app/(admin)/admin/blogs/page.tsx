@@ -266,6 +266,7 @@ export default function AdminBlogsPage() {
         {/* Blogs Table */}
         <AdminTable
           columns={COLUMNS}
+          tableClassName="min-w-[640px]"
           loading={loading}
           empty={blogs.length === 0}
           emptyTitle="No blog posts found"

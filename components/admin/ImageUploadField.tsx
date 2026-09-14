@@ -105,7 +105,7 @@ export default function ImageUploadField({
 
       {/* Input Group: URL text input + Upload Button */}
       <div className="flex gap-2 items-center">
-        <div className="relative flex-1">
+        <div className="relative flex-1 min-w-0">
           <input
             type="text"
             value={value}

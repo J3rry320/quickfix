@@ -223,6 +223,7 @@ export default function AdminBrandsPage() {
         {/* Brands Table */}
         <AdminTable
           columns={COLUMNS}
+          tableClassName="min-w-[560px]"
           loading={loading}
           empty={brands.length === 0}
           emptyTitle="No brands found"

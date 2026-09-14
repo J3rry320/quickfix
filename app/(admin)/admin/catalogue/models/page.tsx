@@ -276,6 +276,7 @@ export default function AdminModelsPage() {
         {/* Models Table */}
         <AdminTable
           columns={COLUMNS}
+          tableClassName="min-w-[760px]"
           loading={loading}
           empty={models.length === 0}
           emptyTitle="No device models found"
