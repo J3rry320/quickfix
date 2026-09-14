@@ -61,7 +61,7 @@ export default function WhyQuickFix() {
             </div>
 
             <h3 className="font-heading text-lg font-black text-tech-slate mb-3">
-              Quick<span className="text-flash-orange">Fix</span>.in Doorstep
+              Quick<span className="text-flash-orange">Fix</span>.in Pickup & Lab
             </h3>
 
             <div className="space-y-3">
@@ -181,7 +181,7 @@ export default function WhyQuickFix() {
                   {t("mediaTitle")}
                 </span>
                 <span className="text-[11px] text-text-muted mt-0.5">
-                  Grounded Workstation • OEM Parts
+                  Certified Pune Lab • OEM Parts • Tamper-Proof Transit
                 </span>
               </div>
 
@@ -192,17 +192,17 @@ export default function WhyQuickFix() {
                 </h3>
               </div>
               <p className="text-xs text-text-muted font-body mb-4 leading-relaxed">
-                Our doorstep technicians carry brand-certified screwdrivers, suction lifters, and genuine adhesive seals for on-the-spot repairs.
+                Our doorstep technicians inspect your device, issue an official handover receipt with IMEI verification, and safely transport it to our Sadashiv Peth precision lab.
               </p>
 
               <div className="space-y-2.5 pt-3 border-t border-border-default/60 text-xs">
                 <div className="flex items-center gap-2 text-tech-slate font-semibold">
                   <Check className="h-4 w-4 text-flash-orange shrink-0" />
-                  <span>Grounded work mat & surface protection</span>
+                  <span>Free doorstep pickup & same-day return in Pune</span>
                 </div>
                 <div className="flex items-center gap-2 text-tech-slate font-semibold">
                   <Check className="h-4 w-4 text-flash-orange shrink-0" />
-                  <span>Precision micro-screwdrivers & suction openers</span>
+                  <span>ESD-safe precision repair lab in Sadashiv Peth</span>
                 </div>
                 <div className="flex items-center gap-2 text-tech-slate font-semibold">
                   <Check className="h-4 w-4 text-flash-orange shrink-0" />
@@ -210,7 +210,7 @@ export default function WhyQuickFix() {
                 </div>
                 <div className="flex items-center gap-2 text-tech-slate font-semibold">
                   <Check className="h-4 w-4 text-flash-orange shrink-0" />
-                  <span>Instant 90-day warranty card & digital invoice</span>
+                  <span>Same-day doorstep delivery with 90-day warranty</span>
                 </div>
               </div>
             </div>

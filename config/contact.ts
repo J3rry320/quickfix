@@ -7,7 +7,7 @@ export const contactConfig = {
   ownerName: "Samadhan Patil",
   brand: "QuickFix.in",
   legalName: "QuickFix Mobile Solutions",
-  tagline: "Pune's #1 Doorstep Mobile Repair Specialists",
+  tagline: "Doorstep Mobile Repair in Pune",
 
   phone: {
     display: "+91 83086 86454",

@@ -1,16 +1,16 @@
-import Image from "next/image";
-import { useTranslations } from "next-intl";
+import contactConfig from "@/config/contact";
+import { Link } from "@/i18n/navigation";
 import {
   ArrowRight,
   CheckCircle2,
-  Phone,
   Image as ImageIcon,
+  Phone,
 } from "lucide-react";
-import { Link } from "@/i18n/navigation";
-import contactConfig from "@/config/contact";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 // User can set their image/video path here (e.g. "/hero-technician.jpg")
-const heroImageSrc = "";
+const heroImageSrc = "/assets/images/landing.webp";
 
 export default function Hero() {
   const t = useTranslations("Hero");
@@ -72,13 +72,14 @@ export default function Hero() {
 
           {/* Right Column: Hero Media Container with 4:3 Aspect Ratio */}
           <div className="lg:col-span-5 flex justify-center w-full">
-            <div className="relative w-full max-w-md lg:max-w-lg aspect-4/3 overflow-hidden rounded-2xl sm:rounded-3xl bg-clean-white/10 backdrop-blur-md border border-clean-white/20 shadow-2xl flex items-center justify-center">
+            <div className="relative w-full max-w-md lg:max-w-lg aspect-1/1 overflow-hidden rounded-2xl sm:rounded-3xl bg-clean-white/10 backdrop-blur-md border border-clean-white/20 shadow-2xl flex items-center justify-center">
               {heroImageSrc ? (
                 <Image
                   src={heroImageSrc}
                   alt="QuickFix Pune mobile repair service"
                   fill
                   preload={true}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 448px, 512px"
                   className="object-cover"
                 />
               ) : (
@@ -87,10 +88,10 @@ export default function Hero() {
                     <ImageIcon className="h-8 w-8 text-clean-white" />
                   </div>
                   <span className="text-sm font-bold text-clean-white tracking-wide">
-                    Doorstep Repair in Pune
+                    Doorstep Pickup & Lab Repair
                   </span>
                   <span className="text-xs text-clean-white/80 mt-1 max-w-xs">
-                    Live 30-min repair right at your doorstep
+                    Free doorstep pickup, ESD-safe lab repair & same-day return
                   </span>
                 </div>
               )}

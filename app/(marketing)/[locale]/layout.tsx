@@ -14,6 +14,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppFab from "@/components/WhatsAppFab";
 import MobileActionBar from "@/components/MobileActionBar";
+import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import "@/app/globals.css";
 
 export const viewport: Viewport = {
@@ -83,11 +84,13 @@ export default async function MarketingLayout({
           id="root-structured-data"
         />
         <NextIntlClientProvider messages={messages}>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <WhatsAppFab />
-          <MobileActionBar />
+          <SmoothScrollProvider>
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <WhatsAppFab />
+            <MobileActionBar />
+          </SmoothScrollProvider>
         </NextIntlClientProvider>
       </body>
     </html>

@@ -17,9 +17,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import SectionHeader from "@/components/landing/SectionHeader";
-import EmptyState from "@/components/ui/EmptyState";
-import { Skeleton } from "@/components/ui/Skeleton";
+import { SectionHeader, EmptyState, Skeleton } from "@/components/ui";
 
 interface ServiceDoc {
   _id: string;
@@ -271,6 +269,7 @@ export default function ServicesCatalog() {
                             src={service.image}
                             alt={service.name}
                             fill
+                            sizes="(max-width: 640px) 285px, (max-width: 768px) 320px, 350px"
                             className="object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                         ) : (

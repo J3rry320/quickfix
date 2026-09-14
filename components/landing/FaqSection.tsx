@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { ChevronDown } from "lucide-react";
-import SectionHeader from "@/components/landing/SectionHeader";
+import { SectionHeader } from "@/components/ui";
 
 export default function FaqSection() {
   const t = useTranslations("Faq");

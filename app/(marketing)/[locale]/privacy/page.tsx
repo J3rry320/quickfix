@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import { Shield, Lock, Eye, FileText, CheckCircle2 } from "lucide-react";
 import { getSeoMetadata, siteConfig } from "@/config/seo";
 import { getBreadcrumbSchema } from "@/config/jsonld";
 import JsonLd from "@/components/seo/JsonLd";
-import { Container, Section, SectionHeader, Card, CTABlock } from "@/components/ui";
+import { Container, Section, Card, CTABlock, PageHero } from "@/components/ui";
 import contactConfig from "@/config/contact";
 
 export async function generateMetadata({
@@ -26,7 +25,6 @@ export default async function PrivacyPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  setRequestLocale(locale);
 
   const siteUrl = siteConfig.url.replace(/\/$/, "");
   const breadcrumbSchema = getBreadcrumbSchema([
@@ -38,16 +36,15 @@ export default async function PrivacyPage({
     <div className="flex flex-col w-full bg-clean-white">
       <JsonLd schema={breadcrumbSchema} id="privacy-structured-data" />
 
-      <Section variant="muted" padding="tight">
-        <Container size="narrow">
-          <SectionHeader
-            badge="Data Security Guarantee"
-            title="Privacy Policy"
-            subtitle="Last updated: September 2026 • Effective across all QuickFix Pune operations"
-            align="left"
-          />
-        </Container>
-      </Section>
+      <PageHero
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Privacy Policy" },
+        ]}
+        title="Privacy Policy"
+        subtitle="Last updated: September 2026 • Effective across all QuickFix Pune operations"
+        align="center"
+      />
 
       <Section variant="white" padding="default">
         <Container size="narrow">
@@ -72,7 +69,7 @@ export default async function PrivacyPage({
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
-                <span>100% repaired in front of your eyes</span>
+                <span>Repaired on-site in your presence</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
@@ -103,12 +100,13 @@ export default async function PrivacyPage({
                 2. On-Device Customer Data Privacy
               </h3>
               <p>
-                Unlike traditional brand service centers that mandate a complete device factory reset, QuickFix operates on a strict <strong>In-Front Repair Protocol</strong>. Because our technician works directly on a sterile antistatic workstation before your eyes:
+                Unlike traditional brand service centers that mandate a complete device factory reset, QuickFix operates on a strict <strong>Zero Data Access Protocol</strong>. Because our service requires zero access to your operating system or storage:
               </p>
               <ul className="mt-2 list-disc list-inside space-y-1 text-zinc-600 pl-2">
                 <li>You never share your device PIN, passcode, pattern, or biometric credentials.</li>
-                <li>Our technicians test display touches and cameras only while you hold and unlock the phone yourself.</li>
-                <li>We do not connect USB data dump tools, backup suites, or external diagnostic hardware that inspects internal storage.</li>
+                <li>Your device is transported in a tamper-evident shock-proof pouch and serviced in our ESD-safe central Pune lab.</li>
+                <li>Our technicians test display touches, cameras, and sensors only after returning the device to your doorstep, while you unlock the phone yourself.</li>
+                <li>We do not connect USB data dump tools, backup suites, or external hardware that inspects internal storage.</li>
               </ul>
             </div>
 

@@ -16,6 +16,7 @@ import {
 import SectionHeader from "@/components/landing/SectionHeader";
 import contactConfig from "@/config/contact";
 import GoogleMapEmbed from "@/components/contact/GoogleMapEmbed";
+import { FormLoadingState, FormSuccessState } from "@/components/ui/form-states";
 
 export default function QuickContactForm() {
   const t = useTranslations("ContactSection");
@@ -84,7 +85,6 @@ export default function QuickContactForm() {
           <div className="lg:col-span-6 space-y-6">
             <div>
               <SectionHeader
-                badge={t("badge")}
                 title={t("title")}
                 subtitle={t("subtitle")}
                 align="left"
@@ -180,35 +180,21 @@ export default function QuickContactForm() {
           {/* Right Column: Clean, High-Conversion Callback Form */}
           <div className="lg:col-span-6">
             <div className="rounded-3xl border border-zinc-200/90 bg-clean-white p-6 sm:p-8 lg:p-9 shadow-sm">
-              {isSuccess ? (
-                <div className="text-center py-8 sm:py-10">
-                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 mb-4 ring-8 ring-emerald-50/50">
-                    <CheckCircle2 className="h-8 w-8" />
-                  </div>
-                  <h3 className="font-heading text-xl sm:text-2xl font-black text-tech-slate">
-                    Request Received!
-                  </h3>
-                  <p className="mt-2 text-xs sm:text-sm text-zinc-600 font-body max-w-sm mx-auto leading-relaxed">
-                    {t("successMsg")}
-                  </p>
-                  <div className="mt-6 p-4 rounded-2xl bg-mist-gray/60 border border-zinc-200/80 max-w-sm mx-auto flex items-center justify-between text-xs">
-                    <span className="text-zinc-600 font-medium">Need urgent help?</span>
-                    <a
-                      href={`tel:${contactConfig.phone.value}`}
-                      className="font-bold text-flash-orange hover:underline inline-flex items-center gap-1"
-                    >
-                      <Phone className="h-3 w-3" />
-                      <span>Call Now</span>
-                    </a>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setIsSuccess(false)}
-                    className="mt-6 inline-flex items-center justify-center rounded-xl bg-tech-slate px-6 py-2.5 text-xs font-bold text-clean-white hover:bg-black transition-all cursor-pointer"
-                  >
-                    Send Another Request
-                  </button>
-                </div>
+              {isSubmitting ? (
+                <FormLoadingState
+                  title="Requesting Quick Callback…"
+                  subtitle="Connecting with Pune on-call technician. Please wait."
+                />
+              ) : isSuccess ? (
+                <FormSuccessState
+                  title="Callback Request Received!"
+                  subtitle={t("successMsg")}
+                  badgeLabel="Logged for Instant Callback"
+                  onReset={() => setIsSuccess(false)}
+                  resetLabel="Send Another Request"
+                  whatsappUrl={contactConfig.whatsapp.getDefaultUrl("Hi QuickFix, I just requested a 5-minute callback on your website.")}
+                  whatsappLabel="Chat on WhatsApp with Support"
+                />
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="mb-2">

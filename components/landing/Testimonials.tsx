@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { CheckCircle2, Star, Smartphone, Wrench, Camera } from "lucide-react";
-import SectionHeader from "@/components/landing/SectionHeader";
+import { SectionHeader } from "@/components/ui";
 import { TESTIMONIALS_DATA } from "@/config/testimonials";
 
 export default function Testimonials() {
@@ -37,8 +37,9 @@ export default function Testimonials() {
                     ) : (
                       <Image
                         src={rev.mediaPath}
-                        alt={`${rev.deviceModel} doorstep repair`}
+                        alt={`${rev.deviceModel} doorstep pickup & repair`}
                         fill
+                        sizes="(max-width: 640px) 280px, 320px"
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     )

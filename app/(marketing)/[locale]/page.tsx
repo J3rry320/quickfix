@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { setRequestLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { getSeoMetadata } from "@/config/seo";
 import { getFaqPageSchema } from "@/config/jsonld";
 import JsonLd from "@/components/seo/JsonLd";
@@ -30,9 +30,6 @@ export default async function MarketingPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-
-  // Enable static rendering
-  setRequestLocale(locale);
 
   const tFaq = await getTranslations({ locale, namespace: "Faq" });
 

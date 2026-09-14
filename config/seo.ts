@@ -23,13 +23,13 @@ export const seoDictionaries: Record<
 > = {
   landing: {
     en: {
-      title: "QuickFix.in | 30-Minute Doorstep Mobile Repair in Pune",
+      title: "QuickFix.in | Doorstep Mobile Pickup & Certified Lab Repair in Pune",
       description:
-        "Fast, reliable doorstep mobile repairs across Pune in 30 minutes with genuine OEM parts, transparent pricing, and a 90-day warranty. Book phone screen, battery, and camera repairs today.",
+        "Doorstep smartphone pickup across Pune, precision repair at our certified central lab with genuine OEM parts, transparent pricing, and 90-day warranty. Screen, battery, and camera fixes.",
       keywords: [
-        "mobile repair pune",
         "doorstep mobile repair",
-        "phone screen replacement pune",
+        "mobile repair pune",
+        "phone pickup and repair pune",
         "iphone repair pune",
         "samsung repair pune",
         "30 minute mobile repair",
@@ -65,34 +65,34 @@ export const seoDictionaries: Record<
   },
   repair: {
     en: {
-      title: "Book Doorstep Mobile Repair | QuickFix.in Pune",
+      title: "Book Doorstep Mobile Repair & Pickup | QuickFix.in Pune",
       description:
-        "Schedule a certified smartphone repair technician to your doorstep anywhere in Pune. Fast 30-minute service at your home or office with genuine parts and 90-day warranty.",
+        "Schedule certified smartphone pickup from your doorstep anywhere in Pune. Lab-grade repairs in Sadashiv Peth with genuine parts, 90-day warranty, and same-day delivery.",
       keywords: [
         "book mobile repair pune",
-        "doorstep technician booking",
+        "doorstep pickup mobile repair",
         "phone repair appointment pune",
         "instant phone repair booking",
       ],
     },
     hi: {
-      title: "डोरस्टेप मोबाइल रिपेयर बुक करें | QuickFix.in पुणे",
+      title: "डोरस्टेप मोबाइल पिकअप व रिपेयर बुक करें | QuickFix.in पुणे",
       description:
-        "पुणे में कहीं भी अपने घर या ऑफिस पर सर्टिफाइड मोबाइल टेक्नीशियन बुक करें। 30 मिनट में त्वरित सेवा, 90 दिनों की वारंटी और 100% असली पार्ट्स।",
+        "पुणे में कहीं भी अपने घर या ऑफिस से सर्टिफाइड मोबाइल पिकअप बुक करें। सदाशिव पेठ लैब में रिपेयर, 90 दिनों की वारंटी और 100% असली पार्ट्स।",
       keywords: [
         "मोबाइल रिपेयर बुक करें",
-        "डोरस्टेप बुकिंग पुणे",
+        "डोरस्टेप पिकअप पुणे",
         "फोन रिपेयर अपॉइंटमेंट",
       ],
     },
     mr: {
-      title: "डोअरस्टेप मोबाईल रिपेअर बुक करा | QuickFix.in पुणे",
+      title: "डोअरस्टेप मोबाईल पिकअप व दुरुस्ती बुक करा | QuickFix.in पुणे",
       description:
-        "पुण्यात कुठेही तुमच्या घरी किंवा ऑफिसमध्ये मोबाईल दुरुस्तीसाठी तंत्रज्ञ बुक करा. ३० मिनिटांत जलद सेवा, ९० दिवसांची वॉरंटी आणि अस्सल पार्ट्स.",
+        "पुण्यात कुठेही तुमच्या घरी किंवा ऑफिसमधून मोबाईल पिकअप बुक करा. सदाशिव पेठ लॅबमध्ये दुरुस्ती, ९० दिवसांची वॉरंटी आणि अस्सल पार्ट्स.",
       keywords: [
         "मोबाईल रिपेअर बुकिंग",
-        "डोअरस्टेप फोन दुरुस्ती पुणे",
-        "मोबाईल टेक्निशियन अपॉइंटमेंट",
+        "डोअरस्टेप पिकअप पुणे",
+        "मोबाईल दुरुस्ती अपॉइंटमेंट",
       ],
     },
   },
@@ -100,7 +100,7 @@ export const seoDictionaries: Record<
     en: {
       title: "About Us | QuickFix.in - Pune's Trusted Doorstep Repair Service",
       description:
-        "Learn about QuickFix.in, Pune's premier doorstep smartphone repair service headquartered in Sadashiv Peth. Founded by Samadhan Patil with a mission of live in-front repair, speed, and genuine parts.",
+        "Learn about QuickFix.in, Pune's premier doorstep smartphone pickup and repair service headquartered in Sadashiv Peth. Founded by Samadhan Patil with a mission of certified lab precision, data privacy, and genuine parts.",
       keywords: [
         "about quickfix pune",
         "samadhan patil mobile repair",
@@ -111,7 +111,7 @@ export const seoDictionaries: Record<
     hi: {
       title: "हमारे बारे में | QuickFix.in - पुणे की विश्वसनीय डोरस्टेप रिपेयर सेवा",
       description:
-        "सदाशिव पेठ, पुणे स्थित QuickFix.in के बारे में जानें। समाधान पाटिल द्वारा स्थापित, सामने लाइव रिपेयर, 30 मिनट की सर्विस और 100% असली पार्ट्स की गारंटी।",
+        "सदाशिव पेठ, पुणे स्थित QuickFix.in के बारे में जानें। समाधान पाटिल द्वारा स्थापित, सुरक्षित पिकअप, सर्टिफाइड पुणे लैब रिपेयर और 100% असली पार्ट्स की गारंटी।",
       keywords: [
         "क्विकफिक्स पुणे के बारे में",
         "समाधान पाटिल",
@@ -121,7 +121,7 @@ export const seoDictionaries: Record<
     mr: {
       title: "आमच्याबद्दल | QuickFix.in - पुण्यातील अग्रगण्य डोअरस्टेप मोबाईल सेवा",
       description:
-        "सदाशिव पेठ, पुणे स्थित QuickFix.in विषयी अधिक जाणून घ्या. समाधान पाटील यांच्या नेतृत्वाखाली डोळ्यांदेखत लाईव्ह रिपेअर, ३० मिनिटांची गती आणि अस्सल पार्ट्सची खात्री.",
+        "सदाशिव पेठ, पुणे स्थित QuickFix.in विषयी अधिक जाणून घ्या. समाधान पाटील यांच्या नेतृत्वाखाली सुरक्षित घरपोच पिकअप, प्रमाणित लॅब दुरुस्ती आणि अस्सल पार्ट्सची खात्री.",
       keywords: [
         "क्विकफिक्स पुण्याबद्दल",
         "समाधान पाटील मोबाईल दुरुस्ती",
@@ -425,9 +425,9 @@ export function getServiceSeoMetadata({
   };
 
   const descriptions = {
-    en: `Certified doorstep ${serviceName.toLowerCase()} in Pune starting from ₹${startingPrice}. Fixed in front of you within ${turnaroundMinutes} minutes with genuine OEM parts and 90-day warranty.`,
-    hi: `पुणे में ₹${startingPrice} से प्रमाणित डोरस्टेप ${serviceName.toLowerCase()}। 100% असली पार्ट्स, 90 दिनों की वारंटी और 30 मिनट में सेवा।`,
-    mr: `पुण्यात ₹${startingPrice} पासून अस्सल स्पेअर पार्ट्ससह डोअरस्टेप ${serviceName.toLowerCase()}. ३० मिनिटांत लाईव्ह रिपेअर आणि ९० दिवसांची वॉरंटी.`,
+    en: `Certified doorstep pickup & ${serviceName.toLowerCase()} in Pune starting from ₹${startingPrice}. Repaired in our central Pune lab with genuine OEM parts, same-day doorstep return, and 90-day warranty.`,
+    hi: `पुणे में ₹${startingPrice} से प्रमाणित डोरस्टेप पिकअप और ${serviceName.toLowerCase()}। 100% असली पार्ट्स, 90 दिनों की वारंटी और उसी दिन डिलीवरी।`,
+    mr: `पुण्यात ₹${startingPrice} पासून अस्सल स्पेअर पार्ट्ससह डोअरस्टेप पिकअप आणि ${serviceName.toLowerCase()}. मध्यवर्ती लॅब दुरुस्ती आणि ९० दिवसांची वॉरंटी.`,
   };
 
   return getCustomSeoMetadata({
@@ -462,9 +462,9 @@ export function getBrandSeoMetadata({
   };
 
   const descriptions = {
-    en: `Expert doorstep mobile repairs for ${brandName} smartphones across all Pune areas. Screen, battery, and camera replacements done live in 30 minutes with 90-day warranty.`,
-    hi: `पुणे में ${brandName} स्मार्टफोन के लिए विश्वसनीय डोरस्टेप रिपेयर। 30 मिनट में स्क्रीन व बैटरी रिप्लेसमेंट, 90 दिनों की वारंटी।`,
-    mr: `पुण्यात ${brandName} फोनसाठी जलद डोअरस्टेप दुरुस्ती. ३० मिनिटांत स्क्रीन व बॅटरी बदल, ९० दिवसांची वॉरंटी आणि डेटा सुरक्षितता.`,
+    en: `Expert doorstep pickup and certified lab repairs for ${brandName} smartphones across Pune. Screen, battery, and camera replacements with OEM-grade parts and 90-day warranty.`,
+    hi: `पुणे में ${brandName} स्मार्टफोन के लिए विश्वसनीय डोरस्टेप पिकअप और लैब रिपेयर। OEM पार्ट्स और 90 दिनों की वारंटी।`,
+    mr: `पुण्यात ${brandName} फोनसाठी जलद डोअरस्टेप पिकअप आणि लॅब दुरुस्ती. OEM पार्ट्स, ९० दिवसांची वॉरंटी आणि डेटा सुरक्षितता.`,
   };
 
   return getCustomSeoMetadata({
@@ -496,15 +496,15 @@ export function getLocationSeoMetadata({
   const safeLocale = ["en", "hi", "mr"].includes(locale) ? locale : "en";
 
   const titles = {
-    en: `Doorstep Mobile Repair in ${localityName}, Pune | ${dispatchTime} Dispatch | QuickFix.in`,
-    hi: `${localityName}, पुणे में डोरस्टेप मोबाइल रिपेयर | ${dispatchTime} में टेक्नीशियन | QuickFix.in`,
-    mr: `${localityName}, पुणे येथे डोअरस्टेप मोबाईल दुरुस्ती | ${dispatchTime} जलद पोहोच | QuickFix.in`,
+    en: `Doorstep Mobile Repair in ${localityName}, Pune | ${dispatchTime} Pickup | QuickFix.in`,
+    hi: `${localityName}, पुणे में डोरस्टेप मोबाइल पिकअप व रिपेयर | ${dispatchTime} में पिकअप | QuickFix.in`,
+    mr: `${localityName}, पुणे येथे डोअरस्टेप मोबाईल दुरुस्ती | ${dispatchTime} पिकअप | QuickFix.in`,
   };
 
   const descriptions = {
-    en: `Need fast smartphone repair in ${localityName}, Pune? Certified technician dispatched in ${dispatchTime}. Screen, battery, and port repairs done in 30 minutes with 90-day warranty.`,
-    hi: `${localityName}, पुणे में अपने घर पर मोबाइल रिपेयर करवाएं। ${dispatchTime} में टेक्नीशियन आगमन, 90 दिनों की वारंटी और नो फिक्स नो फीस।`,
-    mr: `${localityName}, पुणे येथे तुमच्या घरी फोन दुरुस्ती. ${dispatchTime} मध्ये तंत्रज्ञ उपस्थित, ९० दिवसांची वॉरंटी आणि मोफत व्हिजिट.`,
+    en: `Need fast smartphone repair in ${localityName}, Pune? Convenient doorstep pickup within ${dispatchTime}. Screen, battery, and motherboard repairs at our Sadashiv Peth lab with 90-day warranty.`,
+    hi: `${localityName}, पुणे में अपने घर से मोबाइल पिकअप करवाएं। ${dispatchTime} में पिकअप, 90 दिनों की वारंटी और नो फिक्स नो फीस।`,
+    mr: `${localityName}, पुणे येथे तुमच्या घरून फोन पिकअप. ${dispatchTime} मध्ये पिकअप, ९० दिवसांची वॉरंटी आणि मोफत व्हिजिट.`,
   };
 
   return getCustomSeoMetadata({
@@ -517,5 +517,102 @@ export function getLocationSeoMetadata({
     ],
     locale: safeLocale,
     path: `/locations/${slug}`,
+  });
+}
+
+export function getModelSeoMetadata({
+  brandName,
+  modelName,
+  brandSlug,
+  modelSlug,
+  locale = "en",
+}: {
+  brandName: string;
+  modelName: string;
+  brandSlug: string;
+  modelSlug: string;
+  locale?: string;
+}): Metadata {
+  const safeLocale = ["en", "hi", "mr"].includes(locale) ? locale : "en";
+
+  const titles = {
+    en: `${modelName} Repair in Pune | Doorstep Pickup from ₹699 | QuickFix.in`,
+    hi: `${modelName} रिपेयर पुणे | डोरस्टेप पिकअप ₹699 से | QuickFix.in`,
+    mr: `${modelName} दुरुस्ती पुणे | डोअरस्टेप पिकअप ₹699 पासून | QuickFix.in`,
+  };
+
+  const descriptions = {
+    en: `Professional repair for ${modelName} in Pune. Convenient doorstep pickup, certified lab repair with genuine OEM parts, and safe same-day return with 90-day warranty.`,
+    hi: `पुणे में ${modelName} के लिए प्रमाणित रिपेयर। डोरस्टेप पिकअप, लैब में असली पार्ट्स के साथ मरम्मत और 90 दिनों की वारंटी।`,
+    mr: `पुण्यात ${modelName} साठी प्रमाणित दुरुस्ती. डोअरस्टेप पिकअप, अस्सल पार्ट्ससह लॅब दुरुस्ती आणि ९० दिवसांची हमी.`,
+  };
+
+  return getCustomSeoMetadata({
+    title: titles[safeLocale as "en" | "hi" | "mr"],
+    description: descriptions[safeLocale as "en" | "hi" | "mr"],
+    keywords: [
+      `${modelName.toLowerCase()} repair pune`,
+      `${modelName.toLowerCase()} screen replacement`,
+      `${brandName.toLowerCase()} repair pune`,
+      `doorstep ${modelName.toLowerCase()} service`,
+    ],
+    locale: safeLocale,
+    path: `/brands/${brandSlug}/${modelSlug}`,
+  });
+}
+
+export function getServicesHubSeoMetadata({
+  locale = "en",
+}: {
+  locale?: string;
+}): Metadata {
+  const safeLocale = ["en", "hi", "mr"].includes(locale) ? locale : "en";
+
+  const titles = {
+    en: "All Smartphone Repair Services in Pune | QuickFix.in",
+    hi: "पुणे में सभी स्मार्टफोन रिपेयर सेवाएं | QuickFix.in",
+    mr: "पुण्यातील सर्व स्मार्टफोन दुरुस्ती सेवा | QuickFix.in",
+  };
+
+  const descriptions = {
+    en: "Browse all mobile repair services in Pune with doorstep pickup — screen replacement, battery swap, charging port, camera, motherboard & more. Transparent pricing, 90-day warranty.",
+    hi: "पुणे में सभी डोरस्टेप मोबाइल रिपेयर सेवाएं — स्क्रीन, बैटरी, चार्जिंग पोर्ट, कैमरा, मदरबोर्ड। 90 दिनों की वारंटी।",
+    mr: "पुण्यात सर्व डोअरस्टेप मोबाईल दुरुस्ती सेवा — स्क्रीन, बॅटरी, चार्जिंग पोर्ट, कॅमेरा, मदरबोर्ड. ९० दिवसांची वॉरंटी.",
+  };
+
+  return getCustomSeoMetadata({
+    title: titles[safeLocale as "en" | "hi" | "mr"],
+    description: descriptions[safeLocale as "en" | "hi" | "mr"],
+    keywords: ["mobile repair services pune", "phone repair pune", "doorstep repair services"],
+    locale: safeLocale,
+    path: "/services",
+  });
+}
+
+export function getBrandsHubSeoMetadata({
+  locale = "en",
+}: {
+  locale?: string;
+}): Metadata {
+  const safeLocale = ["en", "hi", "mr"].includes(locale) ? locale : "en";
+
+  const titles = {
+    en: "All Smartphone Brands We Repair in Pune | QuickFix.in",
+    hi: "पुणे में सभी स्मार्टफोन ब्रांड रिपेयर | QuickFix.in",
+    mr: "पुण्यात सर्व स्मार्टफोन ब्रँड दुरुस्ती | QuickFix.in",
+  };
+
+  const descriptions = {
+    en: "We provide doorstep pickup and certified lab repair for Apple iPhone, Samsung Galaxy, OnePlus, Xiaomi, Google Pixel, Vivo, Oppo & more across Pune. OEM parts, 90-day warranty.",
+    hi: "पुणे में Apple iPhone, Samsung Galaxy, OnePlus, Xiaomi और सभी प्रमुख ब्रांड के लिए डोरस्टेप पिकअप और लैब रिपेयर। OEM पार्ट्स, 90 दिनों की वारंटी।",
+    mr: "पुण्यात Apple iPhone, Samsung Galaxy, OnePlus, Xiaomi आणि सर्व प्रमुख ब्रँडसाठी डोअरस्टेप पिकअप आणि लॅब दुरुस्ती. OEM पार्ट्स, ९० दिवसांची वॉरंटी.",
+  };
+
+  return getCustomSeoMetadata({
+    title: titles[safeLocale as "en" | "hi" | "mr"],
+    description: descriptions[safeLocale as "en" | "hi" | "mr"],
+    keywords: ["smartphone brands repair pune", "iphone repair pune", "samsung repair pune"],
+    locale: safeLocale,
+    path: "/brands",
   });
 }

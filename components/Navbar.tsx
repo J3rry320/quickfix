@@ -51,7 +51,7 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Adjust dropdown and drawer state when route changes (React-recommended pattern)
+  // Adjust dropdown and drawer state when route changes
   const [prevPathname, setPrevPathname] = useState(pathname);
   if (pathname !== prevPathname) {
     setPrevPathname(pathname);
@@ -84,13 +84,13 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Pune City Pill (visible on xl screens to keep navbar spacious) */}
+          {/* Pune City Pill */}
           <span className="hidden xl:inline-flex items-center rounded-full bg-zinc-100 px-2 py-0.5 text-[11px] font-bold text-zinc-600 border border-zinc-200/80 whitespace-nowrap">
             {t("city")}
           </span>
         </div>
 
-        {/* Center: Desktop Clean Nav Links (lg+ only, strictly whitespace-nowrap) */}
+        {/* Center: Desktop Clean Nav Links */}
         <nav
           ref={navRef}
           className="hidden lg:flex items-center gap-4 xl:gap-6 text-xs xl:text-sm font-semibold text-zinc-600"
@@ -106,7 +106,7 @@ export default function Navbar() {
               }`}
               aria-expanded={openDropdown === "services"}
             >
-              <span>Services</span>
+              <span>{t("nav.services")}</span>
               <ChevronDown
                 className={`h-3.5 w-3.5 transition-transform duration-200 ${
                   openDropdown === "services" ? "rotate-180" : ""
@@ -120,7 +120,7 @@ export default function Navbar() {
                 className="absolute left-0 top-full mt-1 w-64 rounded-2xl bg-clean-white border border-zinc-200 p-2 shadow-xl animate-in fade-in-50 zoom-in-95 z-50"
               >
                 <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-zinc-400">
-                  Doorstep Repairs
+                  {t("nav.services")}
                 </div>
                 {TOP_SERVICES.map((s) => (
                   <Link
@@ -135,11 +135,11 @@ export default function Navbar() {
                 ))}
                 <div className="pt-1.5 mt-1.5 border-t border-zinc-100">
                   <Link
-                    href="/book-repair"
+                    href="/services"
                     onClick={() => setOpenDropdown(null)}
                     className="flex items-center justify-between p-2 rounded-xl text-xs font-bold text-flash-orange hover:bg-flash-orange/10 transition-colors"
                   >
-                    <span>View All Services</span>
+                    <span>{t("nav.viewAllServices")}</span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
@@ -158,7 +158,7 @@ export default function Navbar() {
               }`}
               aria-expanded={openDropdown === "brands"}
             >
-              <span>Brands</span>
+              <span>{t("nav.brands")}</span>
               <ChevronDown
                 className={`h-3.5 w-3.5 transition-transform duration-200 ${
                   openDropdown === "brands" ? "rotate-180" : ""
@@ -172,7 +172,7 @@ export default function Navbar() {
                 className="absolute left-0 top-full mt-1 w-56 rounded-2xl bg-clean-white border border-zinc-200 p-2 shadow-xl animate-in fade-in-50 zoom-in-95 z-50"
               >
                 <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-zinc-400">
-                  Supported Brands
+                  {t("nav.brands")}
                 </div>
                 {TOP_BRANDS.map((b) => (
                   <Link
@@ -187,10 +187,19 @@ export default function Navbar() {
                     </span>
                   </Link>
                 ))}
+                <div className="pt-1.5 mt-1.5 border-t border-zinc-100">
+                  <Link
+                    href="/brands"
+                    onClick={() => setOpenDropdown(null)}
+                    className="flex items-center justify-between p-2 rounded-xl text-xs font-bold text-flash-orange hover:bg-flash-orange/10 transition-colors"
+                  >
+                    <span>{t("nav.viewAllBrands")}</span>
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
               </div>
             )}
           </div>
-
 
           {/* Pune Locations Dropdown */}
           <div className="relative">
@@ -203,7 +212,7 @@ export default function Navbar() {
               }`}
               aria-expanded={openDropdown === "locations"}
             >
-              <span>Pune Areas</span>
+              <span>{t("nav.puneLocations")}</span>
               <ChevronDown
                 className={`h-3.5 w-3.5 transition-transform duration-200 ${
                   openDropdown === "locations" ? "rotate-180" : ""
@@ -217,7 +226,7 @@ export default function Navbar() {
                 className="absolute left-0 top-full mt-1 w-56 rounded-2xl bg-clean-white border border-zinc-200 p-2 shadow-xl animate-in fade-in-50 zoom-in-95 z-50"
               >
                 <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-zinc-400">
-                  Coverage Hubs
+                  {t("nav.puneLocations")}
                 </div>
                 {TOP_LOCATIONS.map((l) => (
                   <Link
@@ -227,7 +236,7 @@ export default function Navbar() {
                     className="flex items-center justify-between p-2.5 rounded-xl hover:bg-mist-gray text-xs font-bold text-tech-slate transition-colors"
                   >
                     <span>{l.name}</span>
-                    <span className="text-[10px] text-emerald-600 font-bold">⚡ {l.time}</span>
+                    <span className="text-[10px] text-emerald-600 font-bold">{l.time}</span>
                   </Link>
                 ))}
               </div>
@@ -255,11 +264,11 @@ export default function Navbar() {
           </Link>
         </nav>
 
-        {/* Right: Desktop Action Controls (Compact Lang + Helpline + Clean CTA) */}
+        {/* Right: Desktop Action Controls */}
         <div className="hidden lg:flex items-center gap-2.5 shrink-0">
           <LanguageSwitcher />
 
-          {/* Direct Phone Helpline (Single-line guaranteed) */}
+          {/* Direct Phone Helpline */}
           <a
             href={`tel:${contactConfig.phone.value}`}
             className="inline-flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs font-bold text-tech-slate hover:bg-mist-gray hover:border-zinc-300 transition-colors whitespace-nowrap shrink-0"
@@ -267,16 +276,15 @@ export default function Navbar() {
           >
             <Phone className="h-3.5 w-3.5 text-flash-orange shrink-0" />
             <span className="hidden xl:inline">{contactConfig.phone.display}</span>
-            <span className="xl:hidden">Call Helpline</span>
+            <span className="xl:hidden">{t("actions.callNow")}</span>
           </a>
 
-          {/* Short, Punchy CTA Button (Single line, never wraps) */}
-          {/* Short, Punchy CTA Button (Single line, never wraps) */}
+          {/* Booking CTA Button */}
           <Link
             href="/book-repair"
             className="inline-flex items-center justify-center rounded-xl bg-flash-orange px-4 py-2 text-xs font-extrabold text-clean-white shadow-xs hover:bg-flash-orange-hover active:scale-95 transition-all whitespace-nowrap shrink-0"
           >
-            Book Repair & Estimate
+            {t("actions.bookRepair")}
           </Link>
         </div>
 
@@ -333,15 +341,24 @@ export default function Navbar() {
             onClick={() => setMobileMenuOpen(false)}
             className="flex items-center justify-center gap-2 rounded-xl bg-flash-orange py-3 px-4 text-xs font-bold text-clean-white shadow-xs hover:bg-flash-orange-hover transition-colors w-full"
           >
-            <span>Book Doorstep Repair (Free Instant Quote)</span>
+            <span>{t("actions.bookRepair")}</span>
             <ArrowRight className="h-3.5 w-3.5" />
           </Link>
 
           {/* Services Section */}
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-2">
-              Popular Repairs
-            </span>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+                {t("nav.services")}
+              </span>
+              <Link
+                href="/services"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-[11px] font-bold text-flash-orange hover:underline"
+              >
+                {t("nav.viewAllServices")} →
+              </Link>
+            </div>
             <div className="grid grid-cols-1 gap-1">
               {TOP_SERVICES.map((s) => (
                 <Link
@@ -359,9 +376,18 @@ export default function Navbar() {
 
           {/* Brands Section */}
           <div className="pt-3 border-t border-zinc-100">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-2">
-              Top Brands
-            </span>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+                {t("nav.brands")}
+              </span>
+              <Link
+                href="/brands"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-[11px] font-bold text-flash-orange hover:underline"
+              >
+                {t("nav.viewAllBrands")} →
+              </Link>
+            </div>
             <div className="grid grid-cols-2 gap-1.5">
               {TOP_BRANDS.map((b) => (
                 <Link
@@ -379,7 +405,7 @@ export default function Navbar() {
           {/* Pune Locations Section */}
           <div className="pt-3 border-t border-zinc-100">
             <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-2">
-              Pune Coverage Zones
+              {t("nav.puneLocations")}
             </span>
             <div className="grid grid-cols-2 gap-1.5">
               {TOP_LOCATIONS.map((l) => (
@@ -398,32 +424,48 @@ export default function Navbar() {
           {/* Static Pages Links */}
           <div className="pt-3 border-t border-zinc-100 flex flex-col space-y-1">
             <Link
+              href="/services"
+              onClick={() => setMobileMenuOpen(false)}
+              className="px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray flex items-center justify-between"
+            >
+              <span>{t("nav.allServices")}</span>
+              <ArrowRight className="h-3 w-3 text-zinc-400" />
+            </Link>
+            <Link
+              href="/brands"
+              onClick={() => setMobileMenuOpen(false)}
+              className="px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray flex items-center justify-between"
+            >
+              <span>{t("nav.allBrands")}</span>
+              <ArrowRight className="h-3 w-3 text-zinc-400" />
+            </Link>
+            <Link
               href="/about"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray"
             >
-              About Us (Sadashiv Peth Origin)
+              {t("nav.about")}
             </Link>
             <Link
               href="/contact"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray"
             >
-              Contact Us & Helpline
+              {t("nav.contact")}
             </Link>
             <Link
               href="/terms"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray"
+              className="px-3 py-2 rounded-lg text-xs font-semibold text-zinc-600 hover:bg-mist-gray"
             >
-              90-Day Warranty & Terms
+              Terms of Service
             </Link>
             <Link
               href="/privacy"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray"
+              className="px-3 py-2 rounded-lg text-xs font-semibold text-zinc-600 hover:bg-mist-gray"
             >
-              Privacy Policy & Data Guarantee
+              Privacy Policy
             </Link>
           </div>
 
@@ -434,7 +476,7 @@ export default function Navbar() {
               className="flex items-center justify-center gap-2 rounded-xl border border-zinc-200 py-3 text-xs font-bold text-tech-slate hover:bg-mist-gray transition-colors"
             >
               <Phone className="h-4 w-4 text-flash-orange" />
-              <span>Call Helpline: {contactConfig.phone.display}</span>
+              <span>{t("actions.callNow")}: {contactConfig.phone.display}</span>
             </a>
           </div>
         </div>

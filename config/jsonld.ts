@@ -274,3 +274,41 @@ export function getServiceDetailPageSchema({
   };
 }
 
+export function getModelDetailPageSchema({
+  brandName,
+  modelName,
+  brandSlug,
+  modelSlug,
+  startingPrice = 699,
+  locale = "en",
+}: {
+  brandName: string;
+  modelName: string;
+  brandSlug: string;
+  modelSlug: string;
+  startingPrice?: number;
+  locale?: string;
+}) {
+  const siteUrl = siteConfig.url.replace(/\/$/, "");
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: `${modelName} Repair Service`,
+    description: `Professional doorstep repair for ${modelName} in Pune. Screen, battery, camera, and charging port repairs with 90-day warranty.`,
+    brand: {
+      "@type": "Brand",
+      name: brandName,
+    },
+    offers: {
+      "@type": "AggregateOffer",
+      lowPrice: startingPrice,
+      priceCurrency: "INR",
+      availability: "https://schema.org/InStock",
+      url: `${siteUrl}/${locale}/brands/${brandSlug}/${modelSlug}`,
+    },
+    provider: {
+      "@id": `${siteUrl}/#business`,
+    },
+  };
+}

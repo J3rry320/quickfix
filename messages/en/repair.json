@@ -1,10 +1,10 @@
 {
   "RepairPage": {
-    "metaTitle": "Book 30-Minute Doorstep Mobile Repair in Pune | QuickFix.in",
-    "metaDescription": "Schedule an on-spot phone repair at your home or office in Pune. Certified technician arrives with genuine parts, 90-day warranty, and zero upfront payment.",
-    "badge": "Express Doorstep Booking",
-    "title": "Book Your Doorstep Mobile Repair",
-    "subtitle": "Certified technician arrives at your home or office in Pune with genuine replacement parts and professional tools.",
+    "metaTitle": "Book Doorstep Mobile Pickup & Certified Lab Repair in Pune | QuickFix.in",
+    "metaDescription": "Schedule doorstep pickup across Pune. Certified repair at our Sadashiv Peth lab with genuine parts, 90-day warranty, and safe same-day delivery.",
+    "badge": "Express Doorstep Pickup",
+    "title": "Book Doorstep Mobile Pickup & Repair",
+    "subtitle": "Safe doorstep pickup across Pune, precision repair in our certified Sadashiv Peth lab, and same-day delivery with a 90-day warranty.",
     "steps": {
       "step1": "Device",
       "step2": "Slot",
@@ -72,18 +72,18 @@
     "navigation": {
       "btnNext": "Continue",
       "btnBack": "Back",
-      "btnSubmit": "Confirm Doorstep Booking",
-      "btnSubmitting": "Scheduling Technician..."
+      "btnSubmit": "Confirm Doorstep Pickup",
+      "btnSubmitting": "Scheduling Pickup..."
     },
     "trustPoints": {
       "payAfter": "Pay only after repair & thorough testing",
-      "warranty": "90-Day hassle-free warranty card on spot",
-      "privacy": "100% Data privacy: repaired right in front of you",
-      "freeDoorstep": "Zero travel: technician comes to your home/office"
+      "warranty": "90-Day hassle-free warranty card on delivery",
+      "privacy": "100% Data privacy: zero passcodes needed & sealed transit",
+      "freeDoorstep": "Zero travel: technician picks up from your home/office"
     },
     "success": {
-      "title": "Doorstep Repair Scheduled Successfully!",
-      "subtitle": "Our Pune dispatch team has assigned your request. Our technician will contact you prior to arrival.",
+      "title": "Doorstep Pickup Scheduled Successfully!",
+      "subtitle": "Our Pune dispatch team has assigned your request. Our technician will contact you prior to arriving for pickup.",
       "refLabel": "Your Booking Reference",
       "whatsappCta": "Chat on WhatsApp for Live Updates",
       "bookAnother": "Book Another Repair",

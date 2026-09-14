@@ -1,0 +1,157 @@
+import React from "react";
+import Container from "./Container";
+import Breadcrumbs, { BreadcrumbItem } from "./Breadcrumbs";
+
+export interface PageHeroHighlight {
+  icon?: React.ComponentType<{ className?: string }>;
+  label: string;
+  value?: string;
+  color?: string;
+}
+
+export interface PageHeroProps {
+  breadcrumbs?: BreadcrumbItem[];
+  title: React.ReactNode;
+  subtitle?: React.ReactNode;
+  highlights?: PageHeroHighlight[];
+  actions?: React.ReactNode;
+  media?: React.ReactNode;
+  align?: "left" | "center";
+  className?: string;
+}
+
+export default function PageHero({
+  breadcrumbs,
+  title,
+  subtitle,
+  highlights,
+  actions,
+  media,
+  align = "left",
+  className = "",
+}: PageHeroProps) {
+  const isCentered = align === "center" || (!media && align !== "left");
+
+  return (
+    <section
+      className={`relative overflow-hidden bg-gradient-to-b from-mist-gray/90 via-clean-white to-clean-white border-b border-border-default pt-8 pb-12 sm:pt-12 sm:pb-16 lg:pb-20 ${className}`}
+    >
+      <Container>
+        {breadcrumbs && breadcrumbs.length > 0 && (
+          <div className={`mb-6 sm:mb-8 ${isCentered ? "flex justify-center" : ""}`}>
+            <Breadcrumbs items={breadcrumbs} />
+          </div>
+        )}
+
+        {isCentered ? (
+          /* Centered Single-Column Layout */
+          <div className="mx-auto max-w-3xl text-center">
+            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-tech-slate">
+              {title}
+            </h1>
+            {subtitle && (
+              <p className="mt-4 sm:mt-5 text-base sm:text-lg text-text-muted leading-relaxed">
+                {subtitle}
+              </p>
+            )}
+
+            {highlights && highlights.length > 0 && (
+              <div className="mt-6 sm:mt-8 mx-auto max-w-3xl">
+                <div
+                  className={`grid gap-2 sm:gap-2.5 ${
+                    highlights.length === 4
+                      ? "grid-cols-2 sm:grid-cols-4"
+                      : highlights.length === 3
+                      ? "grid-cols-1 sm:grid-cols-3"
+                      : highlights.length === 2
+                      ? "grid-cols-2"
+                      : "grid-cols-2 sm:grid-cols-4"
+                  }`}
+                >
+                  {highlights.map((h, i) => {
+                    const Icon = h.icon;
+                    return (
+                      <div
+                        key={i}
+                        className="flex items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-clean-white px-3 py-2.5 text-xs font-semibold text-tech-slate border border-border-default/90 shadow-2xs hover:border-flash-orange/40 hover:shadow-xs transition-all text-center"
+                      >
+                        {Icon && (
+                          <Icon
+                            className={`h-4 w-4 shrink-0 ${h.color || "text-flash-orange"}`}
+                          />
+                        )}
+                        <span className="text-text-muted truncate">{h.label}</span>
+                        {h.value && (
+                          <strong className="font-bold text-tech-slate shrink-0">
+                            {h.value}
+                          </strong>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {actions && <div className="mt-8 flex flex-wrap items-center justify-center gap-4">{actions}</div>}
+
+            {media && <div className="mt-10 mx-auto max-w-4xl">{media}</div>}
+          </div>
+        ) : (
+          /* Two-Column Responsive Layout */
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="lg:col-span-7">
+              <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-tech-slate">
+                {title}
+              </h1>
+
+              {subtitle && (
+                <p className="mt-4 sm:mt-5 text-base sm:text-lg text-text-muted leading-relaxed">
+                  {subtitle}
+                </p>
+              )}
+
+              {highlights && highlights.length > 0 && (
+                <div
+                  className={`mt-6 grid gap-2 sm:gap-2.5 max-w-lg ${
+                    highlights.length === 4
+                      ? "grid-cols-2"
+                      : highlights.length === 3
+                      ? "grid-cols-1 sm:grid-cols-3"
+                      : "grid-cols-2"
+                  }`}
+                >
+                  {highlights.map((h, i) => {
+                    const Icon = h.icon;
+                    return (
+                      <div
+                        key={i}
+                        className="flex items-center gap-2 rounded-xl bg-clean-white px-3.5 py-2.5 text-xs font-semibold text-tech-slate border border-border-default/90 shadow-2xs hover:border-flash-orange/40 transition-all"
+                      >
+                        {Icon && (
+                          <Icon
+                            className={`h-4 w-4 shrink-0 ${h.color || "text-flash-orange"}`}
+                          />
+                        )}
+                        <span className="text-text-muted truncate">{h.label}</span>
+                        {h.value && (
+                          <strong className="font-bold text-tech-slate shrink-0">
+                            {h.value}
+                          </strong>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {actions && <div className="mt-8 flex flex-wrap items-center gap-4">{actions}</div>}
+            </div>
+
+            {media && <div className="lg:col-span-5">{media}</div>}
+          </div>
+        )}
+      </Container>
+    </section>
+  );
+}

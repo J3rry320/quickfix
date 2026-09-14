@@ -6,11 +6,16 @@
     "puneBadge": "पुणे, महाराष्ट्र",
     "nav": {
       "services": "सेवा",
+      "brands": "ब्रँड्स",
       "pricing": "दरपत्रक",
       "whyUs": "आम्हीच का?",
       "puneLocations": "पुण्यातील भाग",
       "about": "आमच्याबद्दल",
-      "contact": "संपर्क"
+      "contact": "संपर्क",
+      "allServices": "सर्व सेवा",
+      "allBrands": "सर्व ब्रँड्स",
+      "viewAllServices": "सर्व सेवा पहा",
+      "viewAllBrands": "सर्व ब्रँड्स पहा"
     },
     "actions": {
       "bookRepair": "डोअरस्टेप रिपेअर बुक करा",

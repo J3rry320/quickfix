@@ -2,7 +2,6 @@ import React from "react";
 import { ArrowRight, Phone } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import contactConfig from "@/config/contact";
-import Badge from "@/components/ui/Badge";
 
 export interface CTABlockProps {
   title?: string;
@@ -12,9 +11,9 @@ export interface CTABlockProps {
 }
 
 export default function CTABlock({
-  title = "Ready to Fix Your Device at Your Doorstep?",
-  subtitle = "Our certified Pune technician will reach your home or office in 30 to 45 minutes with genuine parts and a 90-day warranty.",
-  badge = "Pune Express Dispatch",
+  title = "Ready for Doorstep Pickup & Certified Lab Repair?",
+  subtitle = "Our Pune team picks up your smartphone, repairs it with genuine OEM parts in our Sadashiv Peth cleanroom lab, and returns it with a 90-day warranty.",
+  badge,
   className = "",
 }: CTABlockProps) {
   return (
@@ -32,13 +31,6 @@ export default function CTABlock({
       />
 
       <div className="relative z-10 max-w-3xl mx-auto text-center">
-        {badge && (
-          <div className="mb-4 flex justify-center">
-            <Badge variant="amber" size="md">
-              ⚡ {badge}
-            </Badge>
-          </div>
-        )}
 
         <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight">
           {title}

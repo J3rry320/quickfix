@@ -5,6 +5,8 @@ import { useTranslations, useLocale } from "next-intl";
 import { Send, CheckCircle2, AlertCircle, Phone, MessageSquare, Loader2, ArrowRight } from "lucide-react";
 import contactConfig from "@/config/contact";
 
+import { FormLoadingState, FormSuccessState, FormErrorState } from "@/components/ui/form-states";
+
 export default function ContactForm() {
   const t = useTranslations("ContactPage.form");
   const locale = useLocale();
@@ -76,58 +78,32 @@ export default function ContactForm() {
     setErrorMessage("");
   };
 
+  if (isSubmitting) {
+    return (
+      <FormLoadingState
+        title="Submitting Your Inquiry…"
+        subtitle="Connecting with QuickFix Pune support desk. Please hold on."
+      />
+    );
+  }
+
   if (isSuccess) {
     return (
-      <div className="rounded-3xl border-2 border-success-green/20 bg-clean-white p-6 sm:p-10 shadow-xl text-center animate-in fade-in-50 zoom-in-95">
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-mist-gray text-success-green mb-5 border border-border-default">
-          <CheckCircle2 className="h-9 w-9" />
-        </div>
-
-        <h3 className="font-heading text-2xl font-extrabold text-tech-slate">
-          {t("successTitle")}
-        </h3>
-
-        <p className="mt-2 text-sm text-text-secondary font-body max-w-md mx-auto leading-relaxed">
-          {t("successMsg")}
-        </p>
-
-        {/* Immediate Direct Contact Box */}
-        <div className="my-6 rounded-2xl bg-tech-slate p-5 text-left text-clean-white">
-          <div className="flex items-center justify-between mb-3 border-b border-tech-slate/60 pb-3">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-electric-amber">
-              Need Instant Answer?
-            </span>
-            <span className="text-xs text-clean-white/70">Available 9am - 9pm</span>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-3">
-            <a
-              href={`tel:${contactConfig.phone.value}`}
-              className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-4 py-2.5 text-xs font-bold text-clean-white hover:bg-flash-orange-hover transition-colors"
-            >
-              <Phone className="h-4 w-4" />
-              <span>Call Helpline: {contactConfig.phone.display}</span>
-            </a>
-            <a
-              href={contactConfig.whatsapp.getDefaultUrl(`Hi QuickFix, I just submitted an inquiry on your contact page.`)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-whatsapp px-4 py-2.5 text-xs font-bold text-clean-white hover:bg-whatsapp-hover transition-colors"
-            >
-              <MessageSquare className="h-4 w-4" />
-              <span>Chat on WhatsApp</span>
-            </a>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          onClick={handleReset}
-          className="text-xs font-bold text-flash-orange hover:underline cursor-pointer"
-        >
-          {t("sendAnother")}
-        </button>
-      </div>
+      <FormSuccessState
+        title={t("successTitle")}
+        subtitle={t("successMsg")}
+        badgeLabel="Inquiry Dispatched to Pune Desk"
+        summaryDetails={[
+          { label: "Name", value: name },
+          { label: "Phone", value: phone },
+          ...(area ? [{ label: "Pune Locality", value: area }] : []),
+          { label: "Inquiry Type", value: subject },
+        ]}
+        onReset={handleReset}
+        resetLabel={t("sendAnother")}
+        whatsappUrl={contactConfig.whatsapp.getDefaultUrl(`Hi QuickFix, I just submitted an inquiry from ${name} regarding ${subject}.`)}
+        whatsappLabel="Chat on WhatsApp with Support"
+      />
     );
   }
 

@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { setRequestLocale, getTranslations } from "next-intl/server";
-import { Phone, MessageSquare, Mail, MapPin, Clock, ShieldCheck, Navigation, ArrowRight } from "lucide-react";
+import { getTranslations } from "next-intl/server";
+import { Phone, MessageSquare, Mail, MapPin, Clock, ShieldCheck, Navigation } from "lucide-react";
 import { routing } from "@/i18n/routing";
 import { getSeoMetadata, siteConfig } from "@/config/seo";
 import { getOrganizationAndLocalBusinessSchema, getBreadcrumbSchema } from "@/config/jsonld";
 import JsonLd from "@/components/seo/JsonLd";
-import SectionHeader from "@/components/landing/SectionHeader";
 import contactConfig from "@/config/contact";
 import ContactForm from "@/components/contact/ContactForm";
 import GoogleMapEmbed from "@/components/contact/GoogleMapEmbed";
+import { Breadcrumbs, SectionHeader } from "@/components/ui";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -33,7 +33,6 @@ export default async function ContactPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  setRequestLocale(locale);
 
   const t = await getTranslations({ locale, namespace: "ContactPage" });
   const siteUrl = siteConfig.url.replace(/\/$/, "");
@@ -49,9 +48,17 @@ export default async function ContactPage({
       <JsonLd schema={[localBusinessSchema, breadcrumbSchema]} id="contact-structured-data" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-center mb-6">
+          <Breadcrumbs
+            items={[
+              { label: "Home", href: "/" },
+              { label: t("title") || "Contact Us" },
+            ]}
+          />
+        </div>
+
         {/* Page Header */}
         <SectionHeader
-          badge={t("badge")}
           title={t("title")}
           subtitle={t("subtitle")}
           className="max-w-3xl mb-10 text-center mx-auto"

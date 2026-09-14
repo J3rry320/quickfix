@@ -6,11 +6,16 @@
     "puneBadge": "Pune, Maharashtra",
     "nav": {
       "services": "Services",
+      "brands": "Brands",
       "pricing": "Pricing",
       "whyUs": "Why Us",
       "puneLocations": "Pune Areas",
       "about": "About",
-      "contact": "Contact"
+      "contact": "Contact",
+      "allServices": "All Services",
+      "allBrands": "All Brands",
+      "viewAllServices": "View All Services",
+      "viewAllBrands": "View All Brands"
     },
     "actions": {
       "bookRepair": "Book Doorstep Repair",

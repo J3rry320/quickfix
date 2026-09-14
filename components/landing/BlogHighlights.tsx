@@ -5,9 +5,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { BookOpen, Clock, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import SectionHeader from "@/components/landing/SectionHeader";
-import EmptyState from "@/components/ui/EmptyState";
-import { SkeletonGrid } from "@/components/ui/Skeleton";
+import { SectionHeader, EmptyState, SkeletonGrid } from "@/components/ui";
 
 interface BlogPostItem {
   _id: string;
@@ -85,6 +83,7 @@ export default function BlogHighlights() {
                         src={post.coverImage}
                         alt={post.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 384px"
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     ) : (

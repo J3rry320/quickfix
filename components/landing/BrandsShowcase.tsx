@@ -87,6 +87,7 @@ export default function BrandsShowcase() {
                       src={brand.logoUrl}
                       alt={brand.name}
                       fill
+                      sizes="(max-width: 640px) 40px, 48px"
                       className="object-contain p-1.5"
                     />
                   ) : (

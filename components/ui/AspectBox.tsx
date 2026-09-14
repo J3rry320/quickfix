@@ -10,6 +10,7 @@ export interface AspectBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   label?: string;
   badge?: string;
   preload?: boolean;
+  sizes?: string;
   className?: string;
 }
 
@@ -29,10 +30,16 @@ export default function AspectBox({
   label,
   badge,
   preload = false,
+  sizes,
   className = "",
   ...props
 }: AspectBoxProps) {
   const aspect = aspectClasses[aspectRatio] || "aspect-video";
+  const defaultSizes =
+    aspectRatio === "1/1"
+      ? "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 450px"
+      : "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px";
+  const effectiveSizes = sizes || defaultSizes;
 
   return (
     <div
@@ -45,7 +52,7 @@ export default function AspectBox({
           alt={alt}
           fill
           preload={preload}
-          sizes="(max-width: 768px) 100vw, 50vw"
+          sizes={effectiveSizes}
           className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
       ) : (

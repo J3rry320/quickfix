@@ -12,19 +12,42 @@ import WizardDeviceSummary from "./WizardDeviceSummary";
 import StageDeviceSelect from "./StageDeviceSelect";
 import StageServiceSelect from "./StageServiceSelect";
 import StageConfirmBooking from "./StageConfirmBooking";
-import BookingLoader from "./BookingLoader";
-import BookingSuccess from "./BookingSuccess";
+import { FormLoadingState, FormSuccessState } from "@/components/ui/form-states";
 
 function BookingWizardContent() {
-  const { currentStage, errorMessage, isSubmitting, bookingSuccess } =
+  const { currentStage, errorMessage, isSubmitting, bookingSuccess, formData, resetWizard } =
     useBookingWizard();
 
   if (isSubmitting) {
-    return <BookingLoader />;
+    return (
+      <FormLoadingState
+        title="Confirming Your Doorstep Pickup…"
+        subtitle="Reserving your appointment slot and assigning pickup fleet in Pune."
+      />
+    );
   }
 
   if (bookingSuccess) {
-    return <BookingSuccess />;
+    return (
+      <FormSuccessState
+        title="Doorstep Pickup Scheduled!"
+        subtitle="Our Pune dispatch team has logged your booking. A technician will call you prior to arriving for device pickup."
+        badgeLabel="Pickup Fleet Assigned & Confirmed"
+        referenceCode={bookingSuccess.bookingReference}
+        referenceLabel="Booking Reference Code"
+        summaryDetails={[
+          { label: "Device", value: `${formData.brand} ${formData.model}` },
+          { label: "Repair", value: formData.issueDescription || "Phone Diagnostic & Repair" },
+          { label: "Scheduled Slot", value: `${formData.date} • ${formData.timeSlot}` },
+          {
+            label: "Doorstep Address",
+            value: `${formData.streetAddress}${formData.area ? ` (${formData.area})` : ""}`,
+          },
+        ]}
+        onReset={resetWizard}
+        resetLabel="Book Another Repair"
+      />
+    );
   }
 
   return (

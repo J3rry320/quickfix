@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import { ShieldCheck, Clock, CheckCircle2, AlertCircle } from "lucide-react";
 import { getSeoMetadata, siteConfig } from "@/config/seo";
 import { getBreadcrumbSchema } from "@/config/jsonld";
 import JsonLd from "@/components/seo/JsonLd";
-import { Container, Section, SectionHeader, CTABlock } from "@/components/ui";
+import { Container, Section, CTABlock, PageHero } from "@/components/ui";
 import contactConfig from "@/config/contact";
 
 export async function generateMetadata({
@@ -26,7 +25,6 @@ export default async function TermsPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  setRequestLocale(locale);
 
   const siteUrl = siteConfig.url.replace(/\/$/, "");
   const breadcrumbSchema = getBreadcrumbSchema([
@@ -38,16 +36,15 @@ export default async function TermsPage({
     <div className="flex flex-col w-full bg-clean-white">
       <JsonLd schema={breadcrumbSchema} id="terms-structured-data" />
 
-      <Section variant="muted" padding="tight">
-        <Container size="narrow">
-          <SectionHeader
-            badge="Service Agreement"
-            title="Terms of Service"
-            subtitle="Clear, fair, and transparent service guidelines for all doorstep smartphone repairs across Pune"
-            align="left"
-          />
-        </Container>
-      </Section>
+      <PageHero
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Terms of Service" },
+        ]}
+        title="Terms of Service"
+        subtitle="Clear, fair, and transparent service guidelines for all doorstep smartphone repairs across Pune"
+        align="center"
+      />
 
       <Section variant="white" padding="default">
         <Container size="narrow">

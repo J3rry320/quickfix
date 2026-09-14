@@ -1,6 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Phone, Clock, MapPin, MessageSquare, ShieldCheck, Mail } from "lucide-react";
+import { Phone, Clock, MapPin, MessageSquare, ShieldCheck, Mail, ArrowRight, Heart } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import contactConfig from "@/config/contact";
 
@@ -12,7 +14,7 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-zinc-800">
           {/* Brand Col */}
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-3">
             <Link href="/" className="inline-flex items-center gap-3">
               <Image
                 src="/logo.png"
@@ -117,8 +119,52 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Repairs Directory */}
-          <div className="lg:col-span-3">
+          {/* Company & Static Links Col */}
+          <div className="lg:col-span-2">
+            <h4 className="font-heading text-xs font-extrabold uppercase tracking-wider text-clean-white mb-4">
+              {t("quickLinks")}
+            </h4>
+            <ul className="space-y-2.5 text-xs sm:text-sm text-zinc-400 font-medium">
+              <li>
+                <Link href="/about" className="hover:text-flash-orange transition-colors">
+                  {t("aboutUs")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/book-repair" className="hover:text-flash-orange transition-colors">
+                  {t("bookDoorstep")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/services" className="hover:text-flash-orange transition-colors">
+                  {t("allServices")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/brands" className="hover:text-flash-orange transition-colors">
+                  {t("allBrands")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-flash-orange transition-colors">
+                  {t("contactUs")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-flash-orange transition-colors">
+                  {t("termsOfService")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="hover:text-flash-orange transition-colors">
+                  {t("privacyPolicy")}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Repairs Directory Col */}
+          <div className="lg:col-span-2">
             <h4 className="font-heading text-xs font-extrabold uppercase tracking-wider text-clean-white mb-4">
               {t("services")}
             </h4>
@@ -153,38 +199,56 @@ export default function Footer() {
                   {t("waterDamage")}
                 </Link>
               </li>
+              <li className="pt-2 border-t border-zinc-800/80">
+                <Link
+                  href="/services"
+                  className="inline-flex items-center gap-1.5 font-bold text-flash-orange hover:text-orange-400 transition-colors"
+                >
+                  <span>{t("viewAllServices")}</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Quick Links */}
+          {/* Brands Directory Col */}
           <div className="lg:col-span-2">
             <h4 className="font-heading text-xs font-extrabold uppercase tracking-wider text-clean-white mb-4">
-              {t("quickLinks")}
+              {t("brands")}
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm text-zinc-400 font-medium">
               <li>
-                <Link href="/about" className="hover:text-flash-orange transition-colors">
-                  About Us
+                <Link href="/brands/apple" className="hover:text-flash-orange transition-colors">
+                  Apple iPhone
                 </Link>
               </li>
               <li>
-                <Link href="/#how-it-works" className="hover:text-flash-orange transition-colors">
-                  How It Works
+                <Link href="/brands/samsung" className="hover:text-flash-orange transition-colors">
+                  Samsung Galaxy
                 </Link>
               </li>
               <li>
-                <Link href="/book-repair" className="hover:text-flash-orange transition-colors">
-                  Book Doorstep
+                <Link href="/brands/oneplus" className="hover:text-flash-orange transition-colors">
+                  OnePlus
                 </Link>
               </li>
               <li>
-                <Link href="/#faq" className="hover:text-flash-orange transition-colors">
-                  FAQ
+                <Link href="/brands/xiaomi" className="hover:text-flash-orange transition-colors">
+                  Xiaomi / Redmi
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-flash-orange transition-colors">
-                  Contact Us
+                <Link href="/brands/google-pixel" className="hover:text-flash-orange transition-colors">
+                  Google Pixel
+                </Link>
+              </li>
+              <li className="pt-2 border-t border-zinc-800/80">
+                <Link
+                  href="/brands"
+                  className="inline-flex items-center gap-1.5 font-bold text-flash-orange hover:text-orange-400 transition-colors"
+                >
+                  <span>{t("viewAllBrands")}</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </li>
             </ul>
@@ -242,18 +306,47 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Strip */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-400">
-          <p>{t("copyright")}</p>
-          <div className="flex items-center gap-6">
-            <Link href="/privacy" className="hover:text-clean-white transition-colors">
-              {t("privacyPolicy")}
-            </Link>
-            <Link href="/terms" className="hover:text-clean-white transition-colors">
-              {t("termsOfService")}
-            </Link>
+        {/* Bottom Strip: Copyright & Privacy Links paired together on left, Credit on right */}
+        <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-zinc-400 text-center md:text-left">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+            <p>{t("copyright")}</p>
+            <span className="hidden sm:inline text-zinc-600">•</span>
+            <div className="flex items-center gap-3 text-xs font-medium">
+              <Link href="/privacy" className="hover:text-clean-white hover:underline transition-colors">
+                {t("privacyPolicy")}
+              </Link>
+              <span className="text-zinc-600">•</span>
+              <Link href="/terms" className="hover:text-clean-white hover:underline transition-colors">
+                {t("termsOfService")}
+              </Link>
+            </div>
           </div>
+
+          {/* Multilingual Developer Credit with clean brand link */}
+          <p className="flex items-center justify-center gap-1 text-zinc-400">
+            {t.rich("designedAndDeveloped", {
+              heart: () => (
+                <span className="inline-flex items-center text-rose-500 mx-0.5 align-middle" title="love">
+                  <Heart className="h-3.5 w-3.5 fill-rose-500 shrink-0 inline" />
+                  <span className="sr-only">&lt;3</span>
+                </span>
+              ),
+              author: (chunks) => (
+                <a
+                  href="https://codemedialabs.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-bold text-zinc-300 hover:text-flash-orange hover:underline transition-colors ml-0.5"
+                >
+                  {chunks}
+                </a>
+              ),
+            })}
+          </p>
         </div>
+
+        {/* Safe Area Spacer: Ensures content is never obscured by the fixed WhatsApp FAB button */}
+        <div className="h-16 md:h-20 w-full pointer-events-none" aria-hidden="true" />
       </div>
     </footer>
   );

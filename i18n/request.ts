@@ -1,13 +1,19 @@
+import * as rootParams from "next/root-params";
 import { getRequestConfig } from "next-intl/server";
-import { routing, type Locale } from "./routing";
+import { hasLocale } from "next-intl";
+import { routing } from "./routing";
+import { notFound } from "next/navigation";
 
-export default getRequestConfig(async ({ requestLocale }) => {
-  let locale = await requestLocale;
-
-  if (!locale || !routing.locales.includes(locale as Locale)) {
-    locale = routing.defaultLocale;
+export default getRequestConfig(async ({ locale }) => {
+  // Only read from `next/root-params` if no explicit override is provided
+  if (!locale) {
+    const paramValue = await (rootParams as { locale?: () => Promise<string> }).locale?.();
+    if (hasLocale(routing.locales, paramValue)) {
+      locale = paramValue;
+    } else {
+      notFound();
+    }
   }
-
 
   // Load and merge modular translation files
   const [common, landing, repair, about, contact] = await Promise.all([

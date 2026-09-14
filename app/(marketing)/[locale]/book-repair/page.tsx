@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { setRequestLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { getSeoMetadata, siteConfig } from "@/config/seo";
 import { getServiceSchema, getBreadcrumbSchema } from "@/config/jsonld";
 import JsonLd from "@/components/seo/JsonLd";
-import SectionHeader from "@/components/landing/SectionHeader";
 import StepByStepBookingWizard from "@/components/repair/StepByStepBookingWizard";
-import { Skeleton } from "@/components/ui/Skeleton";
+import { Breadcrumbs, SectionHeader, Skeleton } from "@/components/ui";
 import { Clock, Lock, ShieldCheck, BadgeIndianRupee } from "lucide-react";
 
 export async function generateMetadata({
@@ -28,7 +27,6 @@ export default async function BookRepairPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  setRequestLocale(locale);
 
   const t = await getTranslations({ locale, namespace: "RepairPage" });
 
@@ -43,11 +41,19 @@ export default async function BookRepairPage({
     <div className="py-8 sm:py-12 bg-mist-gray/40 min-h-[calc(100vh-4rem)]">
       <JsonLd schema={[serviceSchema, breadcrumbSchema]} id="repair-structured-data" />
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
+        <div className="flex justify-center mb-6">
+          <Breadcrumbs
+            items={[
+              { label: "Home", href: "/" },
+              { label: t("title") || "Book Doorstep Repair" },
+            ]}
+          />
+        </div>
+
         {/* Simplified Page Header */}
         <SectionHeader
-          badge={t("badge") || "Express Doorstep Booking"}
-          title={t("title") || "Book Your Doorstep Mobile Repair"}
-          subtitle={t("subtitle") || "Certified technician arrives at your home or office in Pune with genuine replacement parts."}
+          title={t("title") || "Book Doorstep Mobile Pickup & Repair"}
+          subtitle={t("subtitle") || "Safe doorstep pickup across Pune, precision repair in our certified Sadashiv Peth lab, returned same-day."}
           className="max-w-2xl mb-6 text-center mx-auto"
         />
 
@@ -60,7 +66,7 @@ export default async function BookRepairPage({
                 <Clock className="h-3.5 w-3.5" aria-hidden="true" />
               </div>
               <div className="min-w-0">
-                <p className="font-heading text-xs font-bold text-tech-slate leading-tight truncate">30-Min Fix</p>
+                <p className="font-heading text-xs font-bold text-tech-slate leading-tight truncate">Fast Pickup</p>
                 <p className="text-[10px] text-text-muted leading-tight truncate">At your doorstep</p>
               </div>
             </div>
@@ -72,7 +78,7 @@ export default async function BookRepairPage({
               </div>
               <div className="min-w-0">
                 <p className="font-heading text-xs font-bold text-tech-slate leading-tight truncate">Data Protected</p>
-                <p className="text-[10px] text-text-muted leading-tight truncate">Repaired on-site</p>
+                <p className="text-[10px] text-text-muted leading-tight truncate">Tamper-proof transit</p>
               </div>
             </div>
 

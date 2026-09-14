@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import { MapPin, Navigation, Zap, ShieldCheck, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import SectionHeader from "@/components/landing/SectionHeader";
+import { SectionHeader } from "@/components/ui";
 import contactConfig from "@/config/contact";
 import { LOCALITIES_CATALOG, LocalityItem } from "@/config/catalogue-data";
 
