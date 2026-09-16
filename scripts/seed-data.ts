@@ -1,5 +1,5 @@
 /**
- * QuickFix.in - Seed Data Script
+ * QuickFixMobile.in - Seed Data Script
  *
  * Populates MongoDB with rich, SEO-ready, user-friendly data for:
  * - 14 Comprehensive Smartphone Repair Services (Screen, Battery, Port, Back Glass, Camera, Camera Glass, Speaker/Mic, Motherboard, Water Damage, Buttons, Face ID/Biometrics, Housing/Chassis, Vibration, Software)
@@ -14,9 +14,9 @@
  *   npm run seed:data
  */
 
-import mongoose from "mongoose";
 import { connectDb } from "@/lib/mongodb";
-import { Brand, RepairService, DeviceModel } from "@/models";
+import { Brand, DeviceModel, RepairService } from "@/models";
+import mongoose from "mongoose";
 
 // ============================================================================
 // 1. REPAIR SERVICES (SEO-Optimized, User-Friendly Descriptions & Pune SLAs)
@@ -263,7 +263,12 @@ const BRANDS_DATA = [
   { name: "Xiaomi", slug: "xiaomi", isPopular: true, displayOrder: 4 },
   { name: "Vivo", slug: "vivo", isPopular: true, displayOrder: 5 },
   { name: "Oppo", slug: "oppo", isPopular: true, displayOrder: 6 },
-  { name: "Google Pixel", slug: "google-pixel", isPopular: true, displayOrder: 7 },
+  {
+    name: "Google Pixel",
+    slug: "google-pixel",
+    isPopular: true,
+    displayOrder: 7,
+  },
   { name: "Realme", slug: "realme", isPopular: true, displayOrder: 8 },
   { name: "Motorola", slug: "motorola", isPopular: false, displayOrder: 9 },
   { name: "Nothing", slug: "nothing", isPopular: false, displayOrder: 10 },
@@ -274,7 +279,12 @@ const BRANDS_DATA = [
 // ============================================================================
 // 3. TIER-BASED PRICING BLUEPRINTS (Authentic Indian Market Rates)
 // ============================================================================
-type DeviceTier = "flagship_ultra" | "flagship" | "upper_mid" | "mid" | "budget";
+type DeviceTier =
+  | "flagship_ultra"
+  | "flagship"
+  | "upper_mid"
+  | "mid"
+  | "budget";
 
 const TIER_PRICES: Record<DeviceTier, Record<string, number>> = {
   flagship_ultra: {
@@ -1797,10 +1807,12 @@ async function seedDatabase() {
     const doc = await RepairService.findOneAndUpdate(
       { slug: s.slug },
       { $set: s },
-      { upsert: true, new: true }
+      { upsert: true, returnDocument: "after" },
     );
     serviceMap.set(s.slug, doc._id as mongoose.Types.ObjectId);
-    console.log(`  ✓ Service: ${s.name} (Starting at ₹${s.startingPrice}, ${s.estimatedTimeMinutes}m SLA)`);
+    console.log(
+      `  ✓ Service: ${s.name} (Starting at ₹${s.startingPrice}, ${s.estimatedTimeMinutes}m SLA)`,
+    );
   }
 
   // 2. Seed Brands
@@ -1811,31 +1823,40 @@ async function seedDatabase() {
     const doc = await Brand.findOneAndUpdate(
       { slug: b.slug },
       { $set: b },
-      { upsert: true, new: true }
+      { upsert: true, returnDocument: "after" },
     );
     brandMap.set(b.slug, doc._id as mongoose.Types.ObjectId);
     console.log(`  ✓ Brand: ${b.name}`);
   }
 
   // 3. Seed Models with Comprehensive Tier & Custom Pricing Across All Services
-  console.log("\nSeeding Device Models with Custom Pricing across all 14 services...");
+  console.log(
+    "\nSeeding Device Models with Custom Pricing across all 14 services...",
+  );
   let modelCount = 0;
 
   for (const m of MODELS_DATA) {
     const brandId = brandMap.get(m.brandSlug);
     if (!brandId) {
-      console.warn(`  ⚠ Warning: Brand slug "${m.brandSlug}" not found for model "${m.name}"`);
+      console.warn(
+        `  ⚠ Warning: Brand slug "${m.brandSlug}" not found for model "${m.name}"`,
+      );
       continue;
     }
 
     const tierPrices = TIER_PRICES[m.tier];
-    const servicePricing: { service: mongoose.Types.ObjectId; price: number; estimatedTimeMinutes: number }[] = [];
+    const servicePricing: {
+      service: mongoose.Types.ObjectId;
+      price: number;
+      estimatedTimeMinutes: number;
+    }[] = [];
 
     for (const s of SERVICES_DATA) {
       const sId = serviceMap.get(s.slug);
       if (!sId) continue;
 
-      const price = m.priceOverrides?.[s.slug] ?? tierPrices[s.slug] ?? s.startingPrice;
+      const price =
+        m.priceOverrides?.[s.slug] ?? tierPrices[s.slug] ?? s.startingPrice;
       servicePricing.push({
         service: sId,
         price,
@@ -1856,11 +1877,13 @@ async function seedDatabase() {
           isActive: true,
         },
       },
-      { upsert: true, new: true }
+      { upsert: true, returnDocument: "after" },
     );
 
     modelCount++;
-    console.log(`  ✓ Model [${m.name}]: ${servicePricing.length} service prices configured`);
+    console.log(
+      `  ✓ Model [${m.name}]: ${servicePricing.length} service prices configured`,
+    );
   }
 
   console.log("\n========================================================");
@@ -1868,7 +1891,9 @@ async function seedDatabase() {
   console.log(`  - Repair Services: ${SERVICES_DATA.length}`);
   console.log(`  - Smartphone Brands: ${BRANDS_DATA.length}`);
   console.log(`  - Device Models with Full Service Pricing: ${modelCount}`);
-  console.log(`  - Total Service-Price Points Configured: ${modelCount * SERVICES_DATA.length}`);
+  console.log(
+    `  - Total Service-Price Points Configured: ${modelCount * SERVICES_DATA.length}`,
+  );
   console.log("========================================================\n");
 
   await mongoose.disconnect();

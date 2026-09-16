@@ -1,14 +1,40 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Phone, ChevronDown, ArrowRight } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
 import contactConfig from "@/config/contact";
 import LanguageSwitcher from "./LanguageSwitcher";
+import {
+  ArrowRight,
+  ChevronDown,
+  Phone,
+  Menu,
+  X,
+  Search,
+  Star,
+  BookOpen,
+  Building2,
+  MapPin,
+  MessageSquare,
+  Smartphone,
+  Wrench,
+} from "lucide-react";
 
-const TOP_SERVICES = [
+interface ServiceNav {
+  name: string;
+  href: string;
+  startingPrice: string;
+}
+
+interface BrandNav {
+  name: string;
+  href: string;
+  tag: string;
+}
+
+const TOP_SERVICES: ServiceNav[] = [
   { name: "Screen Replacement", href: "/services/screen-replacement", startingPrice: "₹1,499" },
   { name: "Battery Replacement", href: "/services/battery-replacement", startingPrice: "₹999" },
   { name: "Charging Port Repair", href: "/services/charging-port", startingPrice: "₹699" },
@@ -16,7 +42,7 @@ const TOP_SERVICES = [
   { name: "Motherboard Diagnostic", href: "/services/motherboard-chip-level", startingPrice: "₹1,999" },
 ];
 
-const TOP_BRANDS = [
+const TOP_BRANDS: BrandNav[] = [
   { name: "Apple iPhone", href: "/brands/apple", tag: "OEM Screens" },
   { name: "Samsung Galaxy", href: "/brands/samsung", tag: "AMOLED" },
   { name: "OnePlus", href: "/brands/oneplus", tag: "Fast Charge" },
@@ -24,12 +50,25 @@ const TOP_BRANDS = [
   { name: "Google Pixel", href: "/brands/google-pixel", tag: "Original" },
 ];
 
-const TOP_LOCATIONS = [
-  { name: "Kothrud", href: "/locations/kothrud", time: "25 Mins" },
-  { name: "Hinjawadi", href: "/locations/hinjawadi", time: "35 Mins" },
-  { name: "Baner", href: "/locations/baner", time: "30 Mins" },
-  { name: "Viman Nagar", href: "/locations/viman-nagar", time: "30 Mins" },
-  { name: "Wakad", href: "/locations/wakad", time: "30 Mins" },
+const COMPANY_LINKS = [
+  {
+    name: "About QuickFix",
+    href: "/about",
+    desc: "Our story, lab standards & technician team",
+    icon: Building2,
+  },
+  {
+    name: "Contact & Lab Center",
+    href: "/contact",
+    desc: "Sadashiv Peth lab hub & customer desk",
+    icon: MessageSquare,
+  },
+  {
+    name: "Pune Service Areas",
+    href: "/locations",
+    desc: "30-minute doorstep coverage across Pune",
+    icon: MapPin,
+  },
 ];
 
 export default function Navbar() {
@@ -51,7 +90,7 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Adjust dropdown and drawer state when route changes
+  // Close menu and dropdown on route change
   const [prevPathname, setPrevPathname] = useState(pathname);
   if (pathname !== prevPathname) {
     setPrevPathname(pathname);
@@ -63,37 +102,41 @@ export default function Navbar() {
     setOpenDropdown(openDropdown === menu ? null : menu);
   };
 
+  const closeMenus = () => {
+    setOpenDropdown(null);
+    setMobileMenuOpen(false);
+  };
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-200/90 bg-clean-white/95 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-border-default bg-clean-white/95 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Left: Brand Logo & Pune Tag */}
         <div className="flex items-center gap-2.5 shrink-0">
           <Link href="/" className="flex items-center gap-2.5 group shrink-0">
             <Image
               src="/logo.png"
-              alt="QuickFix.in Logo"
+              alt="QuickFixMobile.in Logo"
               width={34}
               height={34}
-              className="h-8.5 w-8.5 object-contain rounded-lg group-hover:scale-105 transition-transform"
+              className="h-8 w-8 object-contain rounded-lg group-hover:scale-105 transition-transform"
             />
             <div className="flex items-baseline">
               <span className="font-heading text-lg font-extrabold tracking-tight text-tech-slate">
                 Quick<span className="text-flash-orange">Fix</span>
-                <span className="text-xs font-semibold text-zinc-400">.in</span>
+                <span className="text-xs font-semibold text-text-muted">.in</span>
               </span>
             </div>
           </Link>
 
-          {/* Pune City Pill */}
-          <span className="hidden xl:inline-flex items-center rounded-full bg-zinc-100 px-2 py-0.5 text-[11px] font-bold text-zinc-600 border border-zinc-200/80 whitespace-nowrap">
+          <span className="hidden xl:inline-flex items-center rounded-full bg-mist-gray px-2 py-0.5 text-[11px] font-bold text-text-secondary border border-border-default whitespace-nowrap">
             {t("city")}
           </span>
         </div>
 
-        {/* Center: Desktop Clean Nav Links */}
+        {/* Center: Desktop Nav Links */}
         <nav
           ref={navRef}
-          className="hidden lg:flex items-center gap-4 xl:gap-6 text-xs xl:text-sm font-semibold text-zinc-600"
+          className="hidden lg:flex items-center gap-3 xl:gap-5 text-xs xl:text-sm font-semibold text-text-secondary"
         >
           {/* Services Dropdown */}
           <div className="relative">
@@ -117,26 +160,28 @@ export default function Navbar() {
             {openDropdown === "services" && (
               <div
                 onMouseLeave={() => setOpenDropdown(null)}
-                className="absolute left-0 top-full mt-1 w-64 rounded-2xl bg-clean-white border border-zinc-200 p-2 shadow-xl animate-in fade-in-50 zoom-in-95 z-50"
+                className="absolute left-0 top-full mt-1 w-64 rounded-2xl bg-clean-white border border-border-default p-2 shadow-xl z-50 animate-in fade-in-50 zoom-in-95 duration-150"
               >
-                <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+                <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-text-muted">
                   {t("nav.services")}
                 </div>
                 {TOP_SERVICES.map((s) => (
                   <Link
                     key={s.href}
                     href={s.href}
-                    onClick={() => setOpenDropdown(null)}
+                    onClick={closeMenus}
                     className="flex items-center justify-between p-2.5 rounded-xl hover:bg-mist-gray text-xs font-bold text-tech-slate transition-colors"
                   >
                     <span>{s.name}</span>
-                    <span className="text-[11px] text-zinc-400 font-medium">{s.startingPrice}</span>
+                    <span className="text-[11px] text-text-muted font-medium">
+                      {s.startingPrice}
+                    </span>
                   </Link>
                 ))}
-                <div className="pt-1.5 mt-1.5 border-t border-zinc-100">
+                <div className="pt-1.5 mt-1.5 border-t border-border-default/60">
                   <Link
                     href="/services"
-                    onClick={() => setOpenDropdown(null)}
+                    onClick={closeMenus}
                     className="flex items-center justify-between p-2 rounded-xl text-xs font-bold text-flash-orange hover:bg-flash-orange/10 transition-colors"
                   >
                     <span>{t("nav.viewAllServices")}</span>
@@ -169,28 +214,28 @@ export default function Navbar() {
             {openDropdown === "brands" && (
               <div
                 onMouseLeave={() => setOpenDropdown(null)}
-                className="absolute left-0 top-full mt-1 w-56 rounded-2xl bg-clean-white border border-zinc-200 p-2 shadow-xl animate-in fade-in-50 zoom-in-95 z-50"
+                className="absolute left-0 top-full mt-1 w-56 rounded-2xl bg-clean-white border border-border-default p-2 shadow-xl z-50 animate-in fade-in-50 zoom-in-95 duration-150"
               >
-                <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+                <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-text-muted">
                   {t("nav.brands")}
                 </div>
                 {TOP_BRANDS.map((b) => (
                   <Link
                     key={b.href}
                     href={b.href}
-                    onClick={() => setOpenDropdown(null)}
+                    onClick={closeMenus}
                     className="flex items-center justify-between p-2.5 rounded-xl hover:bg-mist-gray text-xs font-bold text-tech-slate transition-colors"
                   >
                     <span>{b.name}</span>
-                    <span className="text-[10px] bg-mist-gray px-1.5 py-0.5 rounded text-zinc-500 font-semibold">
+                    <span className="text-[10px] bg-mist-gray px-1.5 py-0.5 rounded text-text-muted font-semibold">
                       {b.tag}
                     </span>
                   </Link>
                 ))}
-                <div className="pt-1.5 mt-1.5 border-t border-zinc-100">
+                <div className="pt-1.5 mt-1.5 border-t border-border-default/60">
                   <Link
                     href="/brands"
-                    onClick={() => setOpenDropdown(null)}
+                    onClick={closeMenus}
                     className="flex items-center justify-between p-2 rounded-xl text-xs font-bold text-flash-orange hover:bg-flash-orange/10 transition-colors"
                   >
                     <span>{t("nav.viewAllBrands")}</span>
@@ -201,67 +246,92 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Pune Locations Dropdown */}
+          {/* Customer Reviews */}
+          <Link
+            href="/reviews"
+            onClick={closeMenus}
+            className={`hover:text-flash-orange transition-colors whitespace-nowrap ${
+              pathname.startsWith("/reviews") ? "text-flash-orange font-bold" : ""
+            }`}
+          >
+            {t("nav.reviews")}
+          </Link>
+
+          {/* Blogs & Guides */}
+          <Link
+            href="/blogs"
+            onClick={closeMenus}
+            className={`hover:text-flash-orange transition-colors whitespace-nowrap ${
+              pathname.startsWith("/blogs") ? "text-flash-orange font-bold" : ""
+            }`}
+          >
+            {t("nav.blogs")}
+          </Link>
+
+          {/* Track Repair Utility Link */}
+          <Link
+            href="/track"
+            onClick={closeMenus}
+            className={`inline-flex items-center gap-1 hover:text-flash-orange transition-colors whitespace-nowrap ${
+              pathname.startsWith("/track") ? "text-flash-orange font-bold" : ""
+            }`}
+          >
+            <Search className="h-3.5 w-3.5 text-flash-orange shrink-0" />
+            <span>{t("nav.track")}</span>
+          </Link>
+
+          {/* Company / More Dropdown */}
           <div className="relative">
             <button
               type="button"
-              onClick={() => toggleDropdown("locations")}
-              onMouseEnter={() => setOpenDropdown("locations")}
+              onClick={() => toggleDropdown("company")}
+              onMouseEnter={() => setOpenDropdown("company")}
               className={`flex items-center gap-1 py-2 hover:text-flash-orange transition-colors whitespace-nowrap cursor-pointer ${
-                pathname.startsWith("/locations") ? "text-flash-orange font-bold" : ""
+                ["/about", "/contact", "/locations"].some((p) => pathname.startsWith(p))
+                  ? "text-flash-orange font-bold"
+                  : ""
               }`}
-              aria-expanded={openDropdown === "locations"}
+              aria-expanded={openDropdown === "company"}
             >
-              <span>{t("nav.puneLocations")}</span>
+              <span>{t("nav.company")}</span>
               <ChevronDown
                 className={`h-3.5 w-3.5 transition-transform duration-200 ${
-                  openDropdown === "locations" ? "rotate-180" : ""
+                  openDropdown === "company" ? "rotate-180" : ""
                 }`}
               />
             </button>
 
-            {openDropdown === "locations" && (
+            {openDropdown === "company" && (
               <div
                 onMouseLeave={() => setOpenDropdown(null)}
-                className="absolute left-0 top-full mt-1 w-56 rounded-2xl bg-clean-white border border-zinc-200 p-2 shadow-xl animate-in fade-in-50 zoom-in-95 z-50"
+                className="absolute right-0 top-full mt-1 w-64 rounded-2xl bg-clean-white border border-border-default p-2 shadow-xl z-50 animate-in fade-in-50 zoom-in-95 duration-150"
               >
-                <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-zinc-400">
-                  {t("nav.puneLocations")}
-                </div>
-                {TOP_LOCATIONS.map((l) => (
-                  <Link
-                    key={l.href}
-                    href={l.href}
-                    onClick={() => setOpenDropdown(null)}
-                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-mist-gray text-xs font-bold text-tech-slate transition-colors"
-                  >
-                    <span>{l.name}</span>
-                    <span className="text-[10px] text-emerald-600 font-bold">{l.time}</span>
-                  </Link>
-                ))}
+                {COMPANY_LINKS.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={closeMenus}
+                      className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-mist-gray transition-colors group"
+                    >
+                      <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-mist-gray text-text-secondary group-hover:bg-flash-orange/10 group-hover:text-flash-orange transition-colors shrink-0 mt-0.5">
+                        <Icon className="h-3.5 w-3.5" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-tech-slate">
+                          {item.name}
+                        </div>
+                        <div className="text-[11px] text-text-muted mt-0.5 leading-snug">
+                          {item.desc}
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
             )}
           </div>
-
-          {/* About Us Link */}
-          <Link
-            href="/about"
-            className={`hover:text-flash-orange transition-colors whitespace-nowrap ${
-              pathname === "/about" ? "text-flash-orange font-bold" : ""
-            }`}
-          >
-            {t("nav.about")}
-          </Link>
-
-          {/* Contact Page Link */}
-          <Link
-            href="/contact"
-            className={`hover:text-flash-orange transition-colors whitespace-nowrap ${
-              pathname === "/contact" ? "text-flash-orange font-bold" : ""
-            }`}
-          >
-            {t("nav.contact")}
-          </Link>
         </nav>
 
         {/* Right: Desktop Action Controls */}
@@ -271,7 +341,7 @@ export default function Navbar() {
           {/* Direct Phone Helpline */}
           <a
             href={`tel:${contactConfig.phone.value}`}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs font-bold text-tech-slate hover:bg-mist-gray hover:border-zinc-300 transition-colors whitespace-nowrap shrink-0"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs font-bold text-tech-slate hover:bg-mist-gray hover:border-border-default transition-colors whitespace-nowrap shrink-0"
             title="Call QuickFix Pune Helpline"
           >
             <Phone className="h-3.5 w-3.5 text-flash-orange shrink-0" />
@@ -307,53 +377,90 @@ export default function Navbar() {
             aria-expanded={mobileMenuOpen}
             aria-label="Toggle navigation menu"
           >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-            >
-              {mobileMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
-              )}
-            </svg>
+            {mobileMenuOpen ? (
+              <X className="h-5 w-5 text-tech-slate" />
+            ) : (
+              <Menu className="h-5 w-5 text-tech-slate" />
+            )}
           </button>
         </div>
       </div>
 
-      {/* Mobile / Tablet Drawer (<lg screens) */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="border-b border-border-default bg-clean-white px-4 py-5 lg:hidden space-y-5 max-h-[calc(100vh-4rem)] overflow-y-auto animate-in slide-in-from-top-2">
-          {/* Quick Action Top Bar */}
-          <Link
-            href="/book-repair"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center justify-center gap-2 rounded-xl bg-flash-orange py-3 px-4 text-xs font-bold text-clean-white shadow-xs hover:bg-flash-orange-hover transition-colors w-full"
-          >
-            <span>{t("actions.bookRepair")}</span>
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
+        <div className="border-b border-border-default bg-clean-white px-4 py-5 lg:hidden space-y-5 max-h-[calc(100vh-4rem)] overflow-y-auto animate-in slide-in-from-top-2 duration-200">
+          {/* Top Quick Actions */}
+          <div className="space-y-2">
+            <Link
+              href="/book-repair"
+              onClick={closeMenus}
+              className="flex items-center justify-center gap-2 rounded-xl bg-flash-orange py-3 px-4 text-xs font-bold text-clean-white shadow-xs hover:bg-flash-orange-hover transition-colors w-full"
+            >
+              <span>{t("actions.bookRepair")}</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
 
-          {/* Services Section */}
-          <div>
+            <div className="grid grid-cols-2 gap-2">
+              <Link
+                href="/track"
+                onClick={closeMenus}
+                className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-mist-gray border border-border-default text-xs font-bold text-tech-slate hover:bg-border-default/60 transition-colors"
+              >
+                <Search className="h-3.5 w-3.5 text-flash-orange" />
+                <span>Track Repair</span>
+              </Link>
+              <a
+                href={`tel:${contactConfig.phone.value}`}
+                className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-mist-gray border border-border-default text-xs font-bold text-tech-slate hover:bg-border-default/60 transition-colors"
+              >
+                <Phone className="h-3.5 w-3.5 text-flash-orange" />
+                <span>Call Desk</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Section 1: Customer Resources */}
+          <div className="pt-3 border-t border-border-default">
+            <div className="text-[10px] font-bold uppercase tracking-wider text-text-muted mb-2">
+              Explore & Resources
+            </div>
+            <div className="grid grid-cols-1 gap-1">
+              <Link
+                href="/reviews"
+                onClick={closeMenus}
+                className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray transition-colors"
+              >
+                <Star className="h-4 w-4 text-electric-amber shrink-0" />
+                <span>Customer Reviews & Ratings</span>
+              </Link>
+              <Link
+                href="/blogs"
+                onClick={closeMenus}
+                className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray transition-colors"
+              >
+                <BookOpen className="h-4 w-4 text-flash-orange shrink-0" />
+                <span>Blogs & Mobile Repair Guides</span>
+              </Link>
+              <Link
+                href="/locations"
+                onClick={closeMenus}
+                className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray transition-colors"
+              >
+                <MapPin className="h-4 w-4 text-emerald-600 shrink-0" />
+                <span>Pune Service Areas (30-min Doorstep)</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Section 2: Services */}
+          <div className="pt-3 border-t border-border-default">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-text-muted">
                 {t("nav.services")}
               </span>
               <Link
                 href="/services"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={closeMenus}
                 className="text-[11px] font-bold text-flash-orange hover:underline"
               >
                 {t("nav.viewAllServices")} →
@@ -364,25 +471,30 @@ export default function Navbar() {
                 <Link
                   key={s.href}
                   href={s.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold text-zinc-700 hover:bg-mist-gray"
+                  onClick={closeMenus}
+                  className="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold text-text-secondary hover:bg-mist-gray transition-colors"
                 >
-                  <span>{s.name}</span>
-                  <span className="text-[11px] text-zinc-400 font-normal">{s.startingPrice}</span>
+                  <span className="flex items-center gap-2">
+                    <Wrench className="h-3 w-3 text-text-muted" />
+                    <span>{s.name}</span>
+                  </span>
+                  <span className="text-[11px] text-text-muted font-normal">
+                    {s.startingPrice}
+                  </span>
                 </Link>
               ))}
             </div>
           </div>
 
-          {/* Brands Section */}
-          <div className="pt-3 border-t border-zinc-100">
+          {/* Section 3: Brands */}
+          <div className="pt-3 border-t border-border-default">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-text-muted">
                 {t("nav.brands")}
               </span>
               <Link
                 href="/brands"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={closeMenus}
                 className="text-[11px] font-bold text-flash-orange hover:underline"
               >
                 {t("nav.viewAllBrands")} →
@@ -393,91 +505,39 @@ export default function Navbar() {
                 <Link
                   key={b.href}
                   href={b.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="px-3 py-2 rounded-lg text-xs font-semibold text-zinc-700 hover:bg-mist-gray"
+                  onClick={closeMenus}
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-text-secondary hover:bg-mist-gray transition-colors"
                 >
-                  {b.name}
+                  <Smartphone className="h-3 w-3 text-text-muted shrink-0" />
+                  <span className="truncate">{b.name}</span>
                 </Link>
               ))}
             </div>
           </div>
 
-          {/* Pune Locations Section */}
-          <div className="pt-3 border-t border-zinc-100">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-2">
-              {t("nav.puneLocations")}
-            </span>
+          {/* Section 4: Company Links */}
+          <div className="pt-3 border-t border-border-default">
+            <div className="text-[10px] font-bold uppercase tracking-wider text-text-muted mb-2">
+              QuickFix Pune
+            </div>
             <div className="grid grid-cols-2 gap-1.5">
-              {TOP_LOCATIONS.map((l) => (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="px-3 py-2 rounded-lg text-xs font-semibold text-zinc-700 hover:bg-mist-gray"
-                >
-                  📍 {l.name}
-                </Link>
-              ))}
+              <Link
+                href="/about"
+                onClick={closeMenus}
+                className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray transition-colors"
+              >
+                <Building2 className="h-3.5 w-3.5 text-text-muted shrink-0" />
+                <span>About Us</span>
+              </Link>
+              <Link
+                href="/contact"
+                onClick={closeMenus}
+                className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray transition-colors"
+              >
+                <MessageSquare className="h-3.5 w-3.5 text-text-muted shrink-0" />
+                <span>Contact Desk</span>
+              </Link>
             </div>
-          </div>
-
-          {/* Static Pages Links */}
-          <div className="pt-3 border-t border-zinc-100 flex flex-col space-y-1">
-            <Link
-              href="/services"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray flex items-center justify-between"
-            >
-              <span>{t("nav.allServices")}</span>
-              <ArrowRight className="h-3 w-3 text-zinc-400" />
-            </Link>
-            <Link
-              href="/brands"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray flex items-center justify-between"
-            >
-              <span>{t("nav.allBrands")}</span>
-              <ArrowRight className="h-3 w-3 text-zinc-400" />
-            </Link>
-            <Link
-              href="/about"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray"
-            >
-              {t("nav.about")}
-            </Link>
-            <Link
-              href="/contact"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray"
-            >
-              {t("nav.contact")}
-            </Link>
-            <Link
-              href="/terms"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-xs font-semibold text-zinc-600 hover:bg-mist-gray"
-            >
-              Terms of Service
-            </Link>
-            <Link
-              href="/privacy"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-xs font-semibold text-zinc-600 hover:bg-mist-gray"
-            >
-              Privacy Policy
-            </Link>
-          </div>
-
-          {/* Direct Phone Assistance */}
-          <div className="pt-3 border-t border-zinc-100">
-            <a
-              href={`tel:${contactConfig.phone.value}`}
-              className="flex items-center justify-center gap-2 rounded-xl border border-zinc-200 py-3 text-xs font-bold text-tech-slate hover:bg-mist-gray transition-colors"
-            >
-              <Phone className="h-4 w-4 text-flash-orange" />
-              <span>{t("actions.callNow")}: {contactConfig.phone.display}</span>
-            </a>
           </div>
         </div>
       )}

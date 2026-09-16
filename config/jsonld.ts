@@ -312,3 +312,107 @@ export function getModelDetailPageSchema({
     },
   };
 }
+
+export function getBlogPostSchema({
+  title,
+  description,
+  slug,
+  publishedAt,
+  updatedAt,
+  authorName = "QuickFix Tech Team",
+  locale = "en",
+}: {
+  title: string;
+  description: string;
+  slug: string;
+  publishedAt?: Date | string;
+  updatedAt?: Date | string;
+  authorName?: string;
+  locale?: string;
+}) {
+  const siteUrl = siteConfig.url.replace(/\/$/, "");
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    description,
+    url: `${siteUrl}/${locale}/blogs/${slug}`,
+    datePublished: publishedAt ? new Date(publishedAt).toISOString() : undefined,
+    dateModified: updatedAt ? new Date(updatedAt).toISOString() : undefined,
+    author: {
+      "@type": "Person",
+      name: authorName,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: contactConfig.brand,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteUrl}${siteConfig.defaultOgImage}`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${siteUrl}/${locale}/blogs/${slug}`,
+    },
+  };
+}
+
+export function getTrackPageSchema(locale: string = "en") {
+  const safeLocale = (
+    ["en", "hi", "mr"].includes(locale) ? locale : "en"
+  ) as "en" | "hi" | "mr";
+  const siteUrl = siteConfig.url.replace(/\/$/, "");
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${siteUrl}/${safeLocale}/track#webpage`,
+    name: seoDictionaries.track[safeLocale].title,
+    description: seoDictionaries.track[safeLocale].description,
+    url: `${siteUrl}/${safeLocale}/track`,
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      name: siteConfig.name,
+      url: siteUrl,
+    },
+    provider: {
+      "@type": "LocalBusiness",
+      name: contactConfig.brand,
+      telephone: contactConfig.phone.display,
+    },
+  };
+}
+
+export function getReviewsPageSchema(
+  locale: string = "en",
+  aggregate?: { avgRating: number; totalReviews: number }
+) {
+  const safeLocale = (
+    ["en", "hi", "mr"].includes(locale) ? locale : "en"
+  ) as "en" | "hi" | "mr";
+  const siteUrl = siteConfig.url.replace(/\/$/, "");
+
+  const ratingValue = aggregate?.avgRating ? String(aggregate.avgRating) : "4.9";
+  const reviewCount = aggregate?.totalReviews ? String(aggregate.totalReviews) : "1450";
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${siteUrl}/#business`,
+    name: contactConfig.brand,
+    url: `${siteUrl}/${safeLocale}/reviews`,
+    telephone: contactConfig.phone.display,
+    priceRange: "₹₹",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue,
+      reviewCount,
+      bestRating: "5",
+      worstRating: "1",
+    },
+  };
+}
+

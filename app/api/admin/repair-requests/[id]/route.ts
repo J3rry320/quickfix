@@ -69,7 +69,7 @@ export const PATCH = withAdminAuth<{ id: string }>(
     const updated = await RepairRequest.findByIdAndUpdate(
       id,
       { $set: updateFields },
-      { new: true, runValidators: true }
+      { returnDocument: "after", runValidators: true }
     ).lean();
 
     if (!updated) {
@@ -103,7 +103,7 @@ export const DELETE = withAdminAuth<{ id: string }>(
     const cancelled = await RepairRequest.findByIdAndUpdate(
       id,
       { $set: { status: "cancelled" } },
-      { new: true }
+      { returnDocument: "after" }
     ).lean();
 
     if (!cancelled) {

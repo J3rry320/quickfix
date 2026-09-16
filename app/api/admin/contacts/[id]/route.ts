@@ -44,7 +44,7 @@ export const PATCH = withAdminAuth<{ id: string }>(
     const updated = await ContactSubmission.findByIdAndUpdate(
       id,
       { $set: updateFields },
-      { new: true }
+      { returnDocument: "after" }
     ).lean();
 
     if (!updated) {
@@ -78,7 +78,7 @@ export const DELETE = withAdminAuth<{ id: string }>(
     const archived = await ContactSubmission.findByIdAndUpdate(
       id,
       { $set: { status: "archived" } },
-      { new: true }
+      { returnDocument: "after" }
     ).lean();
 
     if (!archived) {

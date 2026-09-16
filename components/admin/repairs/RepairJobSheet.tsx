@@ -1,13 +1,12 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
 import contactConfig from "@/config/contact";
 import {
   JobSheetData,
   STANDARD_REPAIR_TERMS,
   isChecklistPending,
 } from "@/lib/admin/jobsheet";
+import Image from "next/image";
 
 interface RepairJobSheetProps {
   data: JobSheetData;
@@ -77,7 +76,7 @@ export default function RepairJobSheet({
             <div className="relative h-14 w-14 sm:h-16 sm:w-16 shrink-0 rounded-lg overflow-hidden border border-zinc-200 bg-zinc-50 p-1 flex items-center justify-center">
               <Image
                 src="/logo.png"
-                alt="QuickFix.in Logo"
+                alt="QuickFixMobile.in Logo"
                 width={64}
                 height={64}
                 className="object-contain"
@@ -133,7 +132,10 @@ export default function RepairJobSheet({
               </div>
             </div>
             <div className="text-[11px] text-zinc-600 mt-0.5">
-              Ref: <span className="font-mono font-bold">{data.bookingReference}</span>
+              Ref:{" "}
+              <span className="font-mono font-bold">
+                {data.bookingReference}
+              </span>
             </div>
             <div className="text-[11px] text-zinc-500 mt-0.5">
               Intake Date:{" "}
@@ -161,7 +163,9 @@ export default function RepairJobSheet({
           <div className="border border-zinc-200 rounded-md p-3 bg-zinc-50/60 print:bg-white space-y-1">
             <div className="font-bold text-zinc-700 uppercase tracking-wider text-[10px] border-b border-zinc-200 pb-1 flex justify-between items-center">
               <span>Customer Details</span>
-              <span className="text-[10px] text-zinc-400 font-normal">Pune Region</span>
+              <span className="text-[10px] text-zinc-400 font-normal">
+                Pune Region
+              </span>
             </div>
             <div className="pt-1">
               <div className="font-bold text-sm text-zinc-950">
@@ -232,19 +236,49 @@ export default function RepairJobSheet({
                   Accessories Received (Verify on Handover):
                 </span>
                 <div className="flex flex-wrap gap-x-2 gap-y-0.5 text-[10px] text-zinc-700 mt-0.5">
-                  <span className={data.accessories.simTray ? "font-bold text-zinc-900" : "text-zinc-400"}>
+                  <span
+                    className={
+                      data.accessories.simTray
+                        ? "font-bold text-zinc-900"
+                        : "text-zinc-400"
+                    }
+                  >
                     [{data.accessories.simTray ? "✓" : " "}] SIM Tray
                   </span>
-                  <span className={data.accessories.simCard ? "font-bold text-zinc-900" : "text-zinc-400"}>
+                  <span
+                    className={
+                      data.accessories.simCard
+                        ? "font-bold text-zinc-900"
+                        : "text-zinc-400"
+                    }
+                  >
                     [{data.accessories.simCard ? "✓" : " "}] SIM Card
                   </span>
-                  <span className={data.accessories.memoryCard ? "font-bold text-zinc-900" : "text-zinc-400"}>
+                  <span
+                    className={
+                      data.accessories.memoryCard
+                        ? "font-bold text-zinc-900"
+                        : "text-zinc-400"
+                    }
+                  >
                     [{data.accessories.memoryCard ? "✓" : " "}] SD Card
                   </span>
-                  <span className={data.accessories.protectiveCase ? "font-bold text-zinc-900" : "text-zinc-400"}>
+                  <span
+                    className={
+                      data.accessories.protectiveCase
+                        ? "font-bold text-zinc-900"
+                        : "text-zinc-400"
+                    }
+                  >
                     [{data.accessories.protectiveCase ? "✓" : " "}] Case
                   </span>
-                  <span className={data.accessories.chargerCable ? "font-bold text-zinc-900" : "text-zinc-400"}>
+                  <span
+                    className={
+                      data.accessories.chargerCable
+                        ? "font-bold text-zinc-900"
+                        : "text-zinc-400"
+                    }
+                  >
                     [{data.accessories.chargerCable ? "✓" : " "}] Charger
                   </span>
                   {data.accessories.other && (
@@ -294,13 +328,17 @@ export default function RepairJobSheet({
                     FAIL
                   </span>
                 ) : (
-                  <span className="text-[8px] font-medium text-zinc-400">Pending</span>
+                  <span className="text-[8px] font-medium text-zinc-400">
+                    Pending
+                  </span>
                 )}
               </div>
               <div className="space-y-0.5 text-[9px] leading-tight">
                 <div
                   className={`flex items-center gap-1.5 ${
-                    data.checklist.powerOn === "yes" ? "font-bold text-emerald-700" : "text-zinc-600"
+                    data.checklist.powerOn === "yes"
+                      ? "font-bold text-emerald-700"
+                      : "text-zinc-600"
                   }`}
                 >
                   <span
@@ -316,7 +354,9 @@ export default function RepairJobSheet({
                 </div>
                 <div
                   className={`flex items-center gap-1.5 ${
-                    data.checklist.powerOn === "no" ? "font-bold text-red-700" : "text-zinc-600"
+                    data.checklist.powerOn === "no"
+                      ? "font-bold text-red-700"
+                      : "text-zinc-600"
                   }`}
                 >
                   <span
@@ -348,7 +388,9 @@ export default function RepairJobSheet({
                     FAULT
                   </span>
                 ) : (
-                  <span className="text-[8px] font-medium text-zinc-400">Pending</span>
+                  <span className="text-[8px] font-medium text-zinc-400">
+                    Pending
+                  </span>
                 )}
               </div>
               <div className="space-y-0.5 text-[9px] leading-tight">
@@ -412,7 +454,9 @@ export default function RepairJobSheet({
                     FAULT
                   </span>
                 ) : (
-                  <span className="text-[8px] font-medium text-zinc-400">Pending</span>
+                  <span className="text-[8px] font-medium text-zinc-400">
+                    Pending
+                  </span>
                 )}
               </div>
               <div className="space-y-0.5 text-[9px] leading-tight">
@@ -470,7 +514,9 @@ export default function RepairJobSheet({
                     FAULT
                   </span>
                 ) : (
-                  <span className="text-[8px] font-medium text-zinc-400">Pending</span>
+                  <span className="text-[8px] font-medium text-zinc-400">
+                    Pending
+                  </span>
                 )}
               </div>
               <div className="space-y-0.5 text-[9px] leading-tight">
@@ -525,34 +571,41 @@ export default function RepairJobSheet({
             <div className="border border-zinc-200 rounded p-1.5 bg-white flex flex-col justify-between space-y-1">
               <div className="font-bold text-[10px] text-zinc-800 border-b border-zinc-100 pb-0.5 flex items-center justify-between">
                 <span>5. Cameras (F/R)</span>
-                {data.checklist.frontCamera === "working" && data.checklist.rearCamera === "working" ? (
+                {data.checklist.frontCamera === "working" &&
+                data.checklist.rearCamera === "working" ? (
                   <span className="text-[8px] font-black uppercase px-1 rounded bg-emerald-100 text-emerald-800">
                     PASS
                   </span>
-                ) : data.checklist.frontCamera === "faulty" || data.checklist.rearCamera === "faulty" ? (
+                ) : data.checklist.frontCamera === "faulty" ||
+                  data.checklist.rearCamera === "faulty" ? (
                   <span className="text-[8px] font-black uppercase px-1 rounded bg-red-100 text-red-800">
                     FAULT
                   </span>
                 ) : (
-                  <span className="text-[8px] font-medium text-zinc-400">Pending</span>
+                  <span className="text-[8px] font-medium text-zinc-400">
+                    Pending
+                  </span>
                 )}
               </div>
               <div className="space-y-0.5 text-[9px] leading-tight">
                 <div
                   className={`flex items-center gap-1.5 ${
-                    data.checklist.frontCamera === "working" && data.checklist.rearCamera === "working"
+                    data.checklist.frontCamera === "working" &&
+                    data.checklist.rearCamera === "working"
                       ? "font-bold text-emerald-700"
                       : "text-zinc-600"
                   }`}
                 >
                   <span
                     className={`w-3 h-3 shrink-0 rounded-sm border flex items-center justify-center text-[8px] ${
-                      data.checklist.frontCamera === "working" && data.checklist.rearCamera === "working"
+                      data.checklist.frontCamera === "working" &&
+                      data.checklist.rearCamera === "working"
                         ? "border-emerald-600 bg-emerald-50 text-emerald-700 font-black"
                         : "border-zinc-400 bg-zinc-50"
                     }`}
                   >
-                    {data.checklist.frontCamera === "working" && data.checklist.rearCamera === "working"
+                    {data.checklist.frontCamera === "working" &&
+                    data.checklist.rearCamera === "working"
                       ? "✓"
                       : ""}
                   </span>
@@ -560,19 +613,22 @@ export default function RepairJobSheet({
                 </div>
                 <div
                   className={`flex items-center gap-1.5 ${
-                    data.checklist.frontCamera === "faulty" || data.checklist.rearCamera === "faulty"
+                    data.checklist.frontCamera === "faulty" ||
+                    data.checklist.rearCamera === "faulty"
                       ? "font-bold text-red-700"
                       : "text-zinc-600"
                   }`}
                 >
                   <span
                     className={`w-3 h-3 shrink-0 rounded-sm border flex items-center justify-center text-[8px] ${
-                      data.checklist.frontCamera === "faulty" || data.checklist.rearCamera === "faulty"
+                      data.checklist.frontCamera === "faulty" ||
+                      data.checklist.rearCamera === "faulty"
                         ? "border-red-600 bg-red-50 text-red-700 font-black"
                         : "border-zinc-400 bg-zinc-50"
                     }`}
                   >
-                    {data.checklist.frontCamera === "faulty" || data.checklist.rearCamera === "faulty"
+                    {data.checklist.frontCamera === "faulty" ||
+                    data.checklist.rearCamera === "faulty"
                       ? "✓"
                       : ""}
                   </span>
@@ -589,12 +645,15 @@ export default function RepairJobSheet({
                   <span className="text-[8px] font-black uppercase px-1 rounded bg-emerald-100 text-emerald-800">
                     PASS
                   </span>
-                ) : data.checklist.chargingPort === "loose" || data.checklist.chargingPort === "faulty" ? (
+                ) : data.checklist.chargingPort === "loose" ||
+                  data.checklist.chargingPort === "faulty" ? (
                   <span className="text-[8px] font-black uppercase px-1 rounded bg-red-100 text-red-800">
                     FAULT
                   </span>
                 ) : (
-                  <span className="text-[8px] font-medium text-zinc-400">Pending</span>
+                  <span className="text-[8px] font-medium text-zinc-400">
+                    Pending
+                  </span>
                 )}
               </div>
               <div className="space-y-0.5 text-[9px] leading-tight">
@@ -618,19 +677,22 @@ export default function RepairJobSheet({
                 </div>
                 <div
                   className={`flex items-center gap-1.5 ${
-                    data.checklist.chargingPort === "loose" || data.checklist.chargingPort === "faulty"
+                    data.checklist.chargingPort === "loose" ||
+                    data.checklist.chargingPort === "faulty"
                       ? "font-bold text-red-700"
                       : "text-zinc-600"
                   }`}
                 >
                   <span
                     className={`w-3 h-3 shrink-0 rounded-sm border flex items-center justify-center text-[8px] ${
-                      data.checklist.chargingPort === "loose" || data.checklist.chargingPort === "faulty"
+                      data.checklist.chargingPort === "loose" ||
+                      data.checklist.chargingPort === "faulty"
                         ? "border-red-600 bg-red-50 text-red-700 font-black"
                         : "border-zinc-400 bg-zinc-50"
                     }`}
                   >
-                    {data.checklist.chargingPort === "loose" || data.checklist.chargingPort === "faulty"
+                    {data.checklist.chargingPort === "loose" ||
+                    data.checklist.chargingPort === "faulty"
                       ? "✓"
                       : ""}
                   </span>
@@ -653,7 +715,9 @@ export default function RepairJobSheet({
                     FAULT
                   </span>
                 ) : (
-                  <span className="text-[8px] font-medium text-zinc-400">Pending</span>
+                  <span className="text-[8px] font-medium text-zinc-400">
+                    Pending
+                  </span>
                 )}
               </div>
               <div className="space-y-0.5 text-[9px] leading-tight">
@@ -705,7 +769,8 @@ export default function RepairJobSheet({
             <div className="border border-zinc-200 rounded p-1.5 bg-white flex flex-col justify-between space-y-1">
               <div className="font-bold text-[10px] text-zinc-800 border-b border-zinc-100 pb-0.5 flex items-center justify-between">
                 <span>8. Audio (Spk/Mic)</span>
-                {data.checklist.speakerEarpiece === "working" && data.checklist.microphone === "working" ? (
+                {data.checklist.speakerEarpiece === "working" &&
+                data.checklist.microphone === "working" ? (
                   <span className="text-[8px] font-black uppercase px-1 rounded bg-emerald-100 text-emerald-800">
                     PASS
                   </span>
@@ -719,25 +784,30 @@ export default function RepairJobSheet({
                     FAULT
                   </span>
                 ) : (
-                  <span className="text-[8px] font-medium text-zinc-400">Pending</span>
+                  <span className="text-[8px] font-medium text-zinc-400">
+                    Pending
+                  </span>
                 )}
               </div>
               <div className="space-y-0.5 text-[9px] leading-tight">
                 <div
                   className={`flex items-center gap-1.5 ${
-                    data.checklist.speakerEarpiece === "working" && data.checklist.microphone === "working"
+                    data.checklist.speakerEarpiece === "working" &&
+                    data.checklist.microphone === "working"
                       ? "font-bold text-emerald-700"
                       : "text-zinc-600"
                   }`}
                 >
                   <span
                     className={`w-3 h-3 shrink-0 rounded-sm border flex items-center justify-center text-[8px] ${
-                      data.checklist.speakerEarpiece === "working" && data.checklist.microphone === "working"
+                      data.checklist.speakerEarpiece === "working" &&
+                      data.checklist.microphone === "working"
                         ? "border-emerald-600 bg-emerald-50 text-emerald-700 font-black"
                         : "border-zinc-400 bg-zinc-50"
                     }`}
                   >
-                    {data.checklist.speakerEarpiece === "working" && data.checklist.microphone === "working"
+                    {data.checklist.speakerEarpiece === "working" &&
+                    data.checklist.microphone === "working"
                       ? "✓"
                       : ""}
                   </span>
@@ -794,7 +864,9 @@ export default function RepairJobSheet({
                     FAULT
                   </span>
                 ) : (
-                  <span className="text-[8px] font-medium text-zinc-400">Pending</span>
+                  <span className="text-[8px] font-medium text-zinc-400">
+                    Pending
+                  </span>
                 )}
               </div>
               <div className="space-y-0.5 text-[9px] leading-tight">
@@ -818,7 +890,9 @@ export default function RepairJobSheet({
                 </div>
                 <div
                   className={`flex items-center gap-1.5 ${
-                    data.checklist.networkWifi === "faulty" ? "font-bold text-red-700" : "text-zinc-600"
+                    data.checklist.networkWifi === "faulty"
+                      ? "font-bold text-red-700"
+                      : "text-zinc-600"
                   }`}
                 >
                   <span
@@ -849,7 +923,9 @@ export default function RepairJobSheet({
                     FAULT
                   </span>
                 ) : (
-                  <span className="text-[8px] font-medium text-zinc-400">Pending</span>
+                  <span className="text-[8px] font-medium text-zinc-400">
+                    Pending
+                  </span>
                 )}
               </div>
               <div className="space-y-0.5 text-[9px] leading-tight">
@@ -916,7 +992,9 @@ export default function RepairJobSheet({
             {data.primaryServiceName && (
               <div className="pt-1.5 border-t border-zinc-200 text-[11px] flex justify-between items-center text-zinc-600">
                 <span className="text-zinc-500">Service Category:</span>
-                <span className="font-bold text-zinc-900">{data.primaryServiceName}</span>
+                <span className="font-bold text-zinc-900">
+                  {data.primaryServiceName}
+                </span>
               </div>
             )}
           </div>
@@ -933,7 +1011,9 @@ export default function RepairJobSheet({
             </div>
             <div className="flex-1 bg-white border border-zinc-200 p-2 rounded min-h-[75px] text-zinc-700 text-[11px]">
               {data.workshopNotes ? (
-                <p className="whitespace-pre-wrap leading-relaxed">{data.workshopNotes}</p>
+                <p className="whitespace-pre-wrap leading-relaxed">
+                  {data.workshopNotes}
+                </p>
               ) : (
                 <div className="h-full flex flex-col justify-around py-1 text-zinc-300">
                   <div className="border-b border-dashed border-zinc-300 h-4" />
@@ -954,7 +1034,9 @@ export default function RepairJobSheet({
               <thead>
                 <tr className="bg-zinc-800 text-white font-bold text-[10px] uppercase tracking-wider">
                   <th className="py-1.5 px-3 w-10 text-center">#</th>
-                  <th className="py-1.5 px-3">Service / Spare Part Description</th>
+                  <th className="py-1.5 px-3">
+                    Service / Spare Part Description
+                  </th>
                   <th className="py-1.5 px-3 w-20 text-center">Type</th>
                   <th className="py-1.5 px-3 w-16 text-center">Qty</th>
                   <th className="py-1.5 px-3 w-24 text-right">Price (₹)</th>
@@ -964,14 +1046,18 @@ export default function RepairJobSheet({
                 {data.items.length > 0 ? (
                   data.items.map((item, idx) => (
                     <tr key={idx} className="hover:bg-zinc-50">
-                      <td className="py-1.5 px-3 text-center text-zinc-500">{idx + 1}</td>
+                      <td className="py-1.5 px-3 text-center text-zinc-500">
+                        {idx + 1}
+                      </td>
                       <td className="py-1.5 px-3 font-medium text-zinc-900">
                         {item.description}
                       </td>
                       <td className="py-1.5 px-3 text-center capitalize text-zinc-600 text-[10px]">
                         {item.type}
                       </td>
-                      <td className="py-1.5 px-3 text-center text-zinc-600">{item.quantity}</td>
+                      <td className="py-1.5 px-3 text-center text-zinc-600">
+                        {item.quantity}
+                      </td>
                       <td className="py-1.5 px-3 text-right font-mono font-semibold text-zinc-900">
                         {formatCurrency(item.totalPrice)}
                       </td>
@@ -981,7 +1067,8 @@ export default function RepairJobSheet({
                   <tr>
                     <td className="py-1.5 px-3 text-center text-zinc-500">1</td>
                     <td className="py-1.5 px-3 font-medium text-zinc-900">
-                      {data.primaryServiceName} ({data.device.brand} {data.device.model})
+                      {data.primaryServiceName} ({data.device.brand}{" "}
+                      {data.device.model})
                     </td>
                     <td className="py-1.5 px-3 text-center text-zinc-600 text-[10px]">
                       Service
@@ -995,20 +1082,32 @@ export default function RepairJobSheet({
 
                 {/* Subtotals & Payment Calculation */}
                 <tr className="bg-zinc-50/70 font-medium">
-                  <td colSpan={3} className="py-1.5 px-3 text-right text-zinc-600 text-[10px]">
+                  <td
+                    colSpan={3}
+                    className="py-1.5 px-3 text-right text-zinc-600 text-[10px]"
+                  >
                     Doorstep Convenience & Travel Charge:
                   </td>
-                  <td colSpan={2} className="py-1.5 px-3 text-right font-bold text-emerald-700 text-[11px]">
+                  <td
+                    colSpan={2}
+                    className="py-1.5 px-3 text-right font-bold text-emerald-700 text-[11px]"
+                  >
                     FREE (Zero Pune Travel Fee)
                   </td>
                 </tr>
 
                 {data.diagnosticFee > 0 && (
                   <tr className="bg-zinc-50/70">
-                    <td colSpan={3} className="py-1 px-3 text-right text-zinc-600 text-[10px]">
+                    <td
+                      colSpan={3}
+                      className="py-1 px-3 text-right text-zinc-600 text-[10px]"
+                    >
                       Inspection / Diagnostic Fee:
                     </td>
-                    <td colSpan={2} className="py-1 px-3 text-right font-mono font-semibold text-zinc-900">
+                    <td
+                      colSpan={2}
+                      className="py-1 px-3 text-right font-mono font-semibold text-zinc-900"
+                    >
                       {formatCurrency(data.diagnosticFee)}
                     </td>
                   </tr>
@@ -1016,10 +1115,16 @@ export default function RepairJobSheet({
 
                 {data.discount > 0 && (
                   <tr className="bg-zinc-50/70 text-emerald-700">
-                    <td colSpan={3} className="py-1 px-3 text-right text-[10px]">
+                    <td
+                      colSpan={3}
+                      className="py-1 px-3 text-right text-[10px]"
+                    >
                       Promotional Discount:
                     </td>
-                    <td colSpan={2} className="py-1 px-3 text-right font-mono font-bold">
+                    <td
+                      colSpan={2}
+                      className="py-1 px-3 text-right font-mono font-bold"
+                    >
                       -{formatCurrency(data.discount)}
                     </td>
                   </tr>
@@ -1042,8 +1147,8 @@ export default function RepairJobSheet({
                         {data.paymentStatus === "paid"
                           ? "PAID IN FULL"
                           : data.paymentStatus === "cod"
-                          ? "CASH ON DELIVERY (COD)"
-                          : "UNPAID (DUE ON DELIVERY)"}
+                            ? "CASH ON DELIVERY (COD)"
+                            : "UNPAID (DUE ON DELIVERY)"}
                       </span>
                       {data.paymentMethod && (
                         <span className="text-[10px] text-zinc-500 font-normal capitalize">
@@ -1062,7 +1167,10 @@ export default function RepairJobSheet({
 
                 {/* Advance Paid & Balance Due */}
                 <tr className="bg-white text-[11px] font-semibold border-t border-zinc-200">
-                  <td colSpan={3} className="py-1 px-3 text-zinc-500 text-[10px]">
+                  <td
+                    colSpan={3}
+                    className="py-1 px-3 text-zinc-500 text-[10px]"
+                  >
                     Warranty:{" "}
                     <strong className="text-orange-600">
                       {data.warrantyPeriod || "90-Day QuickFix Guarantee"}
@@ -1077,8 +1185,12 @@ export default function RepairJobSheet({
                   </td>
                 </tr>
                 <tr className="bg-orange-50/70 text-orange-950 font-bold text-xs">
-                  <td colSpan={3} className="py-1.5 px-3 text-[10px] text-zinc-600">
-                    *Transparent pricing policy • No hidden fees • No Fix, No Fee promise.
+                  <td
+                    colSpan={3}
+                    className="py-1.5 px-3 text-[10px] text-zinc-600"
+                  >
+                    *Transparent pricing policy • No hidden fees • No Fix, No
+                    Fee promise.
                   </td>
                   <td className="py-1.5 px-3 text-right uppercase tracking-wider text-[10px] text-orange-900 font-black">
                     Balance Due:
@@ -1098,15 +1210,20 @@ export default function RepairJobSheet({
         <div className="border border-zinc-200 rounded-md p-2.5 bg-zinc-50/50 print:bg-white text-[9px] text-zinc-600 space-y-1">
           <div className="font-bold text-zinc-800 uppercase tracking-wider text-[9px] border-b border-zinc-200 pb-0.5 flex justify-between">
             <span>Standard Terms & Conditions for Mobile Device Service</span>
-            <span className="font-semibold text-zinc-500">QuickFix.in Policy</span>
+            <span className="font-semibold text-zinc-500">
+              QuickFixMobile.in Policy
+            </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 print:grid-cols-2 gap-x-4 gap-y-1.5 leading-tight pt-0.5">
             {STANDARD_REPAIR_TERMS.map((term, i) => (
               <div key={i} className="flex items-start gap-1">
-                <span className="font-bold text-zinc-800 shrink-0">{i + 1}.</span>
+                <span className="font-bold text-zinc-800 shrink-0">
+                  {i + 1}.
+                </span>
                 <div>
-                  <strong className="text-zinc-800">{term.title}:</strong> {term.text}
+                  <strong className="text-zinc-800">{term.title}:</strong>{" "}
+                  {term.text}
                 </div>
               </div>
             ))}
@@ -1118,7 +1235,9 @@ export default function RepairJobSheet({
         ========================================================= */}
         <div className="border-t-2 border-zinc-800 pt-3 text-xs">
           <div className="text-[10px] text-zinc-600 mb-4 leading-tight italic text-center">
-            Customer Declaration: I hereby acknowledge the physical condition checklist, verify the device intake state, and consent to the repair terms and conditions outlined above.
+            Customer Declaration: I hereby acknowledge the physical condition
+            checklist, verify the device intake state, and consent to the repair
+            terms and conditions outlined above.
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 print:grid-cols-3 gap-4 sm:gap-6 pt-2">
@@ -1167,7 +1286,9 @@ export default function RepairJobSheet({
 
         {/* Footer Note */}
         <div className="text-center text-[9px] text-zinc-400 pt-1 border-t border-zinc-100">
-          This is a computer-generated mobile repair job card issued by {contactConfig.legalName}. For support, call {contactConfig.phone.display} or email {contactConfig.email}.
+          This is a computer-generated mobile repair job card issued by{" "}
+          {contactConfig.legalName}. For support, call{" "}
+          {contactConfig.phone.display} or email {contactConfig.email}.
         </div>
       </div>
     </div>

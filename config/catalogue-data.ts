@@ -1,5 +1,5 @@
 /**
- * Centralized SEO & Catalogue Data for QuickFix.in (Pune)
+ * Centralized SEO & Catalogue Data for QuickFixMobile.in (Pune)
  *
  * NOTE: Services, Brands, and Models are dynamically loaded from MongoDB.
  * Only Localities are loaded from config (config/localities.json).
@@ -17,7 +17,8 @@ export interface LocalityItem {
   popularNeighborhoods: string[];
 }
 
-export const LOCALITIES_CATALOG: LocalityItem[] = localitiesData as LocalityItem[];
+export const LOCALITIES_CATALOG: LocalityItem[] =
+  localitiesData as LocalityItem[];
 
 // Note: Database queries and models are strictly in @/lib/db/catalogue (server-only).
 // This config file contains only client-safe static metadata and process definitions.
@@ -45,4 +46,3 @@ export const STANDARD_REPAIR_PROCESS = [
     desc: "Delivered back to your doorstep the same day. Test touch, display, and features personally before paying.",
   },
 ];
-

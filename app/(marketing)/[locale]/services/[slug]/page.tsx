@@ -1,15 +1,37 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { Clock, ShieldCheck, CheckCircle2, ArrowRight, Zap, Phone, HelpCircle } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import JsonLd from "@/components/seo/JsonLd";
+import {
+  Container,
+  CTABlock,
+  HeroMediaImage,
+  PageHero,
+  ProcessStepGrid,
+  Section,
+} from "@/components/ui";
+import contactConfig from "@/config/contact";
+import {
+  getBreadcrumbSchema,
+  getServiceDetailPageSchema,
+} from "@/config/jsonld";
+import { getServiceSeoMetadata, siteConfig } from "@/config/seo";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { siteConfig, getServiceSeoMetadata } from "@/config/seo";
-import { getBreadcrumbSchema, getServiceDetailPageSchema } from "@/config/jsonld";
-import { getDbServiceBySlug, getStaticServiceSlugs, getBrandsForService } from "@/lib/db/catalogue";
-import contactConfig from "@/config/contact";
-import JsonLd from "@/components/seo/JsonLd";
-import { Container, Section, CTABlock, PageHero, ProcessStepGrid, HeroMediaImage } from "@/components/ui";
+import {
+  getBrandsForService,
+  getDbServiceBySlug,
+  getStaticServiceSlugs,
+} from "@/lib/db/catalogue";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Clock,
+  HelpCircle,
+  Phone,
+  ShieldCheck,
+  Zap,
+} from "lucide-react";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
   const slugs = await getStaticServiceSlugs();
@@ -32,7 +54,7 @@ export async function generateMetadata({
 
   if (!service) {
     return {
-      title: "Service Not Found | QuickFix.in",
+      title: "Service Not Found | QuickFixMobile.in",
     };
   }
 
@@ -45,12 +67,18 @@ export async function generateMetadata({
   });
 }
 
+import { cacheLife, cacheTag } from "next/cache";
+
 export default async function ServiceDetailPage({
   params,
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
+  "use cache";
+  cacheLife("days");
+
   const { locale, slug } = await params;
+  cacheTag("services", `service-${slug}`);
 
   const [service, supportedBrands, t] = await Promise.all([
     getDbServiceBySlug(slug),
@@ -66,7 +94,10 @@ export default async function ServiceDetailPage({
   const breadcrumbSchema = getBreadcrumbSchema([
     { name: t("breadcrumbs.home"), url: `${siteUrl}/${locale}` },
     { name: t("breadcrumbs.services"), url: `${siteUrl}/${locale}/services` },
-    { name: service.name, url: `${siteUrl}/${locale}/services/${service.slug}` },
+    {
+      name: service.name,
+      url: `${siteUrl}/${locale}/services/${service.slug}`,
+    },
   ]);
 
   const serviceSchema = getServiceDetailPageSchema({
@@ -103,7 +134,10 @@ export default async function ServiceDetailPage({
 
   return (
     <div className="flex flex-col w-full bg-clean-white">
-      <JsonLd schema={[breadcrumbSchema, serviceSchema]} id={`service-${service.slug}-structured-data`} />
+      <JsonLd
+        schema={[breadcrumbSchema, serviceSchema]}
+        id={`service-${service.slug}-structured-data`}
+      />
 
       {/* 1. Unified Page Hero with DB Image & Fallback */}
       <PageHero
@@ -123,13 +157,17 @@ export default async function ServiceDetailPage({
           {
             icon: Clock,
             label: t("highlights.turnaround"),
-            value: t("highlights.turnaroundValue", { minutes: service.estimatedTimeMinutes }),
+            value: t("highlights.turnaroundValue", {
+              minutes: service.estimatedTimeMinutes,
+            }),
             color: "text-blue-500",
           },
           {
             icon: ShieldCheck,
             label: t("highlights.warranty"),
-            value: t("highlights.warrantyValue", { days: service.warrantyDays }),
+            value: t("highlights.warrantyValue", {
+              days: service.warrantyDays,
+            }),
             color: "text-emerald-500",
           },
           {
@@ -145,7 +183,9 @@ export default async function ServiceDetailPage({
               href={`/book-repair?service=${encodeURIComponent(service.slug)}`}
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-orange-600 active:scale-95 transition-all"
             >
-              <span>{t("actions.bookService", { serviceName: service.name })}</span>
+              <span>
+                {t("actions.bookService", { serviceName: service.name })}
+              </span>
               <ArrowRight className="h-4 w-4" />
             </Link>
 
@@ -154,7 +194,9 @@ export default async function ServiceDetailPage({
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-zinc-300 text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
             >
               <Phone className="h-4 w-4 text-flash-orange" />
-              <span>{t("actions.callNow", { phone: contactConfig.phone.display })}</span>
+              <span>
+                {t("actions.callNow", { phone: contactConfig.phone.display })}
+              </span>
             </a>
           </>
         }
@@ -165,7 +207,9 @@ export default async function ServiceDetailPage({
             badge={t("heroMedia.badge")}
             fallbackType="service"
             title={service.name}
-            subtitle={t("heroMedia.fallbackLabel", { serviceName: service.name })}
+            subtitle={t("heroMedia.fallbackLabel", {
+              serviceName: service.name,
+            })}
             aspectRatio="4/3"
             className="shadow-md"
           />
@@ -181,7 +225,9 @@ export default async function ServiceDetailPage({
                 {t("issues.title")}
               </h2>
               <p className="mt-2 text-xs sm:text-sm text-zinc-600">
-                {t("issues.subtitle", { minutes: service.estimatedTimeMinutes })}
+                {t("issues.subtitle", {
+                  minutes: service.estimatedTimeMinutes,
+                })}
               </p>
             </div>
 
@@ -192,7 +238,9 @@ export default async function ServiceDetailPage({
                   className="flex items-start gap-3 p-4 rounded-xl bg-clean-white border border-zinc-200 shadow-2xs"
                 >
                   <CheckCircle2 className="h-5 w-5 text-flash-orange shrink-0 mt-0.5" />
-                  <span className="text-xs sm:text-sm font-medium text-tech-slate">{issue}</span>
+                  <span className="text-xs sm:text-sm font-medium text-tech-slate">
+                    {issue}
+                  </span>
                 </div>
               ))}
             </div>
@@ -233,7 +281,9 @@ export default async function ServiceDetailPage({
                   <span className="font-heading text-sm font-bold text-tech-slate group-hover:text-flash-orange transition-colors">
                     {b.name}
                   </span>
-                  <span className="text-2xs text-text-muted mt-1">{t("brands.viewModels")}</span>
+                  <span className="text-2xs text-text-muted mt-1">
+                    {t("brands.viewModels")}
+                  </span>
                 </Link>
               ))}
             </div>

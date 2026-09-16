@@ -98,9 +98,9 @@ export default function PageHero({
             {media && <div className="mt-10 mx-auto max-w-4xl">{media}</div>}
           </div>
         ) : (
-          /* Two-Column Responsive Layout */
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            <div className="lg:col-span-7">
+          /* Left-Aligned / Two-Column Responsive Layout */
+          <div className={media ? "grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center" : "max-w-4xl"}>
+            <div className={media ? "lg:col-span-7" : "w-full"}>
               <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-tech-slate">
                 {title}
               </h1>
@@ -113,9 +113,11 @@ export default function PageHero({
 
               {highlights && highlights.length > 0 && (
                 <div
-                  className={`mt-6 grid gap-2 sm:gap-2.5 max-w-lg ${
+                  className={`mt-6 grid gap-2 sm:gap-2.5 ${
+                    media ? "max-w-lg" : "max-w-2xl"
+                  } ${
                     highlights.length === 4
-                      ? "grid-cols-2"
+                      ? "grid-cols-2 sm:grid-cols-4"
                       : highlights.length === 3
                       ? "grid-cols-1 sm:grid-cols-3"
                       : "grid-cols-2"

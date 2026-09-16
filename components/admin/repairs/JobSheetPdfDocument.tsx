@@ -1,18 +1,18 @@
-import React from "react";
-import {
-  Document,
-  Page,
-  Text,
-  View,
-  StyleSheet,
-  Image,
-} from "@react-pdf/renderer";
 import contactConfig from "@/config/contact";
 import {
   JobSheetData,
   STANDARD_REPAIR_TERMS,
   isChecklistPending,
 } from "@/lib/admin/jobsheet";
+import {
+  Document,
+  Image,
+  Page,
+  StyleSheet,
+  Text,
+  View,
+} from "@react-pdf/renderer";
+import React from "react";
 
 // Register styles for React-PDF (using points, numbers, and standard Helvetica)
 const styles = StyleSheet.create({
@@ -344,11 +344,33 @@ const styles = StyleSheet.create({
     paddingVertical: 2.5,
     paddingHorizontal: 4,
   },
-  tableColNum: { width: "6%", textAlign: "center", fontSize: 6.5, color: "#71717a" },
+  tableColNum: {
+    width: "6%",
+    textAlign: "center",
+    fontSize: 6.5,
+    color: "#71717a",
+  },
   tableColDesc: { width: "52%", fontSize: 6.5, color: "#09090b" },
-  tableColType: { width: "16%", textAlign: "center", fontSize: 6, color: "#52525b", textTransform: "capitalize" },
-  tableColQty: { width: "10%", textAlign: "center", fontSize: 6.5, color: "#52525b" },
-  tableColPrice: { width: "16%", textAlign: "right", fontSize: 6.5, fontFamily: "Helvetica-Bold", color: "#09090b" },
+  tableColType: {
+    width: "16%",
+    textAlign: "center",
+    fontSize: 6,
+    color: "#52525b",
+    textTransform: "capitalize",
+  },
+  tableColQty: {
+    width: "10%",
+    textAlign: "center",
+    fontSize: 6.5,
+    color: "#52525b",
+  },
+  tableColPrice: {
+    width: "16%",
+    textAlign: "right",
+    fontSize: 6.5,
+    fontFamily: "Helvetica-Bold",
+    color: "#09090b",
+  },
 
   subtotalRow: {
     flexDirection: "row",
@@ -498,7 +520,8 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
   logoSrc,
 }) => {
   const formatCurrency = (amount?: number) => {
-    if (amount === undefined || amount === null || isNaN(amount)) return "Rs. 0";
+    if (amount === undefined || amount === null || isNaN(amount))
+      return "Rs. 0";
     return `Rs. ${amount.toLocaleString("en-IN")}`;
   };
 
@@ -518,14 +541,14 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
         data.checklist?.powerOn === "yes"
           ? "PASS"
           : data.checklist?.powerOn === "no"
-          ? "FAIL"
-          : "PENDING",
+            ? "FAIL"
+            : "PENDING",
       value:
         data.checklist?.powerOn === "yes"
           ? "Powers On"
           : data.checklist?.powerOn === "no"
-          ? "No Power"
-          : "Pending",
+            ? "No Power"
+            : "Pending",
     },
     {
       num: "2",
@@ -534,19 +557,19 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
         data.checklist?.screenCondition === "good"
           ? "PASS"
           : data.checklist?.screenCondition &&
-            data.checklist?.screenCondition !== "untested"
-          ? "FAULT"
-          : "PENDING",
+              data.checklist?.screenCondition !== "untested"
+            ? "FAULT"
+            : "PENDING",
       value:
         data.checklist?.screenCondition === "good"
           ? "Clear/Intact"
           : data.checklist?.screenCondition === "cracked"
-          ? "Cracked"
-          : data.checklist?.screenCondition === "scratched"
-          ? "Scratched"
-          : data.checklist?.screenCondition === "no_display"
-          ? "Blank"
-          : "Pending",
+            ? "Cracked"
+            : data.checklist?.screenCondition === "scratched"
+              ? "Scratched"
+              : data.checklist?.screenCondition === "no_display"
+                ? "Blank"
+                : "Pending",
     },
     {
       num: "3",
@@ -555,14 +578,14 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
         data.checklist?.touchFunction === "working"
           ? "PASS"
           : data.checklist?.touchFunction === "faulty"
-          ? "FAULT"
-          : "PENDING",
+            ? "FAULT"
+            : "PENDING",
       value:
         data.checklist?.touchFunction === "working"
           ? "Responsive"
           : data.checklist?.touchFunction === "faulty"
-          ? "Faulty"
-          : "Pending",
+            ? "Faulty"
+            : "Pending",
     },
     {
       num: "4",
@@ -571,9 +594,9 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
         data.checklist?.backGlassBody === "good"
           ? "PASS"
           : data.checklist?.backGlassBody &&
-            data.checklist?.backGlassBody !== "untested"
-          ? "FAULT"
-          : "PENDING",
+              data.checklist?.backGlassBody !== "untested"
+            ? "FAULT"
+            : "PENDING",
       value:
         data.checklist?.backGlassBody === "good"
           ? "Intact"
@@ -587,13 +610,13 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
         data.checklist?.rearCamera === "working"
           ? "PASS"
           : (data.checklist?.frontCamera &&
-              data.checklist?.frontCamera !== "untested" &&
-              data.checklist?.frontCamera !== "working") ||
-            (data.checklist?.rearCamera &&
-              data.checklist?.rearCamera !== "untested" &&
-              data.checklist?.rearCamera !== "working")
-          ? "FAULT"
-          : "PENDING",
+                data.checklist?.frontCamera !== "untested" &&
+                data.checklist?.frontCamera !== "working") ||
+              (data.checklist?.rearCamera &&
+                data.checklist?.rearCamera !== "untested" &&
+                data.checklist?.rearCamera !== "working")
+            ? "FAULT"
+            : "PENDING",
       value:
         data.checklist?.frontCamera === "working" &&
         data.checklist?.rearCamera === "working"
@@ -607,9 +630,9 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
         data.checklist?.chargingPort === "working"
           ? "PASS"
           : data.checklist?.chargingPort &&
-            data.checklist?.chargingPort !== "untested"
-          ? "FAULT"
-          : "PENDING",
+              data.checklist?.chargingPort !== "untested"
+            ? "FAULT"
+            : "PENDING",
       value:
         data.checklist?.chargingPort === "working"
           ? "Charges OK"
@@ -622,9 +645,9 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
         data.checklist?.batteryCondition === "normal"
           ? "PASS"
           : data.checklist?.batteryCondition &&
-            data.checklist?.batteryCondition !== "untested"
-          ? "FAULT"
-          : "PENDING",
+              data.checklist?.batteryCondition !== "untested"
+            ? "FAULT"
+            : "PENDING",
       value:
         data.checklist?.batteryCondition === "normal"
           ? "Normal"
@@ -638,13 +661,13 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
         data.checklist?.microphone === "working"
           ? "PASS"
           : (data.checklist?.speakerEarpiece &&
-              data.checklist?.speakerEarpiece !== "untested" &&
-              data.checklist?.speakerEarpiece !== "working") ||
-            (data.checklist?.microphone &&
-              data.checklist?.microphone !== "untested" &&
-              data.checklist?.microphone !== "working")
-          ? "FAULT"
-          : "PENDING",
+                data.checklist?.speakerEarpiece !== "untested" &&
+                data.checklist?.speakerEarpiece !== "working") ||
+              (data.checklist?.microphone &&
+                data.checklist?.microphone !== "untested" &&
+                data.checklist?.microphone !== "working")
+            ? "FAULT"
+            : "PENDING",
       value:
         data.checklist?.speakerEarpiece === "working" &&
         data.checklist?.microphone === "working"
@@ -658,8 +681,8 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
         data.checklist?.networkWifi === "working"
           ? "PASS"
           : data.checklist?.networkWifi === "faulty"
-          ? "FAULT"
-          : "PENDING",
+            ? "FAULT"
+            : "PENDING",
       value:
         data.checklist?.networkWifi === "working"
           ? "Connects OK"
@@ -672,9 +695,9 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
         data.checklist?.liquidDamage === "none"
           ? "PASS"
           : data.checklist?.liquidDamage &&
-            data.checklist?.liquidDamage !== "untested"
-          ? "FAULT"
-          : "PENDING",
+              data.checklist?.liquidDamage !== "untested"
+            ? "FAULT"
+            : "PENDING",
       value:
         data.checklist?.liquidDamage === "none"
           ? "No Moisture"
@@ -701,7 +724,9 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
                   </View>
                 </View>
                 <Text style={styles.tagline}>{contactConfig.tagline}</Text>
-                <Text style={styles.addressText}>{contactConfig.address.full}</Text>
+                <Text style={styles.addressText}>
+                  {contactConfig.address.full}
+                </Text>
                 <View style={styles.contactRow}>
                   <Text>
                     <Text style={styles.contactBold}>Helpline: </Text>
@@ -722,7 +747,9 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
             {/* Meta Right */}
             <View style={styles.metaCol}>
               <View style={styles.badgePill}>
-                <Text style={styles.badgePillText}>Mobile Repair Job Sheet</Text>
+                <Text style={styles.badgePillText}>
+                  Mobile Repair Job Sheet
+                </Text>
               </View>
               <Text style={styles.metaLabel}>Job Sheet No.</Text>
               <Text style={styles.metaJobNumber}>{data.jobSheetNumber}</Text>
@@ -751,7 +778,9 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
               <Text style={styles.boxName}>{data.customer?.name}</Text>
               <Text style={styles.boxRow}>
                 Phone: <Text style={styles.bold}>{data.customer?.phone}</Text>
-                {data.customer?.alternatePhone ? ` | Alt: ${data.customer.alternatePhone}` : ""}
+                {data.customer?.alternatePhone
+                  ? ` | Alt: ${data.customer.alternatePhone}`
+                  : ""}
               </Text>
               {data.customer?.email && (
                 <Text style={styles.boxRow}>Email: {data.customer.email}</Text>
@@ -759,7 +788,9 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
               <Text style={styles.boxRow}>
                 Address: {data.customer?.address}, {data.customer?.area},{" "}
                 {data.customer?.city} - {data.customer?.pincode}
-                {data.customer?.landmark ? ` (Landmark: ${data.customer.landmark})` : ""}
+                {data.customer?.landmark
+                  ? ` (Landmark: ${data.customer.landmark})`
+                  : ""}
               </Text>
             </View>
 
@@ -767,7 +798,9 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
             <View style={styles.colBox}>
               <View style={styles.boxHeader}>
                 <Text style={styles.boxHeaderTitle}>Device & Intake Specs</Text>
-                <Text style={styles.boxHeaderSubtitle}>{data.device?.brand}</Text>
+                <Text style={styles.boxHeaderSubtitle}>
+                  {data.device?.brand}
+                </Text>
               </View>
               <Text style={styles.boxName}>
                 {data.device?.brand} {data.device?.model}
@@ -865,7 +898,9 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
               </Text>
               <Text style={styles.notesContent}>
                 {data.reportedFault || "Diagnostic check requested by customer"}
-                {data.primaryServiceName ? `\nCategory: ${data.primaryServiceName}` : ""}
+                {data.primaryServiceName
+                  ? `\nCategory: ${data.primaryServiceName}`
+                  : ""}
               </Text>
             </View>
 
@@ -874,7 +909,8 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
                 Technician Diagnostic Findings & Workshop Notes:
               </Text>
               <Text style={styles.notesContent}>
-                {data.workshopNotes || "To be recorded during workshop inspection..."}
+                {data.workshopNotes ||
+                  "To be recorded during workshop inspection..."}
               </Text>
             </View>
           </View>
@@ -886,9 +922,15 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
               <Text style={[styles.tableHeaderCol, styles.tableColDesc]}>
                 Service / Spare Part Description
               </Text>
-              <Text style={[styles.tableHeaderCol, styles.tableColType]}>Type</Text>
-              <Text style={[styles.tableHeaderCol, styles.tableColQty]}>Qty</Text>
-              <Text style={[styles.tableHeaderCol, styles.tableColPrice]}>Price</Text>
+              <Text style={[styles.tableHeaderCol, styles.tableColType]}>
+                Type
+              </Text>
+              <Text style={[styles.tableHeaderCol, styles.tableColQty]}>
+                Qty
+              </Text>
+              <Text style={[styles.tableHeaderCol, styles.tableColPrice]}>
+                Price
+              </Text>
             </View>
 
             {data.items && data.items.length > 0 ? (
@@ -907,7 +949,8 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
               <View style={styles.tableRow}>
                 <Text style={styles.tableColNum}>1</Text>
                 <Text style={styles.tableColDesc}>
-                  {data.primaryServiceName} ({data.device?.brand} {data.device?.model})
+                  {data.primaryServiceName} ({data.device?.brand}{" "}
+                  {data.device?.model})
                 </Text>
                 <Text style={styles.tableColType}>Service</Text>
                 <Text style={styles.tableColQty}>1</Text>
@@ -929,7 +972,9 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
 
             {data.diagnosticFee > 0 && (
               <View style={styles.subtotalRow}>
-                <Text style={{ color: "#52525b" }}>Inspection / Diagnostic Fee:</Text>
+                <Text style={{ color: "#52525b" }}>
+                  Inspection / Diagnostic Fee:
+                </Text>
                 <Text style={{ fontFamily: "Helvetica-Bold" }}>
                   {formatCurrency(data.diagnosticFee)}
                 </Text>
@@ -939,7 +984,9 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
             {data.discount > 0 && (
               <View style={styles.subtotalRow}>
                 <Text style={{ color: "#15803d" }}>Promotional Discount:</Text>
-                <Text style={{ fontFamily: "Helvetica-Bold", color: "#15803d" }}>
+                <Text
+                  style={{ fontFamily: "Helvetica-Bold", color: "#15803d" }}
+                >
                   -{formatCurrency(data.discount)}
                 </Text>
               </View>
@@ -948,25 +995,34 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
             {/* Total Row */}
             <View style={styles.totalRow}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Text style={{ fontSize: 6.5, fontFamily: "Helvetica-Bold", marginRight: 4 }}>
+                <Text
+                  style={{
+                    fontSize: 6.5,
+                    fontFamily: "Helvetica-Bold",
+                    marginRight: 4,
+                  }}
+                >
                   PAYMENT STATUS:
                 </Text>
                 <Text
                   style={{
                     fontSize: 6.5,
                     fontFamily: "Helvetica-Bold",
-                    color: data.paymentStatus === "paid" ? "#15803d" : "#b45309",
+                    color:
+                      data.paymentStatus === "paid" ? "#15803d" : "#b45309",
                   }}
                 >
                   {data.paymentStatus === "paid"
                     ? "PAID IN FULL"
                     : data.paymentStatus === "cod"
-                    ? "CASH ON DELIVERY (COD)"
-                    : "UNPAID (DUE ON DELIVERY)"}
+                      ? "CASH ON DELIVERY (COD)"
+                      : "UNPAID (DUE ON DELIVERY)"}
                 </Text>
               </View>
               <View style={{ flexDirection: "row", alignItems: "baseline" }}>
-                <Text style={{ fontSize: 6.5, color: "#52525b", marginRight: 4 }}>
+                <Text
+                  style={{ fontSize: 6.5, color: "#52525b", marginRight: 4 }}
+                >
                   TOTAL ESTIMATE:
                 </Text>
                 <Text style={{ fontSize: 9, fontFamily: "Helvetica-Bold" }}>
@@ -978,7 +1034,8 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
             {/* Advance & Balance */}
             <View style={styles.subtotalRow}>
               <Text style={{ color: "#71717a", fontSize: 6 }}>
-                Warranty: {data.warrantyPeriod || "90-Day QuickFix Guarantee"} on replaced components.
+                Warranty: {data.warrantyPeriod || "90-Day QuickFix Guarantee"}{" "}
+                on replaced components.
               </Text>
               <Text style={{ color: "#3f3f46" }}>
                 Advance Paid: {formatCurrency(data.advancePaid)}
@@ -1019,12 +1076,16 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
               <Text style={styles.termsTitle}>
                 Standard Terms & Conditions for Mobile Device Service
               </Text>
-              <Text style={{ fontSize: 5.5, color: "#71717a" }}>QuickFix.in Policy</Text>
+              <Text style={{ fontSize: 5.5, color: "#71717a" }}>
+                QuickFixMobile.in Policy
+              </Text>
             </View>
             <View style={styles.termsGrid}>
               {STANDARD_REPAIR_TERMS.map((term, i) => (
                 <Text key={i} style={styles.termItem}>
-                  <Text style={styles.bold}>{i + 1}. {term.title}: </Text>
+                  <Text style={styles.bold}>
+                    {i + 1}. {term.title}:{" "}
+                  </Text>
                   {term.text}
                 </Text>
               ))}
@@ -1034,32 +1095,42 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
           {/* 7. Dual Signature */}
           <View style={styles.signatureSection}>
             <Text style={styles.declarationText}>
-              Customer Declaration: I hereby acknowledge the physical condition checklist, verify the device intake state, and consent to the repair terms and conditions outlined above.
+              Customer Declaration: I hereby acknowledge the physical condition
+              checklist, verify the device intake state, and consent to the
+              repair terms and conditions outlined above.
             </Text>
             <View style={styles.sigRow}>
               <View style={styles.sigCol}>
                 <View style={styles.sigLine} />
                 <Text style={styles.sigLabel}>Customer Signature</Text>
-                <Text style={styles.sigSubtext}>Date: ____________________</Text>
+                <Text style={styles.sigSubtext}>
+                  Date: ____________________
+                </Text>
               </View>
 
               <View style={styles.sealBox}>
                 <Text style={styles.sealLabel}>Official Hub Seal</Text>
                 <Text style={styles.sealName}>QuickFix Sadashiv Peth</Text>
-                <Text style={{ fontSize: 5, color: "#71717a" }}>Pune - 411030</Text>
+                <Text style={{ fontSize: 5, color: "#71717a" }}>
+                  Pune - 411030
+                </Text>
               </View>
 
               <View style={styles.sigCol}>
                 <View style={styles.sigLine} />
                 <Text style={styles.sigLabel}>Authorized Signatory</Text>
-                <Text style={styles.sigSubtext}>Date: ____________________</Text>
+                <Text style={styles.sigSubtext}>
+                  Date: ____________________
+                </Text>
               </View>
             </View>
           </View>
 
           {/* 8. Footer */}
           <Text style={styles.footer}>
-            This is a computer-generated mobile repair job card issued by {contactConfig.legalName}. For support, call {contactConfig.phone.display} or email {contactConfig.email}.
+            This is a computer-generated mobile repair job card issued by{" "}
+            {contactConfig.legalName}. For support, call{" "}
+            {contactConfig.phone.display} or email {contactConfig.email}.
           </Text>
         </View>
       </Page>

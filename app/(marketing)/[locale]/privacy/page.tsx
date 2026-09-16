@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
-import { Shield, Lock, Eye, FileText, CheckCircle2 } from "lucide-react";
-import { getSeoMetadata, siteConfig } from "@/config/seo";
-import { getBreadcrumbSchema } from "@/config/jsonld";
 import JsonLd from "@/components/seo/JsonLd";
-import { Container, Section, Card, CTABlock, PageHero } from "@/components/ui";
+import { Container, CTABlock, PageHero, Section } from "@/components/ui";
 import contactConfig from "@/config/contact";
+import { getBreadcrumbSchema } from "@/config/jsonld";
+import { getSeoMetadata, siteConfig } from "@/config/seo";
+import { CheckCircle2, Shield } from "lucide-react";
+import type { Metadata } from "next";
 
 export async function generateMetadata({
   params,
@@ -19,11 +19,16 @@ export async function generateMetadata({
   });
 }
 
+import { cacheLife } from "next/cache";
+
 export default async function PrivacyPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
+  "use cache";
+  cacheLife("max");
+
   const { locale } = await params;
 
   const siteUrl = siteConfig.url.replace(/\/$/, "");
@@ -85,13 +90,23 @@ export default async function PrivacyPage({
                 1. Information We Collect
               </h3>
               <p>
-                When you schedule a doorstep repair through QuickFix.in, we collect only the necessary details required to dispatch a certified technician to your home or workplace in Pune:
+                When you schedule a doorstep repair through QuickFixMobile.in,
+                we collect only the necessary details required to dispatch a
+                certified technician to your home or workplace in Pune:
               </p>
               <ul className="mt-2 list-disc list-inside space-y-1 text-zinc-600 pl-2">
                 <li>Your full name and 10-digit Indian contact number.</li>
-                <li>Your Pune doorstep address, locality, and optional landmark.</li>
-                <li>Your smartphone brand, model, and described hardware/software issue.</li>
-                <li>Optional email address for digital warranty cards and tax invoices.</li>
+                <li>
+                  Your Pune doorstep address, locality, and optional landmark.
+                </li>
+                <li>
+                  Your smartphone brand, model, and described hardware/software
+                  issue.
+                </li>
+                <li>
+                  Optional email address for digital warranty cards and tax
+                  invoices.
+                </li>
               </ul>
             </div>
 
@@ -100,13 +115,29 @@ export default async function PrivacyPage({
                 2. On-Device Customer Data Privacy
               </h3>
               <p>
-                Unlike traditional brand service centers that mandate a complete device factory reset, QuickFix operates on a strict <strong>Zero Data Access Protocol</strong>. Because our service requires zero access to your operating system or storage:
+                Unlike traditional brand service centers that mandate a complete
+                device factory reset, QuickFix operates on a strict{" "}
+                <strong>Zero Data Access Protocol</strong>. Because our service
+                requires zero access to your operating system or storage:
               </p>
               <ul className="mt-2 list-disc list-inside space-y-1 text-zinc-600 pl-2">
-                <li>You never share your device PIN, passcode, pattern, or biometric credentials.</li>
-                <li>Your device is transported in a tamper-evident shock-proof pouch and serviced in our ESD-safe central Pune lab.</li>
-                <li>Our technicians test display touches, cameras, and sensors only after returning the device to your doorstep, while you unlock the phone yourself.</li>
-                <li>We do not connect USB data dump tools, backup suites, or external hardware that inspects internal storage.</li>
+                <li>
+                  You never share your device PIN, passcode, pattern, or
+                  biometric credentials.
+                </li>
+                <li>
+                  Your device is transported in a tamper-evident shock-proof
+                  pouch and serviced in our ESD-safe central Pune lab.
+                </li>
+                <li>
+                  Our technicians test display touches, cameras, and sensors
+                  only after returning the device to your doorstep, while you
+                  unlock the phone yourself.
+                </li>
+                <li>
+                  We do not connect USB data dump tools, backup suites, or
+                  external hardware that inspects internal storage.
+                </li>
               </ul>
             </div>
 
@@ -115,7 +146,11 @@ export default async function PrivacyPage({
                 3. How We Use Booking Details
               </h3>
               <p>
-                Your booking records are used exclusively to fulfill doorstep dispatch logistics, provide automated SMS or WhatsApp status updates, and validate your 90-day warranty claims. We never sell, rent, or trade your contact details with third-party advertisers.
+                Your booking records are used exclusively to fulfill doorstep
+                dispatch logistics, provide automated SMS or WhatsApp status
+                updates, and validate your 90-day warranty claims. We never
+                sell, rent, or trade your contact details with third-party
+                advertisers.
               </p>
             </div>
 
@@ -124,7 +159,10 @@ export default async function PrivacyPage({
                 4. Payment Information Security
               </h3>
               <p>
-                QuickFix does not store or process debit/credit card numbers on our servers. All digital payments are conducted on-site post-repair via verified UPI QR codes (Google Pay, PhonePe, Paytm), official merchant POS card terminals, or cash.
+                QuickFix does not store or process debit/credit card numbers on
+                our servers. All digital payments are conducted on-site
+                post-repair via verified UPI QR codes (Google Pay, PhonePe,
+                Paytm), official merchant POS card terminals, or cash.
               </p>
             </div>
 
@@ -133,12 +171,19 @@ export default async function PrivacyPage({
                 5. Contact Us Regarding Your Data
               </h3>
               <p>
-                For questions regarding data retention, warranty records, or to request deletion of your contact profile, please contact our Pune dispatch hub:
+                For questions regarding data retention, warranty records, or to
+                request deletion of your contact profile, please contact our
+                Pune dispatch hub:
               </p>
               <div className="mt-3 rounded-xl bg-mist-gray p-4 text-xs sm:text-sm text-zinc-700">
-                <p className="font-bold text-tech-slate">{contactConfig.legalName}</p>
+                <p className="font-bold text-tech-slate">
+                  {contactConfig.legalName}
+                </p>
                 <p>{contactConfig.address.full}</p>
-                <p>Email: {contactConfig.email} • Hotline: {contactConfig.phone.display}</p>
+                <p>
+                  Email: {contactConfig.email} • Hotline:{" "}
+                  {contactConfig.phone.display}
+                </p>
               </div>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Clock, ShieldCheck, ArrowRight, Smartphone, Zap, Check, X, Phone } from "lucide-react";
+import { Clock, ShieldCheck, ArrowRight, Zap, Check, X, Phone } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { getServicesHubSeoMetadata, siteConfig } from "@/config/seo";
@@ -7,6 +7,7 @@ import { getBreadcrumbSchema } from "@/config/jsonld";
 import { getDbServices, getDbBrands } from "@/lib/db/catalogue";
 import contactConfig from "@/config/contact";
 import JsonLd from "@/components/seo/JsonLd";
+import DoorstepPickupAssurance from "@/components/landing/DoorstepPickupAssurance";
 import { Container, Section, CTABlock, PageHero } from "@/components/ui";
 
 export function generateStaticParams() {
@@ -22,11 +23,17 @@ export async function generateMetadata({
   return getServicesHubSeoMetadata({ locale });
 }
 
+import { cacheLife, cacheTag } from "next/cache";
+
 export default async function ServicesHubPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
+  "use cache";
+  cacheLife("days");
+  cacheTag("services");
+
   const { locale } = await params;
 
   const [services, brands] = await Promise.all([
@@ -256,7 +263,14 @@ export default async function ServicesHubPage({
         </Container>
       </Section>
 
-      {/* 5. CTA */}
+      {/* 5. Doorstep Pickup Assurance Banner */}
+      <Section variant="muted" padding="default">
+        <Container>
+          <DoorstepPickupAssurance />
+        </Container>
+      </Section>
+
+      {/* 6. CTA */}
       <Section variant="white" padding="default">
         <Container>
           <CTABlock

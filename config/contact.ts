@@ -1,11 +1,11 @@
 /**
- * Centralized Contact, Business, Social, and Service Area Configuration for QuickFix.in
+ * Centralized Contact, Business, Social, and Service Area Configuration for QuickFixMobile.in
  * Hub Location: Sadashiv Peth, Pune
  */
 
 export const contactConfig = {
   ownerName: "Samadhan Patil",
-  brand: "QuickFix.in",
+  brand: "QuickFixMobile.in",
   legalName: "QuickFix Mobile Solutions",
   tagline: "Doorstep Mobile Repair in Pune",
 
@@ -18,7 +18,7 @@ export const contactConfig = {
   },
 
   email: "khairnars12@gmail.com",
-  supportEmail: "support@quickfix.in",
+  supportEmail: "support@quickfixmobile.in",
 
   address: {
     shop: "Shop No. 3, Purva Plaza",
@@ -65,8 +65,8 @@ export const contactConfig = {
     },
     instagram: {
       name: "Instagram",
-      handle: "@quickfix.pune",
-      url: "https://instagram.com/quickfix.pune",
+      handle: "@quickfixpunemh12",
+      url: "https://instagram.com/quickfixpunemh12",
     },
     facebook: {
       name: "Facebook",
@@ -80,8 +80,8 @@ export const contactConfig = {
     },
     youtube: {
       name: "YouTube",
-      handle: "@quickfixpune",
-      url: "https://youtube.com/@quickfixpune",
+      handle: "@quickfixpunemh12",
+      url: "https://youtube.com/@quickfixpunemh12",
     },
     linkedin: {
       name: "LinkedIn",
@@ -218,14 +218,7 @@ export const contactConfig = {
         id: "pcmc-north",
         name: "PCMC / North",
         dispatchTime: "40 Mins",
-        areas: [
-          "Pimpri",
-          "Chinchwad",
-          "Ravet",
-          "Nigdi",
-          "Akurdi",
-          "Bhosari",
-        ],
+        areas: ["Pimpri", "Chinchwad", "Ravet", "Nigdi", "Akurdi", "Bhosari"],
       },
     ],
   },
@@ -239,7 +232,8 @@ export const contactConfig = {
   },
 
   mapUrl: "https://maps.google.com/?q=Purva+Plaza+Sadashiv+Peth+Pune+411030",
-  mapEmbedUrl: "https://maps.google.com/maps?q=Purva+Plaza+Sadashiv+Peth+Pune+411030&t=&z=15&ie=UTF8&iwloc=&output=embed",
+  mapEmbedUrl:
+    "https://maps.google.com/maps?q=Purva+Plaza+Sadashiv+Peth+Pune+411030&t=&z=15&ie=UTF8&iwloc=&output=embed",
 } as const;
 
 export default contactConfig;

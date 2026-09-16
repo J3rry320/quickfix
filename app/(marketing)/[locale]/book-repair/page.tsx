@@ -5,7 +5,8 @@ import { getSeoMetadata, siteConfig } from "@/config/seo";
 import { getServiceSchema, getBreadcrumbSchema } from "@/config/jsonld";
 import JsonLd from "@/components/seo/JsonLd";
 import StepByStepBookingWizard from "@/components/repair/StepByStepBookingWizard";
-import { Breadcrumbs, SectionHeader, Skeleton } from "@/components/ui";
+import DoorstepPickupAssurance from "@/components/landing/DoorstepPickupAssurance";
+import { PageHero, Skeleton } from "@/components/ui";
 import { Clock, Lock, ShieldCheck, BadgeIndianRupee } from "lucide-react";
 
 export async function generateMetadata({
@@ -38,54 +39,61 @@ export default async function BookRepairPage({
   ]);
 
   return (
-    <div className="py-8 sm:py-12 bg-mist-gray/40 min-h-[calc(100vh-4rem)]">
+    <div className="flex flex-col w-full bg-clean-white min-h-[calc(100vh-4rem)]">
       <JsonLd schema={[serviceSchema, breadcrumbSchema]} id="repair-structured-data" />
-      <div className="mx-auto max-w-4xl px-4 sm:px-6">
-        <div className="flex justify-center mb-6">
-          <Breadcrumbs
-            items={[
-              { label: "Home", href: "/" },
-              { label: t("title") || "Book Doorstep Repair" },
-            ]}
-          />
-        </div>
 
-        {/* Simplified Page Header */}
-        <SectionHeader
-          title={t("title") || "Book Doorstep Mobile Pickup & Repair"}
-          subtitle={t("subtitle") || "Safe doorstep pickup across Pune, precision repair in our certified Sadashiv Peth lab, returned same-day."}
-          className="max-w-2xl mb-6 text-center mx-auto"
-        />
+      {/* 1. Unified Page Hero */}
+      <PageHero
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: t("title") || "Book Doorstep Repair" },
+        ]}
+        title={t("title") || "Book Doorstep Mobile Pickup & Repair"}
+        subtitle={t("subtitle") || "Safe doorstep pickup across Pune, precision repair in our certified Sadashiv Peth lab, returned same-day."}
+        align="center"
+        highlights={[
+          {
+            icon: Clock,
+            label: "Fast Pickup",
+            value: "Pune-wide",
+            color: "text-flash-orange",
+          },
+          {
+            icon: Lock,
+            label: "Data Protected",
+            value: "Safe transit",
+            color: "text-emerald-500",
+          },
+          {
+            icon: ShieldCheck,
+            label: "90-Day Warranty",
+            value: "Genuine parts",
+            color: "text-blue-500",
+          },
+          {
+            icon: BadgeIndianRupee,
+            label: "Free Visit",
+            value: "Zero travel fee",
+            color: "text-emerald-500",
+          },
+        ]}
+      />
 
-        {/* Streamlined Trust Strip */}
-        <div className="mb-6 mx-auto max-w-2xl flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-text-muted">
-          <div className="flex items-center gap-1.5">
-            <Clock className="h-3.5 w-3.5 text-flash-orange shrink-0" aria-hidden="true" />
-            <span className="font-semibold text-tech-slate">Fast Pickup</span>
-            <span className="text-2xs text-text-muted">• Pune-wide</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <Lock className="h-3.5 w-3.5 text-emerald-600 shrink-0" aria-hidden="true" />
-            <span className="font-semibold text-tech-slate">Data Protected</span>
-            <span className="text-2xs text-text-muted">• Safe transit</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <ShieldCheck className="h-3.5 w-3.5 text-flash-orange shrink-0" aria-hidden="true" />
-            <span className="font-semibold text-tech-slate">90-Day Warranty</span>
-            <span className="text-2xs text-text-muted">• Genuine parts</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <BadgeIndianRupee className="h-3.5 w-3.5 text-emerald-600 shrink-0" aria-hidden="true" />
-            <span className="font-semibold text-tech-slate">Free Visit</span>
-            <span className="text-2xs text-text-muted">• Zero travel fee</span>
-          </div>
-        </div>
+      {/* 2. Interactive Booking Wizard Section */}
+      <div className="py-8 sm:py-12 bg-mist-gray/40">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6">
 
         {/* Step-by-Step 3-Stage Wizard */}
         <Suspense fallback={<Skeleton className="h-96 w-full rounded-3xl" />}>
           <StepByStepBookingWizard />
         </Suspense>
+
+        {/* Reusable Doorstep Pickup & Lab Assurance Banner */}
+        <div className="mt-10 sm:mt-14">
+          <DoorstepPickupAssurance showCta={false} />
+        </div>
       </div>
     </div>
+  </div>
   );
 }

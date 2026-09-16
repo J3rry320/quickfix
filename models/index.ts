@@ -19,3 +19,4 @@ export {
   type IContactSubmission,
 } from "./ContactSubmission";
 export { BlogPost, type IBlogPost, type IBlogAuthor, type IBlogSeo } from "./BlogPost";
+export { Review, type IReview } from "./Review";

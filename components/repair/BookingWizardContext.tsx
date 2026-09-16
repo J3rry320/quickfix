@@ -137,15 +137,22 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
   const [modelInput, setModelInput] = useState<string>("");
   const [hasPreFilled, setHasPreFilled] = useState<boolean>(false);
 
-  // Date constants (local timezone)
-  const todayDate = useMemo(() => new Date(), []);
-  const todayStr = useMemo(() => todayDate.toISOString().split("T")[0], [todayDate]);
+  // Date constants (local timezone, initialized to stable date during prerender and synchronized on mount)
+  const [todayDate, setTodayDate] = useState<Date>(() => new Date("2026-01-01T00:00:00Z"));
+  const [tomorrowDate, setTomorrowDate] = useState<Date>(() => new Date("2026-01-02T00:00:00Z"));
 
-  const tomorrowDate = useMemo(() => {
-    const d = new Date();
-    d.setDate(d.getDate() + 1);
-    return d;
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const t = new Date();
+      setTodayDate(t);
+      const tm = new Date();
+      tm.setDate(tm.getDate() + 1);
+      setTomorrowDate(tm);
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
+
+  const todayStr = useMemo(() => todayDate.toISOString().split("T")[0], [todayDate]);
   const tomorrowStr = useMemo(() => tomorrowDate.toISOString().split("T")[0], [tomorrowDate]);
 
   // Client time tracking (minutes from midnight, client-only to avoid SSR hydration mismatches)

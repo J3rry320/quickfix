@@ -249,3 +249,54 @@ export const updateRepairRequestSchema = z.object({
     })
     .optional(),
 });
+
+// -------------------------------------------------------------
+// 7. TRACK REPAIR VALIDATION
+// -------------------------------------------------------------
+
+export const trackRepairSchema = z.object({
+  reference: z
+    .string()
+    .trim()
+    .min(5, "Tracking number must be at least 5 characters")
+    .max(30, "Tracking number cannot exceed 30 characters")
+    .regex(/^[a-zA-Z0-9-]+$/, "Invalid tracking number format"),
+});
+
+// -------------------------------------------------------------
+// 8. CUSTOMER REVIEWS VALIDATION
+// -------------------------------------------------------------
+
+export const createReviewSchema = z.object({
+  name: z
+    .string()
+    .min(2, "Name must be at least 2 characters")
+    .max(80, "Name cannot exceed 80 characters")
+    .trim(),
+  rating: z.coerce
+    .number()
+    .int("Rating must be a whole number")
+    .min(1, "Rating must be at least 1 star")
+    .max(5, "Rating cannot exceed 5 stars"),
+  comment: z
+    .string()
+    .min(10, "Please provide at least 10 characters in your review")
+    .max(1000, "Review comment cannot exceed 1000 characters")
+    .trim(),
+  deviceModel: z.string().max(100).trim().optional(),
+  serviceType: z.string().max(100).trim().optional(),
+  area: z.string().max(100).trim().optional(),
+  locale: z.enum(["en", "hi", "mr"]).default("en"),
+});
+
+export const updateReviewStatusSchema = z.object({
+  status: z.enum(["pending", "approved", "rejected"]).optional(),
+  isFeatured: z.boolean().optional(),
+  adminNotes: z.string().trim().optional(),
+  name: z.string().min(2).max(80).trim().optional(),
+  comment: z.string().min(10).max(1000).trim().optional(),
+  deviceModel: z.string().max(100).trim().optional(),
+  serviceType: z.string().max(100).trim().optional(),
+  area: z.string().max(100).trim().optional(),
+  rating: z.coerce.number().int().min(1).max(5).optional(),
+});

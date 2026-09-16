@@ -21,11 +21,17 @@ export async function generateMetadata({
   return getBrandsHubSeoMetadata({ locale });
 }
 
+import { cacheLife, cacheTag } from "next/cache";
+
 export default async function BrandsHubPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
+  "use cache";
+  cacheLife("days");
+  cacheTag("brands");
+
   const { locale } = await params;
 
   const [brands, allModels] = await Promise.all([

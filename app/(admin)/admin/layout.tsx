@@ -1,6 +1,6 @@
-import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "@/app/globals.css";
+import type { Metadata, Viewport } from "next";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -23,13 +23,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "QuickFix.in | Admin Portal",
-  description: "Secure Admin Management Portal for QuickFix.in",
+  title: "QuickFixMobile.in | Admin Portal",
+  description: "Secure Admin Management Portal for QuickFixMobile.in",
   robots: {
     index: false,
     follow: false,
   },
 };
+
+export const instant = false;
 
 export default function AdminLayout({
   children,
@@ -37,10 +39,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${plusJakartaSans.variable} ${inter.variable}`}
-    >
+    <html lang="en" className={`${plusJakartaSans.variable} ${inter.variable}`}>
       <body className="antialiased min-h-screen bg-mist-gray text-tech-slate font-body flex flex-col w-full max-w-full overflow-x-hidden">
         {children}
       </body>

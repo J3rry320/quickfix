@@ -1,6 +1,6 @@
 {
   "Common": {
-    "brand": "QuickFix.in",
+    "brand": "QuickFixMobile.in",
     "tagline": "Pune's Doorstep Mobile Repair",
     "city": "Pune",
     "puneBadge": "Pune, Maharashtra",
@@ -15,7 +15,11 @@
       "allServices": "All Services",
       "allBrands": "All Brands",
       "viewAllServices": "View All Services",
-      "viewAllBrands": "View All Brands"
+      "viewAllBrands": "View All Brands",
+      "reviews": "Reviews",
+      "track": "Track Repair",
+      "blogs": "Blogs",
+      "company": "Company"
     },
     "actions": {
       "bookRepair": "Book Doorstep Repair",

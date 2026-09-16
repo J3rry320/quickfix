@@ -96,17 +96,23 @@
     "step3Title": "Certified ESD-Safe Lab Repair",
     "step3Desc": "Repaired in our central Sadashiv Peth lab with genuine OEM parts, micro-precision equipment, and zero passcode access.",
     "step4Title": "Doorstep Return, Test & Pay",
-    "step4Desc": "Delivered back to your doorstep the same day. Test your repaired phone thoroughly, get a 90-day warranty card, and pay via UPI or cash.",
-    "videoTitle": "Watch How Pickup & Lab Repair Works",
-    "videoSubtitle": "See our streamlined doorstep pickup, certified lab diagnostic process, and safe doorstep delivery in Pune.",
-    "videoBadge": "16:9 Video Placeholder"
+    "step4Desc": "Delivered back to your doorstep the same day. Test your repaired phone thoroughly, get a 90-day warranty card, and pay via UPI or cash."
+  },
+  "DoorstepAssurance": {
+    "title": "Watch Our Technician Fixing a Phone in Our Cleanroom Lab",
+    "subtitle": "Experience high-precision smartphone repairs performed inside our Sadashiv Peth cleanroom lab. Our certified engineers use micro-soldering, OEM parts, and ESD-safe stations with 100% data confidentiality.",
+    "trustPoint1": "Zero Passcode / PIN Access Needed",
+    "trustPoint2": "ESD-Protected Cleanroom Lab",
+    "trustPoint3": "Official Job Sheet & IMEI Log",
+    "trustPoint4": "Same-Day Doorstep Pickup & Return",
+    "cta": "Book Doorstep Pickup"
   },
   "WhyQuickFix": {
     "badge": "The QuickFix Advantage",
     "title": "Why Pune Chooses QuickFix Over Service Centers",
     "subtitle": "Compare the traditional repair hassle with our modern doorstep pickup and lab solution.",
     "thFeature": "Service Feature",
-    "thQuickFix": "QuickFix.in Pickup & Lab",
+    "thQuickFix": "QuickFixMobile.in Pickup & Lab",
     "thServiceCenter": "Brand Service Centers",
     "thLocalShop": "Local Roadside Shops",
     "feature1": "Repair Logistics",
@@ -269,7 +275,7 @@
     "hotline": "+91 83086 86454",
     "hours": "Mon - Sun: 9:00 AM - 9:00 PM",
     "address": "Shop No. 3, Purva Plaza, Sadashiv Peth, Pune - 411030 (Doorstep service across all Pune Pin Codes)",
-    "copyright": "© 2026 QuickFix.in. All rights reserved. Built with precision for Pune.",
+    "copyright": "© 2026 QuickFixMobile.in. All rights reserved. Built with precision for Pune.",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
     "screenRepair": "Screen Replacement",

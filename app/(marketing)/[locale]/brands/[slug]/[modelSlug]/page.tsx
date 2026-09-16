@@ -1,20 +1,34 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { Clock, ShieldCheck, ArrowRight, Phone, Smartphone, Zap, Lock } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import JsonLd from "@/components/seo/JsonLd";
+import {
+  Container,
+  CTABlock,
+  HeroMediaImage,
+  PageHero,
+  ProcessStepGrid,
+  Section,
+} from "@/components/ui";
+import contactConfig from "@/config/contact";
+import { getBreadcrumbSchema, getModelDetailPageSchema } from "@/config/jsonld";
+import { getModelSeoMetadata, siteConfig } from "@/config/seo";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { siteConfig, getModelSeoMetadata } from "@/config/seo";
-import { getBreadcrumbSchema, getModelDetailPageSchema } from "@/config/jsonld";
 import {
   getDbModelBySlug,
-  getStaticModelParams,
   getDbModelsForBrand,
   getDbServices,
+  getStaticModelParams,
 } from "@/lib/db/catalogue";
-import contactConfig from "@/config/contact";
-import JsonLd from "@/components/seo/JsonLd";
-import { Container, Section, CTABlock, PageHero, ProcessStepGrid, HeroMediaImage } from "@/components/ui";
+import {
+  ArrowRight,
+  Clock,
+  Phone,
+  ShieldCheck,
+  Smartphone,
+  Zap,
+} from "lucide-react";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
   const modelParams = await getStaticModelParams();
@@ -40,7 +54,7 @@ export async function generateMetadata({
   const match = await getDbModelBySlug(slug, modelSlug);
 
   if (!match) {
-    return { title: "Model Not Found | QuickFix.in" };
+    return { title: "Model Not Found | QuickFixMobile.in" };
   }
 
   return getModelSeoMetadata({
@@ -52,12 +66,18 @@ export async function generateMetadata({
   });
 }
 
+import { cacheLife, cacheTag } from "next/cache";
+
 export default async function ModelDetailPage({
   params,
 }: {
   params: Promise<{ locale: string; slug: string; modelSlug: string }>;
 }) {
+  "use cache";
+  cacheLife("days");
+
   const { locale, slug, modelSlug } = await params;
+  cacheTag("models", `model-${modelSlug}`);
 
   const [match, allServices, brandModels, t] = await Promise.all([
     getDbModelBySlug(slug, modelSlug),
@@ -97,7 +117,9 @@ export default async function ModelDetailPage({
     };
   });
 
-  const siblingModels = brandModels.filter((m) => m.slug !== modelSlug).slice(0, 8);
+  const siblingModels = brandModels
+    .filter((m) => m.slug !== modelSlug)
+    .slice(0, 8);
   const minPrice = Math.min(...modelServices.map((s) => s.price));
 
   const siteUrl = siteConfig.url.replace(/\/$/, "");
@@ -105,7 +127,10 @@ export default async function ModelDetailPage({
     { name: t("breadcrumbs.home"), url: `${siteUrl}/${locale}` },
     { name: t("breadcrumbs.brands"), url: `${siteUrl}/${locale}/brands` },
     { name: brand.name, url: `${siteUrl}/${locale}/brands/${brand.slug}` },
-    { name: model.name, url: `${siteUrl}/${locale}/brands/${brand.slug}/${model.slug}` },
+    {
+      name: model.name,
+      url: `${siteUrl}/${locale}/brands/${brand.slug}/${model.slug}`,
+    },
   ]);
 
   const productSchema = getModelDetailPageSchema({
@@ -119,7 +144,10 @@ export default async function ModelDetailPage({
 
   return (
     <div className="flex flex-col w-full bg-clean-white">
-      <JsonLd schema={[breadcrumbSchema, productSchema]} id={`model-${model.slug}-structured-data`} />
+      <JsonLd
+        schema={[breadcrumbSchema, productSchema]}
+        id={`model-${model.slug}-structured-data`}
+      />
 
       {/* 1. Unified Page Hero with Model Image from DB & Fallback */}
       <PageHero
@@ -144,12 +172,12 @@ export default async function ModelDetailPage({
             value: t("hero.highlights.warrantyVal"),
             color: "text-blue-500",
           },
-          {
-            icon: Lock,
-            label: t("hero.highlights.privacy"),
-            value: t("hero.highlights.privacyVal"),
-            color: "text-emerald-500",
-          },
+          // {
+          //   icon: Lock,
+          //   label: t("hero.highlights.privacy"),
+          //   value: t("hero.highlights.privacyVal"),
+          //   color: "text-emerald-500",
+          // },
           {
             icon: Zap,
             label: t("hero.highlights.startingFrom"),
@@ -163,7 +191,9 @@ export default async function ModelDetailPage({
               href={`/book-repair?brand=${brand.slug}&model=${encodeURIComponent(model.name)}`}
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-orange-600 active:scale-95 transition-all"
             >
-              <span>{t("hero.actions.bookModel", { modelName: model.name })}</span>
+              <span>
+                {t("hero.actions.bookModel", { modelName: model.name })}
+              </span>
               <ArrowRight className="h-4 w-4" />
             </Link>
 
@@ -172,7 +202,11 @@ export default async function ModelDetailPage({
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-zinc-300 text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
             >
               <Phone className="h-4 w-4 text-flash-orange" />
-              <span>{t("hero.actions.callHelpline", { phone: contactConfig.phone.display })}</span>
+              <span>
+                {t("hero.actions.callHelpline", {
+                  phone: contactConfig.phone.display,
+                })}
+              </span>
             </a>
           </>
         }
@@ -184,7 +218,7 @@ export default async function ModelDetailPage({
             fallbackType="model"
             title={`${brand.name} ${model.name}`}
             subtitle={t("hero.media.fallbackLabel", { modelName: model.name })}
-            aspectRatio="4/3"
+            aspectRatio="1/1"
             className="shadow-md"
           />
         }
@@ -233,7 +267,9 @@ export default async function ModelDetailPage({
                     </span>
                     <span className="flex items-center gap-1">
                       <ShieldCheck className="h-3 w-3" />
-                      {t("pricing.daysWarranty", { days: service.warrantyDays })}
+                      {t("pricing.daysWarranty", {
+                        days: service.warrantyDays,
+                      })}
                     </span>
                   </div>
 

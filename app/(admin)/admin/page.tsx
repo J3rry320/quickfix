@@ -101,17 +101,26 @@ export default function AdminDashboardPage() {
       });
   }, []);
 
-  const todayFormatted = new Date().toLocaleDateString("en-IN", {
-    weekday: "long",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+  const [todayFormatted, setTodayFormatted] = useState("");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTodayFormatted(
+        new Date().toLocaleDateString("en-IN", {
+          weekday: "long",
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        })
+      );
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <AdminShell
       title="Operations Overview"
-      subtitle={`System metrics & activity as of ${todayFormatted}`}
+      subtitle={todayFormatted ? `System metrics & activity as of ${todayFormatted}` : "System metrics & operational activity"}
     >
       <div className="space-y-8">
         {/* Welcome Greeting Banner */}

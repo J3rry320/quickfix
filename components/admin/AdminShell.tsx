@@ -1,23 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { clientSignOut } from "@/lib/firebase/client";
+import {
+  BookOpen,
+  ChevronRight,
+  ExternalLink,
+  Layers,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  MessageSquare,
+  Settings,
+  Smartphone,
+  Star,
+  Wrench,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  LayoutDashboard,
-  Wrench,
-  MessageSquare,
-  Smartphone,
-  Layers,
-  Settings,
-  BookOpen,
-  LogOut,
-  ExternalLink,
-  Menu,
-  X,
-  ChevronRight,
-} from "lucide-react";
-import { clientSignOut } from "@/lib/firebase/client";
+import { useEffect, useState } from "react";
 
 interface AdminUser {
   email: string;
@@ -68,6 +69,11 @@ const NAV_GROUPS: NavGroup[] = [
         label: "Contact Inquiries",
         href: "/admin/contacts",
         icon: MessageSquare,
+      },
+      {
+        label: "Customer Reviews",
+        href: "/admin/reviews",
+        icon: Star,
       },
     ],
   },
@@ -211,7 +217,7 @@ function SidebarNavigation({
               {user?.name || "Administrator"}
             </span>
             <span className="text-[10px] text-zinc-500 truncate">
-              {user?.email || "admin@quickfix.in"}
+              {user?.email || "admin@quickfixmobile.in"}
             </span>
           </div>
         </div>

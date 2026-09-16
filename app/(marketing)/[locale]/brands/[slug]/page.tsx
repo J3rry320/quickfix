@@ -1,15 +1,36 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { Smartphone, ArrowRight, Phone, ShieldCheck, Clock, CheckCircle2, Lock, Sparkles, Zap } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import JsonLd from "@/components/seo/JsonLd";
+import {
+  BrandLogo,
+  Container,
+  CTABlock,
+  PageHero,
+  Section,
+} from "@/components/ui";
+import contactConfig from "@/config/contact";
+import { getBreadcrumbSchema } from "@/config/jsonld";
+import { getBrandSeoMetadata, siteConfig } from "@/config/seo";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { siteConfig, getBrandSeoMetadata } from "@/config/seo";
-import { getBreadcrumbSchema } from "@/config/jsonld";
-import { getDbBrandBySlug, getStaticBrandSlugs, getDbModelsForBrand, getDbServices } from "@/lib/db/catalogue";
-import contactConfig from "@/config/contact";
-import JsonLd from "@/components/seo/JsonLd";
-import { Container, Section, CTABlock, PageHero, BrandLogo } from "@/components/ui";
+import {
+  getDbBrandBySlug,
+  getDbModelsForBrand,
+  getDbServices,
+  getStaticBrandSlugs,
+} from "@/lib/db/catalogue";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Clock,
+  Lock,
+  Phone,
+  ShieldCheck,
+  Smartphone,
+  Sparkles,
+  Zap,
+} from "lucide-react";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
   const slugs = await getStaticBrandSlugs();
@@ -32,7 +53,7 @@ export async function generateMetadata({
 
   if (!brand) {
     return {
-      title: "Brand Not Found | QuickFix.in",
+      title: "Brand Not Found | QuickFixMobile.in",
     };
   }
 
@@ -43,12 +64,18 @@ export async function generateMetadata({
   });
 }
 
+import { cacheLife, cacheTag } from "next/cache";
+
 export default async function BrandDetailPage({
   params,
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
+  "use cache";
+  cacheLife("days");
+
   const { locale, slug } = await params;
+  cacheTag("brands", `brand-${slug}`);
 
   const [brand, models, services, t] = await Promise.all([
     getDbBrandBySlug(slug),
@@ -93,7 +120,10 @@ export default async function BrandDetailPage({
 
   return (
     <div className="flex flex-col w-full bg-clean-white">
-      <JsonLd schema={breadcrumbSchema} id={`brand-${brand.slug}-structured-data`} />
+      <JsonLd
+        schema={breadcrumbSchema}
+        id={`brand-${brand.slug}-structured-data`}
+      />
 
       {/* 1. Unified Page Hero with Small Brand Logo from DB */}
       <PageHero
@@ -153,7 +183,9 @@ export default async function BrandDetailPage({
               href={`/book-repair?brand=${encodeURIComponent(brand.slug)}`}
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-orange-600 active:scale-95 transition-all"
             >
-              <span>{t("hero.actions.bookBrand", { brandName: brand.name })}</span>
+              <span>
+                {t("hero.actions.bookBrand", { brandName: brand.name })}
+              </span>
               <ArrowRight className="h-4 w-4" />
             </Link>
 
@@ -162,7 +194,11 @@ export default async function BrandDetailPage({
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-zinc-300 text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
             >
               <Phone className="h-4 w-4 text-flash-orange" />
-              <span>{t("hero.actions.callUs", { phone: contactConfig.phone.display })}</span>
+              <span>
+                {t("hero.actions.callUs", {
+                  phone: contactConfig.phone.display,
+                })}
+              </span>
             </a>
           </>
         }
@@ -195,21 +231,29 @@ export default async function BrandDetailPage({
             <div className="my-6 space-y-2 text-xs text-text-secondary bg-clean-white/80 p-4 rounded-2xl border border-border-default/60">
               <div className="flex items-center justify-between">
                 <span>Certified On-Site Turnaround:</span>
-                <strong className="text-tech-slate font-bold">30 Mins Express</strong>
+                <strong className="text-tech-slate font-bold">
+                  30 Mins Express
+                </strong>
               </div>
               <div className="flex items-center justify-between">
                 <span>Replacement Warranty:</span>
-                <strong className="text-emerald-600 font-bold">90 Days Full Replacement</strong>
+                <strong className="text-emerald-600 font-bold">
+                  90 Days Full Replacement
+                </strong>
               </div>
               <div className="flex items-center justify-between">
                 <span>Pune Service Areas:</span>
-                <strong className="text-flash-orange font-bold">All Pune Localities</strong>
+                <strong className="text-flash-orange font-bold">
+                  All Pune Localities
+                </strong>
               </div>
             </div>
 
             <div className="flex items-center justify-between text-[11px] text-text-muted border-t border-border-default/60 pt-3">
               <span>QuickFix Sadashiv Peth Hub</span>
-              <span className="font-bold text-tech-slate">Zero Doorstep Travel Fee</span>
+              <span className="font-bold text-tech-slate">
+                Zero Doorstep Travel Fee
+              </span>
             </div>
           </div>
         }
@@ -312,7 +356,8 @@ export default async function BrandDetailPage({
                 Popular Repairs for {brand.name} Phones
               </h2>
               <p className="mt-2 text-xs sm:text-sm text-zinc-600">
-                All services performed live on-site with zero hidden diagnostic fees.
+                All services performed live on-site with zero hidden diagnostic
+                fees.
               </p>
             </div>
 

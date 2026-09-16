@@ -19,11 +19,16 @@ export async function generateMetadata({
   });
 }
 
+import { cacheLife } from "next/cache";
+
 export default async function TermsPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
+  "use cache";
+  cacheLife("max");
+
   const { locale } = await params;
 
   const siteUrl = siteConfig.url.replace(/\/$/, "");

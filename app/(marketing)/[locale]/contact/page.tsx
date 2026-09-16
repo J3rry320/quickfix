@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cacheLife } from "next/cache";
 import { getTranslations } from "next-intl/server";
 import { Phone, MessageSquare, Mail, MapPin, Clock, ShieldCheck, Navigation } from "lucide-react";
 import { routing } from "@/i18n/routing";
@@ -8,7 +9,7 @@ import JsonLd from "@/components/seo/JsonLd";
 import contactConfig from "@/config/contact";
 import ContactForm from "@/components/contact/ContactForm";
 import GoogleMapEmbed from "@/components/contact/GoogleMapEmbed";
-import { Breadcrumbs, SectionHeader } from "@/components/ui";
+import { PageHero } from "@/components/ui";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -32,6 +33,9 @@ export default async function ContactPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
+  "use cache";
+  cacheLife("days");
+
   const { locale } = await params;
 
   const t = await getTranslations({ locale, namespace: "ContactPage" });
@@ -44,25 +48,48 @@ export default async function ContactPage({
   ]);
 
   return (
-    <div className="py-10 sm:py-16 bg-mist-gray/40 min-h-[calc(100vh-4rem)]">
+    <div className="flex flex-col w-full bg-clean-white min-h-[calc(100vh-4rem)]">
       <JsonLd schema={[localBusinessSchema, breadcrumbSchema]} id="contact-structured-data" />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-center mb-6">
-          <Breadcrumbs
-            items={[
-              { label: "Home", href: "/" },
-              { label: t("title") || "Contact Us" },
-            ]}
-          />
-        </div>
+      {/* 1. Unified Page Hero */}
+      <PageHero
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: t("title") || "Contact Us" },
+        ]}
+        title={t("title")}
+        subtitle={t("subtitle")}
+        align="center"
+        highlights={[
+          {
+            icon: Phone,
+            label: "Helpline",
+            value: contactConfig.phone.display,
+            color: "text-flash-orange",
+          },
+          {
+            icon: MessageSquare,
+            label: "WhatsApp",
+            value: "Instant Support",
+            color: "text-emerald-500",
+          },
+          {
+            icon: MapPin,
+            label: "Lab",
+            value: "Sadashiv Peth",
+            color: "text-blue-500",
+          },
+          {
+            icon: ShieldCheck,
+            label: "Coverage",
+            value: "All Pune & PCMC",
+            color: "text-electric-amber",
+          },
+        ]}
+      />
 
-        {/* Page Header */}
-        <SectionHeader
-          title={t("title")}
-          subtitle={t("subtitle")}
-          className="max-w-3xl mb-10 text-center mx-auto"
-        />
+      <div className="py-10 sm:py-16 bg-mist-gray/40">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
         {/* 3 Quick Action Contact Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-12">
@@ -241,5 +268,6 @@ export default async function ContactPage({
         </div>
       </div>
     </div>
+  </div>
   );
 }

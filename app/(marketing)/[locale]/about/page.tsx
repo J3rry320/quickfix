@@ -21,6 +21,8 @@ import { getAboutPageSchema, getBreadcrumbSchema } from "@/config/jsonld";
 import contactConfig from "@/config/contact";
 import { Container, Section, AspectBox, CTABlock, PageHero, SectionHeader } from "@/components/ui";
 
+import { cacheLife } from "next/cache";
+
 export async function generateMetadata({
   params,
 }: {
@@ -39,6 +41,9 @@ export default async function AboutPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
+  "use cache";
+  cacheLife("max");
+
   const { locale } = await params;
 
   const t = await getTranslations({ locale, namespace: "AboutPage" });

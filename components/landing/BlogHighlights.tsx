@@ -128,6 +128,18 @@ export default function BlogHighlights() {
             ))}
           </div>
         )}
+
+        {!isLoading && posts.length > 0 && (
+          <div className="mt-10 sm:mt-12 text-center">
+            <Link
+              href="/blogs"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-mist-gray border border-zinc-300 px-6 py-3 text-xs sm:text-sm font-bold text-tech-slate hover:border-flash-orange hover:text-flash-orange hover:bg-clean-white transition-all shadow-2xs"
+            >
+              <span>{t("viewAll")}</span>
+              <ArrowRight className="h-4 w-4 text-flash-orange" />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

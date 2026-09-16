@@ -11,7 +11,7 @@ export const GET = withPublicApi<{ slug: string }>(
     const post = await BlogPost.findOneAndUpdate(
       { slug: slug.toLowerCase(), isPublished: true },
       { $inc: { viewCount: 1 } },
-      { new: true }
+      { returnDocument: "after" }
     ).lean();
 
     if (!post) {

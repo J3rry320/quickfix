@@ -146,7 +146,7 @@ function AdminLoginForm() {
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-600 hover:text-flash-orange transition-colors"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
-          <span>Return to QuickFix.in Website</span>
+          <span>Return to QuickFixMobile.in Website</span>
         </Link>
       </div>
     </div>

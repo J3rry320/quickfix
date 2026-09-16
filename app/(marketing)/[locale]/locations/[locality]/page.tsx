@@ -1,15 +1,28 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { ArrowRight, MapPin, Navigation, Phone, ShieldCheck, Zap } from "lucide-react";
-import { Link } from "@/i18n/navigation";
-import { routing } from "@/i18n/routing";
-import { siteConfig, getLocationSeoMetadata } from "@/config/seo";
+import JsonLd from "@/components/seo/JsonLd";
+import {
+  Container,
+  CoverageMapView,
+  CTABlock,
+  PageHero,
+  Section,
+} from "@/components/ui";
+import { LOCALITIES_CATALOG } from "@/config/catalogue-data";
 import contactConfig from "@/config/contact";
 import { getBreadcrumbSchema } from "@/config/jsonld";
-import { LOCALITIES_CATALOG } from "@/config/catalogue-data";
+import { getLocationSeoMetadata, siteConfig } from "@/config/seo";
+import { Link } from "@/i18n/navigation";
+import { routing } from "@/i18n/routing";
 import { getDbServices } from "@/lib/db/catalogue";
-import JsonLd from "@/components/seo/JsonLd";
-import { Container, Section, CTABlock, PageHero, CoverageMapView } from "@/components/ui";
+import {
+  ArrowRight,
+  MapPin,
+  Navigation,
+  Phone,
+  ShieldCheck,
+  Zap,
+} from "lucide-react";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 export function generateStaticParams() {
   const params: { locale: string; locality: string }[] = [];
@@ -31,7 +44,7 @@ export async function generateMetadata({
 
   if (!loc) {
     return {
-      title: "Location Not Found | QuickFix.in",
+      title: "Location Not Found | QuickFixMobile.in",
     };
   }
 
@@ -44,12 +57,18 @@ export async function generateMetadata({
   });
 }
 
+import { cacheLife, cacheTag } from "next/cache";
+
 export default async function LocalityPage({
   params,
 }: {
   params: Promise<{ locale: string; locality: string }>;
 }) {
+  "use cache";
+  cacheLife("days");
+
   const { locale, locality } = await params;
+  cacheTag("locations", `location-${locality}`);
 
   const loc = LOCALITIES_CATALOG.find((l) => l.slug === locality);
   if (!loc) {
@@ -73,10 +92,7 @@ export default async function LocalityPage({
 
       {/* 1. Unified Page Hero with Spectacular Coverage Map View */}
       <PageHero
-        breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: loc.name },
-        ]}
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: loc.name }]}
         title={`Doorstep Mobile Pickup & Certified Lab Repair in ${loc.name}, Pune`}
         subtitle={`Broke your smartphone screen or struggling with a dead battery in ${loc.name}? QuickFix provides rapid doorstep pickup within ${loc.dispatchTime}, certified lab repair in Sadashiv Peth, and safe same-day return with a 90-day warranty.`}
         highlights={[
@@ -142,7 +158,8 @@ export default async function LocalityPage({
               Neighborhoods We Visit in & around {loc.name}
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-zinc-600">
-              Zero extra travel charges anywhere within this radius. Safe doorstep pickup and return with tamper-proof transit bags.
+              Zero extra travel charges anywhere within this radius. Safe
+              doorstep pickup and return with tamper-proof transit bags.
             </p>
           </div>
 
@@ -168,7 +185,8 @@ export default async function LocalityPage({
               Top Smartphone Repairs Ordered in {loc.name}
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-zinc-600">
-              Repairs are performed by certified engineers in our Sadashiv Peth cleanroom lab with a 90-day replacement warranty.
+              Repairs are performed by certified engineers in our Sadashiv Peth
+              cleanroom lab with a 90-day replacement warranty.
             </p>
           </div>
 

@@ -1,6 +1,6 @@
 {
   "Common": {
-    "brand": "QuickFix.in",
+    "brand": "QuickFixMobile.in",
     "tagline": "पुण्यातील विश्वासार्ह डोअरस्टेप मोबाईल रिपेअर",
     "city": "पुणे",
     "puneBadge": "पुणे, महाराष्ट्र",
@@ -15,7 +15,11 @@
       "allServices": "सर्व सेवा",
       "allBrands": "सर्व ब्रँड्स",
       "viewAllServices": "सर्व सेवा पहा",
-      "viewAllBrands": "सर्व ब्रँड्स पहा"
+      "viewAllBrands": "सर्व ब्रँड्स पहा",
+      "reviews": "अभिप्राय",
+      "track": "दुरुस्ती ट्रॅक करा",
+      "blogs": "ब्लॉग्स",
+      "company": "कंपनी"
     },
     "actions": {
       "bookRepair": "डोअरस्टेप रिपेअर बुक करा",

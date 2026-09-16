@@ -47,7 +47,7 @@ export const PATCH = withAdminAuth<{ id: string }>(
     const updatedService = await RepairService.findByIdAndUpdate(
       id,
       { $set: validated },
-      { new: true, runValidators: true }
+      { returnDocument: "after", runValidators: true }
     ).lean();
 
     if (!updatedService) {
@@ -81,7 +81,7 @@ export const DELETE = withAdminAuth<{ id: string }>(
     const service = await RepairService.findByIdAndUpdate(
       id,
       { $set: { isActive: false } },
-      { new: true }
+      { returnDocument: "after" }
     ).lean();
 
     if (!service) {

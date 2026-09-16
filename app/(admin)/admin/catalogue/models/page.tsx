@@ -62,9 +62,7 @@ export default function AdminModelsPage() {
   const [brandId, setBrandId] = useState("");
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
-  const [releaseYear, setReleaseYear] = useState<number | string>(
-    new Date().getFullYear()
-  );
+  const [releaseYear, setReleaseYear] = useState<number | string>(2026);
   const [imageUrl, setImageUrl] = useState("");
   const [isPopular, setIsPopular] = useState(false);
   const [isActive, setIsActive] = useState(true);

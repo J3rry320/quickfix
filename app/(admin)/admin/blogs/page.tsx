@@ -12,6 +12,7 @@ import AdminPagination from "@/components/admin/ui/AdminPagination";
 import AdminStatusBadge from "@/components/admin/ui/AdminStatusBadge";
 import AdminModal from "@/components/admin/ui/AdminModal";
 import AdminConfirmModal from "@/components/admin/ui/AdminConfirmModal";
+import MarkdownRenderer from "@/components/blog/MarkdownRenderer";
 
 interface BlogItem {
   _id: string;
@@ -82,6 +83,7 @@ export default function AdminBlogsPage() {
   const [authorRole, setAuthorRole] = useState("Smartphone Specialist");
   const [tagsText, setTagsText] = useState("");
   const [isPublished, setIsPublished] = useState(false);
+  const [previewMode, setPreviewMode] = useState(false);
 
   useEffect(() => {
     let isSubscribed = true;
@@ -139,6 +141,7 @@ export default function AdminBlogsPage() {
     setAuthorRole("Smartphone Specialist");
     setTagsText("");
     setIsPublished(false);
+    setPreviewMode(false);
     setFormError("");
     setIsModalOpen(true);
   };
@@ -157,6 +160,7 @@ export default function AdminBlogsPage() {
     setAuthorRole(b.author?.role || "Smartphone Specialist");
     setTagsText((b.tags || []).join(", "));
     setIsPublished(b.isPublished);
+    setPreviewMode(false);
     setFormError("");
     setIsModalOpen(true);
   };
@@ -472,15 +476,36 @@ export default function AdminBlogsPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-zinc-700">Article Content *</label>
-                <textarea
-                  rows={8}
-                  required
-                  placeholder="Full article content in markdown format..."
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 bg-clean-white p-3 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden font-mono"
-                />
+                <div className="flex items-center justify-between">
+                  <label className="font-bold text-zinc-700">Article Content * (Markdown)</label>
+                  <button
+                    type="button"
+                    onClick={() => setPreviewMode(!previewMode)}
+                    className="inline-flex items-center gap-1 text-2xs font-bold text-flash-orange hover:text-orange-600 cursor-pointer"
+                  >
+                    <Eye className="h-3 w-3" />
+                    <span>{previewMode ? "Switch to Editor" : "Live Markdown Preview"}</span>
+                  </button>
+                </div>
+
+                {previewMode ? (
+                  <div className="max-h-72 overflow-y-auto rounded-xl border border-zinc-200 bg-zinc-50/50 p-4 text-xs text-tech-slate">
+                    {content ? (
+                      <MarkdownRenderer content={content} />
+                    ) : (
+                      <p className="italic text-zinc-400">No markdown content entered yet. Switch back to editor to write your article.</p>
+                    )}
+                  </div>
+                ) : (
+                  <textarea
+                    rows={8}
+                    required
+                    placeholder="Full article content in markdown format (# Heading, ## Section, tables, lists, > [!NOTE] callouts)..."
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    className="w-full rounded-xl border border-zinc-200 bg-clean-white p-3 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden font-mono leading-relaxed"
+                  />
+                )}
               </div>
 
               <div className="space-y-1">

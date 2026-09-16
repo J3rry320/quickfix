@@ -1,3 +1,4 @@
+import { cacheLife, cacheTag } from "next/cache";
 import { connectDb } from "@/lib/mongodb";
 import { Brand } from "@/models/Brand";
 import { RepairService } from "@/models/RepairService";
@@ -60,6 +61,10 @@ export const LOCALITIES_CATALOG: LocalityItem[] = localitiesData as LocalityItem
  * Fetch all active brands from MongoDB ordered by displayOrder and name
  */
 export async function getDbBrands(): Promise<DbBrandItem[]> {
+  "use cache";
+  cacheLife("days");
+  cacheTag("brands");
+
   try {
     await connectDb();
     const brands = await Brand.find({ isActive: true })
@@ -76,6 +81,10 @@ export async function getDbBrands(): Promise<DbBrandItem[]> {
  * Fetch single brand by slug from MongoDB
  */
 export async function getDbBrandBySlug(slug: string): Promise<DbBrandItem | null> {
+  "use cache";
+  cacheLife("days");
+  cacheTag("brands", `brand-${slug}`);
+
   try {
     await connectDb();
     const brand = await Brand.findOne({ slug: slug.toLowerCase(), isActive: true }).lean();
@@ -91,6 +100,10 @@ export async function getDbBrandBySlug(slug: string): Promise<DbBrandItem | null
  * Fetch all active services from MongoDB ordered by isPopular and name
  */
 export async function getDbServices(): Promise<DbServiceItem[]> {
+  "use cache";
+  cacheLife("days");
+  cacheTag("services");
+
   try {
     await connectDb();
     const services = await RepairService.find({ isActive: true })
@@ -107,6 +120,10 @@ export async function getDbServices(): Promise<DbServiceItem[]> {
  * Fetch single service by slug from MongoDB
  */
 export async function getDbServiceBySlug(slug: string): Promise<DbServiceItem | null> {
+  "use cache";
+  cacheLife("days");
+  cacheTag("services", `service-${slug}`);
+
   try {
     await connectDb();
     const service = await RepairService.findOne({ slug: slug.toLowerCase(), isActive: true }).lean();
@@ -122,6 +139,10 @@ export async function getDbServiceBySlug(slug: string): Promise<DbServiceItem | 
  * Fetch all models for a specific brand slug from MongoDB
  */
 export async function getDbModelsForBrand(brandSlug: string): Promise<DbDeviceModelItem[]> {
+  "use cache";
+  cacheLife("days");
+  cacheTag("models", `models-${brandSlug}`);
+
   try {
     await connectDb();
     const brand = await Brand.findOne({ slug: brandSlug.toLowerCase(), isActive: true }).lean();
@@ -144,6 +165,10 @@ export async function getDbModelBySlug(
   brandSlug: string,
   modelSlug: string
 ): Promise<{ brand: DbBrandItem; model: DbDeviceModelItem } | null> {
+  "use cache";
+  cacheLife("days");
+  cacheTag("models", `model-${modelSlug}`);
+
   try {
     await connectDb();
     const brand = await Brand.findOne({ slug: brandSlug.toLowerCase(), isActive: true }).lean();
@@ -175,6 +200,10 @@ export async function getDbModelBySlug(
  * Fetch all active models with brand populated
  */
 export async function getAllDbModels(): Promise<Array<DbDeviceModelItem & { brand: DbBrandItem }>> {
+  "use cache";
+  cacheLife("days");
+  cacheTag("models");
+
   try {
     await connectDb();
     const models = await DeviceModel.find({ isActive: true })
@@ -192,6 +221,10 @@ export async function getAllDbModels(): Promise<Array<DbDeviceModelItem & { bran
  * Fetch brands that have models supporting a specific service
  */
 export async function getBrandsForService(serviceSlug: string): Promise<DbBrandItem[]> {
+  "use cache";
+  cacheLife("days");
+  cacheTag("brands", "services");
+
   try {
     await connectDb();
     const service = await RepairService.findOne({ slug: serviceSlug.toLowerCase(), isActive: true }).lean();
@@ -221,28 +254,42 @@ export async function getBrandsForService(serviceSlug: string): Promise<DbBrandI
  * Static Params Helpers for dynamic routes
  */
 export async function getStaticBrandSlugs(): Promise<string[]> {
+  "use cache";
+  cacheLife("days");
+  cacheTag("brands");
+
   try {
     await connectDb();
     const brands = await Brand.find({ isActive: true }).select("slug").lean();
-    return brands.map((b) => b.slug);
+    if (brands.length > 0) return brands.map((b) => b.slug);
+    return ["apple", "samsung", "oneplus", "xiaomi", "google-pixel"];
   } catch (err) {
-    console.warn("Unable to fetch static brand slugs at build time, will render on demand:", err);
-    return [];
+    console.warn("Unable to fetch static brand slugs at build time, using fallback:", err);
+    return ["apple", "samsung", "oneplus", "xiaomi", "google-pixel"];
   }
 }
 
 export async function getStaticServiceSlugs(): Promise<string[]> {
+  "use cache";
+  cacheLife("days");
+  cacheTag("services");
+
   try {
     await connectDb();
     const services = await RepairService.find({ isActive: true }).select("slug").lean();
-    return services.map((s) => s.slug);
+    if (services.length > 0) return services.map((s) => s.slug);
+    return ["screen-replacement", "battery-replacement", "charging-port", "camera-lens"];
   } catch (err) {
-    console.warn("Unable to fetch static service slugs at build time, will render on demand:", err);
-    return [];
+    console.warn("Unable to fetch static service slugs at build time, using fallback:", err);
+    return ["screen-replacement", "battery-replacement", "charging-port", "camera-lens"];
   }
 }
 
 export async function getStaticModelParams(): Promise<Array<{ slug: string; modelSlug: string }>> {
+  "use cache";
+  cacheLife("days");
+  cacheTag("models");
+
   try {
     await connectDb();
     const models = await DeviceModel.find({ isActive: true })
@@ -250,14 +297,17 @@ export async function getStaticModelParams(): Promise<Array<{ slug: string; mode
       .select("slug brand")
       .lean();
 
-    return models
+    const mapped = models
       .filter((m) => m.brand && typeof (m.brand as unknown as { slug?: string }).slug === "string")
       .map((m) => ({
         slug: (m.brand as unknown as { slug: string }).slug,
         modelSlug: m.slug,
       }));
+
+    if (mapped.length > 0) return mapped;
+    return [{ slug: "apple", modelSlug: "iphone-14" }];
   } catch (err) {
-    console.warn("Unable to fetch static model params at build time, will render on demand:", err);
-    return [];
+    console.warn("Unable to fetch static model params at build time, using fallback:", err);
+    return [{ slug: "apple", modelSlug: "iphone-14" }];
   }
 }

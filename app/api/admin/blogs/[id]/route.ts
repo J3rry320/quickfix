@@ -57,7 +57,7 @@ export const PATCH = withAdminAuth<{ id: string }>(
     const updatedBlog = await BlogPost.findByIdAndUpdate(
       id,
       { $set: validated },
-      { new: true, runValidators: true }
+      { returnDocument: "after", runValidators: true }
     ).lean();
 
     return apiSuccess({ blog: updatedBlog });
@@ -87,7 +87,7 @@ export const DELETE = withAdminAuth<{ id: string }>(
     const blog = await BlogPost.findByIdAndUpdate(
       id,
       { $set: { isPublished: false } },
-      { new: true }
+      { returnDocument: "after" }
     ).lean();
 
     if (!blog) {

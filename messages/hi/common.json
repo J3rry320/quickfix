@@ -1,6 +1,6 @@
 {
   "Common": {
-    "brand": "QuickFix.in",
+    "brand": "QuickFixMobile.in",
     "tagline": "पुणे में डोरस्टेप मोबाइल रिपेयर सेवा",
     "city": "पुणे",
     "puneBadge": "पुणे, महाराष्ट्र",
@@ -15,7 +15,11 @@
       "allServices": "सभी सेवाएं",
       "allBrands": "सभी ब्रांड्स",
       "viewAllServices": "सभी सेवाएं देखें",
-      "viewAllBrands": "सभी ब्रांड्स देखें"
+      "viewAllBrands": "सभी ब्रांड्स देखें",
+      "reviews": "समीक्षाएं",
+      "track": "ट्रैक रिपेयर",
+      "blogs": "ब्लॉग्स",
+      "company": "कंपनी"
     },
     "actions": {
       "bookRepair": "डोरस्टेप रिपेयर बुक करें",

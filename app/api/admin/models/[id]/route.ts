@@ -62,7 +62,7 @@ export const PATCH = withAdminAuth<{ id: string }>(
     const updatedModel = await DeviceModel.findByIdAndUpdate(
       id,
       { $set: validated },
-      { new: true, runValidators: true }
+      { returnDocument: "after", runValidators: true }
     )
       .populate("brand", "name slug logoUrl")
       .populate("servicePricing.service", "name slug startingPrice")
@@ -99,7 +99,7 @@ export const DELETE = withAdminAuth<{ id: string }>(
     const model = await DeviceModel.findByIdAndUpdate(
       id,
       { $set: { isActive: false } },
-      { new: true }
+      { returnDocument: "after" }
     ).lean();
 
     if (!model) {

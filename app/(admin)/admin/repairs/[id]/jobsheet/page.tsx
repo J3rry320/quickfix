@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, use } from "react";
+import { useEffect, useState, use, Suspense } from "react";
 import Link from "next/link";
 import { ArrowLeft, Printer, Edit3, Loader2, AlertCircle, Download } from "lucide-react";
 import RepairJobSheet from "@/components/admin/repairs/RepairJobSheet";
@@ -56,7 +56,7 @@ interface RepairRequestDoc {
   createdAt: string;
 }
 
-export default function StandaloneJobSheetPage({
+function JobSheetContent({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -271,5 +271,24 @@ export default function StandaloneJobSheetPage({
         />
       )}
     </div>
+  );
+}
+
+export default function StandaloneJobSheetPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen flex-col items-center justify-center bg-slate-100">
+          <Loader2 className="h-10 w-10 animate-spin text-flash-orange mb-3" />
+          <p className="text-sm font-bold text-tech-slate">Loading Job Sheet...</p>
+        </div>
+      }
+    >
+      <JobSheetContent params={params} />
+    </Suspense>
   );
 }

@@ -58,7 +58,7 @@ export const PATCH = withAdminAuth<{ id: string }>(
     const updatedBrand = await Brand.findByIdAndUpdate(
       id,
       { $set: validated },
-      { new: true, runValidators: true }
+      { returnDocument: "after", runValidators: true }
     ).lean();
 
     if (!updatedBrand) {
@@ -102,7 +102,7 @@ export const DELETE = withAdminAuth<{ id: string }>(
     const brand = await Brand.findByIdAndUpdate(
       id,
       { $set: { isActive: false } },
-      { new: true }
+      { returnDocument: "after" }
     ).lean();
 
     if (!brand) {

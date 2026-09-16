@@ -64,6 +64,7 @@ export default function AdminStatusBadge({
     case "resolved":
     case "published":
     case "active":
+    case "approved":
     case "true":
     case "paid":
       colorClasses = "bg-emerald-100 text-emerald-800 border-emerald-200";
@@ -75,6 +76,7 @@ export default function AdminStatusBadge({
       break;
 
     case "cancelled":
+    case "rejected":
     case "archived":
     case "inactive":
     case "false":
