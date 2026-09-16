@@ -29,8 +29,12 @@
       "title": "Select Your {brandName} Model",
       "subtitle": "Choose your device model to view exact replacement pricing for displays, batteries, and camera lenses.",
       "viewModels": "View Models",
+      "searchPlaceholder": "Search {brandName} models (e.g. Pro, Ultra, Note)...",
+      "showingCount": "Showing {count} of {total} {brandName} models",
       "emptyTitle": "No Models Found for {brandName}",
-      "emptySubtitle": "Contact our Pune helpline for custom {brandName} model repair quotes."
+      "emptySubtitle": "Contact our Pune helpline for custom {brandName} model repair quotes.",
+      "noSearchResults": "No {brandName} models match \"{query}\"",
+      "clearSearch": "Clear Search"
     },
     "standards": {
       "title": "Our {brandName} Service Standards",

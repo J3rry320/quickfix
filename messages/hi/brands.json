@@ -29,8 +29,12 @@
       "title": "अपना {brandName} मॉडल चुनें",
       "subtitle": "डिस्प्ले, बैटरी और कैमरा लेंस के सटीक रिप्लेसमेंट मूल्य देखने के लिए अपना डिवाइस मॉडल चुनें।",
       "viewModels": "मॉडल देखें",
+      "searchPlaceholder": "{brandName} मॉडल्स खोजें (जैसे Pro, Ultra, Note)...",
+      "showingCount": "{total} में से {count} {brandName} मॉडल्स प्रदर्शित",
       "emptyTitle": "{brandName} के लिए कोई मॉडल नहीं मिला",
-      "emptySubtitle": "कस्टम {brandName} मॉडल रिपेयर कोट के लिए हमारी पुणे हेल्पलाइन से संपर्क करें।"
+      "emptySubtitle": "कस्टम {brandName} मॉडल रिपेयर कोट के लिए हमारी पुणे हेल्पलाइन से संपर्क करें।",
+      "noSearchResults": "\"{query}\" से मेल खाता कोई {brandName} मॉडल नहीं मिला",
+      "clearSearch": "सर्च रीसेट करें"
     },
     "standards": {
       "title": "हमारे {brandName} सेवा मानक",

@@ -29,8 +29,12 @@
       "title": "आपले {brandName} मॉडेल निवडा",
       "subtitle": "डिस्प्ले, बॅटरी आणि कॅमेरा लेन्सचे नेमके दर पाहण्यासाठी आपले मॉडेल निवडा.",
       "viewModels": "मॉडेल पहा",
+      "searchPlaceholder": "{brandName} मॉडेल शोधा (उदा. Pro, Ultra, Note)...",
+      "showingCount": "{total} पैकी {count} {brandName} मॉडेल्स",
       "emptyTitle": "{brandName} साठी कोणतेही मॉडेल उपलब्ध नाही",
-      "emptySubtitle": "इतर {brandName} मॉडेल्सच्या दरांसाठी आमच्या पुणे हेल्पलाइनवर संपर्क साधा."
+      "emptySubtitle": "इतर {brandName} मॉडेल्सच्या दरांसाठी आमच्या पुणे हेल्पलाइनवर संपर्क साधा.",
+      "noSearchResults": "\"{query}\" शी जुळणारे {brandName} मॉडेल सापडले नाही",
+      "clearSearch": "शोध रीसेट करा"
     },
     "standards": {
       "title": "आमची {brandName} सेवा मानके",

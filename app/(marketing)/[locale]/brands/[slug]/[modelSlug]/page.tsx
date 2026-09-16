@@ -7,6 +7,7 @@ import {
   ProcessStepGrid,
   Section,
 } from "@/components/ui";
+import { ModelsScrollSection } from "@/components/models";
 import contactConfig from "@/config/contact";
 import { getBreadcrumbSchema, getModelDetailPageSchema } from "@/config/jsonld";
 import { getModelSeoMetadata, siteConfig } from "@/config/seo";
@@ -23,7 +24,6 @@ import {
   Clock,
   Phone,
   ShieldCheck,
-  Smartphone,
   Zap,
 } from "lucide-react";
 import type { Metadata } from "next";
@@ -296,35 +296,16 @@ export default async function ModelDetailPage({
         </Container>
       </Section>
 
-      {/* 4. Other Models by Brand (Loaded from DB) */}
+      {/* 4. Other Models by Brand (Loaded from DB, horizontally scrollable) */}
       {siblingModels.length > 0 && (
-        <Section variant="muted" padding="default">
-          <Container>
-            <div className="max-w-3xl mb-8">
-              <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
-                {t("siblings.title", { brandName: brand.name })}
-              </h2>
-              <p className="mt-2 text-xs sm:text-sm text-zinc-600">
-                {t("siblings.subtitle")}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-              {siblingModels.map((m) => (
-                <Link
-                  key={m.slug}
-                  href={`/brands/${brand.slug}/${m.slug}`}
-                  className="p-3.5 rounded-xl bg-clean-white border border-zinc-200 hover:border-flash-orange/50 hover:shadow-xs transition-all group flex items-center gap-2.5"
-                >
-                  <Smartphone className="h-4 w-4 text-zinc-400 group-hover:text-flash-orange transition-colors shrink-0" />
-                  <span className="text-xs font-bold text-tech-slate group-hover:text-flash-orange transition-colors truncate">
-                    {m.name}
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </Container>
-        </Section>
+        <ModelsScrollSection
+          models={siblingModels}
+          title={t("siblings.title", { brandName: brand.name })}
+          subtitle={t("siblings.subtitle")}
+          brandSlugOverride={brand.slug}
+          brandNameOverride={brand.name}
+          sectionVariant="muted"
+        />
       )}
 
       {/* 5. CTA Block */}

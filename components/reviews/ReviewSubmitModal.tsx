@@ -111,21 +111,21 @@ export default function ReviewSubmitModal({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-tech-slate/60 backdrop-blur-xs"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-tech-slate/60 backdrop-blur-xs"
     >
-      <div className="relative w-full max-w-lg bg-clean-white border border-border-default rounded-3xl p-6 sm:p-8 shadow-xl max-h-[90vh] overflow-y-auto">
+      <div className="relative w-full max-w-lg bg-clean-white border border-border-default rounded-2xl sm:rounded-3xl shadow-2xl max-h-[90vh] sm:max-h-[85vh] flex flex-col overflow-hidden">
         {/* Close Button */}
         <button
           type="button"
           onClick={handleClose}
-          className="absolute top-5 right-5 p-2 rounded-xl text-text-muted hover:text-tech-slate hover:bg-mist-gray transition-colors cursor-pointer"
+          className="absolute top-4 right-4 z-20 p-2 rounded-xl text-text-muted hover:text-tech-slate hover:bg-mist-gray transition-colors cursor-pointer"
           aria-label="Close review dialog"
         >
           <X className="h-5 w-5" />
         </button>
 
         {isSuccess ? (
-          <div className="text-center py-6 space-y-4">
+          <div className="p-6 sm:p-8 text-center space-y-4 my-auto">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
               <CheckCircle2 className="h-7 w-7" />
             </div>
@@ -146,150 +146,154 @@ export default function ReviewSubmitModal({
             </div>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div>
+          <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0 overflow-hidden">
+            {/* 1. Fixed Header */}
+            <div className="p-5 sm:p-6 pb-3 sm:pb-4 border-b border-border-default/60 shrink-0 pr-12">
               <h2 className="font-heading text-lg sm:text-xl font-bold text-tech-slate">
                 Share Your Experience
               </h2>
-              <p className="text-xs text-text-muted mt-1">
+              <p className="text-xs text-text-muted mt-0.5">
                 Tell us about your phone repair experience with QuickFix Pune.
               </p>
             </div>
 
-            {/* Error Alert */}
-            {errorMessage && (
-              <div
-                role="alert"
-                className="rounded-xl bg-error-light border border-error-border p-3 text-xs text-error flex items-start gap-2"
-              >
-                <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
-                <span>{errorMessage}</span>
+            {/* 2. Scrollable Body */}
+            <div className="flex-1 min-h-0 overflow-y-auto p-5 sm:p-6 space-y-4 overscroll-contain">
+              {/* Error Alert */}
+              {errorMessage && (
+                <div
+                  role="alert"
+                  className="rounded-xl bg-error-light border border-error-border p-3 text-xs text-error flex items-start gap-2"
+                >
+                  <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
+                  <span>{errorMessage}</span>
+                </div>
+              )}
+
+              {/* Star Rating Selector */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-tech-slate">
+                  Your Rating <span className="text-error">*</span>
+                </label>
+                <div className="flex items-center gap-1.5">
+                  {[1, 2, 3, 4, 5].map((starVal) => (
+                    <button
+                      key={starVal}
+                      type="button"
+                      onClick={() => setRating(starVal)}
+                      onMouseEnter={() => setHoverRating(starVal)}
+                      onMouseLeave={() => setHoverRating(0)}
+                      className="p-1 -m-1 focus:outline-none cursor-pointer"
+                      aria-label={`Rate ${starVal} stars`}
+                    >
+                      <Star
+                        className={`h-6 sm:h-7 w-6 sm:w-7 transition-colors ${
+                          starVal <= activeStarCount
+                            ? "fill-electric-amber text-electric-amber"
+                            : "text-border-default"
+                        }`}
+                      />
+                    </button>
+                  ))}
+                  <span className="text-xs font-semibold text-text-muted ml-2">
+                    {RATING_LABELS[activeStarCount] || ""}
+                  </span>
+                </div>
               </div>
-            )}
 
-            {/* Star Rating Selector */}
-            <div className="space-y-1.5">
-              <label className="block text-xs font-bold text-tech-slate">
-                Your Rating <span className="text-error">*</span>
-              </label>
-              <div className="flex items-center gap-1.5">
-                {[1, 2, 3, 4, 5].map((starVal) => (
-                  <button
-                    key={starVal}
-                    type="button"
-                    onClick={() => setRating(starVal)}
-                    onMouseEnter={() => setHoverRating(starVal)}
-                    onMouseLeave={() => setHoverRating(0)}
-                    className="p-1 -m-1 focus:outline-none cursor-pointer"
-                    aria-label={`Rate ${starVal} stars`}
-                  >
-                    <Star
-                      className={`h-7 w-7 transition-colors ${
-                        starVal <= activeStarCount
-                          ? "fill-electric-amber text-electric-amber"
-                          : "text-border-default"
-                      }`}
-                    />
-                  </button>
-                ))}
-                <span className="text-xs font-semibold text-text-muted ml-2">
-                  {RATING_LABELS[activeStarCount] || ""}
-                </span>
-              </div>
-            </div>
-
-            {/* Customer Name */}
-            <div>
-              <label className="block text-xs font-bold text-tech-slate mb-1">
-                Your Name <span className="text-error">*</span>
-              </label>
-              <input
-                type="text"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="e.g. Rahul Sharma"
-                className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-mist-gray/60 border border-border-default rounded-xl text-tech-slate placeholder:text-text-muted focus:outline-none focus:border-flash-orange focus:bg-clean-white transition-colors"
-              />
-            </div>
-
-            {/* Locality & Device Row */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {/* Customer Name */}
               <div>
                 <label className="block text-xs font-bold text-tech-slate mb-1">
-                  Pune Area / Locality
+                  Your Name <span className="text-error">*</span>
                 </label>
                 <input
                   type="text"
-                  value={area}
-                  onChange={(e) => setArea(e.target.value)}
-                  placeholder="e.g. Kothrud, Baner"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="e.g. Rahul Sharma"
                   className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-mist-gray/60 border border-border-default rounded-xl text-tech-slate placeholder:text-text-muted focus:outline-none focus:border-flash-orange focus:bg-clean-white transition-colors"
                 />
               </div>
+
+              {/* Locality & Device Row */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-tech-slate mb-1">
+                    Pune Area / Locality
+                  </label>
+                  <input
+                    type="text"
+                    value={area}
+                    onChange={(e) => setArea(e.target.value)}
+                    placeholder="e.g. Kothrud, Baner"
+                    className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-mist-gray/60 border border-border-default rounded-xl text-tech-slate placeholder:text-text-muted focus:outline-none focus:border-flash-orange focus:bg-clean-white transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-tech-slate mb-1">
+                    Device Model
+                  </label>
+                  <input
+                    type="text"
+                    value={deviceModel}
+                    onChange={(e) => setDeviceModel(e.target.value)}
+                    placeholder="e.g. iPhone 14, OnePlus 11"
+                    className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-mist-gray/60 border border-border-default rounded-xl text-tech-slate placeholder:text-text-muted focus:outline-none focus:border-flash-orange focus:bg-clean-white transition-colors"
+                  />
+                </div>
+              </div>
+
+              {/* Service Type */}
               <div>
                 <label className="block text-xs font-bold text-tech-slate mb-1">
-                  Device Model
+                  Repair Service Done
                 </label>
                 <input
                   type="text"
-                  value={deviceModel}
-                  onChange={(e) => setDeviceModel(e.target.value)}
-                  placeholder="e.g. iPhone 14, OnePlus 11"
+                  value={serviceType}
+                  onChange={(e) => setServiceType(e.target.value)}
+                  placeholder="e.g. Screen Replacement, Battery Replacement"
                   className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-mist-gray/60 border border-border-default rounded-xl text-tech-slate placeholder:text-text-muted focus:outline-none focus:border-flash-orange focus:bg-clean-white transition-colors"
+                />
+              </div>
+
+              {/* Review Comment */}
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-xs font-bold text-tech-slate">
+                    Your Review <span className="text-error">*</span>
+                  </label>
+                  <span className="text-2xs text-text-muted">
+                    {comment.length}/1000
+                  </span>
+                </div>
+                <textarea
+                  required
+                  rows={3}
+                  maxLength={1000}
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  placeholder="How was your device repair experience with our technician and lab?"
+                  className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-mist-gray/60 border border-border-default rounded-xl text-tech-slate placeholder:text-text-muted focus:outline-none focus:border-flash-orange focus:bg-clean-white transition-colors resize-none"
                 />
               </div>
             </div>
 
-            {/* Service Type */}
-            <div>
-              <label className="block text-xs font-bold text-tech-slate mb-1">
-                Repair Service Done
-              </label>
-              <input
-                type="text"
-                value={serviceType}
-                onChange={(e) => setServiceType(e.target.value)}
-                placeholder="e.g. Screen Replacement, Battery Replacement"
-                className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-mist-gray/60 border border-border-default rounded-xl text-tech-slate placeholder:text-text-muted focus:outline-none focus:border-flash-orange focus:bg-clean-white transition-colors"
-              />
-            </div>
-
-            {/* Review Comment */}
-            <div>
-              <div className="flex items-center justify-between mb-1">
-                <label className="text-xs font-bold text-tech-slate">
-                  Your Review <span className="text-error">*</span>
-                </label>
-                <span className="text-2xs text-text-muted">
-                  {comment.length}/1000
-                </span>
-              </div>
-              <textarea
-                required
-                rows={4}
-                maxLength={1000}
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                placeholder="How was your device repair experience with our technician and lab?"
-                className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-mist-gray/60 border border-border-default rounded-xl text-tech-slate placeholder:text-text-muted focus:outline-none focus:border-flash-orange focus:bg-clean-white transition-colors resize-none"
-              />
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex items-center justify-end gap-3 pt-2">
+            {/* 3. Pinned & Always Visible Footer */}
+            <div className="p-3.5 sm:p-4 px-5 sm:px-6 bg-mist-gray/40 border-t border-border-default/80 flex items-center justify-end gap-3 shrink-0 rounded-b-2xl sm:rounded-b-3xl">
               <button
                 type="button"
                 onClick={handleClose}
                 disabled={isSubmitting}
-                className="px-4 py-2.5 text-xs font-bold text-text-secondary hover:text-tech-slate transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-xl text-xs font-bold text-text-secondary hover:text-tech-slate hover:bg-mist-gray transition-colors cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-5 py-2.5 bg-flash-orange hover:bg-flash-orange-hover text-clean-white font-heading font-bold text-xs rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5 cursor-pointer"
+                className="px-5 py-2.5 bg-flash-orange hover:bg-flash-orange-hover text-clean-white font-heading font-bold text-xs rounded-xl shadow-xs disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5 cursor-pointer"
               >
                 {isSubmitting ? (
                   <>

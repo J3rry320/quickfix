@@ -6,6 +6,7 @@ import {
   PageHero,
   Section,
 } from "@/components/ui";
+import { ModelsScrollSection } from "@/components/models";
 import contactConfig from "@/config/contact";
 import { getBreadcrumbSchema } from "@/config/jsonld";
 import { getBrandSeoMetadata, siteConfig } from "@/config/seo";
@@ -19,13 +20,20 @@ import {
 } from "@/lib/db/catalogue";
 import {
   ArrowRight,
+  BatteryCharging,
+  Camera,
   CheckCircle2,
   Clock,
+  Cpu,
+  Droplets,
   Lock,
   Phone,
+  Shield,
   ShieldCheck,
   Smartphone,
   Sparkles,
+  Volume2,
+  Wrench,
   Zap,
 } from "lucide-react";
 import type { Metadata } from "next";
@@ -65,6 +73,19 @@ export async function generateMetadata({
 }
 
 import { cacheLife, cacheTag } from "next/cache";
+
+function getBrandServiceIcon(slug: string, name: string) {
+  const s = (slug + " " + name).toLowerCase();
+  if (s.includes("battery") || s.includes("power")) return BatteryCharging;
+  if (s.includes("screen") || s.includes("display") || s.includes("touch")) return Smartphone;
+  if (s.includes("charging") || s.includes("port") || s.includes("flex")) return Zap;
+  if (s.includes("camera") || s.includes("lens")) return Camera;
+  if (s.includes("glass") || s.includes("frame") || s.includes("housing")) return Shield;
+  if (s.includes("speaker") || s.includes("mic") || s.includes("earpiece") || s.includes("audio")) return Volume2;
+  if (s.includes("motherboard") || s.includes("chip") || s.includes("soldering")) return Cpu;
+  if (s.includes("water") || s.includes("liquid")) return Droplets;
+  return Wrench;
+}
 
 export default async function BrandDetailPage({
   params,
@@ -259,55 +280,25 @@ export default async function BrandDetailPage({
         }
       />
 
-      {/* 2. Supported Models for this Brand (Loaded from DB) */}
-      <Section variant="muted" padding="default">
-        <Container>
-          <div className="max-w-3xl mb-8">
-            <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
-              {t("models.title", { brandName: brand.name })}
-            </h2>
-            <p className="mt-2 text-xs sm:text-sm text-zinc-600">
-              {t("models.subtitle")}
-            </p>
-          </div>
-
-          {models.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-              {models.map((model) => (
-                <Link
-                  key={model.slug}
-                  href={`/brands/${brand.slug}/${model.slug}`}
-                  className="p-4 rounded-xl bg-clean-white border border-zinc-200 hover:border-flash-orange hover:shadow-xs transition-all group flex items-center gap-3"
-                >
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-mist-gray text-zinc-600 group-hover:text-flash-orange group-hover:bg-orange-50 transition-colors">
-                    <Smartphone className="h-4 w-4" />
-                  </div>
-                  <div className="overflow-hidden">
-                    <span className="text-xs sm:text-sm font-bold text-tech-slate group-hover:text-flash-orange transition-colors truncate block">
-                      {model.name}
-                    </span>
-                    {model.releaseYear && (
-                      <span className="text-3xs text-text-muted font-mono">
-                        {model.releaseYear}
-                      </span>
-                    )}
-                  </div>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="p-8 text-center bg-clean-white rounded-2xl border border-zinc-200">
-              <Smartphone className="h-8 w-8 text-zinc-400 mx-auto mb-2" />
-              <h3 className="font-heading font-bold text-sm text-tech-slate">
-                {t("models.emptyTitle", { brandName: brand.name })}
-              </h3>
-              <p className="text-xs text-zinc-500 mt-1">
-                {t("models.emptySubtitle", { brandName: brand.name })}
-              </p>
-            </div>
-          )}
-        </Container>
-      </Section>
+      {/* 2. Supported Models for this Brand (Loaded from DB, searchable & horizontally scrollable) */}
+      <ModelsScrollSection
+        models={models}
+        title={t("models.title", { brandName: brand.name })}
+        subtitle={t("models.subtitle")}
+        brandSlugOverride={brand.slug}
+        brandNameOverride={brand.name}
+        showSearch={true}
+        searchPlaceholder={t("models.searchPlaceholder", { brandName: brand.name })}
+        showingCountTemplate={t("models.showingCount", {
+          count: "{count}",
+          total: "{total}",
+          brandName: brand.name,
+        })}
+        emptyTitle={t("models.emptyTitle", { brandName: brand.name })}
+        emptySubtitle={t("models.emptySubtitle", { brandName: brand.name })}
+        clearSearchLabel={t("models.clearSearch")}
+        sectionVariant="muted"
+      />
 
       {/* 3. OEM Parts Warranty & Quality Guarantee Block */}
       <Section variant="white" padding="default">
@@ -362,34 +353,48 @@ export default async function BrandDetailPage({
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {services.slice(0, 6).map((service) => (
-                <Link
-                  key={service.slug}
-                  href={`/services/${service.slug}`}
-                  className="p-5 rounded-2xl bg-clean-white border border-zinc-200/90 hover:border-flash-orange/50 hover:shadow-md transition-all flex flex-col justify-between group"
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-2 mb-2">
-                      <span className="text-xs font-bold text-flash-orange uppercase tracking-wider">
-                        {service.name.split("&")[0].trim()}
-                      </span>
-                      <span className="text-xs font-bold text-zinc-500">
-                        from ₹{service.startingPrice}
+              {services.slice(0, 6).map((service) => {
+                const IconComponent = getBrandServiceIcon(service.slug, service.name);
+                return (
+                  <Link
+                    key={service.slug}
+                    href={`/services/${service.slug}`}
+                    className="p-5 rounded-2xl bg-clean-white border border-border-default hover:border-flash-orange/60 hover:shadow-md transition-all duration-200 flex flex-col justify-between group"
+                  >
+                    <div>
+                      {/* Top Row: Icon Container + Starting Price Badge */}
+                      <div className="flex items-start justify-between gap-3 mb-4">
+                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-mist-gray text-tech-slate border border-border-default group-hover:bg-flash-orange group-hover:text-clean-white group-hover:border-flash-orange transition-all duration-200 shadow-2xs">
+                          <IconComponent className="h-5 w-5 transition-transform group-hover:scale-110 duration-200" />
+                        </div>
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-xl bg-mist-gray/90 border border-border-default/80 text-xs font-bold text-tech-slate group-hover:border-flash-orange/30 transition-colors">
+                          From ₹{service.startingPrice}
+                        </span>
+                      </div>
+
+                      {/* Title & Description */}
+                      <h3 className="font-heading text-base font-bold text-tech-slate group-hover:text-flash-orange transition-colors line-clamp-1">
+                        {service.name}
+                      </h3>
+                      <p className="mt-2 text-xs text-text-secondary leading-relaxed line-clamp-2">
+                        {service.description}
+                      </p>
+                    </div>
+
+                    {/* Footer: Turnaround SLA & Action Link */}
+                    <div className="mt-5 pt-3.5 border-t border-border-default/60 flex items-center justify-between text-xs font-bold text-flash-orange">
+                      <div className="flex items-center gap-1.5 text-3xs text-text-muted font-normal">
+                        <Clock className="h-3.5 w-3.5 text-flash-orange/70" />
+                        <span>{service.estimatedTimeMinutes || 30} mins express</span>
+                      </div>
+                      <span className="inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                        <span>View Details</span>
+                        <ArrowRight className="h-3.5 w-3.5" />
                       </span>
                     </div>
-                    <h3 className="font-heading text-base font-bold text-tech-slate group-hover:text-flash-orange transition-colors">
-                      {service.name}
-                    </h3>
-                    <p className="mt-1.5 text-xs text-zinc-600 leading-relaxed line-clamp-2">
-                      {service.description}
-                    </p>
-                  </div>
-                  <div className="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between text-xs font-bold text-flash-orange">
-                    <span>View Details & Pricing</span>
-                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </div>
           </Container>
         </Section>

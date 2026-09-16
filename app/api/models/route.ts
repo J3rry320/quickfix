@@ -37,11 +37,19 @@ export const GET = withPublicApi(async (request: NextRequest) => {
     filter.name = { $regex: search, $options: "i" };
   }
 
-  const models = await DeviceModel.find(filter)
+  const limitParam = searchParams.get("limit");
+  const limit = limitParam ? Math.max(1, Math.min(100, parseInt(limitParam, 10))) : 0;
+
+  let query = DeviceModel.find(filter)
     .populate("brand", "name slug logoUrl")
     .populate("servicePricing.service", "name slug startingPrice warrantyDays")
-    .sort({ isPopular: -1, name: 1 })
-    .lean();
+    .sort({ isPopular: -1, releaseYear: -1, name: 1 });
+
+  if (limit > 0) {
+    query = query.limit(limit);
+  }
+
+  const models = await query.lean();
 
   return apiSuccess({
     models,

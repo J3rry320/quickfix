@@ -1,4 +1,5 @@
 import { cacheLife, cacheTag } from "next/cache";
+import { Types } from "mongoose";
 import { connectDb } from "@/lib/mongodb";
 import { Brand } from "@/models/Brand";
 import { RepairService } from "@/models/RepairService";
@@ -136,9 +137,11 @@ export async function getDbServiceBySlug(slug: string): Promise<DbServiceItem | 
 }
 
 /**
- * Fetch all models for a specific brand slug from MongoDB
+ * Fetch all models for a specific brand slug from MongoDB with brand and service pricing populated
  */
-export async function getDbModelsForBrand(brandSlug: string): Promise<DbDeviceModelItem[]> {
+export async function getDbModelsForBrand(
+  brandSlug: string
+): Promise<Array<DbDeviceModelItem & { brand: DbBrandItem }>> {
   "use cache";
   cacheLife("days");
   cacheTag("models", `models-${brandSlug}`);
@@ -149,11 +152,55 @@ export async function getDbModelsForBrand(brandSlug: string): Promise<DbDeviceMo
     if (!brand) return [];
 
     const models = await DeviceModel.find({ brand: brand._id, isActive: true })
+      .populate("brand", "name slug logoUrl")
+      .populate("servicePricing.service", "name slug startingPrice warrantyDays")
       .sort({ isPopular: -1, releaseYear: -1, name: 1 })
       .lean();
     return JSON.parse(JSON.stringify(models));
   } catch (err) {
     console.error("Error fetching models for brand from db:", err);
+    return [];
+  }
+}
+
+/**
+ * Fetch popular smartphone models across brands with brand and service pricing populated
+ */
+export async function getPopularDbModels(
+  limit: number = 24
+): Promise<Array<DbDeviceModelItem & { brand: DbBrandItem }>> {
+  "use cache";
+  cacheLife("days");
+  cacheTag("models", "popular-models");
+
+  try {
+    await connectDb();
+    let models = await DeviceModel.find({ isActive: true, isPopular: true })
+      .populate("brand", "name slug logoUrl")
+      .populate("servicePricing.service", "name slug startingPrice warrantyDays")
+      .sort({ releaseYear: -1, name: 1 })
+      .limit(limit)
+      .lean();
+
+    // If fewer than 10 models are flagged popular, backfill with active models
+    if (models.length < 10) {
+      const remainingLimit = limit - models.length;
+      const existingIds = models.map((m: { _id: unknown }) => m._id as Types.ObjectId);
+      const backfill = await DeviceModel.find({
+        isActive: true,
+        _id: { $nin: existingIds },
+      })
+        .populate("brand", "name slug logoUrl")
+        .populate("servicePricing.service", "name slug startingPrice warrantyDays")
+        .sort({ releaseYear: -1, name: 1 })
+        .limit(remainingLimit)
+        .lean();
+      models = [...models, ...backfill];
+    }
+
+    return JSON.parse(JSON.stringify(models));
+  } catch (err) {
+    console.error("Error fetching popular db models:", err);
     return [];
   }
 }

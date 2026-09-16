@@ -4,9 +4,10 @@ import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { getBrandsHubSeoMetadata, siteConfig } from "@/config/seo";
 import { getBreadcrumbSchema } from "@/config/jsonld";
-import { getDbBrands, getAllDbModels } from "@/lib/db/catalogue";
+import { getDbBrands, getAllDbModels, getPopularDbModels } from "@/lib/db/catalogue";
 import JsonLd from "@/components/seo/JsonLd";
 import { Container, Section, CTABlock, PageHero } from "@/components/ui";
+import { ModelsScrollSection } from "@/components/models";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -34,9 +35,10 @@ export default async function BrandsHubPage({
 
   const { locale } = await params;
 
-  const [brands, allModels] = await Promise.all([
+  const [brands, allModels, popularModels] = await Promise.all([
     getDbBrands(),
     getAllDbModels(),
+    getPopularDbModels(24),
   ]);
 
   // Group models by brand id / slug
@@ -153,6 +155,19 @@ export default async function BrandsHubPage({
           </div>
         </Container>
       </Section>
+
+      {/* 2.5 Popular Models Across Brands */}
+      {popularModels.length > 0 && (
+        <ModelsScrollSection
+          models={popularModels}
+          brands={brands}
+          showBrandFilter={true}
+          badge="Popular Across Brands"
+          title="Top Repaired Phone Models in Pune"
+          subtitle="Explore authentic replacement costs, genuine parts stock, and quick turnaround times for Pune's most popular smartphones."
+          sectionVariant="white"
+        />
+      )}
 
       {/* 3. Reusable CTA */}
       <Section variant="white" padding="default">

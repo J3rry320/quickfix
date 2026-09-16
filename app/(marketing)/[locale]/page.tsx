@@ -14,6 +14,8 @@ import Testimonials from "@/components/landing/Testimonials";
 import FaqSection from "@/components/landing/FaqSection";
 import BlogHighlights from "@/components/landing/BlogHighlights";
 import QuickContactForm from "@/components/landing/QuickContactForm";
+import { ModelsScrollSection } from "@/components/models";
+import { getPopularDbModels, getDbBrands } from "@/lib/db/catalogue";
 
 export async function generateMetadata({
   params,
@@ -31,7 +33,12 @@ export default async function MarketingPage({
 }) {
   const { locale } = await params;
 
-  const tFaq = await getTranslations({ locale, namespace: "Faq" });
+  const [tFaq, tModels, popularModels, brands] = await Promise.all([
+    getTranslations({ locale, namespace: "Faq" }),
+    getTranslations({ locale, namespace: "PopularModels" }),
+    getPopularDbModels(24),
+    getDbBrands(),
+  ]);
 
   const faqSchema = getFaqPageSchema([
     { question: tFaq("q1"), answer: tFaq("a1") },
@@ -60,8 +67,21 @@ export default async function MarketingPage({
       {/* 6. Why QuickFix: Mobile Responsive Comparison */}
       <WhyQuickFix />
 
-      {/* 7. Supported Smartphone Brands & Models */}
+      {/* 7. Supported Smartphone Brands */}
       <BrandsShowcase />
+
+      {/* 7.5 Top Popular Smartphone Models We Repair */}
+      {popularModels.length > 0 && (
+        <ModelsScrollSection
+          models={popularModels}
+          brands={brands}
+          showBrandFilter={true}
+          badge={tModels("badge")}
+          title={tModels("title")}
+          subtitle={tModels("subtitle")}
+          sectionVariant="white"
+        />
+      )}
 
       {/* 8. Pune Localities & Doorstep Dispatch Coverage */}
       <LocalitiesDirectory />

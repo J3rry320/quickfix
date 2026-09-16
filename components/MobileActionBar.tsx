@@ -1,11 +1,22 @@
 "use client";
 
 import { MessageSquare, Wrench } from "lucide-react";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import contactConfig from "@/config/contact";
 
 export default function MobileActionBar() {
+  const pathname = usePathname();
   const whatsappUrl = contactConfig.whatsapp.getDefaultUrl();
+
+  // Hide sticky mobile action buttons on the repair booking page
+  const isBookingPage =
+    pathname === "/book-repair" ||
+    pathname.startsWith("/book-repair") ||
+    pathname.includes("book-repair");
+
+  if (isBookingPage) {
+    return null;
+  }
 
   return (
     <aside
