@@ -52,21 +52,18 @@ const TOP_BRANDS: BrandNav[] = [
 
 const COMPANY_LINKS = [
   {
-    name: "About QuickFix",
+    key: "about",
     href: "/about",
-    desc: "Our story, lab standards & technician team",
     icon: Building2,
   },
   {
-    name: "Contact & Lab Center",
+    key: "contact",
     href: "/contact",
-    desc: "Sadashiv Peth lab hub & customer desk",
     icon: MessageSquare,
   },
   {
-    name: "Pune Service Areas",
+    key: "locations",
     href: "/locations",
-    desc: "30-minute doorstep coverage across Pune",
     icon: MapPin,
   },
 ];
@@ -319,11 +316,11 @@ export default function Navbar() {
                         <Icon className="h-3.5 w-3.5" />
                       </div>
                       <div>
-                        <div className="text-xs font-bold text-tech-slate">
-                          {item.name}
+                        <div className="text-xs font-bold text-tech-slate group-hover:text-flash-orange transition-colors">
+                          {t(`company.${item.key}Title`)}
                         </div>
                         <div className="text-[11px] text-text-muted mt-0.5 leading-snug">
-                          {item.desc}
+                          {t(`company.${item.key}Desc`)}
                         </div>
                       </div>
                     </Link>
@@ -407,14 +404,14 @@ export default function Navbar() {
                 className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-mist-gray border border-border-default text-xs font-bold text-tech-slate hover:bg-border-default/60 transition-colors"
               >
                 <Search className="h-3.5 w-3.5 text-flash-orange" />
-                <span>Track Repair</span>
+                <span>{t("nav.track")}</span>
               </Link>
               <a
                 href={`tel:${contactConfig.phone.value}`}
                 className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-mist-gray border border-border-default text-xs font-bold text-tech-slate hover:bg-border-default/60 transition-colors"
               >
                 <Phone className="h-3.5 w-3.5 text-flash-orange" />
-                <span>Call Desk</span>
+                <span>{t("actions.callDesk")}</span>
               </a>
             </div>
           </div>
@@ -422,7 +419,7 @@ export default function Navbar() {
           {/* Section 1: Customer Resources */}
           <div className="pt-3 border-t border-border-default">
             <div className="text-[10px] font-bold uppercase tracking-wider text-text-muted mb-2">
-              Explore & Resources
+              {t("explore.title")}
             </div>
             <div className="grid grid-cols-1 gap-1">
               <Link
@@ -431,7 +428,7 @@ export default function Navbar() {
                 className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray transition-colors"
               >
                 <Star className="h-4 w-4 text-electric-amber shrink-0" />
-                <span>Customer Reviews & Ratings</span>
+                <span>{t("explore.reviews")}</span>
               </Link>
               <Link
                 href="/blogs"
@@ -439,7 +436,7 @@ export default function Navbar() {
                 className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray transition-colors"
               >
                 <BookOpen className="h-4 w-4 text-flash-orange shrink-0" />
-                <span>Blogs & Mobile Repair Guides</span>
+                <span>{t("explore.blogs")}</span>
               </Link>
               <Link
                 href="/locations"
@@ -447,7 +444,7 @@ export default function Navbar() {
                 className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray transition-colors"
               >
                 <MapPin className="h-4 w-4 text-emerald-600 shrink-0" />
-                <span>Pune Service Areas (30-min Doorstep)</span>
+                <span>{t("explore.locations")}</span>
               </Link>
             </div>
           </div>
@@ -518,7 +515,7 @@ export default function Navbar() {
           {/* Section 4: Company Links */}
           <div className="pt-3 border-t border-border-default">
             <div className="text-[10px] font-bold uppercase tracking-wider text-text-muted mb-2">
-              QuickFix Pune
+              {t("nav.company")}
             </div>
             <div className="grid grid-cols-2 gap-1.5">
               <Link
@@ -527,7 +524,7 @@ export default function Navbar() {
                 className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray transition-colors"
               >
                 <Building2 className="h-3.5 w-3.5 text-text-muted shrink-0" />
-                <span>About Us</span>
+                <span>{t("nav.about")}</span>
               </Link>
               <Link
                 href="/contact"
@@ -535,7 +532,7 @@ export default function Navbar() {
                 className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray transition-colors"
               >
                 <MessageSquare className="h-3.5 w-3.5 text-text-muted shrink-0" />
-                <span>Contact Desk</span>
+                <span>{t("nav.contact")}</span>
               </Link>
             </div>
           </div>

@@ -101,5 +101,54 @@
       "phoneRequired": "Please enter a valid 10-digit mobile number",
       "submissionFailed": "Unable to schedule repair. Please try again or call us directly."
     }
+  },
+  "TrackPage": {
+    "title": "Track Your Device Repair",
+    "subtitle": "Check real-time repair status and milestones with your booking reference code.",
+    "breadcrumb": "Track Repair",
+    "home": "Home",
+    "loading": "Loading tracking portal...",
+    "searchPlaceholder": "Enter Booking Reference (e.g. QF-2509-ABCDE)",
+    "trackButton": "Track Repair",
+    "checkingButton": "Checking...",
+    "clearSearch": "Clear Search",
+    "trackAnother": "Track Another Device",
+    "bookingReference": "Booking Reference",
+    "device": "Device",
+    "lastUpdated": "Last Updated",
+    "whatsappDispatch": "WhatsApp Dispatch",
+    "callHelpline": "Call Helpline",
+    "status": {
+      "pending": "Booking Received",
+      "confirmed": "Pickup Fleet Assigned",
+      "inProgress": "Lab Repair In Progress",
+      "completed": "Repaired & Delivered",
+      "cancelled": "Booking Cancelled"
+    },
+    "steps": {
+      "step": "Step",
+      "step1Label": "Booking Logged",
+      "step1Desc": "Order registered in system",
+      "step2Label": "Fleet Assigned",
+      "step2Desc": "Technician assigned for pickup",
+      "step3Label": "Lab Diagnostic & Repair",
+      "step3Desc": "Under precision lab service",
+      "step4Label": "Ready & Delivered",
+      "step4Desc": "Device tested & handed over"
+    },
+    "cancelledNotice": "This booking request was cancelled. If you believe this is an error or would like to reschedule, please contact our helpline.",
+    "notFound": {
+      "title": "Repair Booking Not Found",
+      "description": "We couldn't find an active repair booking matching reference",
+      "tip": "Please double-check the tracking code from your booking confirmation SMS or receipt, or reach out to our team.",
+      "whatsappSupport": "WhatsApp Support",
+      "callHelpline": "Call Helpline"
+    },
+    "errors": {
+      "enterCode": "Please enter a valid tracking reference (e.g. QF-2509-ABCDE)",
+      "invalidFormat": "Tracking reference format is invalid (must be 5–30 letters, numbers, or dashes)",
+      "networkError": "Network error. Please check your internet connection and try again.",
+      "unableToRetrieve": "Unable to retrieve status for \"{reference}\". Please check connection and try again."
+    }
   }
 }

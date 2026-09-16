@@ -21,9 +21,24 @@
       "blogs": "Blogs",
       "company": "Company"
     },
+    "company": {
+      "aboutTitle": "About QuickFix",
+      "aboutDesc": "Our story, lab standards & technician team",
+      "contactTitle": "Contact & Lab Center",
+      "contactDesc": "Sadashiv Peth lab hub & customer desk",
+      "locationsTitle": "Pune Service Areas",
+      "locationsDesc": "30-minute doorstep coverage across Pune"
+    },
+    "explore": {
+      "title": "Explore & Resources",
+      "reviews": "Customer Reviews & Ratings",
+      "blogs": "Blogs & Mobile Repair Guides",
+      "locations": "Pune Service Areas (30-min Doorstep)"
+    },
     "actions": {
       "bookRepair": "Book Doorstep Repair",
       "callNow": "Call Pune Hotline",
+      "callDesk": "Call Desk",
       "whatsapp": "WhatsApp Support",
       "phone": "+91 83086 86454"
     },
