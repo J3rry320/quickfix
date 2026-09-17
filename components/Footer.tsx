@@ -33,7 +33,8 @@ export default function Footer() {
                 className="h-10 w-10 object-contain rounded-xl"
               />
               <span className="font-heading text-xl font-black text-clean-white tracking-tight">
-                QuickFix<span className="text-flash-orange">.in</span>
+                QuickFix<span className="text-flash-orange">Mobile</span>
+                <span className="text-zinc-400 text-sm font-semibold">.in</span>
               </span>
             </Link>
 

@@ -332,50 +332,88 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
         setBrands(loadedBrands);
         setServices(loadedServices);
 
-        // Check for URL query pre-fills
+        // Check for URL query pre-fills with live database validation
+        let matchedBrandObj: BrandItem | null = null;
+        let matchedModelObj: ModelItem | null = null;
+        let matchedServiceObj: ServiceItem | null = null;
+
+        // 1. Validate Brand against DB
         if (queryBrand && loadedBrands.length > 0) {
-          const matchedB =
-            loadedBrands.find(
-              (b) =>
-                b.name.toLowerCase() === queryBrand.toLowerCase() ||
-                b.slug.toLowerCase() === queryBrand.toLowerCase()
-            ) || {
-              name: queryBrand,
-              slug: queryBrand.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-            };
+          const cleanBrandQuery = decodeURIComponent(queryBrand).trim().toLowerCase();
+          const foundBrand = loadedBrands.find(
+            (b) =>
+              b.name.toLowerCase() === cleanBrandQuery ||
+              b.slug.toLowerCase() === cleanBrandQuery
+          );
 
-          setSelectedBrand(matchedB);
-          setFormData((prev) => ({ ...prev, brand: matchedB.name }));
+          if (foundBrand) {
+            matchedBrandObj = foundBrand;
+            setSelectedBrand(foundBrand);
+            setFormData((prev) => ({ ...prev, brand: foundBrand.name }));
 
-          if (queryModel) {
-            const mItem: ModelItem = {
-              name: queryModel,
-              slug: queryModel.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-            };
-            setSelectedModel(mItem);
-            setModelInput(queryModel);
-            setFormData((prev) => ({ ...prev, model: queryModel }));
-          }
+            // Fetch models for this brand right away to validate queryModel
+            try {
+              const query = foundBrand._id
+                ? `brand=${encodeURIComponent(foundBrand._id)}`
+                : `brand=${encodeURIComponent(foundBrand.slug)}`;
+              const mRes = await fetch(`/api/models?${query}`);
+              if (mRes.ok) {
+                const mJson = await mRes.json();
+                if (mJson.success && Array.isArray(mJson.data?.models)) {
+                  const brandModels: ModelItem[] = mJson.data.models;
+                  setModels(brandModels);
 
-          if (queryService && loadedServices.length > 0) {
-            const matchedS = loadedServices.find(
-              (s) =>
-                s.name.toLowerCase().includes(queryService.toLowerCase()) ||
-                s.slug.toLowerCase() === queryService.toLowerCase()
-            );
-            if (matchedS) {
-              setSelectedService(matchedS);
-              setFormData((prev) => ({ ...prev, issueDescription: matchedS.name }));
+                  // 2. Validate Model against brand's models in DB
+                  if (queryModel) {
+                    const cleanModelQuery = decodeURIComponent(queryModel).trim().toLowerCase();
+                    const foundModel = brandModels.find(
+                      (m) =>
+                        m.name.toLowerCase() === cleanModelQuery ||
+                        m.slug.toLowerCase() === cleanModelQuery
+                    );
+                    if (foundModel) {
+                      matchedModelObj = foundModel;
+                      setSelectedModel(foundModel);
+                      setModelInput(foundModel.name);
+                      setFormData((prev) => ({ ...prev, model: foundModel.name }));
+                    }
+                  }
+                }
+              }
+            } catch (err) {
+              console.error("Failed to pre-fetch models for brand:", err);
             }
           }
+        }
 
-          // If brand, model, and service were provided via URL, jump directly to stage 3
-          if (queryModel && queryService) {
-            setHasPreFilled(true);
-            setCurrentStage(3);
-          } else if (queryModel) {
-            setCurrentStage(2);
+        // 3. Validate Service against DB (works with or without brand)
+        if (queryService && loadedServices.length > 0) {
+          const cleanServiceQuery = decodeURIComponent(queryService).trim().toLowerCase();
+          const foundService = loadedServices.find(
+            (s) =>
+              s.slug.toLowerCase() === cleanServiceQuery ||
+              s.name.toLowerCase() === cleanServiceQuery ||
+              s.name.toLowerCase().includes(cleanServiceQuery)
+          );
+          if (foundService) {
+            matchedServiceObj = foundService;
+            setSelectedService(foundService);
+            setFormData((prev) => ({ ...prev, issueDescription: foundService.name }));
           }
+        }
+
+        // 4. Smart Stage Progression
+        // - Brand + Model + Service valid -> Stage 3 (Confirm & Schedule)
+        // - Brand + Model valid -> Stage 2 (Service Selection)
+        // - Brand valid or Service valid -> Stage 1 (Select Device)
+        if (matchedBrandObj && matchedModelObj && matchedServiceObj) {
+          setHasPreFilled(true);
+          setCurrentStage(3);
+        } else if (matchedBrandObj && matchedModelObj) {
+          setHasPreFilled(true);
+          setCurrentStage(2);
+        } else {
+          setCurrentStage(1);
         }
       } catch (err) {
         console.error("Failed to load catalog data from DB:", err);
@@ -610,15 +648,17 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
     setFieldErrors({});
 
     const cleanPhone = formData.phone.replace(/\D/g, "");
-    const cleanPincode = formData.pincode.replace(/\D/g, "");
+    const cleanAddress = formData.streetAddress?.trim() || "";
+    const pincodeMatch = cleanAddress.match(/\b\d{6}\b/);
+    const resolvedPincode = pincodeMatch ? pincodeMatch[0] : (formData.pincode?.replace(/\D/g, "") || "411030");
 
     // 1. Client-side Zod validation
     const parseRes = stageConfirmSchema.safeParse({
       name: formData.name,
       phone: cleanPhone,
-      area: formData.area,
-      streetAddress: formData.streetAddress,
-      pincode: cleanPincode,
+      area: formData.area || "Pune",
+      streetAddress: cleanAddress,
+      pincode: resolvedPincode,
       date: formData.date,
       timeSlot: formData.timeSlot,
     });
@@ -664,9 +704,9 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
           : formData.issueDescription.trim(),
         serviceMode: formData.serviceMode || "doorstep",
         address: {
-          area: formData.area.trim() || "Pune",
-          streetAddress: formData.streetAddress.trim(),
-          pincode: cleanPincode || "411030",
+          area: formData.area?.trim() || "Pune",
+          streetAddress: cleanAddress || "To be confirmed via phone call",
+          pincode: resolvedPincode,
           city: "Pune",
         },
         preferredSlot: {

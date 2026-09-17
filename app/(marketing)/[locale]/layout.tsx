@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
+import { Figtree, Plus_Jakarta_Sans } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { routing, type Locale } from "@/i18n/routing";
@@ -23,10 +23,10 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
-const spaceGrotesk = Space_Grotesk({
+const figtree = Figtree({
   subsets: ["latin"],
-  weight: ["600", "700"],
-  variable: "--font-space-grotesk",
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-figtree",
   display: "swap",
 });
 
@@ -76,7 +76,7 @@ export default async function MarketingLayout({
   return (
     <html
       lang={locale}
-      className={`${spaceGrotesk.variable} ${plusJakartaSans.variable}`}
+      className={`${figtree.variable} ${plusJakartaSans.variable}`}
     >
       <body className="antialiased min-h-screen bg-base-surface text-dark-neutral font-body flex flex-col">
         <JsonLd

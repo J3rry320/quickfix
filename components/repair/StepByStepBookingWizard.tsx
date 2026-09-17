@@ -2,6 +2,7 @@
 
 import React from "react";
 import { AlertCircle, Phone } from "lucide-react";
+import { useTranslations } from "next-intl";
 import contactConfig from "@/config/contact";
 import {
   BookingWizardProvider,
@@ -15,6 +16,7 @@ import StageConfirmBooking from "./StageConfirmBooking";
 import { FormLoadingState, FormSuccessState } from "@/components/ui/form-states";
 
 function BookingWizardContent() {
+  const t = useTranslations("RepairPage.status");
   const {
     currentStage,
     errorMessage,
@@ -32,8 +34,8 @@ function BookingWizardContent() {
   if (isSubmitting) {
     return (
       <FormLoadingState
-        title="Confirming Your Doorstep Pickup…"
-        subtitle="Reserving your appointment slot and assigning pickup fleet in Pune."
+        title={t("loadingTitle")}
+        subtitle={t("loadingSubtitle")}
       />
     );
   }
@@ -42,41 +44,41 @@ function BookingWizardContent() {
     const estimatedCost = dynamicPrice || selectedService?.startingPrice || 0;
     return (
       <FormSuccessState
-        title="Doorstep Pickup Scheduled!"
-        subtitle="Our Pune dispatch team has logged your booking. A technician will call you prior to arriving for device pickup."
-        badgeLabel="Pickup Fleet Assigned & Confirmed"
+        title={t("successTitle")}
+        subtitle={t("successSubtitle")}
+        badgeLabel={t("successBadge")}
         referenceCode={bookingSuccess.bookingReference}
-        referenceLabel="Booking Reference Code"
+        referenceLabel={t("refLabel")}
         summaryDetails={[
-          { label: "Device", value: `${formData.brand} ${formData.model}` },
-          { label: "Repair", value: formData.issueDescription || "Phone Diagnostic & Repair" },
-          { label: "Scheduled Slot", value: `${formData.date} • ${formData.timeSlot}` },
+          { label: t("summaryDevice"), value: `${formData.brand} ${formData.model}`.trim() },
+          { label: t("summaryRepair"), value: formData.issueDescription || t("defaultRepairDesc") },
+          { label: t("summarySlot"), value: `${formData.date} • ${formData.timeSlot}` },
           {
-            label: "Doorstep Address",
-            value: `${formData.streetAddress}${formData.area ? ` (${formData.area})` : ""}`,
+            label: t("summaryAddress"),
+            value: formData.streetAddress?.trim() || t("tobeConfirmedOnCall"),
           },
           ...(estimatedCost > 0
             ? [
                 {
-                  label: "Estimated Cost",
+                  label: t("summaryEstimatedCost"),
                   value: `₹${estimatedCost.toLocaleString("en-IN")}`,
                 },
               ]
             : []),
         ]}
         onReset={resetWizard}
-        resetLabel="Book Another Repair"
+        resetLabel={t("bookAnother")}
       />
     );
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
+    <div className="w-full max-w-5xl mx-auto">
       {/* 3-Stage Progress Stepper */}
       <WizardProgress />
 
       {/* Main Booking Card */}
-      <div className="rounded-2xl border border-border-default/90 bg-clean-white p-5 sm:p-7 shadow-xs">
+      <div className="rounded-2xl border border-border-default/90 bg-clean-white p-3.5 sm:p-6 md:p-7 shadow-xs">
         {/* Error Alert (only for non-field general errors) */}
         {showTopError && (
           <div
@@ -101,7 +103,7 @@ function BookingWizardContent() {
       {/* Direct Phone Helpline Support */}
       <div className="mt-6 text-center">
         <p className="text-xs text-text-muted">
-          Prefer booking over a call?{" "}
+          {t("preferCall")}{" "}
           <a
             href={`tel:${contactConfig.phone.value}`}
             className="font-bold text-flash-orange hover:underline inline-flex items-center gap-1 font-mono ml-1"

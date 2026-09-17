@@ -119,7 +119,7 @@ export default function Navbar() {
             />
             <div className="flex items-baseline">
               <span className="font-heading text-lg font-extrabold tracking-tight text-tech-slate">
-                Quick<span className="text-flash-orange">Fix</span>
+                QuickFix<span className="text-flash-orange">Mobile</span>
                 <span className="text-xs font-semibold text-text-muted">.in</span>
               </span>
             </div>

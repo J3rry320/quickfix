@@ -2,16 +2,18 @@
 
 import React from "react";
 import { Check, ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useBookingWizard } from "./BookingWizardContext";
 
-const STAGES = [
-  { stage: 1 as const, shortLabel: "Device", fullLabel: "1. Your Device" },
-  { stage: 2 as const, shortLabel: "Issue", fullLabel: "2. Repair Issue" },
-  { stage: 3 as const, shortLabel: "Confirm", fullLabel: "3. Confirm & Schedule" },
-];
-
 export default function WizardProgress() {
+  const t = useTranslations("RepairPage.stages");
   const { currentStage, setStage, formData } = useBookingWizard();
+
+  const stages = [
+    { stage: 1 as const, shortLabel: t("stage1"), fullLabel: t("stage1Full") },
+    { stage: 2 as const, shortLabel: t("stage2"), fullLabel: t("stage2Full") },
+    { stage: 3 as const, shortLabel: t("stage3"), fullLabel: t("stage3Full") },
+  ];
 
   const isStageAccessible = (s: 1 | 2 | 3) => {
     if (s === 1) return true;
@@ -21,9 +23,9 @@ export default function WizardProgress() {
   };
 
   return (
-    <nav aria-label="Booking steps" className="max-w-2xl mx-auto mb-6 sm:mb-8 px-2">
+    <nav aria-label="Booking steps" className="max-w-3xl mx-auto mb-6 sm:mb-8 px-2">
       <div className="flex items-center justify-center gap-1.5 sm:gap-2.5">
-        {STAGES.map(({ stage, shortLabel, fullLabel }, idx) => {
+        {stages.map(({ stage, shortLabel, fullLabel }, idx) => {
           const isCurrent = currentStage === stage;
           const isCompleted = currentStage > stage;
           const canClick = isStageAccessible(stage);

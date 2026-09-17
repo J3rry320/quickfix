@@ -13,8 +13,8 @@ import {
   Calendar,
   AlertCircle,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useBookingWizard, QUICK_SLOTS } from "./BookingWizardContext";
-import contactConfig from "@/config/contact";
 
 function getSlotIcon(slotId: string) {
   switch (slotId) {
@@ -32,6 +32,9 @@ function getSlotIcon(slotId: string) {
 }
 
 export default function StageConfirmBooking() {
+  const t = useTranslations("RepairPage.stage3");
+  const tSlots = useTranslations("RepairPage.slots");
+
   const {
     formData,
     updateFormData,
@@ -50,14 +53,10 @@ export default function StageConfirmBooking() {
     fieldErrors,
   } = useBookingWizard();
 
-  const puneAreas = contactConfig.serviceAreas.all;
-  const popularAreas = contactConfig.serviceAreas.popular;
-
   // Zod-backed field errors
   const nameError = fieldErrors.name;
   const phoneError = fieldErrors.phone;
   const addressError = fieldErrors.streetAddress;
-  const pincodeError = fieldErrors.pincode;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,9 +73,26 @@ export default function StageConfirmBooking() {
     updateFormData({ phone: digits.slice(0, 10) });
   };
 
-  const handlePincodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const digits = e.target.value.replace(/\D/g, "").slice(0, 6);
-    updateFormData({ pincode: digits });
+  const getSlotLabel = (slotId: string) => {
+    switch (slotId) {
+      case "today-express":
+        return { label: tSlots("todayExpress"), sub: tSlots("todayExpressSub") };
+      case "today-afternoon":
+        return { label: tSlots("todayAfternoon"), sub: tSlots("todayAfternoonSub") };
+      case "today-evening":
+        return { label: tSlots("todayEvening"), sub: tSlots("todayEveningSub") };
+      case "tomorrow-morning":
+        return { label: tSlots("tomorrowMorning"), sub: tSlots("tomorrowMorningSub") };
+      default:
+        return { label: slotId, sub: "" };
+    }
+  };
+
+  const formatDisabledReason = (reason: string | null) => {
+    if (!reason) return null;
+    if (reason.toLowerCase().includes("closed")) return t("closedToday");
+    if (reason.toLowerCase().includes("passed")) return t("slotPassed");
+    return reason;
   };
 
   return (
@@ -86,12 +102,12 @@ export default function StageConfirmBooking() {
         <h2
           id="stage-heading"
           tabIndex={-1}
-          className="font-heading text-xl sm:text-2xl font-black text-tech-slate tracking-tight outline-hidden"
+          className="font-heading text-lg sm:text-xl font-black text-tech-slate tracking-tight outline-hidden"
         >
-          3. Schedule & Confirm Doorstep Repair
+          {t("title")}
         </h2>
         <p className="mt-1 text-xs sm:text-sm text-text-muted font-body">
-          Enter your doorstep address and contact details. Certified technician calls 30 minutes before arrival.
+          {t("description")}
         </p>
       </div>
 
@@ -101,7 +117,7 @@ export default function StageConfirmBooking() {
           <div className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-flash-orange shrink-0" aria-hidden="true" />
             <span className="text-xs font-bold text-tech-slate">
-              When should we arrive? <span className="text-flash-orange">*</span>
+              {t("slotQuestion")} <span className="text-flash-orange">*</span>
             </span>
           </div>
           <button
@@ -109,14 +125,14 @@ export default function StageConfirmBooking() {
             onClick={() => setUseCustomSlot(!useCustomSlot)}
             className="text-xs font-bold text-flash-orange hover:underline cursor-pointer"
           >
-            {useCustomSlot ? "← Quick arrival slots" : "Pick custom date & time →"}
+            {useCustomSlot ? t("quickSlotsBtn") : t("customSlotBtn")}
           </button>
         </div>
 
         {!useCustomSlot ? (
           <div
             role="radiogroup"
-            aria-label="Preferred arrival time slot"
+            aria-label={t("slotQuestion")}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3"
           >
             {QUICK_SLOTS.map((slotItem) => {
@@ -124,6 +140,7 @@ export default function StageConfirmBooking() {
               const IconComp = getSlotIcon(slotItem.id);
               const isAvailable = isSlotAvailable(slotItem.id);
               const disabledReason = getSlotDisabledReason(slotItem.id);
+              const { label, sub } = getSlotLabel(slotItem.id);
 
               return (
                 <button
@@ -165,13 +182,13 @@ export default function StageConfirmBooking() {
                             : "text-tech-slate"
                         }`}
                       >
-                        {slotItem.label}
+                        {label}
                       </span>
                     </div>
 
                     {!isAvailable && disabledReason && (
                       <span className="text-[10px] font-semibold text-zinc-500 bg-zinc-200/80 px-1.5 py-0.5 rounded-md shrink-0">
-                        {disabledReason}
+                        {formatDisabledReason(disabledReason)}
                       </span>
                     )}
                   </div>
@@ -181,7 +198,7 @@ export default function StageConfirmBooking() {
                       !isAvailable ? "text-zinc-400 line-through decoration-zinc-300" : "text-text-muted"
                     }`}
                   >
-                    {slotItem.sub}
+                    {sub}
                   </div>
                 </button>
               );
@@ -194,7 +211,7 @@ export default function StageConfirmBooking() {
                 htmlFor="customDate"
                 className="block text-2xs font-semibold text-text-muted mb-1.5"
               >
-                Select Date
+                {t("selectDateLabel")}
               </label>
               <input
                 id="customDate"
@@ -223,7 +240,7 @@ export default function StageConfirmBooking() {
                 htmlFor="customSlot"
                 className="block text-2xs font-semibold text-text-muted mb-1.5"
               >
-                Time Window
+                {t("timeWindowLabel")}
               </label>
               <select
                 id="customSlot"
@@ -235,19 +252,19 @@ export default function StageConfirmBooking() {
                   value="Morning (10:00 AM - 1:00 PM)"
                   disabled={formData.date === todayStr && !isTimeWindowAvailableForDate("Morning (10:00 AM - 1:00 PM)", todayStr)}
                 >
-                  Morning (10:00 AM – 1:00 PM) {formData.date === todayStr && !isTimeWindowAvailableForDate("Morning (10:00 AM - 1:00 PM)", todayStr) ? "(Passed)" : ""}
+                  Morning (10:00 AM – 1:00 PM) {formData.date === todayStr && !isTimeWindowAvailableForDate("Morning (10:00 AM - 1:00 PM)", todayStr) ? t("passedBadge") : ""}
                 </option>
                 <option
                   value="Afternoon (1:00 PM - 4:00 PM)"
                   disabled={formData.date === todayStr && !isTimeWindowAvailableForDate("Afternoon (1:00 PM - 4:00 PM)", todayStr)}
                 >
-                  Afternoon (1:00 PM – 4:00 PM) {formData.date === todayStr && !isTimeWindowAvailableForDate("Afternoon (1:00 PM - 4:00 PM)", todayStr) ? "(Passed)" : ""}
+                  Afternoon (1:00 PM – 4:00 PM) {formData.date === todayStr && !isTimeWindowAvailableForDate("Afternoon (1:00 PM - 4:00 PM)", todayStr) ? t("passedBadge") : ""}
                 </option>
                 <option
                   value="Evening (4:00 PM - 8:00 PM)"
                   disabled={formData.date === todayStr && !isTimeWindowAvailableForDate("Evening (4:00 PM - 8:00 PM)", todayStr)}
                 >
-                  Evening (4:00 PM – 8:00 PM) {formData.date === todayStr && !isTimeWindowAvailableForDate("Evening (4:00 PM - 8:00 PM)", todayStr) ? "(Passed)" : ""}
+                  Evening (4:00 PM – 8:00 PM) {formData.date === todayStr && !isTimeWindowAvailableForDate("Evening (4:00 PM - 8:00 PM)", todayStr) ? t("passedBadge") : ""}
                 </option>
               </select>
             </div>
@@ -255,127 +272,50 @@ export default function StageConfirmBooking() {
         )}
       </div>
 
-      {/* Section 2: Doorstep Address in Pune */}
+      {/* Section 2: Doorstep Address in Pune (Simplified & Optional) */}
       <div className="space-y-3 pt-5 border-t border-border-default/70">
-        <div className="flex items-center gap-2">
-          <MapPin className="h-4 w-4 text-flash-orange shrink-0" aria-hidden="true" />
-          <span className="text-xs font-bold text-tech-slate">
-            Doorstep Location in Pune <span className="text-flash-orange">*</span>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <MapPin className="h-4 w-4 text-flash-orange shrink-0" aria-hidden="true" />
+            <span className="text-xs font-bold text-tech-slate">
+              {t("addressHeading")}
+            </span>
+          </div>
+          <span className="text-2xs font-semibold text-text-muted bg-zinc-100 px-2 py-0.5 rounded-md">
+            {t("optionalBadge")}
           </span>
         </div>
 
-        {/* Popular Locality Chips */}
-        <div className="space-y-1.5">
-          <span className="block text-2xs font-semibold text-text-muted">
-            Quick Locality:
-          </span>
-          <div className="flex flex-wrap gap-1.5">
-            {popularAreas.map((areaName) => {
-              const isSelected = formData.area === areaName;
-              return (
-                <button
-                  type="button"
-                  key={areaName}
-                  onClick={() => updateFormData({ area: areaName })}
-                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer ${
-                    isSelected
-                      ? "bg-flash-orange text-clean-white shadow-2xs font-bold"
-                      : "bg-zinc-100 text-tech-slate hover:bg-zinc-200"
-                  }`}
-                >
-                  {areaName}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Locality Dropdown + Pune Pincode */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="areaSelect"
-              className="block text-2xs font-semibold text-text-muted mb-1.5"
-            >
-              Area / Locality in Pune
-            </label>
-            <select
-              id="areaSelect"
-              aria-label="Select Pune Locality"
-              value={formData.area}
-              onChange={(e) => updateFormData({ area: e.target.value })}
-              className="w-full h-11 rounded-xl border border-border-default bg-zinc-50/70 px-3 text-xs font-medium text-tech-slate focus:bg-clean-white focus-visible:ring-2 focus-visible:ring-flash-orange focus-visible:outline-hidden cursor-pointer transition-colors"
-            >
-              <option value="">Select Pune locality…</option>
-              {puneAreas.map((a) => (
-                <option key={a} value={a}>
-                  {a}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="sm:col-span-1">
-            <label
-              htmlFor="pincodeInput"
-              className="block text-2xs font-semibold text-text-muted mb-1.5"
-            >
-              Pune Pincode (411xxx) <span className="text-flash-orange">*</span>
-            </label>
-            <input
-              id="pincodeInput"
-              type="text"
-              required
-              inputMode="numeric"
-              maxLength={6}
-              placeholder="e.g. 411030"
-              value={formData.pincode}
-              onChange={handlePincodeChange}
-              aria-invalid={Boolean(pincodeError)}
-              aria-describedby={pincodeError ? "pincode-error" : undefined}
-              className={`w-full h-11 rounded-xl border px-3.5 text-xs sm:text-sm font-medium text-tech-slate placeholder:text-zinc-400 focus:bg-clean-white focus-visible:ring-2 focus-visible:outline-hidden transition-colors ${
-                pincodeError
-                  ? "border-red-500 bg-red-50/40 focus-visible:ring-red-500"
-                  : "border-border-default bg-zinc-50/70 focus-visible:ring-flash-orange"
-              }`}
-            />
-            {pincodeError && (
-              <p id="pincode-error" className="mt-1 text-2xs text-red-600 flex items-center gap-1 font-medium animate-in fade-in duration-150">
-                <AlertCircle className="h-3 w-3 shrink-0" aria-hidden="true" />
-                <span>{pincodeError}</span>
-              </p>
-            )}
-          </div>
-        </div>
-
-        {/* Street Address */}
         <div>
           <label
             htmlFor="streetAddress"
             className="block text-2xs font-semibold text-text-muted mb-1.5"
           >
-            Doorstep Address (Flat, Society, Street) <span className="text-flash-orange">*</span>
+            {t("singleLineAddressLabel")}
           </label>
           <input
             id="streetAddress"
             type="text"
-            required
             autoComplete="street-address"
-            placeholder="Flat/House no., building/society name, street…"
+            placeholder={t("singleLineAddressPlaceholder")}
             value={formData.streetAddress}
             onChange={(e) => updateFormData({ streetAddress: e.target.value })}
             aria-invalid={Boolean(addressError)}
-            aria-describedby={addressError ? "address-error" : undefined}
+            aria-describedby={addressError ? "address-error" : "address-hint"}
             className={`w-full h-11 rounded-xl border px-3.5 text-xs sm:text-sm font-medium text-tech-slate placeholder:text-zinc-400 focus:bg-clean-white focus-visible:ring-2 focus-visible:outline-hidden transition-colors ${
               addressError
                 ? "border-red-500 bg-red-50/40 focus-visible:ring-red-500"
                 : "border-border-default bg-zinc-50/70 focus-visible:ring-flash-orange"
             }`}
           />
-          {addressError && (
-            <p id="address-error" className="mt-1 text-2xs text-red-600 flex items-center gap-1 font-medium animate-in fade-in duration-150">
+          {addressError ? (
+            <p id="address-error" className="mt-1.5 text-2xs text-red-600 flex items-center gap-1 font-medium animate-in fade-in duration-150">
               <AlertCircle className="h-3 w-3 shrink-0" aria-hidden="true" />
               <span>{addressError}</span>
+            </p>
+          ) : (
+            <p id="address-hint" className="mt-1.5 text-2xs text-text-muted leading-relaxed">
+              {t("singleLineAddressHint")}
             </p>
           )}
         </div>
@@ -386,24 +326,24 @@ export default function StageConfirmBooking() {
         <div className="flex items-center gap-2">
           <Phone className="h-4 w-4 text-flash-orange shrink-0" aria-hidden="true" />
           <span className="text-xs font-bold text-tech-slate">
-            Contact Details for Technician <span className="text-flash-orange">*</span>
+            {t("contactHeading")} <span className="text-flash-orange">*</span>
           </span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           <div>
             <label
-              htmlFor="customerName"
+              htmlFor="name"
               className="block text-2xs font-semibold text-text-muted mb-1.5"
             >
-              Your Full Name <span className="text-flash-orange">*</span>
+              {t("nameLabel")} <span className="text-flash-orange">*</span>
             </label>
             <input
-              id="customerName"
+              id="name"
               type="text"
               required
               autoComplete="name"
-              placeholder="e.g. Rohit Patil"
+              placeholder={t("namePlaceholder")}
               value={formData.name}
               onChange={(e) => updateFormData({ name: e.target.value })}
               aria-invalid={Boolean(nameError)}
@@ -424,10 +364,10 @@ export default function StageConfirmBooking() {
 
           <div>
             <label
-              htmlFor="customerPhone"
+              htmlFor="phone"
               className="block text-2xs font-semibold text-text-muted mb-1.5"
             >
-              10-Digit Mobile Number <span className="text-flash-orange">*</span>
+              {t("phoneLabel")} <span className="text-flash-orange">*</span>
             </label>
             <div
               className={`relative flex h-11 rounded-xl border transition-colors focus-within:bg-clean-white focus-within:ring-2 ${
@@ -440,14 +380,14 @@ export default function StageConfirmBooking() {
                 +91
               </span>
               <input
-                id="customerPhone"
+                id="phone"
                 type="tel"
                 required
                 inputMode="tel"
                 autoComplete="tel"
                 spellCheck={false}
                 maxLength={10}
-                placeholder="10-digit mobile number…"
+                placeholder={t("phonePlaceholder")}
                 value={formData.phone}
                 onChange={handlePhoneChange}
                 aria-invalid={Boolean(phoneError)}
@@ -473,7 +413,7 @@ export default function StageConfirmBooking() {
           className="h-11 inline-flex items-center gap-1.5 rounded-xl border border-border-default px-4 text-xs sm:text-sm font-bold text-tech-slate hover:bg-zinc-50 cursor-pointer transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
-          <span>Back to Services</span>
+          <span>{t("backBtn")}</span>
         </button>
 
         <button
@@ -481,11 +421,12 @@ export default function StageConfirmBooking() {
           disabled={isSubmitting}
           className="h-11 inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-6 sm:px-8 text-xs sm:text-sm font-black text-clean-white shadow-md shadow-flash-orange/20 hover:bg-flash-orange-hover hover:shadow-lg active:scale-[0.99] transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-flash-orange focus-visible:outline-hidden disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          <span>Confirm Booking</span>
+          <span>{isSubmitting ? t("confirmingBtn") : t("confirmBtn")}</span>
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </button>
       </div>
     </form>
   );
 }
+
 

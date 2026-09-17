@@ -187,15 +187,27 @@ export const deviceSchema = z.object({
 });
 
 export const addressSchema = z.object({
-  area: z.string().trim().default("Pune"),
-  streetAddress: z.string().min(3, "Doorstep address is required").trim(),
+  area: z
+    .string()
+    .trim()
+    .optional()
+    .default("Pune")
+    .transform((v) => (v && v.trim().length > 0 ? v.trim() : "Pune")),
+  streetAddress: z
+    .string()
+    .trim()
+    .optional()
+    .default("To be confirmed via phone call")
+    .transform((v) => (v && v.trim().length > 0 ? v.trim() : "To be confirmed via phone call")),
   pincode: z
     .string()
     .trim()
-    .regex(/^411\d{3}$/, "Please provide a valid 6-digit Pune pincode (411xxx)")
     .optional()
-    .or(z.literal(""))
-    .default("411030"),
+    .default("411030")
+    .transform((v) => (v && v.trim().length > 0 ? v.trim() : "411030"))
+    .refine((val) => /^411\d{3}$/.test(val), {
+      message: "Please provide a valid 6-digit Pune pincode (411xxx)",
+    }),
   landmark: z.string().optional(),
   city: z.string().default("Pune"),
 });

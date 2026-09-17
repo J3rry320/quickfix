@@ -19,15 +19,27 @@ export const stageConfirmSchema = z.object({
     .string()
     .trim()
     .regex(/^[6-9]\d{9}$/, "Please enter a valid 10-digit Indian mobile number."),
-  area: z.string().trim().optional(),
   streetAddress: z
     .string()
     .trim()
-    .min(3, "Please enter your doorstep address (minimum 3 characters)."),
-  pincode: z
-    .string()
-    .trim()
-    .regex(/^411\d{3}$/, "Please enter a valid 6-digit Pune pincode (411xxx)."),
+    .optional()
+    .refine(
+      (val) => {
+        if (!val || val.length === 0) return true; // Optional!
+        if (val.length < 3) return false;
+        // If a 6-digit pincode is entered in the address, verify it starts with 411
+        const pincodeMatch = val.match(/\b\d{6}\b/);
+        if (pincodeMatch && !pincodeMatch[0].startsWith("411")) {
+          return false;
+        }
+        return true;
+      },
+      {
+        message: "We only provide doorstep pickup across Pune (Pincode must start with 411).",
+      }
+    ),
+  area: z.string().trim().optional(),
+  pincode: z.string().trim().optional(),
   date: z.string().min(1, "Please select your preferred repair date."),
   timeSlot: z.string().min(1, "Please select your preferred time slot."),
 });

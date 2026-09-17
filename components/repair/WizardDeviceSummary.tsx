@@ -2,9 +2,11 @@
 
 import React from "react";
 import { Smartphone, Wrench, Edit3 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useBookingWizard } from "./BookingWizardContext";
 
 export default function WizardDeviceSummary() {
+  const t = useTranslations("RepairPage.summary");
   const { currentStage, setStage, formData, dynamicPrice } = useBookingWizard();
 
   // Only show once brand is chosen
@@ -26,10 +28,10 @@ export default function WizardDeviceSummary() {
                 type="button"
                 onClick={() => setStage(1)}
                 className="ml-1 inline-flex items-center gap-0.5 text-2xs font-bold text-flash-orange hover:underline cursor-pointer"
-                aria-label="Change device"
+                aria-label={t("changeDeviceAria")}
               >
                 <Edit3 className="h-2.5 w-2.5" />
-                <span>Edit</span>
+                <span>{t("edit")}</span>
               </button>
             )}
           </div>
@@ -47,10 +49,10 @@ export default function WizardDeviceSummary() {
                   type="button"
                   onClick={() => setStage(2)}
                   className="ml-1 inline-flex items-center gap-0.5 text-2xs font-bold text-flash-orange hover:underline cursor-pointer"
-                  aria-label="Change repair issue"
+                  aria-label={t("changeIssueAria")}
                 >
                   <Edit3 className="h-2.5 w-2.5" />
-                  <span>Edit</span>
+                  <span>{t("edit")}</span>
                 </button>
               </div>
             </>
@@ -60,7 +62,7 @@ export default function WizardDeviceSummary() {
         {/* Live Estimated Price Tag */}
         {dynamicPrice !== null && (
           <div className="inline-flex items-center gap-1.5 rounded-lg bg-clean-white border border-border-default px-2.5 py-1 text-2xs shadow-2xs shrink-0">
-            <span className="text-text-muted font-medium">Est. Total:</span>
+            <span className="text-text-muted font-medium">{t("estTotal")}</span>
             <span className="font-heading font-black text-tech-slate tabular-nums">
               ₹{dynamicPrice.toLocaleString("en-IN")}
             </span>

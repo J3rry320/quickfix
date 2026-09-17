@@ -328,7 +328,7 @@ export default function ServicesCatalog() {
                       </div>
 
                       <Link
-                        href="/book-repair"
+                        href={`/book-repair?service=${encodeURIComponent(service.slug)}`}
                         className="inline-flex items-center justify-center rounded-xl bg-flash-orange px-4 py-2.5 text-xs font-extrabold text-clean-white shadow-xs hover:bg-flash-orange-hover active:scale-95 transition-all"
                       >
                         <span>{t("bookService")}</span>

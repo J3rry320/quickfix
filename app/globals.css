@@ -39,9 +39,15 @@
   --color-base-surface: #FFFFFF;
 
   /* Fonts */
-  --font-heading: var(--font-space-grotesk), system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-figtree), system-ui, -apple-system, sans-serif;
   --font-body: var(--font-plus-jakarta-sans), system-ui, -apple-system, sans-serif;
   --font-sans: var(--font-plus-jakarta-sans), system-ui, -apple-system, sans-serif;
+
+  /* Font Sizes */
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 0.875rem;
+  --text-3xs: 0.625rem;
+  --text-3xs--line-height: 0.75rem;
 }
 
 @layer base {

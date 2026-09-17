@@ -13,11 +13,11 @@ export interface IRepairRequestDevice {
 }
 
 export interface IRepairRequestAddress {
-  area: string;
-  streetAddress: string;
-  pincode: string;
+  area?: string;
+  streetAddress?: string;
+  pincode?: string;
   landmark?: string;
-  city: string;
+  city?: string;
 }
 
 export interface IRepairRequestSlot {
@@ -120,17 +120,17 @@ const RepairRequestSchema = new Schema<IRepairRequest>(
     address: {
       area: {
         type: String,
-        required: [true, "Pune locality/area is required"],
+        default: "Pune",
         trim: true,
       },
       streetAddress: {
         type: String,
-        required: [true, "Street address is required"],
+        default: "To be confirmed via phone call",
         trim: true,
       },
       pincode: {
         type: String,
-        required: [true, "Pincode is required"],
+        default: "411030",
         trim: true,
       },
       landmark: {

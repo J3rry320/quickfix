@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
-import { Suspense } from "react";
-import { getTranslations } from "next-intl/server";
-import { getSeoMetadata, siteConfig } from "@/config/seo";
-import { getServiceSchema, getBreadcrumbSchema } from "@/config/jsonld";
-import JsonLd from "@/components/seo/JsonLd";
 import StepByStepBookingWizard from "@/components/repair/StepByStepBookingWizard";
-import DoorstepPickupAssurance from "@/components/landing/DoorstepPickupAssurance";
-import { PageHero, Skeleton } from "@/components/ui";
-import { Clock, Lock, ShieldCheck, BadgeIndianRupee } from "lucide-react";
+import JsonLd from "@/components/seo/JsonLd";
+import { Skeleton } from "@/components/ui";
+import { getBreadcrumbSchema, getServiceSchema } from "@/config/jsonld";
+import { getSeoMetadata, siteConfig } from "@/config/seo";
+import { ChevronRight } from "lucide-react";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import Link from "next/link";
+import { Suspense } from "react";
 
 export async function generateMetadata({
   params,
@@ -35,65 +35,52 @@ export default async function BookRepairPage({
   const serviceSchema = getServiceSchema(locale);
   const breadcrumbSchema = getBreadcrumbSchema([
     { name: "Home", url: `${siteUrl}/${locale}` },
-    { name: t("title") || "Book Doorstep Repair", url: `${siteUrl}/${locale}/book-repair` },
+    {
+      name: t("title") || "Book Doorstep Repair",
+      url: `${siteUrl}/${locale}/book-repair`,
+    },
   ]);
 
   return (
     <div className="flex flex-col w-full bg-clean-white min-h-[calc(100vh-4rem)]">
-      <JsonLd schema={[serviceSchema, breadcrumbSchema]} id="repair-structured-data" />
-
-      {/* 1. Unified Page Hero */}
-      <PageHero
-        breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: t("title") || "Book Doorstep Repair" },
-        ]}
-        title={t("title") || "Book Doorstep Mobile Pickup & Repair"}
-        subtitle={t("subtitle") || "Safe doorstep pickup across Pune, precision repair in our certified Sadashiv Peth lab, returned same-day."}
-        align="center"
-        highlights={[
-          {
-            icon: Clock,
-            label: "Fast Pickup",
-            value: "Pune-wide",
-            color: "text-flash-orange",
-          },
-          {
-            icon: Lock,
-            label: "Data Protected",
-            value: "Safe transit",
-            color: "text-emerald-500",
-          },
-          {
-            icon: ShieldCheck,
-            label: "90-Day Warranty",
-            value: "Genuine parts",
-            color: "text-blue-500",
-          },
-          {
-            icon: BadgeIndianRupee,
-            label: "Free Visit",
-            value: "Zero travel fee",
-            color: "text-emerald-500",
-          },
-        ]}
+      <JsonLd
+        schema={[serviceSchema, breadcrumbSchema]}
+        id="repair-structured-data"
       />
 
+      {/* 1. Distraction-Free Header */}
+      <div className="border-b border-border-default/60 bg-gradient-to-b from-mist-gray/50 to-clean-white pt-5 pb-6 sm:pt-7 sm:pb-8">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 text-center">
+          {/* Breadcrumbs */}
+          <p className="mt-2 text-xs sm:text-sm text-text-muted max-w-xl mx-auto font-body">
+            You are here
+          </p>
+          <nav
+            aria-label="Breadcrumbs"
+            className="flex items-center justify-center gap-1.5 text-2xs sm:text-xs text-text-muted mb-3"
+          >
+            <Link
+              href={`/${locale}`}
+              className="hover:text-flash-orange transition-colors"
+            >
+              Home
+            </Link>
+            <ChevronRight className="h-3 w-3 text-zinc-400" />
+            <span className="font-semibold text-tech-slate">{t("title")}</span>
+          </nav>
+
+          {/* Heading */}
+        </div>
+      </div>
+
       {/* 2. Interactive Booking Wizard Section */}
-      <div className="py-8 sm:py-12 bg-mist-gray/40">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6">
-
-        {/* Step-by-Step 3-Stage Wizard */}
-        <Suspense fallback={<Skeleton className="h-96 w-full rounded-3xl" />}>
-          <StepByStepBookingWizard />
-        </Suspense>
-
-        {/* Reusable Doorstep Pickup & Lab Assurance Banner */}
-        <div className="mt-10 sm:mt-14">
-          <DoorstepPickupAssurance showCta={false} />
+      <div className="py-4 sm:py-10 bg-mist-gray/30 grow">
+        <div className="mx-auto max-w-5xl px-2.5 sm:px-6">
+          <Suspense fallback={<Skeleton className="h-96 w-full rounded-2xl" />}>
+            <StepByStepBookingWizard />
+          </Suspense>
         </div>
       </div>
     </div>
-  </div>
   );
 }

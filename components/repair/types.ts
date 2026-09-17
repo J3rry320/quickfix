@@ -2,6 +2,7 @@ export interface BrandItem {
   _id?: string;
   name: string;
   slug: string;
+  logoUrl?: string;
   isPopular?: boolean;
 }
 
@@ -23,6 +24,8 @@ export interface ModelItem {
   _id?: string;
   name: string;
   slug: string;
+  imageUrl?: string;
+  releaseYear?: number;
   isPopular?: boolean;
   servicePricing?: ServicePricingItem[];
 }
