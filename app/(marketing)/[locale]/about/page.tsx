@@ -196,12 +196,15 @@ export default async function AboutPage({
       <Section variant="muted" padding="default">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-            {/* Visual Media Placeholder Box */}
+            {/* Visual Media Box */}
             <div className="lg:col-span-5 relative">
               <AspectBox
                 aspectRatio="4/3"
+                variant="solid"
                 badge="Central Pune Lab"
-                label={`QuickFix Headquarters & Quality Assurance Lab — ${contactConfig.address.full}`}
+                fallbackType="lab"
+                title="QuickFix HQ & Lab"
+                label={`Sadashiv Peth Central Operations & Quality Lab — ${contactConfig.address.full}`}
                 className="shadow-lg"
               />
             </div>
@@ -317,8 +320,11 @@ export default async function AboutPage({
             <div className="lg:col-span-5">
               <AspectBox
                 aspectRatio="4/3"
+                variant="solid"
                 badge="Quality Lab"
-                label="Precision hardware diagnostic and thermal testing station in Pune"
+                fallbackType="service"
+                title="ESD-Safe Testing Station"
+                label="Calibrated logic board analysis, thermal profiling & OEM part pre-screening"
                 className="shadow-md"
               />
             </div>

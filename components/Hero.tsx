@@ -1,13 +1,12 @@
+import AspectBox from "@/components/ui/AspectBox";
 import contactConfig from "@/config/contact";
 import { Link } from "@/i18n/navigation";
 import {
   ArrowRight,
   CheckCircle2,
-  Image as ImageIcon,
   Phone,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 
 // User can set their image/video path here (e.g. "/hero-technician.jpg")
 const heroImageSrc = "/assets/images/landing.webp";
@@ -70,31 +69,21 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right Column: Hero Media Container with 4:3 Aspect Ratio */}
+          {/* Right Column: Hero Media Container */}
           <div className="lg:col-span-5 flex justify-center w-full">
-            <div className="relative w-full max-w-md lg:max-w-lg aspect-1/1 overflow-hidden rounded-2xl sm:rounded-3xl bg-clean-white/10 backdrop-blur-md border border-clean-white/20 shadow-2xl flex items-center justify-center">
-              {heroImageSrc ? (
-                <Image
-                  src={heroImageSrc}
-                  alt="QuickFix Pune mobile repair service"
-                  fill
-                  preload={true}
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 448px, 512px"
-                  className="object-cover"
-                />
-              ) : (
-                <div className="flex flex-col items-center justify-center p-6 text-center select-none text-clean-white">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-clean-white/15 border border-clean-white/30 text-clean-white mb-3 shadow-inner">
-                    <ImageIcon className="h-8 w-8 text-clean-white" />
-                  </div>
-                  <span className="text-sm font-bold text-clean-white tracking-wide">
-                    Doorstep Pickup & Lab Repair
-                  </span>
-                  <span className="text-xs text-clean-white/80 mt-1 max-w-xs">
-                    Free doorstep pickup, ESD-safe lab repair & same-day return
-                  </span>
-                </div>
-              )}
+            <div className="w-full max-w-md lg:max-w-lg">
+              <AspectBox
+                aspectRatio="1/1"
+                src={heroImageSrc}
+                alt="QuickFix Pune mobile repair service"
+                variant="glass"
+                badge="Sadashiv Peth Lab"
+                fallbackType="lab"
+                title="Doorstep Pickup & Lab Repair"
+                label="Free doorstep pickup, ESD-safe lab repair & same-day return"
+                preload={true}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 448px, 512px"
+              />
             </div>
           </div>
         </div>

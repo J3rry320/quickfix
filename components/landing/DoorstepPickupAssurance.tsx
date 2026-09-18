@@ -217,7 +217,7 @@ export default function DoorstepPickupAssurance({
 
   if (variant === "section") {
     return (
-      <section className={`py-10 sm:py-16 bg-base-surface ${className}`}>
+      <section className={`py-10 sm:py-16 bg-clean-white ${className}`}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {cardContent}
         </div>

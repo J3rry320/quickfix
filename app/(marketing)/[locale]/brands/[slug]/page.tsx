@@ -1,5 +1,6 @@
 import JsonLd from "@/components/seo/JsonLd";
 import {
+  AspectBox,
   BrandLogo,
   Container,
   CTABlock,
@@ -22,7 +23,6 @@ import {
   ArrowRight,
   BatteryCharging,
   Camera,
-  CheckCircle2,
   Clock,
   Cpu,
   Droplets,
@@ -224,59 +224,16 @@ export default async function BrandDetailPage({
           </>
         }
         media={
-          /* Redesigned Brand Showcase Hero Card with Small Brand Logo from DB */
-          <div className="relative w-full rounded-3xl bg-gradient-to-br from-mist-gray via-clean-white to-flash-orange/5 p-6 sm:p-8 border border-border-default/80 shadow-md flex flex-col justify-between overflow-hidden">
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <BrandLogo
-                  src={brand.logoUrl}
-                  brandName={brand.name}
-                  size="lg"
-                  className="shadow-sm"
-                />
-                <div>
-                  <h3 className="font-heading text-lg font-black text-tech-slate leading-tight">
-                    {brand.name}
-                  </h3>
-                  <span className="text-xs text-text-muted font-medium">
-                    {models.length} {t("models.viewModels")}
-                  </span>
-                </div>
-              </div>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-success-light text-success-text border border-success-border px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider">
-                <CheckCircle2 className="h-3.5 w-3.5" />
-                <span>Verified OEM</span>
-              </span>
-            </div>
-
-            <div className="my-6 space-y-2 text-xs text-text-secondary bg-clean-white/80 p-4 rounded-2xl border border-border-default/60">
-              <div className="flex items-center justify-between">
-                <span>Certified On-Site Turnaround:</span>
-                <strong className="text-tech-slate font-bold">
-                  30 Mins Express
-                </strong>
-              </div>
-              <div className="flex items-center justify-between">
-                <span>Replacement Warranty:</span>
-                <strong className="text-success font-bold">
-                  90 Days Full Replacement
-                </strong>
-              </div>
-              <div className="flex items-center justify-between">
-                <span>Pune Service Areas:</span>
-                <strong className="text-flash-orange font-bold">
-                  All Pune Localities
-                </strong>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between text-[11px] text-text-muted border-t border-border-default/60 pt-3">
-              <span>QuickFix Sadashiv Peth Hub</span>
-              <span className="font-bold text-tech-slate">
-                Zero Doorstep Travel Fee
-              </span>
-            </div>
-          </div>
+          <AspectBox
+            aspectRatio="4/3"
+            src={brand.logoUrl}
+            alt={brand.name}
+            badge={`${brand.name} Authorized Specs`}
+            fallbackType="brand"
+            title={`${brand.name} Repairs`}
+            label="OEM-grade components, 90-day warranty & 30-min express turnaround in Pune"
+            className="shadow-xl"
+          />
         }
       />
 

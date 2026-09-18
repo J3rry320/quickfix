@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { BookOpen, Clock, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { SectionHeader, EmptyState, SkeletonGrid } from "@/components/ui";
+import AspectBox from "@/components/ui/AspectBox";
 
 interface BlogPostItem {
   _id: string;
@@ -76,24 +76,15 @@ export default function BlogHighlights() {
                 className="flex flex-col justify-between rounded-2xl bg-mist-gray/80 border border-border-default p-5 sm:p-6 shadow-2xs hover:shadow-lg hover:border-flash-orange/40 transition-all group"
               >
                 <div>
-                  {/* 16:9 Image or Graphic */}
-                  <div className="relative mb-4 aspect-16/9 w-full overflow-hidden rounded-xl bg-gradient-to-br from-mist-gray to-border-default flex items-center justify-center border border-border-default">
-                    {post.coverImage ? (
-                      <Image
-                        src={post.coverImage}
-                        alt={post.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 384px"
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    ) : (
-                      <div className="flex flex-col items-center justify-center text-center p-4">
-                        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-clean-white text-flash-orange shadow-xs group-hover:scale-110 transition-transform">
-                          <BookOpen className="h-5 w-5" />
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                  {/* 16:9 Image or Fallback */}
+                  <AspectBox
+                    aspectRatio="16/9"
+                    src={post.coverImage}
+                    alt={post.title}
+                    fallbackType="blog"
+                    className="mb-4"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 384px"
+                  />
 
                   <div className="flex items-center gap-2 text-xs font-semibold text-text-muted mb-2">
                     <span className="rounded-md bg-clean-white px-2.5 py-0.5 text-tech-slate border border-border-default">

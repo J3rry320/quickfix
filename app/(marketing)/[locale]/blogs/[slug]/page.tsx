@@ -1,6 +1,13 @@
 import MarkdownRenderer from "@/components/blog/MarkdownRenderer";
 import JsonLd from "@/components/seo/JsonLd";
-import { Badge, Container, CTABlock, PageHero, Section } from "@/components/ui";
+import {
+  AspectBox,
+  Badge,
+  Container,
+  CTABlock,
+  PageHero,
+  Section,
+} from "@/components/ui";
 import { getBlogPostSchema, getBreadcrumbSchema } from "@/config/jsonld";
 import { siteConfig } from "@/config/seo";
 import { Link } from "@/i18n/navigation";
@@ -190,6 +197,19 @@ export default async function BlogPostDetailPage({
               {post.category}
             </Badge>
           </div>
+        }
+        media={
+          <AspectBox
+            aspectRatio="16/9"
+            src={post.coverImage}
+            alt={post.title}
+            badge={post.category}
+            fallbackType="blog"
+            title={post.title}
+            label={`Published by ${post.author?.name || "QuickFix Tech Team"} • ${post.readingTimeMinutes || 5} min read`}
+            className="shadow-xl"
+            preload={true}
+          />
         }
       />
 

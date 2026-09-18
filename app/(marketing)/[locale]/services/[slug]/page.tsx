@@ -1,8 +1,8 @@
 import JsonLd from "@/components/seo/JsonLd";
 import {
+  AspectBox,
   Container,
   CTABlock,
-  HeroMediaImage,
   PageHero,
   ProcessStepGrid,
   Section,
@@ -201,13 +201,13 @@ export default async function ServiceDetailPage({
           </>
         }
         media={
-          <HeroMediaImage
+          <AspectBox
             src={service.image}
             alt={service.name}
             badge={t("heroMedia.badge")}
             fallbackType="service"
             title={service.name}
-            subtitle={t("heroMedia.fallbackLabel", {
+            label={t("heroMedia.fallbackLabel", {
               serviceName: service.name,
             })}
             aspectRatio="4/3"

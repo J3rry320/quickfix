@@ -1,8 +1,8 @@
 import JsonLd from "@/components/seo/JsonLd";
 import {
+  AspectBox,
   Container,
   CTABlock,
-  HeroMediaImage,
   PageHero,
   ProcessStepGrid,
   Section,
@@ -211,13 +211,13 @@ export default async function ModelDetailPage({
           </>
         }
         media={
-          <HeroMediaImage
+          <AspectBox
             src={model.imageUrl}
             alt={`${brand.name} ${model.name}`}
             badge={t("hero.media.badge", { modelName: model.name })}
             fallbackType="model"
             title={`${brand.name} ${model.name}`}
-            subtitle={t("hero.media.fallbackLabel", { modelName: model.name })}
+            label={t("hero.media.fallbackLabel", { modelName: model.name })}
             aspectRatio="1/1"
             className="shadow-md"
           />

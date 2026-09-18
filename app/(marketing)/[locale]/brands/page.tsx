@@ -6,7 +6,7 @@ import { getBrandsHubSeoMetadata, siteConfig } from "@/config/seo";
 import { getBreadcrumbSchema } from "@/config/jsonld";
 import { getDbBrands, getAllDbModels, getPopularDbModels } from "@/lib/db/catalogue";
 import JsonLd from "@/components/seo/JsonLd";
-import { Container, Section, CTABlock, PageHero } from "@/components/ui";
+import { Container, Section, CTABlock, PageHero, AspectBox } from "@/components/ui";
 import { ModelsScrollSection } from "@/components/models";
 
 export function generateStaticParams() {
@@ -70,7 +70,18 @@ export default async function BrandsHubPage({
         ]}
         title="Smartphone Brands We Repair in Pune"
         subtitle="Select your phone brand to explore model-specific repairs, authentic OEM pricing estimates, and convenient doorstep pickup scheduling across Pune."
-        align="center"
+        align="left"
+        media={
+          <AspectBox
+            aspectRatio="4/3"
+            variant="solid"
+            badge="OEM Verified"
+            fallbackType="brand"
+            title="Multi-Brand Service Center"
+            label="Expert chip-level repairs for Apple, Samsung, OnePlus, Xiaomi & more in Pune"
+            className="shadow-xl"
+          />
+        }
         highlights={[
           {
             icon: Smartphone,
@@ -170,7 +181,7 @@ export default async function BrandsHubPage({
       )}
 
       {/* 3. Reusable CTA */}
-      <Section variant="white" padding="default">
+      <Section variant="muted" padding="default">
         <Container>
           <CTABlock
             title="Don't See Your Specific Smartphone Model?"

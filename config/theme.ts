@@ -6,7 +6,7 @@
  * to maintain strict single-source-of-truth consistency.
  */
 
-export const themeColors = {
+const baseColors = {
   // Brand Accents
   flashOrange: "#FF5722",
   flashOrangeHover: "#E64A19",
@@ -73,6 +73,61 @@ export const themeColors = {
   whatsapp: "#25D366",
   whatsappHover: "#20BD5A",
   whatsappDark: "#075E54",
+} as const;
+
+export const themeColors = {
+  ...baseColors,
+
+  // Nested namespaces for hierarchical access (used in JobSheetPdfDocument, canvas, etc.)
+  flashOrange: {
+    DEFAULT: baseColors.flashOrange,
+    hover: baseColors.flashOrangeHover,
+    subtle: baseColors.flashOrangeSubtle,
+  },
+  electricAmber: {
+    DEFAULT: baseColors.electricAmber,
+    hover: baseColors.electricAmberHover,
+  },
+  techSlate: {
+    DEFAULT: baseColors.techSlate,
+    hover: baseColors.techSlateHover,
+    dark: baseColors.techSlateDark,
+  },
+  border: {
+    default: baseColors.borderDefault,
+    subtle: baseColors.borderSubtle,
+    strong: baseColors.borderStrong,
+    dark: baseColors.borderDark,
+  },
+  text: {
+    primary: baseColors.textPrimary,
+    secondary: baseColors.textSecondary,
+    muted: baseColors.textMuted,
+    disabled: baseColors.textDisabled,
+    caption: baseColors.caption,
+  },
+  status: {
+    success: baseColors.success,
+    successHover: baseColors.successHover,
+    successLight: baseColors.successLight,
+    successBorder: baseColors.successBorder,
+    successText: baseColors.successText,
+    error: baseColors.error,
+    errorHover: baseColors.errorHover,
+    errorLight: baseColors.errorLight,
+    errorBorder: baseColors.errorBorder,
+    errorText: baseColors.errorText,
+    warning: baseColors.warning,
+    warningHover: baseColors.warningHover,
+    warningLight: baseColors.warningLight,
+    warningBorder: baseColors.warningBorder,
+    warningText: baseColors.warningText,
+    info: baseColors.info,
+    infoHover: baseColors.infoHover,
+    infoLight: baseColors.infoLight,
+    infoBorder: baseColors.infoBorder,
+    infoText: baseColors.infoText,
+  },
 } as const;
 
 export type ThemeColorKey = keyof typeof themeColors;

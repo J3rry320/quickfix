@@ -1,5 +1,6 @@
 import JsonLd from "@/components/seo/JsonLd";
 import {
+  AspectBox,
   Badge,
   Card,
   CardContent,
@@ -175,7 +176,17 @@ async function BlogListingSection({
                   });
 
               return (
-                <Card key={post._id} hoverable className="group">
+                <Card key={post._id} hoverable className="group overflow-hidden">
+                  <Link href={`/blogs/${post.slug}`} className="block">
+                    <AspectBox
+                      aspectRatio="16/9"
+                      src={post.coverImage}
+                      alt={post.title}
+                      fallbackType="blog"
+                      className="rounded-b-none border-0 border-b border-border-default/60"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 384px"
+                    />
+                  </Link>
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between gap-2 mb-3">
                       <Badge variant="accent" size="sm">
@@ -260,8 +271,18 @@ export default async function BlogIndexPage({
           { label: "Blogs & Guides" },
         ]}
         title="Smartphone Repair Guides & Tech Tips"
-        subtitle="In-depth articles from our Pune lab engineers covering battery degradation, display technologies, water damage rescue, and safe charging practices."
-        align="center"
+        align="left"
+        media={
+          <AspectBox
+            aspectRatio="4/3"
+            variant="solid"
+            badge="Technical Insights"
+            fallbackType="blog"
+            title="Pune Repair Knowledge Base"
+            label="Step-by-step troubleshooting, battery calibration & hardware guides written by lab engineers"
+            className="shadow-xl"
+          />
+        }
         highlights={[
           {
             icon: BookOpen,

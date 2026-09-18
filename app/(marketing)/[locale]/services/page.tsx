@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Clock, ShieldCheck, ArrowRight, Zap, Check, X, Phone } from "lucide-react";
+import { Clock, ShieldCheck, ArrowRight, Zap, Check, X, Phone, Wrench } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { getServicesHubSeoMetadata, siteConfig } from "@/config/seo";
@@ -8,7 +8,7 @@ import { getDbServices, getDbBrands } from "@/lib/db/catalogue";
 import contactConfig from "@/config/contact";
 import JsonLd from "@/components/seo/JsonLd";
 import DoorstepPickupAssurance from "@/components/landing/DoorstepPickupAssurance";
-import { Container, Section, CTABlock, PageHero } from "@/components/ui";
+import { Container, Section, CTABlock, PageHero, AspectBox } from "@/components/ui";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -79,7 +79,7 @@ export default async function ServicesHubPage({
     <div className="flex flex-col w-full bg-clean-white">
       <JsonLd schema={breadcrumbSchema} id="services-hub-structured-data" />
 
-      {/* 1. Unified Page Hero */}
+      {/* 1. Unified Page Hero with Media */}
       <PageHero
         breadcrumbs={[
           { label: "Home", href: "/" },
@@ -87,10 +87,21 @@ export default async function ServicesHubPage({
         ]}
         title="Smartphone Repair Services in Pune"
         subtitle="Doorstep smartphone pickup across Pune with precision repairs in our Sadashiv Peth cleanroom lab, authentic OEM parts, and a 90-day replacement warranty."
-        align="center"
+        align="left"
+        media={
+          <AspectBox
+            aspectRatio="4/3"
+            variant="solid"
+            badge="Certified Repair"
+            fallbackType="service"
+            title="Express Mobile Diagnostics"
+            label="Doorstep pickup & ESD-safe lab repair across all Pune & PCMC zones"
+            className="shadow-xl"
+          />
+        }
         highlights={[
           {
-            icon: WrenchIcon,
+            icon: Wrench,
             label: "Repairs",
             value: `${services.length} Core Services`,
             color: "text-flash-orange",
@@ -136,7 +147,7 @@ export default async function ServicesHubPage({
       />
 
       {/* 2. All Services Grid (Loaded from DB) */}
-      <Section variant="muted" padding="default">
+      <Section variant="white" padding="default">
         <Container>
           <div className="max-w-3xl mb-8">
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
@@ -189,7 +200,14 @@ export default async function ServicesHubPage({
         </Container>
       </Section>
 
-      {/* 3. Doorstep Repair vs Local Shop Comparison */}
+      {/* 3. Doorstep Pickup Assurance Banner */}
+      <Section variant="muted" padding="default">
+        <Container>
+          <DoorstepPickupAssurance />
+        </Container>
+      </Section>
+
+      {/* 4. Doorstep Repair vs Local Shop Comparison */}
       <Section variant="white" padding="default">
         <Container>
           <div className="text-center max-w-2xl mx-auto mb-10">
@@ -229,7 +247,7 @@ export default async function ServicesHubPage({
         </Container>
       </Section>
 
-      {/* 4. Brands Quick Grid (Loaded from DB) */}
+      {/* 5. Brands Quick Grid (Loaded from DB) */}
       <Section variant="muted" padding="default">
         <Container>
           <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight mb-2">
@@ -263,13 +281,6 @@ export default async function ServicesHubPage({
         </Container>
       </Section>
 
-      {/* 5. Doorstep Pickup Assurance Banner */}
-      <Section variant="muted" padding="default">
-        <Container>
-          <DoorstepPickupAssurance />
-        </Container>
-      </Section>
-
       {/* 6. CTA */}
       <Section variant="white" padding="default">
         <Container>
@@ -281,8 +292,4 @@ export default async function ServicesHubPage({
       </Section>
     </div>
   );
-}
-
-function WrenchIcon({ className }: { className?: string }) {
-  return <Clock className={className} />;
 }
