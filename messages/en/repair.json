@@ -90,11 +90,11 @@
       "tomorrowMorningSub": "10:00 AM – 1:00 PM"
     },
     "status": {
-      "loadingTitle": "Confirming Your Doorstep Pickup…",
-      "loadingSubtitle": "Reserving your appointment slot and assigning pickup fleet in Pune.",
+      "loadingTitle": "Confirming Your Repair Booking…",
+      "loadingSubtitle": "Please wait a moment while we schedule your repair pickup.",
       "successTitle": "Doorstep Pickup Scheduled!",
-      "successSubtitle": "Our Pune dispatch team has logged your booking. A technician will call you prior to arriving for device pickup.",
-      "successBadge": "Pickup Fleet Assigned & Confirmed",
+      "successSubtitle": "We have received your repair request. Our technician will call you before arriving.",
+      "successBadge": "Booking Confirmed",
       "refLabel": "Booking Reference Code",
       "summaryDevice": "Device",
       "summaryRepair": "Repair",

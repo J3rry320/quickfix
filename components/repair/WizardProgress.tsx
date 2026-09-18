@@ -34,7 +34,7 @@ export default function WizardProgress() {
             <React.Fragment key={stage}>
               {idx > 0 && (
                 <ChevronRight
-                  className="h-3.5 w-3.5 text-zinc-300 shrink-0 select-none"
+                  className="h-3.5 w-3.5 text-border-strong shrink-0 select-none"
                   aria-hidden="true"
                 />
               )}
@@ -50,8 +50,8 @@ export default function WizardProgress() {
                   isCurrent
                     ? "bg-flash-orange text-clean-white shadow-xs ring-4 ring-flash-orange/15"
                     : isCompleted
-                    ? "bg-clean-white border border-border-default text-tech-slate hover:bg-zinc-50 hover:border-zinc-300 cursor-pointer shadow-2xs"
-                    : "bg-clean-white border border-border-default/70 text-zinc-400 cursor-not-allowed"
+                    ? "bg-clean-white border border-border-default text-tech-slate hover:bg-surface-hover hover:border-border-strong cursor-pointer shadow-2xs"
+                    : "bg-clean-white border border-border-default/70 text-text-disabled cursor-not-allowed"
                 }`}
               >
                 <span
@@ -59,8 +59,8 @@ export default function WizardProgress() {
                     isCurrent
                       ? "bg-clean-white/25 text-clean-white"
                       : isCompleted
-                      ? "bg-emerald-50 text-emerald-600 border border-emerald-200"
-                      : "bg-zinc-100 text-zinc-400 border border-zinc-200"
+                      ? "bg-success-light text-success border border-success-border"
+                      : "bg-surface-hover text-text-disabled border border-border-default"
                   }`}
                 >
                   {isCompleted ? (

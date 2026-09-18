@@ -99,13 +99,13 @@ export default async function ServicesHubPage({
             icon: Clock,
             label: "Turnaround",
             value: "Same-Day Return",
-            color: "text-blue-500",
+            color: "text-info",
           },
           {
             icon: ShieldCheck,
             label: "Warranty",
             value: "90-Day Coverage",
-            color: "text-emerald-500",
+            color: "text-success",
           },
           {
             icon: Zap,
@@ -118,7 +118,7 @@ export default async function ServicesHubPage({
           <>
             <Link
               href="/book-repair"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-orange-600 active:scale-95 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-flash-orange-hover active:scale-95 transition-all"
             >
               <span>Book Doorstep Repair</span>
               <ArrowRight className="h-4 w-4" />
@@ -126,7 +126,7 @@ export default async function ServicesHubPage({
 
             <a
               href={`tel:${contactConfig.phone.value}`}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-zinc-300 text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-border-strong text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
             >
               <Phone className="h-4 w-4 text-flash-orange" />
               <span>Call Helpline: {contactConfig.phone.display}</span>
@@ -142,7 +142,7 @@ export default async function ServicesHubPage({
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
               All Smartphone Repair Services
             </h2>
-            <p className="mt-2 text-xs sm:text-sm text-zinc-600">
+            <p className="mt-2 text-xs sm:text-sm text-text-secondary">
               Select any repair to inspect symptoms, turnaround times, and pricing.
             </p>
           </div>
@@ -152,26 +152,26 @@ export default async function ServicesHubPage({
               <Link
                 key={service.slug}
                 href={`/services/${service.slug}`}
-                className="p-5 rounded-2xl bg-clean-white border border-zinc-200/90 hover:border-flash-orange/50 hover:shadow-md transition-all flex flex-col justify-between group"
+                className="p-5 rounded-2xl bg-clean-white border border-border-default/90 hover:border-flash-orange/50 hover:shadow-md transition-all flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-2">
                     <span className="text-xs font-bold text-flash-orange uppercase tracking-wider">
                       {service.name.split("&")[0].trim()}
                     </span>
-                    <span className="text-xs font-bold text-zinc-500">
+                    <span className="text-xs font-bold text-text-muted">
                       from ₹{service.startingPrice}
                     </span>
                   </div>
                   <h3 className="font-heading text-base font-bold text-tech-slate group-hover:text-flash-orange transition-colors">
                     {service.name}
                   </h3>
-                  <p className="mt-1.5 text-xs text-zinc-600 leading-relaxed line-clamp-2">
+                  <p className="mt-1.5 text-xs text-text-secondary leading-relaxed line-clamp-2">
                     {service.description}
                   </p>
                 </div>
-                <div className="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between">
-                  <div className="flex items-center gap-3 text-[11px] text-zinc-500 font-semibold">
+                <div className="mt-4 pt-3 border-t border-border-default flex items-center justify-between">
+                  <div className="flex items-center gap-3 text-[11px] text-text-muted font-semibold">
                     <span className="flex items-center gap-1">
                       <Clock className="h-3 w-3" />
                       {service.estimatedTimeMinutes} mins
@@ -196,7 +196,7 @@ export default async function ServicesHubPage({
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
               Why Doorstep Repair Wins Over Local Shops
             </h2>
-            <p className="mt-2 text-xs sm:text-sm text-zinc-600">
+            <p className="mt-2 text-xs sm:text-sm text-text-secondary">
               Save hours of travel time and protect your confidential mobile data with live doorstep service.
             </p>
           </div>
@@ -204,8 +204,8 @@ export default async function ServicesHubPage({
           <div className="max-w-4xl mx-auto overflow-hidden rounded-2xl border border-border-default shadow-xs bg-clean-white">
             <div className="grid grid-cols-12 bg-tech-slate text-clean-white p-4 font-heading text-xs sm:text-sm font-bold uppercase tracking-wider">
               <div className="col-span-4 sm:col-span-4">Service Feature</div>
-              <div className="col-span-4 sm:col-span-4 text-emerald-400 font-black">QuickFix Doorstep</div>
-              <div className="col-span-4 sm:col-span-4 text-zinc-400">Traditional Local Shop</div>
+              <div className="col-span-4 sm:col-span-4 text-success-light font-black">QuickFix Doorstep</div>
+              <div className="col-span-4 sm:col-span-4 text-text-muted">Traditional Local Shop</div>
             </div>
 
             <div className="divide-y divide-border-default text-xs sm:text-sm">
@@ -214,12 +214,12 @@ export default async function ServicesHubPage({
                   <div className="col-span-4 sm:col-span-4 font-bold text-tech-slate">
                     {row.feature}
                   </div>
-                  <div className="col-span-4 sm:col-span-4 text-emerald-700 font-semibold flex items-center gap-1.5">
-                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                  <div className="col-span-4 sm:col-span-4 text-success-text font-semibold flex items-center gap-1.5">
+                    <Check className="h-4 w-4 text-success shrink-0" />
                     <span>{row.quickfix}</span>
                   </div>
                   <div className="col-span-4 sm:col-span-4 text-text-muted flex items-center gap-1.5">
-                    <X className="h-4 w-4 text-rose-500 shrink-0" />
+                    <X className="h-4 w-4 text-error shrink-0" />
                     <span>{row.localShop}</span>
                   </div>
                 </div>
@@ -235,7 +235,7 @@ export default async function ServicesHubPage({
           <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight mb-2">
             Repairs by Smartphone Brand
           </h2>
-          <p className="text-xs sm:text-sm text-zinc-600 mb-8">
+          <p className="text-xs sm:text-sm text-text-secondary mb-8">
             Select your smartphone brand to see model-specific repair options and pricing.
           </p>
 
@@ -244,16 +244,16 @@ export default async function ServicesHubPage({
               <Link
                 key={brand.slug}
                 href={`/brands/${brand.slug}`}
-                className="p-4 rounded-xl bg-clean-white border border-zinc-200 hover:border-flash-orange/50 hover:shadow-xs transition-all group flex items-center gap-3"
+                className="p-4 rounded-xl bg-clean-white border border-border-default hover:border-flash-orange/50 hover:shadow-xs transition-all group flex items-center gap-3"
               >
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-mist-gray border border-zinc-200 shadow-2xs font-heading font-black text-xs text-tech-slate">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-mist-gray border border-border-default shadow-2xs font-heading font-black text-xs text-tech-slate">
                   {brand.name.slice(0, 2).toUpperCase()}
                 </div>
                 <div className="overflow-hidden">
                   <p className="text-xs sm:text-sm font-bold text-tech-slate group-hover:text-flash-orange transition-colors truncate">
                     {brand.name}
                   </p>
-                  <span className="text-[11px] text-zinc-500">
+                  <span className="text-[11px] text-text-muted">
                     Doorstep in Pune →
                   </span>
                 </div>

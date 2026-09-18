@@ -1,4 +1,5 @@
 import contactConfig from "@/config/contact";
+import { themeColors } from "@/config/theme";
 import {
   JobSheetData,
   STANDARD_REPAIR_TERMS,
@@ -22,12 +23,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 22,
     fontFamily: "Helvetica",
     fontSize: 7.5,
-    color: "#18181b",
-    backgroundColor: "#ffffff",
+    color: themeColors.techSlate.DEFAULT,
+    backgroundColor: themeColors.cleanWhite,
   },
   container: {
     borderWidth: 1,
-    borderColor: "#d4d4d8",
+    borderColor: themeColors.border.strong,
     borderRadius: 4,
     padding: 12,
   },
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-start",
     borderBottomWidth: 1.5,
-    borderBottomColor: "#18181b",
+    borderBottomColor: themeColors.techSlate.DEFAULT,
     paddingBottom: 8,
     marginBottom: 8,
   },
@@ -61,11 +62,11 @@ const styles = StyleSheet.create({
   brandTitle: {
     fontSize: 13,
     fontFamily: "Helvetica-Bold",
-    color: "#09090b",
+    color: themeColors.techSlate.dark,
     marginRight: 5,
   },
   legalBadge: {
-    backgroundColor: "#ffedd5",
+    backgroundColor: themeColors.flashOrange.subtle,
     borderRadius: 2,
     paddingHorizontal: 4,
     paddingVertical: 1,
@@ -73,18 +74,18 @@ const styles = StyleSheet.create({
   legalBadgeText: {
     fontSize: 6,
     fontFamily: "Helvetica-Bold",
-    color: "#9a3412",
+    color: themeColors.flashOrange.hover,
     textTransform: "uppercase",
   },
   tagline: {
     fontSize: 7,
     fontFamily: "Helvetica-Bold",
-    color: "#ea580c",
+    color: themeColors.flashOrange.DEFAULT,
     marginBottom: 2,
   },
   addressText: {
     fontSize: 6.5,
-    color: "#52525b",
+    color: themeColors.text.secondary,
     lineHeight: 1.2,
     marginBottom: 2,
   },
@@ -92,11 +93,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     fontSize: 6.5,
-    color: "#52525b",
+    color: themeColors.text.secondary,
   },
   contactBold: {
     fontFamily: "Helvetica-Bold",
-    color: "#27272a",
+    color: themeColors.techSlate.DEFAULT,
   },
 
   // Meta Badge
@@ -105,14 +106,14 @@ const styles = StyleSheet.create({
     maxWidth: "38%",
   },
   badgePill: {
-    backgroundColor: "#18181b",
+    backgroundColor: themeColors.techSlate.DEFAULT,
     borderRadius: 3,
     paddingHorizontal: 6,
     paddingVertical: 2,
     marginBottom: 4,
   },
   badgePillText: {
-    color: "#ffffff",
+    color: themeColors.cleanWhite,
     fontSize: 7.5,
     fontFamily: "Helvetica-Bold",
     textTransform: "uppercase",
@@ -120,23 +121,23 @@ const styles = StyleSheet.create({
   },
   metaLabel: {
     fontSize: 6.5,
-    color: "#71717a",
+    color: themeColors.text.muted,
     textTransform: "uppercase",
   },
   metaJobNumber: {
     fontSize: 10,
     fontFamily: "Helvetica-Bold",
-    color: "#09090b",
+    color: themeColors.techSlate.dark,
   },
   metaText: {
     fontSize: 7,
-    color: "#3f3f46",
+    color: themeColors.text.secondary,
     marginTop: 1,
   },
   modePill: {
-    backgroundColor: "#f4f4f5",
+    backgroundColor: themeColors.mistGray,
     borderWidth: 0.5,
-    borderColor: "#e4e4e7",
+    borderColor: themeColors.border.default,
     borderRadius: 2,
     paddingHorizontal: 4,
     paddingVertical: 1,
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
   modePillText: {
     fontSize: 6.5,
     fontFamily: "Helvetica-Bold",
-    color: "#27272a",
+    color: themeColors.techSlate.DEFAULT,
     textTransform: "uppercase",
   },
 
@@ -158,38 +159,38 @@ const styles = StyleSheet.create({
   colBox: {
     width: "49%",
     borderWidth: 0.75,
-    borderColor: "#e4e4e7",
+    borderColor: themeColors.border.default,
     borderRadius: 3,
     padding: 6,
-    backgroundColor: "#fafafa",
+    backgroundColor: themeColors.mistGray,
   },
   boxHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     borderBottomWidth: 0.5,
-    borderBottomColor: "#e4e4e7",
+    borderBottomColor: themeColors.border.default,
     paddingBottom: 2,
     marginBottom: 4,
   },
   boxHeaderTitle: {
     fontSize: 6.5,
     fontFamily: "Helvetica-Bold",
-    color: "#3f3f46",
+    color: themeColors.text.secondary,
     textTransform: "uppercase",
   },
   boxHeaderSubtitle: {
     fontSize: 6,
-    color: "#a1a1aa",
+    color: themeColors.text.muted,
   },
   boxName: {
     fontSize: 8.5,
     fontFamily: "Helvetica-Bold",
-    color: "#09090b",
+    color: themeColors.techSlate.dark,
     marginBottom: 2,
   },
   boxRow: {
     fontSize: 7,
-    color: "#3f3f46",
+    color: themeColors.text.secondary,
     marginBottom: 1.5,
     lineHeight: 1.25,
   },
@@ -200,10 +201,10 @@ const styles = StyleSheet.create({
   // Checklist
   checklistSection: {
     borderWidth: 0.75,
-    borderColor: "#e4e4e7",
+    borderColor: themeColors.border.default,
     borderRadius: 3,
     padding: 6,
-    backgroundColor: "#fafafa",
+    backgroundColor: themeColors.mistGray,
     marginBottom: 6,
   },
   checklistHeader: {
@@ -212,13 +213,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 4,
     borderBottomWidth: 0.5,
-    borderBottomColor: "#e4e4e7",
+    borderBottomColor: themeColors.border.default,
     paddingBottom: 2,
   },
   checklistTitle: {
     fontSize: 6.5,
     fontFamily: "Helvetica-Bold",
-    color: "#27272a",
+    color: themeColors.techSlate.DEFAULT,
     textTransform: "uppercase",
   },
   checklistStatusBadge: {
@@ -239,10 +240,10 @@ const styles = StyleSheet.create({
   checklistItem: {
     width: "19%",
     borderWidth: 0.5,
-    borderColor: "#e4e4e7",
+    borderColor: themeColors.border.default,
     borderRadius: 2,
     padding: 3,
-    backgroundColor: "#ffffff",
+    backgroundColor: themeColors.cleanWhite,
     marginBottom: 3,
   },
   itemTitleRow: {
@@ -251,37 +252,37 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 2,
     borderBottomWidth: 0.5,
-    borderBottomColor: "#f4f4f5",
+    borderBottomColor: themeColors.border.subtle,
     paddingBottom: 1,
   },
   itemTitle: {
     fontSize: 5.5,
     fontFamily: "Helvetica-Bold",
-    color: "#27272a",
+    color: themeColors.techSlate.DEFAULT,
   },
   itemBadgePass: {
     fontSize: 5,
     fontFamily: "Helvetica-Bold",
-    color: "#15803d",
-    backgroundColor: "#dcfce7",
+    color: themeColors.status.successText,
+    backgroundColor: themeColors.status.successLight,
     paddingHorizontal: 2,
     borderRadius: 1,
   },
   itemBadgeFail: {
     fontSize: 5,
     fontFamily: "Helvetica-Bold",
-    color: "#b91c1c",
-    backgroundColor: "#fee2e2",
+    color: themeColors.status.errorText,
+    backgroundColor: themeColors.status.errorLight,
     paddingHorizontal: 2,
     borderRadius: 1,
   },
   itemBadgePending: {
     fontSize: 5,
-    color: "#a1a1aa",
+    color: themeColors.text.muted,
   },
   itemValueText: {
     fontSize: 5.5,
-    color: "#52525b",
+    color: themeColors.text.secondary,
   },
 
   // Notes
@@ -293,24 +294,24 @@ const styles = StyleSheet.create({
   notesBox: {
     width: "49%",
     borderWidth: 0.75,
-    borderColor: "#e4e4e7",
+    borderColor: themeColors.border.default,
     borderRadius: 3,
     padding: 6,
-    backgroundColor: "#fafafa",
+    backgroundColor: themeColors.mistGray,
   },
   notesTitle: {
     fontSize: 6.5,
     fontFamily: "Helvetica-Bold",
-    color: "#3f3f46",
+    color: themeColors.text.secondary,
     textTransform: "uppercase",
     marginBottom: 3,
   },
   notesContent: {
     fontSize: 6.5,
-    color: "#18181b",
-    backgroundColor: "#ffffff",
+    color: themeColors.techSlate.DEFAULT,
+    backgroundColor: themeColors.cleanWhite,
     borderWidth: 0.5,
-    borderColor: "#e4e4e7",
+    borderColor: themeColors.border.default,
     borderRadius: 2,
     padding: 4,
     minHeight: 28,
@@ -320,19 +321,19 @@ const styles = StyleSheet.create({
   // Pricing Table
   table: {
     borderWidth: 0.75,
-    borderColor: "#d4d4d8",
+    borderColor: themeColors.border.strong,
     borderRadius: 3,
     marginBottom: 6,
     overflow: "hidden",
   },
   tableHeader: {
     flexDirection: "row",
-    backgroundColor: "#27272a",
+    backgroundColor: themeColors.techSlate.DEFAULT,
     paddingVertical: 3,
     paddingHorizontal: 4,
   },
   tableHeaderCol: {
-    color: "#ffffff",
+    color: themeColors.cleanWhite,
     fontSize: 6,
     fontFamily: "Helvetica-Bold",
     textTransform: "uppercase",
@@ -340,7 +341,7 @@ const styles = StyleSheet.create({
   tableRow: {
     flexDirection: "row",
     borderBottomWidth: 0.5,
-    borderBottomColor: "#e4e4e7",
+    borderBottomColor: themeColors.border.default,
     paddingVertical: 2.5,
     paddingHorizontal: 4,
   },
@@ -348,36 +349,36 @@ const styles = StyleSheet.create({
     width: "6%",
     textAlign: "center",
     fontSize: 6.5,
-    color: "#71717a",
+    color: themeColors.text.muted,
   },
-  tableColDesc: { width: "52%", fontSize: 6.5, color: "#09090b" },
+  tableColDesc: { width: "52%", fontSize: 6.5, color: themeColors.techSlate.dark },
   tableColType: {
     width: "16%",
     textAlign: "center",
     fontSize: 6,
-    color: "#52525b",
+    color: themeColors.text.secondary,
     textTransform: "capitalize",
   },
   tableColQty: {
     width: "10%",
     textAlign: "center",
     fontSize: 6.5,
-    color: "#52525b",
+    color: themeColors.text.secondary,
   },
   tableColPrice: {
     width: "16%",
     textAlign: "right",
     fontSize: 6.5,
     fontFamily: "Helvetica-Bold",
-    color: "#09090b",
+    color: themeColors.techSlate.dark,
   },
 
   subtotalRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#fafafa",
+    backgroundColor: themeColors.mistGray,
     borderBottomWidth: 0.5,
-    borderBottomColor: "#e4e4e7",
+    borderBottomColor: themeColors.border.default,
     paddingVertical: 2,
     paddingHorizontal: 6,
     fontSize: 6.5,
@@ -386,9 +387,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#f4f4f5",
+    backgroundColor: themeColors.surfaceHover,
     borderTopWidth: 1,
-    borderTopColor: "#18181b",
+    borderTopColor: themeColors.techSlate.DEFAULT,
     paddingVertical: 3,
     paddingHorizontal: 6,
   },
@@ -396,7 +397,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#fff7ed",
+    backgroundColor: themeColors.flashOrange.subtle,
     paddingVertical: 2.5,
     paddingHorizontal: 6,
   },
@@ -404,24 +405,24 @@ const styles = StyleSheet.create({
   // Terms
   termsSection: {
     borderWidth: 0.75,
-    borderColor: "#e4e4e7",
+    borderColor: themeColors.border.default,
     borderRadius: 3,
     padding: 5,
-    backgroundColor: "#fafafa",
+    backgroundColor: themeColors.mistGray,
     marginBottom: 6,
   },
   termsHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     borderBottomWidth: 0.5,
-    borderBottomColor: "#e4e4e7",
+    borderBottomColor: themeColors.border.default,
     paddingBottom: 2,
     marginBottom: 3,
   },
   termsTitle: {
     fontSize: 6,
     fontFamily: "Helvetica-Bold",
-    color: "#27272a",
+    color: themeColors.techSlate.DEFAULT,
     textTransform: "uppercase",
   },
   termsGrid: {
@@ -433,20 +434,20 @@ const styles = StyleSheet.create({
     width: "49%",
     marginBottom: 2,
     fontSize: 5.5,
-    color: "#52525b",
+    color: themeColors.text.secondary,
     lineHeight: 1.25,
   },
 
   // Signatures
   signatureSection: {
     borderTopWidth: 1,
-    borderTopColor: "#18181b",
+    borderTopColor: themeColors.techSlate.DEFAULT,
     paddingTop: 5,
     marginBottom: 4,
   },
   declarationText: {
     fontSize: 5.5,
-    color: "#52525b",
+    color: themeColors.text.secondary,
     textAlign: "center",
     marginBottom: 6,
     fontStyle: "italic",
@@ -463,7 +464,7 @@ const styles = StyleSheet.create({
   sigLine: {
     width: "100%",
     borderBottomWidth: 0.75,
-    borderBottomColor: "#a1a1aa",
+    borderBottomColor: themeColors.border.strong,
     borderBottomStyle: "dashed",
     height: 18,
     marginBottom: 3,
@@ -471,7 +472,7 @@ const styles = StyleSheet.create({
   sealBox: {
     width: "32%",
     borderWidth: 0.75,
-    borderColor: "#d4d4d8",
+    borderColor: themeColors.border.strong,
     borderStyle: "dashed",
     borderRadius: 3,
     padding: 4,
@@ -480,32 +481,32 @@ const styles = StyleSheet.create({
   sealLabel: {
     fontSize: 5,
     fontFamily: "Helvetica-Bold",
-    color: "#a1a1aa",
+    color: themeColors.text.muted,
     textTransform: "uppercase",
   },
   sealName: {
     fontSize: 6,
     fontFamily: "Helvetica-Bold",
-    color: "#3f3f46",
+    color: themeColors.text.secondary,
     marginTop: 1,
   },
   sigLabel: {
     fontSize: 6.5,
     fontFamily: "Helvetica-Bold",
-    color: "#09090b",
+    color: themeColors.techSlate.dark,
   },
   sigSubtext: {
     fontSize: 5.5,
-    color: "#71717a",
+    color: themeColors.text.muted,
   },
 
   // Footer
   footer: {
     textAlign: "center",
     fontSize: 5.5,
-    color: "#a1a1aa",
+    color: themeColors.text.muted,
     borderTopWidth: 0.5,
-    borderTopColor: "#f4f4f5",
+    borderTopColor: themeColors.border.subtle,
     paddingTop: 3,
   },
 });
@@ -847,8 +848,8 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
                   styles.checklistStatusBadge,
                   {
                     backgroundColor: isChecklistPending(data.checklist)
-                      ? "#fef3c7"
-                      : "#dcfce7",
+                      ? themeColors.status.warningLight
+                      : themeColors.status.successLight,
                   },
                 ]}
               >
@@ -857,8 +858,8 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
                     styles.checklistStatusText,
                     {
                       color: isChecklistPending(data.checklist)
-                        ? "#92400e"
-                        : "#166534",
+                        ? themeColors.status.warningText
+                        : themeColors.status.successText,
                     },
                   ]}
                 >
@@ -962,17 +963,17 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
 
             {/* Travel Fee */}
             <View style={styles.subtotalRow}>
-              <Text style={{ color: "#52525b" }}>
+              <Text style={{ color: themeColors.text.secondary }}>
                 Doorstep Convenience & Travel Charge:
               </Text>
-              <Text style={{ fontFamily: "Helvetica-Bold", color: "#15803d" }}>
+              <Text style={{ fontFamily: "Helvetica-Bold", color: themeColors.status.successText }}>
                 FREE (Zero Pune Travel Fee)
               </Text>
             </View>
 
             {data.diagnosticFee > 0 && (
               <View style={styles.subtotalRow}>
-                <Text style={{ color: "#52525b" }}>
+                <Text style={{ color: themeColors.text.secondary }}>
                   Inspection / Diagnostic Fee:
                 </Text>
                 <Text style={{ fontFamily: "Helvetica-Bold" }}>
@@ -983,9 +984,9 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
 
             {data.discount > 0 && (
               <View style={styles.subtotalRow}>
-                <Text style={{ color: "#15803d" }}>Promotional Discount:</Text>
+                <Text style={{ color: themeColors.status.successText }}>Promotional Discount:</Text>
                 <Text
-                  style={{ fontFamily: "Helvetica-Bold", color: "#15803d" }}
+                  style={{ fontFamily: "Helvetica-Bold", color: themeColors.status.successText }}
                 >
                   -{formatCurrency(data.discount)}
                 </Text>
@@ -1009,7 +1010,9 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
                     fontSize: 6.5,
                     fontFamily: "Helvetica-Bold",
                     color:
-                      data.paymentStatus === "paid" ? "#15803d" : "#b45309",
+                      data.paymentStatus === "paid"
+                        ? themeColors.status.successText
+                        : themeColors.status.warningText,
                   }}
                 >
                   {data.paymentStatus === "paid"
@@ -1021,7 +1024,7 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
               </View>
               <View style={{ flexDirection: "row", alignItems: "baseline" }}>
                 <Text
-                  style={{ fontSize: 6.5, color: "#52525b", marginRight: 4 }}
+                  style={{ fontSize: 6.5, color: themeColors.text.secondary, marginRight: 4 }}
                 >
                   TOTAL ESTIMATE:
                 </Text>
@@ -1033,17 +1036,17 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
 
             {/* Advance & Balance */}
             <View style={styles.subtotalRow}>
-              <Text style={{ color: "#71717a", fontSize: 6 }}>
+              <Text style={{ color: themeColors.text.muted, fontSize: 6 }}>
                 Warranty: {data.warrantyPeriod || "90-Day QuickFix Guarantee"}{" "}
                 on replaced components.
               </Text>
-              <Text style={{ color: "#3f3f46" }}>
+              <Text style={{ color: themeColors.text.secondary }}>
                 Advance Paid: {formatCurrency(data.advancePaid)}
               </Text>
             </View>
 
             <View style={styles.balanceRow}>
-              <Text style={{ fontSize: 6, color: "#7c2d12" }}>
+              <Text style={{ fontSize: 6, color: themeColors.flashOrange.hover }}>
                 *Transparent pricing • No hidden fees • No Fix, No Fee promise.
               </Text>
               <View style={{ flexDirection: "row", alignItems: "baseline" }}>
@@ -1051,7 +1054,7 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
                   style={{
                     fontSize: 6.5,
                     fontFamily: "Helvetica-Bold",
-                    color: "#9a3412",
+                    color: themeColors.flashOrange.hover,
                     marginRight: 4,
                   }}
                 >
@@ -1061,7 +1064,7 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
                   style={{
                     fontSize: 8.5,
                     fontFamily: "Helvetica-Bold",
-                    color: "#c2410c",
+                    color: themeColors.flashOrange.DEFAULT,
                   }}
                 >
                   {formatCurrency(data.balanceDue)}
@@ -1076,7 +1079,7 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
               <Text style={styles.termsTitle}>
                 Standard Terms & Conditions for Mobile Device Service
               </Text>
-              <Text style={{ fontSize: 5.5, color: "#71717a" }}>
+              <Text style={{ fontSize: 5.5, color: themeColors.text.muted }}>
                 QuickFixMobile.in Policy
               </Text>
             </View>
@@ -1111,7 +1114,7 @@ export const JobSheetPdfDocument: React.FC<JobSheetPdfDocumentProps> = ({
               <View style={styles.sealBox}>
                 <Text style={styles.sealLabel}>Official Hub Seal</Text>
                 <Text style={styles.sealName}>QuickFix Sadashiv Peth</Text>
-                <Text style={{ fontSize: 5, color: "#71717a" }}>
+                <Text style={{ fontSize: 5, color: themeColors.text.muted }}>
                   Pune - 411030
                 </Text>
               </View>

@@ -225,7 +225,7 @@ export default function AdminModelsPage() {
             type="button"
             onClick={() => setRefreshIndex((k) => k + 1)}
             disabled={loading}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-clean-white px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-bold text-zinc-600 hover:bg-zinc-50 cursor-pointer"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-border-default bg-clean-white px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-bold text-text-secondary hover:bg-mist-gray cursor-pointer"
           >
             <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
             <span className="hidden sm:inline">Refresh</span>
@@ -233,7 +233,7 @@ export default function AdminModelsPage() {
           <button
             type="button"
             onClick={openCreateModal}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-flash-orange px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs font-bold text-clean-white hover:bg-orange-600 shadow-md shadow-orange-500/20 active:scale-95 transition-all cursor-pointer"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-flash-orange px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs font-bold text-clean-white hover:bg-flash-orange-hover shadow-md shadow-flash-orange/20 active:scale-95 transition-all cursor-pointer"
           >
             <Plus className="h-4 w-4" />
             <span className="hidden sm:inline">Add Model</span>
@@ -259,7 +259,7 @@ export default function AdminModelsPage() {
                 setSelectedBrand(e.target.value);
                 setPage(1);
               }}
-              className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs font-bold text-tech-slate focus:border-flash-orange focus:outline-hidden shadow-2xs"
+              className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs font-bold text-tech-slate focus:border-flash-orange focus:outline-hidden shadow-2xs"
             >
               <option value="">All Smartphone Brands</option>
               {brands.map((b) => (
@@ -281,7 +281,7 @@ export default function AdminModelsPage() {
           emptyDescription="There are no smartphone models matching your selected brand or search query."
         >
           {models.map((m) => (
-            <tr key={m._id} className="hover:bg-zinc-50/80 transition-colors">
+            <tr key={m._id} className="hover:bg-mist-gray/80 transition-colors">
               {/* Model Name & Image */}
               <td className="px-5 py-4 font-bold text-tech-slate">
                 <div className="flex items-center gap-3">
@@ -289,7 +289,7 @@ export default function AdminModelsPage() {
                     src={m.imageUrl}
                     alt={m.name}
                     fallbackIcon={Smartphone}
-                    containerClassName="h-9 w-9 shrink-0 rounded-lg bg-zinc-50 border border-zinc-200 p-1 flex items-center justify-center shadow-2xs text-tech-slate"
+                    containerClassName="h-9 w-9 shrink-0 rounded-lg bg-mist-gray border border-border-default p-1 flex items-center justify-center shadow-2xs text-tech-slate"
                   />
                   <span>{m.name}</span>
                 </div>
@@ -297,23 +297,23 @@ export default function AdminModelsPage() {
 
               {/* Brand */}
               <td className="px-5 py-4">
-                <span className="inline-flex rounded-md bg-zinc-100 px-2 py-0.5 text-xs font-bold text-tech-slate">
+                <span className="inline-flex rounded-md bg-mist-gray px-2 py-0.5 text-xs font-bold text-tech-slate">
                   {m.brand?.name || "Unknown"}
                 </span>
               </td>
 
               {/* Slug */}
-              <td className="px-5 py-4 font-mono text-zinc-500">{m.slug}</td>
+              <td className="px-5 py-4 font-mono text-text-muted">{m.slug}</td>
 
               {/* Year */}
-              <td className="px-5 py-4 text-zinc-600">{m.releaseYear || "-"}</td>
+              <td className="px-5 py-4 text-text-secondary">{m.releaseYear || "-"}</td>
 
               {/* Configured Services (Clickable to manage) */}
               <td className="px-5 py-4">
                 <button
                   type="button"
                   onClick={() => setPricingModalModel(m)}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-orange-50 px-2.5 py-1 text-2xs font-bold text-flash-orange hover:bg-flash-orange hover:text-white transition-colors cursor-pointer border border-flash-orange/30 shadow-2xs"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-flash-orange-subtle px-2.5 py-1 text-2xs font-bold text-flash-orange hover:bg-flash-orange hover:text-clean-white transition-colors cursor-pointer border border-flash-orange/30 shadow-2xs"
                   title="Configure Service Pricing"
                 >
                   <Wrench className="h-3 w-3" />
@@ -326,7 +326,7 @@ export default function AdminModelsPage() {
                 {m.isPopular ? (
                   <AdminStatusBadge status="popular" label="Popular" />
                 ) : (
-                  <span className="text-zinc-300">-</span>
+                  <span className="text-border-strong">-</span>
                 )}
               </td>
 
@@ -340,7 +340,7 @@ export default function AdminModelsPage() {
                 <button
                   type="button"
                   onClick={() => openEditModal(m)}
-                  className="rounded-lg p-1.5 text-zinc-500 hover:bg-zinc-100 hover:text-tech-slate cursor-pointer"
+                  className="rounded-lg p-1.5 text-text-muted hover:bg-mist-gray hover:text-tech-slate cursor-pointer"
                   title="Edit Model"
                 >
                   <Edit2 className="h-4 w-4" />
@@ -348,7 +348,7 @@ export default function AdminModelsPage() {
                 <button
                   type="button"
                   onClick={() => setModelToDelete(m)}
-                  className="rounded-lg p-1.5 text-zinc-500 hover:bg-red-50 hover:text-red-600 cursor-pointer"
+                  className="rounded-lg p-1.5 text-text-muted hover:bg-error-light hover:text-error cursor-pointer"
                   title="Delete Model"
                 >
                   <Trash2 className="h-4 w-4" />
@@ -382,12 +382,12 @@ export default function AdminModelsPage() {
           >
             <div className="space-y-4 text-xs">
               <div className="space-y-1">
-                <label className="font-bold text-zinc-700">Manufacturer Brand *</label>
+                <label className="font-bold text-text-secondary">Manufacturer Brand *</label>
                 <select
                   required
                   value={brandId}
                   onChange={(e) => setBrandId(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs font-bold text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                  className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs font-bold text-tech-slate focus:border-flash-orange focus:outline-hidden"
                 >
                   <option value="">Select a brand...</option>
                   {brands.map((b) => (
@@ -399,20 +399,20 @@ export default function AdminModelsPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-zinc-700">Model Name *</label>
+                <label className="font-bold text-text-secondary">Model Name *</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. iPhone 15 Pro, Galaxy S24"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                  className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="font-bold text-zinc-700">
+                  <label className="font-bold text-text-secondary">
                     Slug (optional auto-generated)
                   </label>
                   <input
@@ -420,19 +420,19 @@ export default function AdminModelsPage() {
                     placeholder="e.g. iphone-15-pro"
                     value={slug}
                     onChange={(e) => setSlug(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs font-mono text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                    className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs font-mono text-tech-slate focus:border-flash-orange focus:outline-hidden"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-bold text-zinc-700">Release Year</label>
+                  <label className="font-bold text-text-secondary">Release Year</label>
                   <input
                     type="number"
                     min={2000}
                     max={2100}
                     value={releaseYear}
                     onChange={(e) => setReleaseYear(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                    className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
                   />
                 </div>
               </div>
@@ -446,22 +446,22 @@ export default function AdminModelsPage() {
               />
 
               <div className="flex items-center gap-6 pt-2">
-                <label className="inline-flex items-center gap-2 font-bold text-zinc-700 cursor-pointer">
+                <label className="inline-flex items-center gap-2 font-bold text-text-secondary cursor-pointer">
                   <input
                     type="checkbox"
                     checked={isPopular}
                     onChange={(e) => setIsPopular(e.target.checked)}
-                    className="rounded border-zinc-300 text-flash-orange focus:ring-flash-orange"
+                    className="rounded border-border-strong text-flash-orange focus:ring-flash-orange"
                   />
                   <span>Popular Device</span>
                 </label>
 
-                <label className="inline-flex items-center gap-2 font-bold text-zinc-700 cursor-pointer">
+                <label className="inline-flex items-center gap-2 font-bold text-text-secondary cursor-pointer">
                   <input
                     type="checkbox"
                     checked={isActive}
                     onChange={(e) => setIsActive(e.target.checked)}
-                    className="rounded border-zinc-300 text-flash-orange focus:ring-flash-orange"
+                    className="rounded border-border-strong text-flash-orange focus:ring-flash-orange"
                   />
                   <span>Active in Catalogue</span>
                 </label>

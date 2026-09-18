@@ -47,7 +47,7 @@ export default function BlogHighlights() {
   }, []);
 
   return (
-    <section className="py-10 sm:py-16 lg:py-20 bg-clean-white border-b border-zinc-200">
+    <section className="py-10 sm:py-16 lg:py-20 bg-clean-white border-b border-border-default">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <SectionHeader
@@ -73,11 +73,11 @@ export default function BlogHighlights() {
             {posts.map((post) => (
               <article
                 key={post._id}
-                className="flex flex-col justify-between rounded-2xl bg-mist-gray/80 border border-zinc-200 p-5 sm:p-6 shadow-2xs hover:shadow-lg hover:border-flash-orange/40 transition-all group"
+                className="flex flex-col justify-between rounded-2xl bg-mist-gray/80 border border-border-default p-5 sm:p-6 shadow-2xs hover:shadow-lg hover:border-flash-orange/40 transition-all group"
               >
                 <div>
                   {/* 16:9 Image or Graphic */}
-                  <div className="relative mb-4 aspect-16/9 w-full overflow-hidden rounded-xl bg-gradient-to-br from-mist-gray to-zinc-200 flex items-center justify-center border border-zinc-100">
+                  <div className="relative mb-4 aspect-16/9 w-full overflow-hidden rounded-xl bg-gradient-to-br from-mist-gray to-border-default flex items-center justify-center border border-border-default">
                     {post.coverImage ? (
                       <Image
                         src={post.coverImage}
@@ -95,8 +95,8 @@ export default function BlogHighlights() {
                     )}
                   </div>
 
-                  <div className="flex items-center gap-2 text-xs font-semibold text-zinc-500 mb-2">
-                    <span className="rounded-md bg-clean-white px-2.5 py-0.5 text-tech-slate border border-zinc-200">
+                  <div className="flex items-center gap-2 text-xs font-semibold text-text-muted mb-2">
+                    <span className="rounded-md bg-clean-white px-2.5 py-0.5 text-tech-slate border border-border-default">
                       {post.category || "Repair Guide"}
                     </span>
                     <span>•</span>
@@ -110,12 +110,12 @@ export default function BlogHighlights() {
                     {post.title}
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-zinc-600 font-body line-clamp-3 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-text-secondary font-body line-clamp-3 leading-relaxed">
                     {post.excerpt}
                   </p>
                 </div>
 
-                <div className="mt-4 pt-4 border-t border-zinc-200/80">
+                <div className="mt-4 pt-4 border-t border-border-default/80">
                   <Link
                     href={`/blogs/${post.slug}`}
                     className="inline-flex items-center text-xs font-bold text-flash-orange group-hover:translate-x-1 transition-transform"
@@ -133,7 +133,7 @@ export default function BlogHighlights() {
           <div className="mt-10 sm:mt-12 text-center">
             <Link
               href="/blogs"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-mist-gray border border-zinc-300 px-6 py-3 text-xs sm:text-sm font-bold text-tech-slate hover:border-flash-orange hover:text-flash-orange hover:bg-clean-white transition-all shadow-2xs"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-mist-gray border border-border-strong px-6 py-3 text-xs sm:text-sm font-bold text-tech-slate hover:border-flash-orange hover:text-flash-orange hover:bg-clean-white transition-all shadow-2xs"
             >
               <span>{t("viewAll")}</span>
               <ArrowRight className="h-4 w-4 text-flash-orange" />

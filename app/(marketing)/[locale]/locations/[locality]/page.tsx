@@ -112,20 +112,20 @@ export default async function LocalityPage({
             icon: MapPin,
             label: "Landmark",
             value: loc.landmark,
-            color: "text-blue-500",
+            color: "text-info",
           },
           {
             icon: ShieldCheck,
             label: "Warranty",
             value: "90 Days Hassle-Free",
-            color: "text-emerald-500",
+            color: "text-success",
           },
         ]}
         actions={
           <>
             <Link
               href="/book-repair"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-orange-600 active:scale-95 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-flash-orange-hover active:scale-95 transition-all"
             >
               <span>Book Pickup in {loc.name}</span>
               <ArrowRight className="h-4 w-4" />
@@ -133,7 +133,7 @@ export default async function LocalityPage({
 
             <a
               href={`tel:${contactConfig.phone.value}`}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-zinc-300 text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-border-strong text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
             >
               <Phone className="h-4 w-4 text-flash-orange" />
               <span>Call {contactConfig.phone.display}</span>
@@ -157,7 +157,7 @@ export default async function LocalityPage({
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
               Neighborhoods We Visit in & around {loc.name}
             </h2>
-            <p className="mt-2 text-xs sm:text-sm text-zinc-600">
+            <p className="mt-2 text-xs sm:text-sm text-text-secondary">
               Zero extra travel charges anywhere within this radius. Safe
               doorstep pickup and return with tamper-proof transit bags.
             </p>
@@ -167,7 +167,7 @@ export default async function LocalityPage({
             {loc.popularNeighborhoods.map((area, idx) => (
               <span
                 key={idx}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-clean-white border border-zinc-200 px-3.5 py-2 text-xs font-semibold text-tech-slate shadow-2xs"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-clean-white border border-border-default px-3.5 py-2 text-xs font-semibold text-tech-slate shadow-2xs"
               >
                 <MapPin className="h-3.5 w-3.5 text-flash-orange shrink-0" />
                 <span>{area}</span>
@@ -184,7 +184,7 @@ export default async function LocalityPage({
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
               Top Smartphone Repairs Ordered in {loc.name}
             </h2>
-            <p className="mt-2 text-xs sm:text-sm text-zinc-600">
+            <p className="mt-2 text-xs sm:text-sm text-text-secondary">
               Repairs are performed by certified engineers in our Sadashiv Peth
               cleanroom lab with a 90-day replacement warranty.
             </p>
@@ -195,25 +195,25 @@ export default async function LocalityPage({
               <Link
                 key={service.slug}
                 href={`/services/${service.slug}`}
-                className="p-5 rounded-2xl bg-elevated-surface border border-zinc-200/90 hover:border-flash-orange/50 hover:shadow-md transition-all flex flex-col justify-between group"
+                className="p-5 rounded-2xl bg-elevated-surface border border-border-default/90 hover:border-flash-orange/50 hover:shadow-md transition-all flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-2">
                     <span className="text-xs font-bold text-flash-orange uppercase tracking-wider">
                       {service.name.split("&")[0].trim()}
                     </span>
-                    <span className="text-xs font-bold text-zinc-500">
+                    <span className="text-xs font-bold text-text-muted">
                       from ₹{service.startingPrice}
                     </span>
                   </div>
                   <h3 className="font-heading text-base font-bold text-tech-slate group-hover:text-flash-orange transition-colors">
                     {service.name} in {loc.name}
                   </h3>
-                  <p className="mt-1.5 text-xs text-zinc-600 leading-relaxed line-clamp-2">
+                  <p className="mt-1.5 text-xs text-text-secondary leading-relaxed line-clamp-2">
                     {service.description}
                   </p>
                 </div>
-                <div className="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between text-xs font-bold text-flash-orange">
+                <div className="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between text-xs font-bold text-flash-orange">
                   <span>View Details & Pricing</span>
                   <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>

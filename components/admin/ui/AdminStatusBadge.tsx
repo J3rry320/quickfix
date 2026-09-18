@@ -38,7 +38,7 @@ export default function AdminStatusBadge({
 }: AdminStatusBadgeProps) {
   const normalized = String(status).toLowerCase();
 
-  let colorClasses = "bg-zinc-100 text-zinc-700 border-zinc-200";
+  let colorClasses = "bg-surface-hover text-tech-slate border-border-default";
   let icon: React.ReactNode = null;
 
   switch (normalized) {
@@ -46,18 +46,18 @@ export default function AdminStatusBadge({
     case "new":
     case "draft":
     case "unpaid":
-      colorClasses = "bg-amber-100 text-amber-800 border-amber-200";
+      colorClasses = "bg-warning-light text-warning-text border-warning-border";
       icon = <Clock className="h-3 w-3" />;
       break;
 
     case "confirmed":
     case "in_progress":
     case "cod":
-      colorClasses = "bg-blue-100 text-blue-800 border-blue-200";
+      colorClasses = "bg-info-light text-info-text border-info-border";
       break;
 
     case "contacted":
-      colorClasses = "bg-purple-100 text-purple-800 border-purple-200";
+      colorClasses = "bg-electric-amber/10 text-electric-amber border-electric-amber/20";
       break;
 
     case "completed":
@@ -67,12 +67,12 @@ export default function AdminStatusBadge({
     case "approved":
     case "true":
     case "paid":
-      colorClasses = "bg-emerald-100 text-emerald-800 border-emerald-200";
+      colorClasses = "bg-success-light text-success-text border-success-border";
       icon = <Check className="h-3 w-3" />;
       break;
 
     case "popular":
-      colorClasses = "bg-amber-100 text-amber-800 border-amber-200 font-extrabold";
+      colorClasses = "bg-warning-light text-warning-text border-warning-border font-extrabold";
       break;
 
     case "cancelled":
@@ -80,12 +80,12 @@ export default function AdminStatusBadge({
     case "archived":
     case "inactive":
     case "false":
-      colorClasses = "bg-zinc-100 text-zinc-600 border-zinc-200";
+      colorClasses = "bg-surface-hover text-text-muted border-border-default";
       icon = <XCircle className="h-3 w-3" />;
       break;
 
     default:
-      colorClasses = "bg-zinc-100 text-zinc-700 border-zinc-200";
+      colorClasses = "bg-surface-hover text-tech-slate border-border-default";
   }
 
   // Format label

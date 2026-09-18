@@ -24,7 +24,7 @@ export default function CoverageMapView({
 
   return (
     <div
-      className={`relative w-full rounded-3xl overflow-hidden border border-slate-700/80 bg-slate-950 shadow-2xl group select-none ${className}`}
+      className={`relative w-full rounded-3xl overflow-hidden border border-border-dark bg-tech-slate-dark shadow-2xl group select-none ${className}`}
       style={{ minHeight: "360px" }}
     >
       {/* Background Cartographic Vector Grid */}
@@ -87,23 +87,23 @@ export default function CoverageMapView({
       </div>
 
       {/* Top Status & SLA HUD Bar */}
-      <div className="relative z-10 p-4 sm:p-5 flex items-center justify-between gap-3 bg-gradient-to-b from-slate-950/90 to-transparent">
+      <div className="relative z-10 p-4 sm:p-5 flex items-center justify-between gap-3 bg-gradient-to-b from-tech-slate-dark/90 to-transparent">
         <div className="flex items-center gap-2">
           <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-flash-orange/20 border border-flash-orange/40 text-flash-orange">
             <Radio className="h-3.5 w-3.5 animate-pulse" />
           </div>
           <div>
-            <span className="text-2xs font-mono font-bold tracking-wider text-slate-400 uppercase block">
+            <span className="text-2xs font-mono font-bold tracking-wider text-text-muted uppercase block">
               {zoneName}
             </span>
-            <span className="text-xs font-heading font-extrabold text-white">
+            <span className="text-xs font-heading font-extrabold text-clean-white">
               Live Dispatch Radar
             </span>
           </div>
         </div>
 
-        <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-950/90 border border-emerald-500/50 px-3 py-1 text-2xs font-mono font-bold text-emerald-400 shadow-xs">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+        <div className="inline-flex items-center gap-1.5 rounded-full bg-tech-slate border border-success/50 px-3 py-1 text-2xs font-mono font-bold text-success shadow-xs">
+          <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
           <span>{dispatchTime} SLA</span>
         </div>
       </div>
@@ -112,18 +112,18 @@ export default function CoverageMapView({
       <div className="relative z-10 my-10 flex flex-col items-center justify-center text-center px-4">
         {/* Glowing Pin Beacon */}
         <div className="relative mb-3 flex items-center justify-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-flash-orange text-white shadow-lg shadow-flash-orange/40 ring-4 ring-flash-orange/30 group-hover:scale-110 transition-transform">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-flash-orange text-clean-white shadow-lg shadow-flash-orange/40 ring-4 ring-flash-orange/30 group-hover:scale-110 transition-transform">
             <MapPin className="h-6 w-6 stroke-[2.5]" />
           </div>
         </div>
 
         {/* Locality Badge Pill */}
-        <div className="rounded-xl bg-slate-900/90 border border-slate-700/80 px-4 py-2 backdrop-blur-sm shadow-xl max-w-xs">
-          <h4 className="font-heading text-sm sm:text-base font-black text-white tracking-tight flex items-center justify-center gap-1.5">
+        <div className="rounded-xl bg-tech-slate border border-border-dark px-4 py-2 backdrop-blur-sm shadow-xl max-w-xs">
+          <h4 className="font-heading text-sm sm:text-base font-black text-clean-white tracking-tight flex items-center justify-center gap-1.5">
             <span>{localityName}</span>
-            <span className="text-2xs font-normal text-slate-400 font-mono">Pune</span>
+            <span className="text-2xs font-normal text-text-muted font-mono">Pune</span>
           </h4>
-          <p className="text-2xs text-slate-400 font-mono mt-0.5">
+          <p className="text-2xs text-text-muted font-mono mt-0.5">
             {pincode ? `PIN: ${pincode} • ` : ""}Active Doorstep Van Sector
           </p>
         </div>
@@ -131,19 +131,19 @@ export default function CoverageMapView({
 
       {/* Surrounding Pune Landmark Markers */}
       <div className="absolute top-20 left-6 z-0 hidden sm:block">
-        <span className="rounded-md bg-slate-900/70 border border-slate-800 px-2 py-0.5 text-3xs font-mono text-slate-400">
+        <span className="rounded-md bg-tech-slate/70 border border-border-dark px-2 py-0.5 text-3xs font-mono text-text-muted">
           ● Aundh / Baner Corridor
         </span>
       </div>
       <div className="absolute bottom-20 right-6 z-0 hidden sm:block">
-        <span className="rounded-md bg-slate-900/70 border border-slate-800 px-2 py-0.5 text-3xs font-mono text-slate-400">
+        <span className="rounded-md bg-tech-slate/70 border border-border-dark px-2 py-0.5 text-3xs font-mono text-text-muted">
           ● Shivaji Nagar Hub 3.8 km
         </span>
       </div>
 
       {/* Bottom Action Footer with Google Maps Link */}
-      <div className="relative z-10 p-4 sm:p-5 bg-gradient-to-t from-slate-950 via-slate-950/95 to-transparent border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <div className="flex items-center gap-2 text-2xs text-slate-300 font-medium text-center sm:text-left">
+      <div className="relative z-10 p-4 sm:p-5 bg-gradient-to-t from-tech-slate-dark via-tech-slate-dark/95 to-transparent border-t border-border-dark flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="flex items-center gap-2 text-2xs text-text-secondary font-medium text-center sm:text-left">
           <Zap className="h-3.5 w-3.5 text-electric-amber shrink-0" />
           <span>Mobile toolkit dispatched direct to residential & IT parks</span>
         </div>
@@ -152,7 +152,7 @@ export default function CoverageMapView({
           href={googleMapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange hover:bg-flash-orange-hover text-white px-4 py-2 text-xs font-bold shadow-md shadow-flash-orange/20 transition-all group-hover:shadow-flash-orange/40 active:scale-95 shrink-0"
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange hover:bg-flash-orange-hover text-clean-white px-4 py-2 text-xs font-bold shadow-md shadow-flash-orange/20 transition-all group-hover:shadow-flash-orange/40 active:scale-95 shrink-0"
         >
           <Navigation className="h-3.5 w-3.5" />
           <span>Open in Google Maps</span>

@@ -43,7 +43,7 @@ export default function AspectBox({
 
   return (
     <div
-      className={`relative w-full overflow-hidden rounded-2xl bg-mist-gray border-2 border-dashed border-zinc-300 flex flex-col items-center justify-center group ${aspect} ${className}`}
+      className={`relative w-full overflow-hidden rounded-2xl bg-mist-gray border-2 border-dashed border-border-strong flex flex-col items-center justify-center group ${aspect} ${className}`}
       {...props}
     >
       {src ? (
@@ -56,25 +56,25 @@ export default function AspectBox({
           className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
       ) : (
-        <div className="flex flex-col items-center justify-center p-6 text-center select-none text-zinc-500">
+        <div className="flex flex-col items-center justify-center p-6 text-center select-none text-text-muted">
           {type === "video" ? (
             <div className="relative mb-3 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-flash-orange text-clean-white shadow-lg transition-transform group-hover:scale-110">
               <Play className="h-5 w-5 sm:h-6 sm:w-6 fill-current ml-0.5" />
             </div>
           ) : (
-            <div className="mb-3 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-zinc-200/80 text-zinc-600 shadow-inner">
+            <div className="mb-3 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-surface-hover/80 text-text-secondary shadow-inner">
               <ImageIcon className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
           )}
 
           {badge && (
-            <span className="mb-1 rounded-full bg-zinc-200 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-tech-slate">
+            <span className="mb-1 rounded-full bg-surface-hover px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-tech-slate">
               {badge}
             </span>
           )}
 
           {label && (
-            <span className="text-xs font-semibold text-zinc-600 max-w-xs leading-snug">
+            <span className="text-xs font-semibold text-text-secondary max-w-xs leading-snug">
               {label}
             </span>
           )}

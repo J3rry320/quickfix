@@ -150,7 +150,7 @@ export default function DoorstepPickupAssurance({
           >
             {/* Minimal Smartphone Notch */}
             <div className="pointer-events-none absolute top-2.5 inset-x-0 z-20 flex justify-center">
-              <div className="h-3 w-16 sm:w-20 rounded-full bg-black/60 backdrop-blur-md border border-white/15" />
+              <div className="h-3 w-16 sm:w-20 rounded-full bg-tech-slate-dark/80 backdrop-blur-md border border-clean-white/15" />
             </div>
 
             {/* Video Element */}
@@ -168,7 +168,7 @@ export default function DoorstepPickupAssurance({
 
             {/* Top Overlay Badge: Lab Location */}
             <div className="pointer-events-none absolute top-7 left-3 z-20">
-              <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-bold text-clean-white border border-white/15 shadow-sm">
+              <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-tech-slate-dark/80 backdrop-blur-md text-[10px] font-bold text-clean-white border border-clean-white/15 shadow-sm">
                 <span className="h-1.5 w-1.5 rounded-full bg-flash-orange animate-pulse" />
                 Sadashiv Peth Lab
               </span>
@@ -180,7 +180,7 @@ export default function DoorstepPickupAssurance({
                 type="button"
                 onClick={toggleMute}
                 aria-label={isMuted ? "Unmute video" : "Mute video"}
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-black/60 backdrop-blur-md text-clean-white border border-white/20 hover:bg-black/80 transition-colors shadow-md"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-tech-slate-dark/80 backdrop-blur-md text-clean-white border border-clean-white/20 hover:bg-tech-slate-dark transition-colors shadow-md"
               >
                 {isMuted ? (
                   <VolumeX className="h-3.5 w-3.5" />
@@ -192,7 +192,7 @@ export default function DoorstepPickupAssurance({
 
             {/* Center Play / Pause Indicator */}
             <div
-              className={`absolute inset-0 z-10 flex items-center justify-center bg-black/30 transition-opacity duration-300 ${
+              className={`absolute inset-0 z-10 flex items-center justify-center bg-tech-slate-dark/40 transition-opacity duration-300 ${
                 isPlaying ? "opacity-0 group-hover:opacity-100" : "opacity-100"
               }`}
             >
@@ -207,7 +207,7 @@ export default function DoorstepPickupAssurance({
 
             {/* Bottom Home Indicator Bar */}
             <div className="pointer-events-none absolute bottom-2 inset-x-0 z-20 flex justify-center">
-              <div className="h-1 w-20 sm:w-24 rounded-full bg-white/40" />
+              <div className="h-1 w-20 sm:w-24 rounded-full bg-clean-white/40" />
             </div>
           </div>
         </div>

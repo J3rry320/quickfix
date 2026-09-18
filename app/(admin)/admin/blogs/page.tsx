@@ -234,7 +234,7 @@ export default function AdminBlogsPage() {
             type="button"
             onClick={() => setRefreshIndex((k) => k + 1)}
             disabled={loading}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-clean-white px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-bold text-zinc-600 hover:bg-zinc-50 cursor-pointer"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-border-default bg-clean-white px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-bold text-text-secondary hover:bg-mist-gray cursor-pointer"
           >
             <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
             <span className="hidden sm:inline">Refresh</span>
@@ -242,7 +242,7 @@ export default function AdminBlogsPage() {
           <button
             type="button"
             onClick={openCreateModal}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-flash-orange px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs font-bold text-clean-white hover:bg-orange-600 shadow-md shadow-orange-500/20 active:scale-95 transition-all cursor-pointer"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-flash-orange px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs font-bold text-clean-white hover:bg-flash-orange-hover shadow-md shadow-flash-orange/20 active:scale-95 transition-all cursor-pointer"
           >
             <Plus className="h-4 w-4" />
             <span className="hidden sm:inline">Write Article</span>
@@ -277,7 +277,7 @@ export default function AdminBlogsPage() {
           emptyDescription="There are no blog posts matching your active filters."
         >
           {blogs.map((b) => (
-            <tr key={b._id} className="hover:bg-zinc-50/80 transition-colors">
+            <tr key={b._id} className="hover:bg-mist-gray/80 transition-colors">
               {/* Post Title & Category */}
               <td className="px-5 py-4">
                 <div className="flex items-center gap-3">
@@ -285,27 +285,27 @@ export default function AdminBlogsPage() {
                     src={b.coverImage}
                     alt={b.title}
                     fallbackIcon={BookOpen}
-                    containerClassName="h-10 w-14 rounded-lg bg-zinc-100 border border-zinc-200 overflow-hidden shrink-0 shadow-2xs"
+                    containerClassName="h-10 w-14 rounded-lg bg-mist-gray border border-border-default overflow-hidden shrink-0 shadow-2xs"
                     className="h-full w-full object-cover"
                   />
                   <div className="min-w-0">
                     <span className="font-bold text-tech-slate block truncate max-w-sm">
                       {b.title}
                     </span>
-                    <span className="text-[11px] text-zinc-500">{b.category}</span>
+                    <span className="text-[11px] text-text-muted">{b.category}</span>
                   </div>
                 </div>
               </td>
 
               {/* Language */}
-              <td className="px-5 py-4 uppercase font-bold text-xs text-zinc-600">
+              <td className="px-5 py-4 uppercase font-bold text-xs text-text-secondary">
                 {b.language || "en"}
               </td>
 
               {/* Views */}
-              <td className="px-5 py-4 text-zinc-600">
+              <td className="px-5 py-4 text-text-secondary">
                 <span className="inline-flex items-center gap-1">
-                  <Eye className="h-3 w-3 text-zinc-400" />
+                  <Eye className="h-3 w-3 text-text-muted" />
                   <span>{b.viewCount ?? 0}</span>
                 </span>
               </td>
@@ -316,7 +316,7 @@ export default function AdminBlogsPage() {
               </td>
 
               {/* Date */}
-              <td className="px-5 py-4 whitespace-nowrap text-zinc-500">
+              <td className="px-5 py-4 whitespace-nowrap text-text-muted">
                 {b.publishedAt
                   ? new Date(b.publishedAt).toLocaleDateString("en-IN", {
                       day: "numeric",
@@ -335,7 +335,7 @@ export default function AdminBlogsPage() {
                 <button
                   type="button"
                   onClick={() => openEditModal(b)}
-                  className="rounded-lg p-1.5 text-zinc-500 hover:bg-zinc-100 hover:text-tech-slate cursor-pointer"
+                  className="rounded-lg p-1.5 text-text-muted hover:bg-mist-gray hover:text-tech-slate cursor-pointer"
                   title="Edit Article"
                 >
                   <Edit2 className="h-4 w-4" />
@@ -343,7 +343,7 @@ export default function AdminBlogsPage() {
                 <button
                   type="button"
                   onClick={() => setBlogToDelete(b)}
-                  className="rounded-lg p-1.5 text-zinc-500 hover:bg-red-50 hover:text-red-600 cursor-pointer"
+                  className="rounded-lg p-1.5 text-text-muted hover:bg-error-light hover:text-error cursor-pointer"
                   title="Delete Article"
                 >
                   <Trash2 className="h-4 w-4" />
@@ -377,24 +377,24 @@ export default function AdminBlogsPage() {
           >
             <div className="space-y-4 text-xs">
               <div className="space-y-1">
-                <label className="font-bold text-zinc-700">Article Title *</label>
+                <label className="font-bold text-text-secondary">Article Title *</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. 5 Signs Your iPhone Battery Needs Immediate Replacement"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                  className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="space-y-1">
-                  <label className="font-bold text-zinc-700">Category *</label>
+                  <label className="font-bold text-text-secondary">Category *</label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                    className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
                   >
                     <option value="Repair Guides">Repair Guides</option>
                     <option value="Battery & Charging">Battery & Charging</option>
@@ -405,13 +405,13 @@ export default function AdminBlogsPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-bold text-zinc-700">Language</label>
+                  <label className="font-bold text-text-secondary">Language</label>
                   <select
                     value={language}
                     onChange={(e) =>
                       setLanguage(e.target.value as "en" | "hi" | "mr")
                     }
-                    className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                    className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
                   >
                     <option value="en">English (en)</option>
                     <option value="hi">Hindi (hi)</option>
@@ -420,37 +420,37 @@ export default function AdminBlogsPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-bold text-zinc-700">Reading Time (Mins)</label>
+                  <label className="font-bold text-text-secondary">Reading Time (Mins)</label>
                   <input
                     type="number"
                     min={1}
                     value={readingTime}
                     onChange={(e) => setReadingTime(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                    className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="font-bold text-zinc-700">Slug (optional auto-generated)</label>
+                  <label className="font-bold text-text-secondary">Slug (optional auto-generated)</label>
                   <input
                     type="text"
                     placeholder="e.g. iphone-battery-replacement-guide"
                     value={slug}
                     onChange={(e) => setSlug(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs font-mono text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                    className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs font-mono text-tech-slate focus:border-flash-orange focus:outline-hidden"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-bold text-zinc-700">Author Name</label>
+                  <label className="font-bold text-text-secondary">Author Name</label>
                   <input
                     type="text"
                     placeholder="e.g. QuickFix Tech Team"
                     value={authorName}
                     onChange={(e) => setAuthorName(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                    className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
                   />
                 </div>
               </div>
@@ -464,24 +464,24 @@ export default function AdminBlogsPage() {
               />
 
               <div className="space-y-1">
-                <label className="font-bold text-zinc-700">Short Excerpt *</label>
+                <label className="font-bold text-text-secondary">Short Excerpt *</label>
                 <textarea
                   rows={2}
                   required
                   placeholder="Summary of the article for blog cards and search engine previews..."
                   value={excerpt}
                   onChange={(e) => setExcerpt(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 bg-clean-white p-3 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                  className="w-full rounded-xl border border-border-default bg-clean-white p-3 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
                 />
               </div>
 
               <div className="space-y-1">
                 <div className="flex items-center justify-between">
-                  <label className="font-bold text-zinc-700">Article Content * (Markdown)</label>
+                  <label className="font-bold text-text-secondary">Article Content * (Markdown)</label>
                   <button
                     type="button"
                     onClick={() => setPreviewMode(!previewMode)}
-                    className="inline-flex items-center gap-1 text-2xs font-bold text-flash-orange hover:text-orange-600 cursor-pointer"
+                    className="inline-flex items-center gap-1 text-2xs font-bold text-flash-orange hover:text-flash-orange-hover cursor-pointer"
                   >
                     <Eye className="h-3 w-3" />
                     <span>{previewMode ? "Switch to Editor" : "Live Markdown Preview"}</span>
@@ -489,11 +489,11 @@ export default function AdminBlogsPage() {
                 </div>
 
                 {previewMode ? (
-                  <div className="max-h-72 overflow-y-auto rounded-xl border border-zinc-200 bg-zinc-50/50 p-4 text-xs text-tech-slate">
+                  <div className="max-h-72 overflow-y-auto rounded-xl border border-border-default bg-mist-gray/50 p-4 text-xs text-tech-slate">
                     {content ? (
                       <MarkdownRenderer content={content} />
                     ) : (
-                      <p className="italic text-zinc-400">No markdown content entered yet. Switch back to editor to write your article.</p>
+                      <p className="italic text-text-muted">No markdown content entered yet. Switch back to editor to write your article.</p>
                     )}
                   </div>
                 ) : (
@@ -503,29 +503,29 @@ export default function AdminBlogsPage() {
                     placeholder="Full article content in markdown format (# Heading, ## Section, tables, lists, > [!NOTE] callouts)..."
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-200 bg-clean-white p-3 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden font-mono leading-relaxed"
+                    className="w-full rounded-xl border border-border-default bg-clean-white p-3 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden font-mono leading-relaxed"
                   />
                 )}
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-zinc-700">Tags (comma separated)</label>
+                <label className="font-bold text-text-secondary">Tags (comma separated)</label>
                 <input
                   type="text"
                   placeholder="iphone, battery, pune, doorstep repair"
                   value={tagsText}
                   onChange={(e) => setTagsText(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                  className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
                 />
               </div>
 
               <div className="pt-2">
-                <label className="inline-flex items-center gap-2 font-bold text-zinc-700 cursor-pointer">
+                <label className="inline-flex items-center gap-2 font-bold text-text-secondary cursor-pointer">
                   <input
                     type="checkbox"
                     checked={isPublished}
                     onChange={(e) => setIsPublished(e.target.checked)}
-                    className="rounded border-zinc-300 text-flash-orange focus:ring-flash-orange"
+                    className="rounded border-border-strong text-flash-orange focus:ring-flash-orange"
                   />
                   <span>Publish Article immediately</span>
                 </label>

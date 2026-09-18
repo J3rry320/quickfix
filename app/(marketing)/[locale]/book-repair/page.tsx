@@ -65,7 +65,7 @@ export default async function BookRepairPage({
             >
               Home
             </Link>
-            <ChevronRight className="h-3 w-3 text-zinc-400" />
+            <ChevronRight className="h-3 w-3 text-text-muted" />
             <span className="font-semibold text-tech-slate">{t("title")}</span>
           </nav>
 

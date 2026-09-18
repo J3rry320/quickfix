@@ -106,8 +106,8 @@ function JobSheetContent({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-zinc-100 flex flex-col items-center justify-center text-zinc-500 gap-3">
-        <Loader2 className="h-8 w-8 animate-spin text-orange-600" />
+      <div className="min-h-screen bg-mist-gray flex flex-col items-center justify-center text-text-muted gap-3">
+        <Loader2 className="h-8 w-8 animate-spin text-flash-orange" />
         <p className="text-xs font-semibold">Generating Repair Job Sheet...</p>
       </div>
     );
@@ -115,16 +115,16 @@ function JobSheetContent({
 
   if (error || !repair) {
     return (
-      <div className="min-h-screen bg-zinc-100 flex flex-col items-center justify-center p-4">
-        <div className="bg-white rounded-xl p-6 border border-zinc-200 shadow-sm max-w-md w-full text-center space-y-4">
-          <AlertCircle className="h-10 w-10 text-red-500 mx-auto" />
-          <h2 className="font-heading text-lg font-bold text-zinc-900">
+      <div className="min-h-screen bg-mist-gray flex flex-col items-center justify-center p-4">
+        <div className="bg-clean-white rounded-xl p-6 border border-border-default shadow-xs max-w-md w-full text-center space-y-4">
+          <AlertCircle className="h-10 w-10 text-error mx-auto" />
+          <h2 className="font-heading text-lg font-bold text-tech-slate">
             Job Sheet Not Available
           </h2>
-          <p className="text-xs text-zinc-500">{error || "The specified repair booking does not exist."}</p>
+          <p className="text-xs text-text-muted">{error || "The specified repair booking does not exist."}</p>
           <Link
             href="/admin/repairs"
-            className="inline-flex items-center gap-1.5 rounded-lg bg-zinc-900 px-4 py-2 text-xs font-bold text-white hover:bg-zinc-800"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-tech-slate px-4 py-2 text-xs font-bold text-clean-white hover:bg-tech-slate-hover"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Return to Repairs</span>
@@ -199,22 +199,22 @@ function JobSheetContent({
   };
 
   return (
-    <div className="min-h-screen bg-zinc-100/80 py-3 sm:py-8 px-2 sm:px-6 flex flex-col items-center">
+    <div className="min-h-screen bg-mist-gray/80 py-3 sm:py-8 px-2 sm:px-6 flex flex-col items-center">
       {/* Floating Action Header (Hidden on Print) */}
-      <div className="no-print w-full max-w-[210mm] mb-3 sm:mb-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 bg-white p-3 sm:p-3.5 rounded-xl border border-zinc-200 shadow-sm">
+      <div className="no-print w-full max-w-[210mm] mb-3 sm:mb-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 bg-clean-white p-3 sm:p-3.5 rounded-xl border border-border-default shadow-xs">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <Link
             href="/admin/repairs"
-            className="inline-flex items-center gap-1 text-xs font-bold text-zinc-600 hover:text-zinc-950 transition-colors shrink-0"
+            className="inline-flex items-center gap-1 text-xs font-bold text-text-secondary hover:text-tech-slate transition-colors shrink-0"
           >
             <ArrowLeft className="h-4 w-4" />
             <span className="hidden xs:inline">Repairs</span>
           </Link>
-          <span className="text-zinc-300">|</span>
-          <span className="font-mono text-xs font-bold text-zinc-800 truncate">
+          <span className="text-border-strong">|</span>
+          <span className="font-mono text-xs font-bold text-tech-slate truncate">
             {repair.bookingReference}
           </span>
-          <span className="text-[11px] text-zinc-500 truncate hidden xs:inline">
+          <span className="text-[11px] text-text-muted truncate hidden xs:inline">
             ({repair.device.brand} {repair.device.model})
           </span>
         </div>
@@ -223,7 +223,7 @@ function JobSheetContent({
           <button
             type="button"
             onClick={() => setIsEditModalOpen(true)}
-            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-2.5 sm:px-3 py-1.5 text-xs font-bold text-zinc-700 hover:bg-zinc-50 cursor-pointer"
+            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-lg border border-border-default bg-clean-white px-2.5 sm:px-3 py-1.5 text-xs font-bold text-text-secondary hover:bg-mist-gray cursor-pointer"
           >
             <Edit3 className="h-3.5 w-3.5" />
             <span>Edit</span>
@@ -233,7 +233,7 @@ function JobSheetContent({
             type="button"
             onClick={handleDownloadPdf}
             disabled={isDownloadingPdf}
-            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-lg bg-orange-600 px-3 sm:px-4 py-1.5 text-xs font-bold text-white hover:bg-orange-700 shadow-xs transition-all cursor-pointer disabled:opacity-50"
+            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-lg bg-flash-orange px-3 sm:px-4 py-1.5 text-xs font-bold text-clean-white hover:bg-flash-orange-hover shadow-xs transition-all cursor-pointer disabled:opacity-50"
           >
             {isDownloadingPdf ? (
               <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -246,7 +246,7 @@ function JobSheetContent({
           <button
             type="button"
             onClick={() => triggerJobSheetPrint(jobSheetNo)}
-            className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 shadow-xs transition-all cursor-pointer"
+            className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-border-default bg-clean-white px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold text-text-secondary hover:bg-surface-hover shadow-xs transition-all cursor-pointer"
           >
             <Printer className="h-3.5 w-3.5" />
             <span className="hidden xs:inline">Print</span>
@@ -256,7 +256,7 @@ function JobSheetContent({
 
       {/* Printable Sheet */}
       <div className="w-full max-w-full overflow-x-auto p-1 pb-4 flex justify-center [scrollbar-width:thin] touch-pan-x">
-        <div className="w-full max-w-[210mm] min-w-[320px] sm:min-w-[650px] md:min-w-[210mm] bg-white shadow-md rounded-lg overflow-hidden border border-zinc-200 shrink-0">
+        <div className="w-full max-w-[210mm] min-w-[320px] sm:min-w-[650px] md:min-w-[210mm] bg-clean-white shadow-md rounded-lg overflow-hidden border border-border-default shrink-0">
           <RepairJobSheet data={sheetData} id={`jobsheet-doc-${jobSheetNo}`} />
         </div>
       </div>
@@ -282,7 +282,7 @@ export default function StandaloneJobSheetPage({
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen flex-col items-center justify-center bg-slate-100">
+        <div className="flex min-h-screen flex-col items-center justify-center bg-mist-gray">
           <Loader2 className="h-10 w-10 animate-spin text-flash-orange mb-3" />
           <p className="text-sm font-bold text-tech-slate">Loading Job Sheet...</p>
         </div>

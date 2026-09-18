@@ -62,7 +62,7 @@ export default function LocalitiesDirectory() {
                         {zone.title || zone.name}
                       </h3>
                     </div>
-                    <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-2xs font-extrabold text-emerald-700 border border-emerald-200 shrink-0">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-success-light px-2.5 py-0.5 text-2xs font-extrabold text-success border border-success-border shrink-0">
                       <Zap className="h-3 w-3 text-success-green" />
                       {zone.defaultSla}
                     </span>

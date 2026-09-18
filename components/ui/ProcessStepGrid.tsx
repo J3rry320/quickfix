@@ -54,7 +54,7 @@ export default function ProcessStepGrid({
             </div>
             <div className="mt-4 pt-3 border-t border-border-default/60 flex items-center justify-between text-2xs text-text-muted font-medium">
               <span>Step {index + 1} of {steps.length}</span>
-              <span className="text-emerald-600 font-bold">Pune On-Site</span>
+              <span className="text-success font-bold">Pune On-Site</span>
             </div>
           </div>
         ))}

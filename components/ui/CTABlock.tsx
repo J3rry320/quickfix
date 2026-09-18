@@ -36,7 +36,7 @@ export default function CTABlock({
           {title}
         </h2>
 
-        <p className="mt-3 sm:mt-4 text-xs sm:text-sm md:text-base text-zinc-300 font-body leading-relaxed max-w-2xl mx-auto">
+        <p className="mt-3 sm:mt-4 text-xs sm:text-sm md:text-base text-clean-white/80 font-body leading-relaxed max-w-2xl mx-auto">
           {subtitle}
         </p>
 

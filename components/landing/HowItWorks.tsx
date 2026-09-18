@@ -41,7 +41,7 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="py-10 sm:py-16 lg:py-20 bg-clean-white border-b border-zinc-200"
+      className="py-10 sm:py-16 lg:py-20 bg-clean-white border-b border-border-default"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -58,21 +58,21 @@ export default function HowItWorks() {
             return (
               <div
                 key={step.num}
-                className="relative rounded-2xl bg-mist-gray/90 border border-zinc-200/90 p-5 sm:p-6 shadow-2xs flex flex-col justify-between hover:border-flash-orange/50 hover:shadow-md transition-all"
+                className="relative rounded-2xl bg-mist-gray/90 border border-border-default/90 p-5 sm:p-6 shadow-2xs flex flex-col justify-between hover:border-flash-orange/50 hover:shadow-md transition-all"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <span className="font-heading text-2xl sm:text-3xl font-black text-flash-orange/40">
                       {step.num}
                     </span>
-                    <div className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-clean-white text-flash-orange shadow-2xs border border-zinc-200">
+                    <div className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-clean-white text-flash-orange shadow-2xs border border-border-default">
                       <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
                     </div>
                   </div>
                   <h3 className="font-heading text-sm sm:text-base font-bold text-tech-slate mb-1.5">
                     {step.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-zinc-600 font-body leading-relaxed">
+                  <p className="text-xs sm:text-sm text-text-secondary font-body leading-relaxed">
                     {step.desc}
                   </p>
                 </div>

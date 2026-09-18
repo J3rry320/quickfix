@@ -124,16 +124,16 @@ export default function AdminDashboardPage() {
     >
       <div className="space-y-8">
         {/* Welcome Greeting Banner */}
-        <div className="rounded-2xl bg-tech-slate p-5 sm:p-8 text-clean-white shadow-xl shadow-slate-900/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 sm:gap-6 border border-slate-800">
+        <div className="rounded-2xl bg-tech-slate p-5 sm:p-8 text-clean-white shadow-xl shadow-slate-900/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 sm:gap-6 border border-border-dark">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-amber-300 backdrop-blur-xs border border-white/15">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+            <div className="inline-flex items-center gap-2 rounded-full bg-clean-white/10 px-3 py-1 text-xs font-bold text-electric-amber backdrop-blur-xs border border-clean-white/15">
+              <span className="h-2 w-2 rounded-full bg-success animate-pulse" />
               <span>System Live • Pune Central Control</span>
             </div>
             <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight">
               Welcome, {user?.name || user?.email?.split("@")[0] || "User"}!
             </h2>
-            <p className="text-xs sm:text-sm text-zinc-300 max-w-xl">
+            <p className="text-xs sm:text-sm text-mist-gray max-w-xl">
               Monitor incoming doorstep repair bookings, manage your device catalog, and respond to customer enquiries.
             </p>
           </div>
@@ -141,7 +141,7 @@ export default function AdminDashboardPage() {
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <Link
               href="/admin/repairs"
-              className="w-full sm:w-auto justify-center inline-flex items-center gap-2 rounded-xl bg-flash-orange px-4 py-2.5 text-xs font-bold text-clean-white hover:bg-orange-600 shadow-md shadow-orange-500/20 active:scale-95 transition-all"
+              className="w-full sm:w-auto justify-center inline-flex items-center gap-2 rounded-xl bg-flash-orange px-4 py-2.5 text-xs font-bold text-clean-white hover:bg-flash-orange-hover shadow-md shadow-flash-orange/20 active:scale-95 transition-all"
             >
               <Wrench className="h-4 w-4" />
               <span>Manage Bookings</span>
@@ -152,11 +152,11 @@ export default function AdminDashboardPage() {
         {/* Quick Stats Grid */}
         <section className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="font-heading text-sm font-bold uppercase tracking-wider text-zinc-500">
+            <h3 className="font-heading text-sm font-bold uppercase tracking-wider text-text-muted">
               Key Performance Indicators
             </h3>
             {stats && (
-              <span className="text-xs text-zinc-400 font-medium">
+              <span className="text-xs text-text-muted font-medium">
                 {stats.repairs.today} new bookings today
               </span>
             )}
@@ -167,7 +167,7 @@ export default function AdminDashboardPage() {
               {[...Array(4)].map((_, i) => (
                 <div
                   key={i}
-                  className="rounded-2xl border border-zinc-200 bg-clean-white p-5 space-y-3"
+                  className="rounded-2xl border border-border-default bg-clean-white p-5 space-y-3"
                 >
                   <Skeleton className="h-4 w-24" />
                   <Skeleton className="h-8 w-16" />
@@ -180,13 +180,13 @@ export default function AdminDashboardPage() {
               {/* Stat 1: Total Repairs */}
               <Link
                 href="/admin/repairs"
-                className="group rounded-2xl border border-zinc-200 bg-clean-white p-5 shadow-xs hover:border-flash-orange/50 hover:shadow-md transition-all"
+                className="group rounded-2xl border border-border-default bg-clean-white p-5 shadow-xs hover:border-flash-orange/50 hover:shadow-md transition-all"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                  <span className="text-xs font-bold uppercase tracking-wider text-text-muted">
                     Repair Requests
                   </span>
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-50 text-flash-orange group-hover:scale-110 transition-transform">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-flash-orange/10 text-flash-orange group-hover:scale-110 transition-transform">
                     <Wrench className="h-4 w-4" />
                   </div>
                 </div>
@@ -194,12 +194,12 @@ export default function AdminDashboardPage() {
                   {stats?.repairs.total ?? 0}
                 </p>
                 <div className="mt-2 flex items-center gap-2 text-xs">
-                  <span className="inline-flex items-center gap-1 font-bold text-amber-600">
+                  <span className="inline-flex items-center gap-1 font-bold text-warning">
                     <Clock className="h-3 w-3" />
                     {stats?.repairs.pending ?? 0} Pending
                   </span>
-                  <span className="text-zinc-300">•</span>
-                  <span className="inline-flex items-center gap-1 font-bold text-emerald-600">
+                  <span className="text-border-strong">•</span>
+                  <span className="inline-flex items-center gap-1 font-bold text-success">
                     <CheckCircle2 className="h-3 w-3" />
                     {stats?.repairs.completed ?? 0} Done
                   </span>
@@ -209,20 +209,20 @@ export default function AdminDashboardPage() {
               {/* Stat 2: Active Services */}
               <Link
                 href="/admin/catalogue/services"
-                className="group rounded-2xl border border-zinc-200 bg-clean-white p-5 shadow-xs hover:border-blue-500/50 hover:shadow-md transition-all"
+                className="group rounded-2xl border border-border-default bg-clean-white p-5 shadow-xs hover:border-info/50 hover:shadow-md transition-all"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                  <span className="text-xs font-bold uppercase tracking-wider text-text-muted">
                     Active Services
                   </span>
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600 group-hover:scale-110 transition-transform">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-info-light text-info group-hover:scale-110 transition-transform">
                     <Layers className="h-4 w-4" />
                   </div>
                 </div>
                 <p className="mt-3 font-heading text-3xl font-extrabold text-tech-slate">
                   {stats?.catalogue.services.active ?? 0}
                 </p>
-                <p className="mt-2 text-xs text-zinc-500">
+                <p className="mt-2 text-xs text-text-muted">
                   {stats?.catalogue.services.total ?? 0} catalogued services
                 </p>
               </Link>
@@ -230,20 +230,20 @@ export default function AdminDashboardPage() {
               {/* Stat 3: Device Models & Brands */}
               <Link
                 href="/admin/catalogue/models"
-                className="group rounded-2xl border border-zinc-200 bg-clean-white p-5 shadow-xs hover:border-purple-500/50 hover:shadow-md transition-all"
+                className="group rounded-2xl border border-border-default bg-clean-white p-5 shadow-xs hover:border-electric-amber/50 hover:shadow-md transition-all"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                  <span className="text-xs font-bold uppercase tracking-wider text-text-muted">
                     Device Catalog
                   </span>
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-50 text-purple-600 group-hover:scale-110 transition-transform">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-electric-amber/15 text-electric-amber group-hover:scale-110 transition-transform">
                     <Smartphone className="h-4 w-4" />
                   </div>
                 </div>
                 <p className="mt-3 font-heading text-3xl font-extrabold text-tech-slate">
                   {stats?.catalogue.models.total ?? 0}
                 </p>
-                <p className="mt-2 text-xs text-zinc-500">
+                <p className="mt-2 text-xs text-text-muted">
                   Across {stats?.catalogue.brands.active ?? 0} smartphone brands
                 </p>
               </Link>
@@ -251,13 +251,13 @@ export default function AdminDashboardPage() {
               {/* Stat 4: Contact Inquiries */}
               <Link
                 href="/admin/contacts"
-                className="group rounded-2xl border border-zinc-200 bg-clean-white p-5 shadow-xs hover:border-emerald-500/50 hover:shadow-md transition-all"
+                className="group rounded-2xl border border-border-default bg-clean-white p-5 shadow-xs hover:border-success/50 hover:shadow-md transition-all"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                  <span className="text-xs font-bold uppercase tracking-wider text-text-muted">
                     Contact Enquiries
                   </span>
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 group-hover:scale-110 transition-transform">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-success-light text-success group-hover:scale-110 transition-transform">
                     <MessageSquare className="h-4 w-4" />
                   </div>
                 </div>
@@ -265,12 +265,12 @@ export default function AdminDashboardPage() {
                   {stats?.contacts.total ?? 0}
                 </p>
                 <div className="mt-2 flex items-center gap-2 text-xs">
-                  <span className="inline-flex items-center gap-1 font-bold text-amber-600">
+                  <span className="inline-flex items-center gap-1 font-bold text-warning">
                     <AlertCircle className="h-3 w-3" />
                     {stats?.contacts.new ?? 0} New
                   </span>
-                  <span className="text-zinc-300">•</span>
-                  <span className="text-zinc-500">
+                  <span className="text-border-strong">•</span>
+                  <span className="text-text-muted">
                     {stats?.contacts.resolved ?? 0} Resolved
                   </span>
                 </div>
@@ -281,37 +281,37 @@ export default function AdminDashboardPage() {
 
         {/* Quick Action Shortcuts */}
         <section className="space-y-3">
-          <h3 className="font-heading text-sm font-bold uppercase tracking-wider text-zinc-500">
+          <h3 className="font-heading text-sm font-bold uppercase tracking-wider text-text-muted">
             Quick Actions
           </h3>
           <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-3">
             <Link
               href="/admin/repairs?status=pending"
-              className="flex items-center justify-between rounded-xl border border-zinc-200 bg-clean-white p-3.5 text-xs font-bold text-tech-slate hover:bg-zinc-50 hover:border-flash-orange/40 transition-all shadow-2xs"
+              className="flex items-center justify-between rounded-xl border border-border-default bg-clean-white p-3.5 text-xs font-bold text-tech-slate hover:bg-mist-gray hover:border-flash-orange/40 transition-all shadow-2xs"
             >
               <span>Review Pending Repairs</span>
-              <ArrowUpRight className="h-4 w-4 text-zinc-400 shrink-0 ml-1" />
+              <ArrowUpRight className="h-4 w-4 text-text-muted shrink-0 ml-1" />
             </Link>
             <Link
               href="/admin/catalogue/services"
-              className="flex items-center justify-between rounded-xl border border-zinc-200 bg-clean-white p-3.5 text-xs font-bold text-tech-slate hover:bg-zinc-50 hover:border-flash-orange/40 transition-all shadow-2xs"
+              className="flex items-center justify-between rounded-xl border border-border-default bg-clean-white p-3.5 text-xs font-bold text-tech-slate hover:bg-mist-gray hover:border-flash-orange/40 transition-all shadow-2xs"
             >
               <span>Add / Edit Services</span>
-              <Plus className="h-4 w-4 text-zinc-400 shrink-0 ml-1" />
+              <Plus className="h-4 w-4 text-text-muted shrink-0 ml-1" />
             </Link>
             <Link
               href="/admin/catalogue/models"
-              className="flex items-center justify-between rounded-xl border border-zinc-200 bg-clean-white p-3.5 text-xs font-bold text-tech-slate hover:bg-zinc-50 hover:border-flash-orange/40 transition-all shadow-2xs"
+              className="flex items-center justify-between rounded-xl border border-border-default bg-clean-white p-3.5 text-xs font-bold text-tech-slate hover:bg-mist-gray hover:border-flash-orange/40 transition-all shadow-2xs"
             >
               <span>Configure Model Pricing</span>
-              <ArrowUpRight className="h-4 w-4 text-zinc-400 shrink-0 ml-1" />
+              <ArrowUpRight className="h-4 w-4 text-text-muted shrink-0 ml-1" />
             </Link>
             <Link
               href="/admin/blogs"
-              className="flex items-center justify-between rounded-xl border border-zinc-200 bg-clean-white p-3.5 text-xs font-bold text-tech-slate hover:bg-zinc-50 hover:border-flash-orange/40 transition-all shadow-2xs"
+              className="flex items-center justify-between rounded-xl border border-border-default bg-clean-white p-3.5 text-xs font-bold text-tech-slate hover:bg-mist-gray hover:border-flash-orange/40 transition-all shadow-2xs"
             >
               <span>Write Blog Article</span>
-              <BookOpen className="h-4 w-4 text-zinc-400 shrink-0 ml-1" />
+              <BookOpen className="h-4 w-4 text-text-muted shrink-0 ml-1" />
             </Link>
           </div>
         </section>
@@ -319,13 +319,13 @@ export default function AdminDashboardPage() {
         {/* Recent Activity Sections (Two Column Grid) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Recent Repair Requests */}
-          <section className="rounded-2xl border border-zinc-200 bg-clean-white p-5 sm:p-6 shadow-xs space-y-4">
+          <section className="rounded-2xl border border-border-default bg-clean-white p-5 sm:p-6 shadow-xs space-y-4">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="font-heading text-base font-bold text-tech-slate">
                   Recent Repair Bookings
                 </h3>
-                <p className="text-xs text-zinc-500">
+                <p className="text-xs text-text-muted">
                   Latest customer repair requests
                 </p>
               </div>
@@ -348,11 +348,11 @@ export default function AdminDashboardPage() {
                 ))}
               </div>
             ) : !stats?.recentRequests?.length ? (
-              <div className="text-center py-8 text-xs text-zinc-400">
+              <div className="text-center py-8 text-xs text-text-muted">
                 No repair bookings recorded yet.
               </div>
             ) : (
-              <div className="divide-y divide-zinc-100">
+              <div className="divide-y divide-border-subtle">
                 {stats.recentRequests.map((req) => (
                   <div
                     key={req._id}
@@ -363,12 +363,12 @@ export default function AdminDashboardPage() {
                         <span className="font-bold text-tech-slate font-mono">
                           {req.bookingReference}
                         </span>
-                        <span className="text-zinc-400">•</span>
-                        <span className="text-zinc-600 truncate">
+                        <span className="text-text-muted">•</span>
+                        <span className="text-text-secondary truncate">
                           {req.customer?.name || "Customer"}
                         </span>
                       </div>
-                      <p className="text-[11px] text-zinc-500 truncate">
+                      <p className="text-[11px] text-text-muted truncate">
                         {req.device?.brand || "Device"} {req.device?.model || ""}
                         {typeof req.service === "object" && req.service?.name
                           ? ` (${req.service.name})`
@@ -383,7 +383,7 @@ export default function AdminDashboardPage() {
                       <Link
                         href={`/admin/repairs/${req._id}/jobsheet`}
                         target="_blank"
-                        className="p-1 rounded-md text-zinc-400 hover:text-flash-orange hover:bg-orange-50 transition-colors"
+                        className="p-1 rounded-md text-text-muted hover:text-flash-orange hover:bg-flash-orange/10 transition-colors"
                         title="Job Sheet PDF"
                       >
                         <FileText className="h-3.5 w-3.5" />
@@ -396,13 +396,13 @@ export default function AdminDashboardPage() {
           </section>
 
           {/* Recent Contact Inquiries */}
-          <section className="rounded-2xl border border-zinc-200 bg-clean-white p-5 sm:p-6 shadow-xs space-y-4">
+          <section className="rounded-2xl border border-border-default bg-clean-white p-5 sm:p-6 shadow-xs space-y-4">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="font-heading text-base font-bold text-tech-slate">
                   Recent Inquiries
                 </h3>
-                <p className="text-xs text-zinc-500">
+                <p className="text-xs text-text-muted">
                   Landing page general contact submissions
                 </p>
               </div>
@@ -425,11 +425,11 @@ export default function AdminDashboardPage() {
                 ))}
               </div>
             ) : !stats?.recentContacts?.length ? (
-              <div className="text-center py-8 text-xs text-zinc-400">
+              <div className="text-center py-8 text-xs text-text-muted">
                 No contact enquiries received yet.
               </div>
             ) : (
-              <div className="divide-y divide-zinc-100">
+              <div className="divide-y divide-border-subtle">
                 {stats.recentContacts.map((c) => (
                   <div
                     key={c._id}
@@ -440,12 +440,12 @@ export default function AdminDashboardPage() {
                         <span className="font-bold text-tech-slate truncate">
                           {c.name}
                         </span>
-                        <span className="text-zinc-400">•</span>
-                        <span className="text-zinc-500 text-[11px]">
+                        <span className="text-text-muted">•</span>
+                        <span className="text-text-muted text-[11px]">
                           {c.phone}
                         </span>
                       </div>
-                      <p className="text-[11px] text-zinc-500 truncate">
+                      <p className="text-[11px] text-text-muted truncate">
                         {c.subject || "General Inquiry"}
                       </p>
                     </div>

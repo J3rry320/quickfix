@@ -157,7 +157,7 @@ export default function AdminContactsPage() {
           type="button"
           onClick={() => setRefreshIndex((k) => k + 1)}
           disabled={loading}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-clean-white px-3 py-1.5 text-xs font-bold text-zinc-600 hover:bg-zinc-50 cursor-pointer"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-border-default bg-clean-white px-3 py-1.5 text-xs font-bold text-text-secondary hover:bg-mist-gray cursor-pointer"
         >
           <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
           <span className="hidden sm:inline">Refresh</span>
@@ -191,18 +191,18 @@ export default function AdminContactsPage() {
           emptyDescription="There are no inquiries matching your active filters."
         >
           {contacts.map((c) => (
-            <tr key={c._id} className="hover:bg-zinc-50/80 transition-colors">
+            <tr key={c._id} className="hover:bg-mist-gray/80 transition-colors">
               {/* Customer */}
               <td className="px-5 py-4">
                 <div className="font-bold text-tech-slate">{c.name}</div>
-                <div className="flex items-center gap-2 mt-0.5 text-[11px] text-zinc-500">
+                <div className="flex items-center gap-2 mt-0.5 text-[11px] text-text-muted">
                   <span className="inline-flex items-center gap-1">
-                    <Phone className="h-3 w-3 text-zinc-400" />
+                    <Phone className="h-3 w-3 text-text-muted" />
                     {c.phone}
                   </span>
                   {c.email && (
                     <span className="inline-flex items-center gap-1 truncate max-w-[140px]">
-                      <Mail className="h-3 w-3 text-zinc-400" />
+                      <Mail className="h-3 w-3 text-text-muted" />
                       {c.email}
                     </span>
                   )}
@@ -211,14 +211,14 @@ export default function AdminContactsPage() {
 
               {/* Area */}
               <td className="px-5 py-4">
-                <span className="inline-flex items-center gap-1 text-zinc-600 font-medium">
+                <span className="inline-flex items-center gap-1 text-text-secondary font-medium">
                   {c.area ? (
                     <>
                       <MapPin className="h-3 w-3 text-flash-orange" />
                       <span>{c.area}</span>
                     </>
                   ) : (
-                    <span className="text-zinc-400">Pune</span>
+                    <span className="text-text-muted">Pune</span>
                   )}
                 </span>
               </td>
@@ -228,11 +228,11 @@ export default function AdminContactsPage() {
                 <div className="font-bold text-tech-slate truncate">
                   {c.subject || "General Inquiry"}
                 </div>
-                <p className="text-[11px] text-zinc-500 truncate mt-0.5 max-w-sm">
+                <p className="text-[11px] text-text-muted truncate mt-0.5 max-w-sm">
                   {c.message}
                 </p>
                 {c.internalNotes && (
-                  <p className="text-[10px] text-amber-700 bg-amber-50 rounded px-1.5 py-0.5 inline-block mt-1 font-medium">
+                  <p className="text-[10px] text-warning-text bg-warning-light rounded px-1.5 py-0.5 inline-block mt-1 font-medium">
                     Note: {c.internalNotes}
                   </p>
                 )}
@@ -244,7 +244,7 @@ export default function AdminContactsPage() {
               </td>
 
               {/* Date */}
-              <td className="px-5 py-4 whitespace-nowrap text-zinc-500">
+              <td className="px-5 py-4 whitespace-nowrap text-text-muted">
                 {new Date(c.createdAt).toLocaleDateString("en-IN", {
                   day: "numeric",
                   month: "short",
@@ -257,14 +257,14 @@ export default function AdminContactsPage() {
                 <button
                   type="button"
                   onClick={() => openDetailModal(c)}
-                  className="rounded-lg bg-zinc-100 px-3 py-1.5 text-xs font-bold text-zinc-700 hover:bg-tech-slate hover:text-clean-white transition-all cursor-pointer"
+                  className="rounded-lg bg-mist-gray px-3 py-1.5 text-xs font-bold text-text-secondary hover:bg-tech-slate hover:text-clean-white transition-all cursor-pointer"
                 >
                   Manage
                 </button>
                 <button
                   type="button"
                   onClick={() => setContactToDelete(c)}
-                  className="rounded-lg p-1.5 text-zinc-400 hover:bg-red-50 hover:text-red-600 transition-colors cursor-pointer"
+                  className="rounded-lg p-1.5 text-text-muted hover:bg-error-light hover:text-error transition-colors cursor-pointer"
                   title="Archive Inquiry"
                 >
                   <Trash2 className="h-4 w-4" />
@@ -298,22 +298,22 @@ export default function AdminContactsPage() {
           >
             <div className="space-y-4">
               {/* Sender Details Box */}
-              <div className="bg-zinc-50 p-3.5 rounded-xl border border-zinc-200/80 space-y-2 text-xs">
+              <div className="bg-mist-gray p-3.5 rounded-xl border border-border-default/80 space-y-2 text-xs">
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-tech-slate text-sm">
                     {selectedContact.name}
                   </span>
-                  <span className="text-2xs text-zinc-500 uppercase font-bold">
+                  <span className="text-2xs text-text-muted uppercase font-bold">
                     Area: {selectedContact.area || "Pune"}
                   </span>
                 </div>
 
-                <div className="flex flex-wrap gap-4 text-zinc-600">
+                <div className="flex flex-wrap gap-4 text-text-secondary">
                   <a
                     href={`tel:${selectedContact.phone}`}
                     className="flex items-center gap-1.5 hover:text-flash-orange font-mono"
                   >
-                    <Phone className="h-3.5 w-3.5 text-zinc-400" />
+                    <Phone className="h-3.5 w-3.5 text-text-muted" />
                     <span>{selectedContact.phone}</span>
                   </a>
 
@@ -322,17 +322,17 @@ export default function AdminContactsPage() {
                       href={`mailto:${selectedContact.email}`}
                       className="flex items-center gap-1.5 hover:text-flash-orange"
                     >
-                      <Mail className="h-3.5 w-3.5 text-zinc-400" />
+                      <Mail className="h-3.5 w-3.5 text-text-muted" />
                       <span>{selectedContact.email}</span>
                     </a>
                   )}
                 </div>
 
-                <div className="pt-2 border-t border-zinc-200">
-                  <span className="font-bold text-zinc-700 block mb-1">
+                <div className="pt-2 border-t border-border-default">
+                  <span className="font-bold text-tech-slate block mb-1">
                     Subject: {selectedContact.subject || "General Inquiry"}
                   </span>
-                  <p className="text-zinc-600 leading-relaxed bg-white p-3 rounded-lg border border-zinc-200/70 whitespace-pre-wrap">
+                  <p className="text-text-secondary leading-relaxed bg-clean-white p-3 rounded-lg border border-border-default/70 whitespace-pre-wrap">
                     {selectedContact.message}
                   </p>
                 </div>
@@ -340,11 +340,11 @@ export default function AdminContactsPage() {
 
               {/* Status Update Dropdown */}
               <div className="space-y-1">
-                <label className="text-xs font-bold text-zinc-700">Inquiry Status</label>
+                <label className="text-xs font-bold text-text-secondary">Inquiry Status</label>
                 <select
                   value={newStatus}
                   onChange={(e) => setNewStatus(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs font-bold text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                  className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs font-bold text-tech-slate focus:border-flash-orange focus:outline-hidden"
                 >
                   <option value="new">New Inquiry</option>
                   <option value="in_progress">In Progress</option>
@@ -356,7 +356,7 @@ export default function AdminContactsPage() {
 
               {/* Internal Staff Notes */}
               <div className="space-y-1">
-                <label className="text-xs font-bold text-zinc-700">
+                <label className="text-xs font-bold text-text-secondary">
                   Internal Staff Notes (Private)
                 </label>
                 <textarea
@@ -364,7 +364,7 @@ export default function AdminContactsPage() {
                   value={internalNotes}
                   onChange={(e) => setInternalNotes(e.target.value)}
                   placeholder="e.g. Called customer at 3pm, confirmed screen model..."
-                  className="w-full rounded-xl border border-zinc-200 bg-clean-white p-3 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                  className="w-full rounded-xl border border-border-default bg-clean-white p-3 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
                 />
               </div>
             </div>

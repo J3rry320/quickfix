@@ -37,11 +37,11 @@ export default function AdminTable({
 }: AdminTableProps) {
   return (
     <div
-      className={`rounded-2xl border border-zinc-200 bg-clean-white shadow-xs overflow-hidden ${className}`}
+      className={`rounded-2xl border border-border-default bg-clean-white shadow-xs overflow-hidden ${className}`}
     >
       <div className="overflow-x-auto [scrollbar-width:thin] touch-pan-x">
         <table className={`w-full text-left text-xs ${tableClassName}`}>
-          <thead className="border-b border-zinc-200 bg-zinc-50/80 text-[11px] font-extrabold uppercase tracking-wider text-zinc-500">
+          <thead className="border-b border-border-default bg-mist-gray/80 text-[11px] font-extrabold uppercase tracking-wider text-text-muted">
             <tr>
               {columns.map((col) => (
                 <th
@@ -59,7 +59,7 @@ export default function AdminTable({
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-100">
+          <tbody className="divide-y divide-border-subtle">
             {loading ? (
               Array.from({ length: skeletonRows }).map((_, i) => (
                 <tr key={i}>

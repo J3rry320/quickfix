@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { AlertCircle, AlertTriangle, MessageSquare, Phone, RotateCcw } from "lucide-react";
+import React, { useEffect, useRef } from "react";
+import { AlertCircle, MessageSquare, Phone, RotateCcw } from "lucide-react";
 import contactConfig from "@/config/contact";
 
 export interface FormErrorStateProps {
@@ -10,7 +10,6 @@ export interface FormErrorStateProps {
   message?: string;
   badgeLabel?: string;
   errorCode?: string;
-  errorDetails?: string;
   onRetry?: () => void;
   retryLabel?: string;
   onReset?: () => void;
@@ -20,15 +19,15 @@ export interface FormErrorStateProps {
   phoneValue?: string;
   phoneDisplay?: string;
   className?: string;
+  autoScroll?: boolean;
 }
 
 export default function FormErrorState({
   title = "Submission Failed",
-  subtitle = "We couldn't process your request. Please try again or reach out to our Pune support team directly.",
+  subtitle = "We were unable to process your request. Please try again or reach out to our support team directly.",
   message,
-  badgeLabel = "Action Required",
+  badgeLabel,
   errorCode,
-  errorDetails,
   onRetry,
   retryLabel = "Try Again",
   onReset,
@@ -38,7 +37,16 @@ export default function FormErrorState({
   phoneValue = contactConfig.phone.value,
   phoneDisplay = contactConfig.phone.display,
   className = "",
+  autoScroll = true,
 }: FormErrorStateProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (autoScroll && containerRef.current) {
+      containerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [autoScroll]);
+
   const handleAction = onRetry || onReset;
   const actionLabel = retryLabel || resetLabel || "Try Again";
   const displaySubtitle = message || subtitle;
@@ -53,45 +61,29 @@ export default function FormErrorState({
 
   return (
     <div
+      ref={containerRef}
       role="alert"
       aria-live="assertive"
-      className={`mx-auto max-w-2xl rounded-3xl bg-clean-white border border-error-border/60 p-6 sm:p-10 shadow-xl text-center animate-in fade-in zoom-in-95 duration-300 ${className}`}
+      className={`mx-auto max-w-xl rounded-3xl bg-clean-white border border-error-border p-6 sm:p-8 shadow-lg text-center animate-in fade-in zoom-in-95 duration-200 scroll-mt-24 ${className}`}
     >
-      <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-error-light text-error mb-4 border border-error-border">
-        <AlertCircle className="h-9 w-9" aria-hidden="true" />
+      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-error-light text-error mb-4 border border-error-border shadow-2xs">
+        <AlertCircle className="h-8 w-8" aria-hidden="true" />
       </div>
 
       {badgeLabel && (
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-error-light px-3.5 py-1 text-xs font-bold text-error border border-error-border mb-2">
-          <AlertTriangle className="h-3.5 w-3.5 stroke-[2.5]" aria-hidden="true" />
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-error-light px-3 py-1 text-2xs font-bold text-error-text border border-error-border mb-2">
           <span>{badgeLabel}</span>
         </span>
       )}
 
-      <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
+      <h2 className="font-heading text-xl sm:text-2xl font-bold text-tech-slate tracking-tight">
         {title}
       </h2>
 
       {displaySubtitle && (
-        <p className="mt-1.5 text-xs sm:text-sm text-text-muted font-body max-w-md mx-auto leading-relaxed">
+        <p className="mt-2 text-xs sm:text-sm text-text-muted font-body max-w-md mx-auto leading-relaxed">
           {displaySubtitle}
         </p>
-      )}
-
-      {/* Error Code Tag */}
-      {errorCode && (
-        <div className="my-4 inline-flex items-center gap-2 rounded-xl bg-mist-gray px-3.5 py-1.5 font-mono text-2xs text-text-muted border border-border-subtle">
-          <span className="text-zinc-400">Reference / Code:</span>
-          <span className="font-bold text-tech-slate">{errorCode}</span>
-        </div>
-      )}
-
-      {/* Diagnostic / Error Details */}
-      {errorDetails && (
-        <div className="my-4 rounded-2xl bg-error-light/60 border border-error-border p-4 max-w-md mx-auto text-left text-xs text-error leading-relaxed">
-          <p className="font-semibold mb-1 text-2xs uppercase tracking-wider text-error/80">Diagnostic Info</p>
-          <p className="text-zinc-700 font-mono text-2xs break-all">{errorDetails}</p>
-        </div>
       )}
 
       {/* Action Buttons */}
@@ -120,7 +112,7 @@ export default function FormErrorState({
         {phoneValue && (
           <a
             href={`tel:${phoneValue}`}
-            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-tech-slate px-5 py-3.5 text-xs sm:text-sm font-bold text-clean-white hover:bg-tech-slate/90 transition-all shadow-sm"
+            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-tech-slate px-5 py-3.5 text-xs sm:text-sm font-bold text-clean-white hover:bg-tech-slate-hover transition-all shadow-sm"
           >
             <Phone className="h-4 w-4 text-flash-orange" aria-hidden="true" />
             <span>Call {phoneDisplay}</span>

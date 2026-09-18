@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { AlertCircle, Phone } from "lucide-react";
 import { useTranslations } from "next-intl";
 import contactConfig from "@/config/contact";
@@ -20,7 +20,7 @@ function BookingWizardContent() {
   const {
     currentStage,
     errorMessage,
-    fieldErrors,
+    setErrorMessage,
     isSubmitting,
     bookingSuccess,
     formData,
@@ -29,7 +29,13 @@ function BookingWizardContent() {
     resetWizard,
   } = useBookingWizard();
 
-  const showTopError = Boolean(errorMessage && Object.keys(fieldErrors).length === 0);
+  const errorRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (errorMessage && errorRef.current) {
+      errorRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [errorMessage]);
 
   if (isSubmitting) {
     return (
@@ -46,7 +52,6 @@ function BookingWizardContent() {
       <FormSuccessState
         title={t("successTitle")}
         subtitle={t("successSubtitle")}
-        badgeLabel={t("successBadge")}
         referenceCode={bookingSuccess.bookingReference}
         referenceLabel={t("refLabel")}
         summaryDetails={[
@@ -79,15 +84,26 @@ function BookingWizardContent() {
 
       {/* Main Booking Card */}
       <div className="rounded-2xl border border-border-default/90 bg-clean-white p-3.5 sm:p-6 md:p-7 shadow-xs">
-        {/* Error Alert (only for non-field general errors) */}
-        {showTopError && (
+        {/* Error Alert */}
+        {errorMessage && (
           <div
+            ref={errorRef}
             role="alert"
-            aria-live="polite"
-            className="mb-5 rounded-xl bg-red-50 border border-red-200 p-3.5 flex items-center gap-2.5 text-xs sm:text-sm text-red-700 font-medium animate-in fade-in"
+            aria-live="assertive"
+            className="mb-5 rounded-xl bg-error-light border border-error-border p-3.5 sm:p-4 flex items-start sm:items-center justify-between gap-3 text-xs sm:text-sm text-error-text font-medium animate-in fade-in scroll-mt-24 shadow-2xs"
           >
-            <AlertCircle className="h-4 w-4 shrink-0 text-red-600" aria-hidden="true" />
-            <span>{errorMessage}</span>
+            <div className="flex items-center gap-2.5 min-w-0">
+              <AlertCircle className="h-4 w-4 shrink-0 text-error mt-0.5 sm:mt-0" aria-hidden="true" />
+              <span className="leading-snug">{errorMessage}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setErrorMessage("")}
+              className="text-xs font-bold text-error hover:text-error-text cursor-pointer shrink-0 ml-2"
+              aria-label="Dismiss error"
+            >
+              Dismiss
+            </button>
           </div>
         )}
 

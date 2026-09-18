@@ -45,7 +45,7 @@ export default function BrandLogo({
           {brandName ? (
             <span>{brandName.slice(0, 2).toUpperCase()}</span>
           ) : (
-            <Smartphone className="h-4 w-4 text-zinc-400" />
+            <Smartphone className="h-4 w-4 text-text-muted" />
           )}
         </div>
       )}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Send, AlertCircle, Loader2 } from "lucide-react";
 import contactConfig from "@/config/contact";
@@ -23,6 +23,14 @@ export default function ContactForm() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  const errorRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (errorMessage && errorRef.current) {
+      errorRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [errorMessage]);
 
   const puneAreas = contactConfig.serviceAreas.all;
 
@@ -62,6 +70,15 @@ export default function ContactForm() {
       }
       setFieldErrors(errors);
       setErrorMessage(result.error.issues[0]?.message || "Please correct the highlighted fields.");
+      setTimeout(() => {
+        if (errorRef.current) {
+          errorRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          const firstInvalid = document.querySelector<HTMLElement>('[aria-invalid="true"]');
+          firstInvalid?.scrollIntoView({ behavior: "smooth", block: "center" });
+          firstInvalid?.focus();
+        }
+      }, 50);
       return;
     }
 
@@ -102,6 +119,9 @@ export default function ContactForm() {
       setIsSuccess(true);
     } catch (err) {
       setErrorMessage(err instanceof Error ? err.message : "Something went wrong. Please call or WhatsApp us.");
+      setTimeout(() => {
+        errorRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 50);
     } finally {
       setIsSubmitting(false);
     }
@@ -120,8 +140,8 @@ export default function ContactForm() {
   if (isSubmitting) {
     return (
       <FormLoadingState
-        title="Submitting Your Inquiry…"
-        subtitle="Connecting with QuickFix Pune support desk. Please hold on."
+        title={t("submitting")}
+        subtitle="Please wait a moment while we send your inquiry."
       />
     );
   }
@@ -131,12 +151,11 @@ export default function ContactForm() {
       <FormSuccessState
         title={t("successTitle")}
         subtitle={t("successMsg")}
-        badgeLabel="Inquiry Dispatched to Pune Desk"
         summaryDetails={[
-          { label: "Name", value: name },
-          { label: "Phone", value: phone },
-          ...(area ? [{ label: "Pune Locality", value: area }] : []),
-          { label: "Inquiry Type", value: subject },
+          { label: t("nameLabel"), value: name },
+          { label: t("phoneLabel"), value: phone },
+          ...(area ? [{ label: t("areaLabel"), value: area }] : []),
+          { label: t("subjectLabel"), value: subject },
         ]}
         onReset={handleReset}
         resetLabel={t("sendAnother")}
@@ -160,10 +179,25 @@ export default function ContactForm() {
         </p>
       </div>
 
-      {errorMessage && Object.keys(fieldErrors).length === 0 && (
-        <div className="mb-6 rounded-xl bg-error-light border border-error-border p-4 flex items-center gap-3 text-xs sm:text-sm text-error font-medium">
-          <AlertCircle className="h-5 w-5 shrink-0 text-error" />
-          <span>{errorMessage}</span>
+      {errorMessage && (
+        <div
+          ref={errorRef}
+          role="alert"
+          aria-live="assertive"
+          className="mb-6 rounded-2xl bg-error-light border border-error-border p-4 flex items-start sm:items-center justify-between gap-3 text-xs sm:text-sm text-error-text font-medium animate-in fade-in scroll-mt-24 shadow-2xs"
+        >
+          <div className="flex items-center gap-2.5 min-w-0">
+            <AlertCircle className="h-5 w-5 shrink-0 text-error mt-0.5 sm:mt-0" aria-hidden="true" />
+            <span className="leading-snug">{errorMessage}</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setErrorMessage("")}
+            className="text-xs font-bold text-error hover:text-error-hover cursor-pointer shrink-0 ml-2"
+            aria-label="Dismiss error"
+          >
+            Dismiss
+          </button>
         </div>
       )}
 
@@ -187,12 +221,12 @@ export default function ContactForm() {
               aria-describedby={fieldErrors.name ? "contact-name-error" : undefined}
               className={`w-full rounded-xl border bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:outline-hidden focus:ring-2 ${
                 fieldErrors.name
-                  ? "border-red-500 focus:ring-red-500/20"
-                  : "border-zinc-300 focus:border-flash-orange focus:ring-flash-orange/20"
+                  ? "border-error focus:ring-error/20"
+                  : "border-border-default focus:border-flash-orange focus:ring-flash-orange/20"
               }`}
             />
             {fieldErrors.name && (
-              <p id="contact-name-error" className="mt-1 text-2xs text-red-600 flex items-center gap-1 font-medium animate-in fade-in duration-150">
+              <p id="contact-name-error" className="mt-1 text-2xs text-error flex items-center gap-1 font-medium animate-in fade-in duration-150">
                 <AlertCircle className="h-3 w-3 shrink-0" aria-hidden="true" />
                 <span>{fieldErrors.name}</span>
               </p>
@@ -218,12 +252,12 @@ export default function ContactForm() {
               aria-describedby={fieldErrors.phone ? "contact-phone-error" : undefined}
               className={`w-full rounded-xl border bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:outline-hidden focus:ring-2 ${
                 fieldErrors.phone
-                  ? "border-red-500 focus:ring-red-500/20"
-                  : "border-zinc-300 focus:border-flash-orange focus:ring-flash-orange/20"
+                  ? "border-error focus:ring-error/20"
+                  : "border-border-default focus:border-flash-orange focus:ring-flash-orange/20"
               }`}
             />
             {fieldErrors.phone && (
-              <p id="contact-phone-error" className="mt-1 text-2xs text-red-600 flex items-center gap-1 font-medium animate-in fade-in duration-150">
+              <p id="contact-phone-error" className="mt-1 text-2xs text-error flex items-center gap-1 font-medium animate-in fade-in duration-150">
                 <AlertCircle className="h-3 w-3 shrink-0" aria-hidden="true" />
                 <span>{fieldErrors.phone}</span>
               </p>
@@ -249,12 +283,12 @@ export default function ContactForm() {
               aria-describedby={fieldErrors.email ? "contact-email-error" : undefined}
               className={`w-full rounded-xl border bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:outline-hidden focus:ring-2 ${
                 fieldErrors.email
-                  ? "border-red-500 focus:ring-red-500/20"
-                  : "border-zinc-300 focus:border-flash-orange focus:ring-flash-orange/20"
+                  ? "border-error focus:ring-error/20"
+                  : "border-border-default focus:border-flash-orange focus:ring-flash-orange/20"
               }`}
             />
             {fieldErrors.email && (
-              <p id="contact-email-error" className="mt-1 text-2xs text-red-600 flex items-center gap-1 font-medium animate-in fade-in duration-150">
+              <p id="contact-email-error" className="mt-1 text-2xs text-error flex items-center gap-1 font-medium animate-in fade-in duration-150">
                 <AlertCircle className="h-3 w-3 shrink-0" aria-hidden="true" />
                 <span>{fieldErrors.email}</span>
               </p>
@@ -271,7 +305,7 @@ export default function ContactForm() {
                 setArea(e.target.value);
                 clearFieldError("area");
               }}
-              className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20 cursor-pointer"
+              className="w-full rounded-xl border border-border-default bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20 cursor-pointer"
             >
               <option value="">{t("areaSelect")}</option>
               {puneAreas.map((a) => (
@@ -291,7 +325,7 @@ export default function ContactForm() {
           <select
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            className="w-full rounded-xl border border-zinc-300 bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20 cursor-pointer"
+            className="w-full rounded-xl border border-border-default bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:border-flash-orange focus:outline-hidden focus:ring-2 focus:ring-flash-orange/20 cursor-pointer"
           >
             <option value="Phone Repair Quote / Inquiry">Phone Repair Quote / Inquiry</option>
             <option value="Warranty & After-Sales Support">Warranty & After-Sales Support</option>
@@ -318,12 +352,12 @@ export default function ContactForm() {
             aria-describedby={fieldErrors.message ? "contact-message-error" : undefined}
             className={`w-full rounded-xl border bg-clean-white px-4 py-2.5 text-sm font-medium text-tech-slate shadow-2xs focus:outline-hidden focus:ring-2 resize-none ${
               fieldErrors.message
-                ? "border-red-500 focus:ring-red-500/20"
-                : "border-zinc-300 focus:border-flash-orange focus:ring-flash-orange/20"
+                ? "border-error focus:ring-error/20"
+                : "border-border-default focus:border-flash-orange focus:ring-flash-orange/20"
             }`}
           />
           {fieldErrors.message && (
-            <p id="contact-message-error" className="mt-1 text-2xs text-red-600 flex items-center gap-1 font-medium animate-in fade-in duration-150">
+            <p id="contact-message-error" className="mt-1 text-2xs text-error flex items-center gap-1 font-medium animate-in fade-in duration-150">
               <AlertCircle className="h-3 w-3 shrink-0" aria-hidden="true" />
               <span>{fieldErrors.message}</span>
             </p>
@@ -349,7 +383,7 @@ export default function ContactForm() {
           )}
         </button>
 
-        <p className="text-[11px] text-center text-zinc-400 font-medium">
+        <p className="text-[11px] text-center text-text-muted font-medium">
           🔒 No passcodes requested. 100% data confidentiality guaranteed.
         </p>
       </form>

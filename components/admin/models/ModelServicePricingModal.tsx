@@ -244,7 +244,7 @@ export default function ModelServicePricingModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-2 sm:p-4 backdrop-blur-xs overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-tech-slate-dark/50 p-2 sm:p-4 backdrop-blur-xs overflow-y-auto"
       onClick={(e) => {
         if (e.target === e.currentTarget && !isSaving) onClose();
       }}
@@ -254,24 +254,24 @@ export default function ModelServicePricingModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="flex items-start justify-between border-b border-zinc-200 pb-3 sm:pb-4 shrink-0 gap-2">
+        <div className="flex items-start justify-between border-b border-border-default pb-3 sm:pb-4 shrink-0 gap-2">
           <div className="flex items-center gap-3 min-w-0">
             <AdminImage
               src={model.imageUrl}
               alt={model.name}
               fallbackIcon={Smartphone}
-              containerClassName="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-zinc-50 border border-zinc-200 p-1 flex items-center justify-center shrink-0"
+              containerClassName="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-mist-gray border border-border-default p-1 flex items-center justify-center shrink-0"
             />
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
                 <h3 className="font-heading text-base sm:text-lg font-bold text-tech-slate truncate">
                   {model.name}
                 </h3>
-                <span className="rounded-md bg-zinc-100 px-2 py-0.5 text-2xs font-bold text-tech-slate shrink-0">
+                <span className="rounded-md bg-surface-hover px-2 py-0.5 text-2xs font-bold text-tech-slate shrink-0">
                   {model.brand?.name}
                 </span>
               </div>
-              <p className="text-xs text-zinc-500 mt-0.5 truncate sm:whitespace-normal">
+              <p className="text-xs text-text-muted mt-0.5 truncate sm:whitespace-normal">
                 Configure custom repair prices and turnaround times for this
                 phone model.
               </p>
@@ -281,7 +281,7 @@ export default function ModelServicePricingModal({
             type="button"
             onClick={onClose}
             disabled={isSaving}
-            className="rounded-lg p-1.5 text-zinc-400 hover:bg-zinc-100 cursor-pointer disabled:opacity-50 shrink-0"
+            className="rounded-lg p-1.5 text-text-muted hover:bg-surface-hover cursor-pointer disabled:opacity-50 shrink-0"
           >
             <X className="h-5 w-5" />
           </button>
@@ -289,21 +289,21 @@ export default function ModelServicePricingModal({
 
         {/* Feedback Alerts */}
         {error && (
-          <div className="p-3 rounded-xl bg-red-50 text-red-700 text-xs border border-red-200 font-medium flex items-center gap-2 shrink-0">
+          <div className="p-3 rounded-xl bg-error-light text-error-text text-xs border border-error-border font-medium flex items-center gap-2 shrink-0">
             <AlertCircle className="h-4 w-4 shrink-0" />
             <span>{error}</span>
           </div>
         )}
 
         {success && (
-          <div className="p-3 rounded-xl bg-emerald-50 text-emerald-700 text-xs border border-emerald-200 font-medium flex items-center gap-2 shrink-0">
-            <Check className="h-4 w-4 shrink-0 text-emerald-600" />
+          <div className="p-3 rounded-xl bg-success-light text-success-text text-xs border border-success-border font-medium flex items-center gap-2 shrink-0">
+            <Check className="h-4 w-4 shrink-0 text-success" />
             <span>{success}</span>
           </div>
         )}
 
         {/* Quick Actions Bar */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-3 rounded-xl bg-zinc-50 border border-zinc-200/80 text-xs shrink-0">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-3 rounded-xl bg-mist-gray border border-border-default/80 text-xs shrink-0">
           <span className="font-bold text-tech-slate">
             {modelServiceList.length} Repair Services Configured
           </span>
@@ -312,7 +312,7 @@ export default function ModelServicePricingModal({
             <button
               type="button"
               onClick={handleQuickAddAllServices}
-              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-lg bg-tech-slate px-3 py-2 sm:py-1.5 text-xs font-bold text-clean-white hover:bg-black transition-all cursor-pointer"
+              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-lg bg-tech-slate px-3 py-2 sm:py-1.5 text-xs font-bold text-clean-white hover:bg-tech-slate-dark transition-all cursor-pointer"
               title="Populate all active catalogue services with default starting rates"
             >
               <Sparkles className="h-3.5 w-3.5 text-electric-amber" />
@@ -323,7 +323,7 @@ export default function ModelServicePricingModal({
               <button
                 type="button"
                 onClick={() => setModelServiceList([])}
-                className="rounded-lg border border-zinc-200 bg-clean-white px-2.5 py-2 sm:py-1.5 text-xs font-semibold text-zinc-600 hover:bg-red-50 hover:text-red-600 transition-colors cursor-pointer"
+                className="rounded-lg border border-border-default bg-clean-white px-2.5 py-2 sm:py-1.5 text-xs font-semibold text-text-secondary hover:bg-error-light hover:text-error transition-colors cursor-pointer"
               >
                 Clear All
               </button>
@@ -339,13 +339,13 @@ export default function ModelServicePricingModal({
 
           <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
             <div className="sm:col-span-5 space-y-1">
-              <label className="text-2xs font-bold text-zinc-600">
+              <label className="text-2xs font-bold text-text-secondary">
                 Select Service
               </label>
               <select
                 value={addServiceId}
                 onChange={(e) => handleSelectServiceToAdd(e.target.value)}
-                className="w-full rounded-lg border border-zinc-300 bg-clean-white px-3 py-2 text-xs font-medium text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                className="w-full rounded-lg border border-border-strong bg-clean-white px-3 py-2 text-xs font-medium text-tech-slate focus:border-flash-orange focus:outline-hidden"
               >
                 <option value="">Choose service...</option>
                 {availableServices.map((svc) => {
@@ -362,35 +362,35 @@ export default function ModelServicePricingModal({
             </div>
 
             <div className="sm:col-span-3 space-y-1">
-              <label className="text-2xs font-bold text-zinc-600">
+              <label className="text-2xs font-bold text-text-secondary">
                 Model Price (₹)
               </label>
               <div className="relative">
-                <IndianRupee className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-zinc-400" />
+                <IndianRupee className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-text-muted" />
                 <input
                   type="number"
                   min={0}
                   placeholder="2499"
                   value={addServicePrice}
                   onChange={(e) => setAddServicePrice(e.target.value)}
-                  className="w-full rounded-lg border border-zinc-300 bg-clean-white pl-8 pr-2 py-2 text-xs font-bold text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                  className="w-full rounded-lg border border-border-strong bg-clean-white pl-8 pr-2 py-2 text-xs font-bold text-tech-slate focus:border-flash-orange focus:outline-hidden"
                 />
               </div>
             </div>
 
             <div className="sm:col-span-2 space-y-1">
-              <label className="text-2xs font-bold text-zinc-600">
+              <label className="text-2xs font-bold text-text-secondary">
                 Est. Time (Mins)
               </label>
               <div className="relative">
-                <Clock className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-zinc-400" />
+                <Clock className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-text-muted" />
                 <input
                   type="number"
                   min={5}
                   placeholder="30"
                   value={addServiceTime}
                   onChange={(e) => setAddServiceTime(e.target.value)}
-                  className="w-full rounded-lg border border-zinc-300 bg-clean-white pl-8 pr-2 py-2 text-xs font-medium text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                  className="w-full rounded-lg border border-border-strong bg-clean-white pl-8 pr-2 py-2 text-xs font-medium text-tech-slate focus:border-flash-orange focus:outline-hidden"
                 />
               </div>
             </div>
@@ -399,7 +399,7 @@ export default function ModelServicePricingModal({
               <button
                 type="button"
                 onClick={handleAddServiceToList}
-                className="w-full inline-flex items-center justify-center gap-1.5 rounded-lg bg-flash-orange px-3 py-2 text-xs font-bold text-clean-white hover:bg-orange-600 active:scale-95 transition-all shadow-xs cursor-pointer"
+                className="w-full inline-flex items-center justify-center gap-1.5 rounded-lg bg-flash-orange px-3 py-2 text-xs font-bold text-clean-white hover:bg-flash-orange-hover active:scale-95 transition-all shadow-xs cursor-pointer"
               >
                 <Plus className="h-3.5 w-3.5" />
                 <span>Add</span>
@@ -409,21 +409,21 @@ export default function ModelServicePricingModal({
         </div>
 
         {/* Configured Services Table (Scrollable) */}
-        <div className="flex-1 overflow-y-auto overflow-x-auto [scrollbar-width:thin] touch-pan-x min-h-[160px] rounded-xl border border-zinc-200 bg-clean-white">
+        <div className="flex-1 overflow-y-auto overflow-x-auto [scrollbar-width:thin] touch-pan-x min-h-[160px] rounded-xl border border-border-default bg-clean-white">
           {modelServiceList.length === 0 ? (
-            <div className="text-center py-10 px-4 text-zinc-400 space-y-2">
-              <Wrench className="h-8 w-8 mx-auto text-zinc-300" />
+            <div className="text-center py-10 px-4 text-text-muted space-y-2">
+              <Wrench className="h-8 w-8 mx-auto text-border-strong" />
               <p className="text-xs font-medium">
                 No repair services associated with this model yet.
               </p>
-              <p className="text-2xs text-zinc-400">
+              <p className="text-2xs text-text-muted">
                 Use the &quot;Quick Add All Active Services&quot; button above or
                 add individual services manually.
               </p>
             </div>
           ) : (
             <table className="w-full min-w-[500px] text-left text-xs">
-              <thead className="sticky top-0 bg-zinc-50 border-b border-zinc-200 text-[10px] font-extrabold uppercase tracking-wider text-zinc-500">
+              <thead className="sticky top-0 bg-mist-gray border-b border-border-default text-[10px] font-extrabold uppercase tracking-wider text-text-muted">
                 <tr>
                   <th className="px-4 py-2.5">Service</th>
                   <th className="px-4 py-2.5">Price (₹)</th>
@@ -431,7 +431,7 @@ export default function ModelServicePricingModal({
                   <th className="px-4 py-2.5 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-100">
+              <tbody className="divide-y divide-border-subtle">
                 {modelServiceList.map((entry) => {
                   const svc = availableServices.find(
                     (s) => s._id === entry.serviceId
@@ -439,7 +439,7 @@ export default function ModelServicePricingModal({
                   return (
                     <tr
                       key={entry.serviceId}
-                      className="hover:bg-zinc-50/80 transition-colors"
+                      className="hover:bg-mist-gray/80 transition-colors"
                     >
                       {/* Service Details */}
                       <td className="px-4 py-3">
@@ -455,7 +455,7 @@ export default function ModelServicePricingModal({
                               {svc?.name || "Unknown Service"}
                             </span>
                             {svc?.startingPrice !== undefined && (
-                              <span className="text-2xs text-zinc-400">
+                              <span className="text-2xs text-text-muted">
                                 Catalogue Default: ₹{svc.startingPrice}
                               </span>
                             )}
@@ -466,7 +466,7 @@ export default function ModelServicePricingModal({
                       {/* Editable Price */}
                       <td className="px-4 py-3 w-36">
                         <div className="relative">
-                          <IndianRupee className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-zinc-400" />
+                          <IndianRupee className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-text-muted" />
                           <input
                             type="number"
                             min={0}
@@ -477,7 +477,7 @@ export default function ModelServicePricingModal({
                                 e.target.value
                               )
                             }
-                            className="w-full rounded-lg border border-zinc-200 bg-clean-white pl-7 pr-2 py-1.5 text-xs font-bold text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                            className="w-full rounded-lg border border-border-default bg-clean-white pl-7 pr-2 py-1.5 text-xs font-bold text-tech-slate focus:border-flash-orange focus:outline-hidden"
                           />
                         </div>
                       </td>
@@ -485,7 +485,7 @@ export default function ModelServicePricingModal({
                       {/* Editable Time */}
                       <td className="px-4 py-3 w-32">
                         <div className="relative">
-                          <Clock className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-zinc-400" />
+                          <Clock className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-text-muted" />
                           <input
                             type="number"
                             min={5}
@@ -496,7 +496,7 @@ export default function ModelServicePricingModal({
                                 e.target.value
                               )
                             }
-                            className="w-full rounded-lg border border-zinc-200 bg-clean-white pl-7 pr-2 py-1.5 text-xs font-medium text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                            className="w-full rounded-lg border border-border-default bg-clean-white pl-7 pr-2 py-1.5 text-xs font-medium text-tech-slate focus:border-flash-orange focus:outline-hidden"
                           />
                         </div>
                       </td>
@@ -508,7 +508,7 @@ export default function ModelServicePricingModal({
                           onClick={() =>
                             handleRemoveServiceFromList(entry.serviceId)
                           }
-                          className="rounded-lg p-1.5 text-zinc-400 hover:bg-red-50 hover:text-red-600 transition-colors cursor-pointer"
+                          className="rounded-lg p-1.5 text-text-muted hover:bg-error-light hover:text-error transition-colors cursor-pointer"
                           title="Remove service association"
                         >
                           <Trash2 className="h-4 w-4" />
@@ -523,8 +523,8 @@ export default function ModelServicePricingModal({
         </div>
 
         {/* Modal Footer Actions */}
-        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-3 sm:pt-4 border-t border-zinc-200 shrink-0">
-          <span className="text-2xs text-zinc-500 font-medium text-center sm:text-left">
+        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-3 sm:pt-4 border-t border-border-default shrink-0">
+          <span className="text-2xs text-text-muted font-medium text-center sm:text-left">
             Changes must be saved to update pricing for this device model.
           </span>
 
@@ -533,7 +533,7 @@ export default function ModelServicePricingModal({
               type="button"
               onClick={onClose}
               disabled={isSaving}
-              className="w-full sm:w-auto text-center rounded-xl px-4 py-2.5 sm:py-2 text-xs font-bold text-zinc-600 hover:bg-zinc-100 cursor-pointer disabled:opacity-50"
+              className="w-full sm:w-auto text-center rounded-xl px-4 py-2.5 sm:py-2 text-xs font-bold text-text-secondary hover:bg-surface-hover cursor-pointer disabled:opacity-50"
             >
               Close
             </button>
@@ -541,7 +541,7 @@ export default function ModelServicePricingModal({
               type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-5 py-2.5 text-xs font-bold text-clean-white hover:bg-orange-600 shadow-md shadow-orange-500/20 active:scale-95 transition-all cursor-pointer disabled:opacity-60"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-5 py-2.5 text-xs font-bold text-clean-white hover:bg-flash-orange-hover shadow-md shadow-flash-orange/20 active:scale-95 transition-all cursor-pointer disabled:opacity-60"
             >
               {isSaving ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />

@@ -18,7 +18,7 @@ export default function AdminImage({
   fallbackIcon: FallbackIcon,
   fallbackText,
   className = "h-full w-full object-contain",
-  containerClassName = "h-9 w-9 rounded-lg bg-zinc-50 border border-zinc-200 shrink-0",
+  containerClassName = "h-9 w-9 rounded-lg bg-mist-gray border border-border-default shrink-0",
 }: AdminImageProps) {
   const [error, setError] = useState(false);
 
@@ -38,13 +38,13 @@ export default function AdminImage({
           className={className}
         />
       ) : FallbackIcon ? (
-        <FallbackIcon className="h-4 w-4 text-zinc-400" />
+        <FallbackIcon className="h-4 w-4 text-text-muted" />
       ) : fallbackText ? (
         <span className="font-heading font-extrabold text-xs text-tech-slate">
           {fallbackText}
         </span>
       ) : (
-        <div className="h-2 w-2 rounded-full bg-zinc-300" />
+        <div className="h-2 w-2 rounded-full bg-border-strong" />
       )}
     </div>
   );

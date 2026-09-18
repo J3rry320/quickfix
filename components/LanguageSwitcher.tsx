@@ -47,20 +47,20 @@ export default function LanguageSwitcher() {
         disabled={isPending}
         aria-label={`Change language, current is ${languageMeta[currentLocale].label}`}
         aria-expanded={isOpen}
-        className="inline-flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-clean-white px-2.5 py-1.5 text-xs font-bold text-tech-slate hover:bg-mist-gray hover:border-zinc-300 transition-colors cursor-pointer disabled:opacity-60"
+        className="inline-flex items-center gap-1.5 rounded-xl border border-border-default bg-clean-white px-2.5 py-1.5 text-xs font-bold text-tech-slate hover:bg-mist-gray hover:border-border-strong transition-colors cursor-pointer disabled:opacity-60"
       >
-        <Globe className="h-3.5 w-3.5 text-zinc-500 shrink-0" />
+        <Globe className="h-3.5 w-3.5 text-text-muted shrink-0" />
         <span className="uppercase text-[11px] tracking-wider">{languageMeta[currentLocale].code}</span>
         <ChevronDown
-          className={`h-3 w-3 text-zinc-400 transition-transform duration-150 ${
+          className={`h-3 w-3 text-text-muted transition-transform duration-150 ${
             isOpen ? "rotate-180" : ""
           }`}
         />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-1.5 w-36 rounded-2xl bg-clean-white border border-zinc-200 p-1.5 shadow-xl animate-in fade-in-50 zoom-in-95 z-50">
-          <div className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+        <div className="absolute right-0 top-full mt-1.5 w-36 rounded-2xl bg-clean-white border border-border-default p-1.5 shadow-xl animate-in fade-in-50 zoom-in-95 z-50">
+          <div className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-text-muted">
             Language
           </div>
           {routing.locales.map((loc) => {

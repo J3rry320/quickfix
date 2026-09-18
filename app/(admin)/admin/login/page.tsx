@@ -60,7 +60,7 @@ function AdminLoginForm() {
   };
 
   return (
-    <div className="w-full max-w-md rounded-2xl bg-clean-white p-8 shadow-xl border border-zinc-200">
+    <div className="w-full max-w-md rounded-2xl bg-clean-white p-8 shadow-xl border border-border-default">
       {/* Brand Header */}
       <div className="flex flex-col items-center text-center">
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-flash-orange text-clean-white shadow-md mb-4">
@@ -81,16 +81,16 @@ function AdminLoginForm() {
         <h1 className="font-heading text-2xl font-extrabold text-tech-slate">
           Quick<span className="text-flash-orange">Fix</span> Admin
         </h1>
-        <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+        <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-text-muted">
           Protected Staff & Operations Area
         </p>
       </div>
 
       {/* Error Notification */}
       {error && (
-        <div className="mt-6 flex items-start gap-3 rounded-xl bg-red-50 p-4 border border-red-200 text-left animate-in fade-in">
-          <ShieldAlert className="h-5 w-5 text-red-600 shrink-0 mt-0.5" />
-          <div className="text-xs text-red-800">
+        <div className="mt-6 flex items-start gap-3 rounded-xl bg-error-light p-4 border border-error-border text-left animate-in fade-in">
+          <ShieldAlert className="h-5 w-5 text-error shrink-0 mt-0.5" />
+          <div className="text-xs text-error-text">
             <p className="font-bold">Authentication Failed</p>
             <p className="mt-0.5">{error}</p>
           </div>
@@ -103,7 +103,7 @@ function AdminLoginForm() {
           type="button"
           onClick={handleGoogleSignIn}
           disabled={loading}
-          className="flex w-full items-center justify-center gap-3 rounded-xl border border-zinc-300 bg-clean-white px-5 py-3.5 text-sm font-bold text-tech-slate shadow-xs hover:bg-zinc-50 hover:border-zinc-400 active:scale-[0.99] transition-all disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+          className="flex w-full items-center justify-center gap-3 rounded-xl border border-border-strong bg-clean-white px-5 py-3.5 text-sm font-bold text-tech-slate shadow-xs hover:bg-mist-gray hover:border-border-strong active:scale-[0.99] transition-all disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
         >
           {loading ? (
             <>
@@ -140,10 +140,10 @@ function AdminLoginForm() {
       {/* Security Notice */}
 
       {/* Return to website */}
-      <div className="mt-8 pt-4 border-t border-zinc-200 text-center">
+      <div className="mt-8 pt-4 border-t border-border-default text-center">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-600 hover:text-flash-orange transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-text-secondary hover:text-flash-orange transition-colors"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           <span>Return to QuickFixMobile.in Website</span>
@@ -158,7 +158,7 @@ export default function AdminLoginPage() {
     <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-mist-gray">
       <Suspense
         fallback={
-          <div className="flex items-center gap-2 text-zinc-500 text-sm font-medium">
+          <div className="flex items-center gap-2 text-text-muted text-sm font-medium">
             <Loader2 className="h-5 w-5 animate-spin text-flash-orange" />
             <span>Loading admin portal...</span>
           </div>

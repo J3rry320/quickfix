@@ -126,7 +126,7 @@ export default function ReviewSubmitModal({
 
         {isSuccess ? (
           <div className="p-6 sm:p-8 text-center space-y-4 my-auto">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-success-light text-success">
               <CheckCircle2 className="h-7 w-7" />
             </div>
             <h3 className="font-heading text-xl font-bold text-tech-slate">

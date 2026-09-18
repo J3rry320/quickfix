@@ -242,7 +242,7 @@ export default function ModelsScrollSection({
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold shrink-0 transition-all ${
                 selectedBrandSlug === "all"
                   ? "bg-flash-orange text-clean-white shadow-2xs"
-                  : "bg-mist-gray text-text-secondary hover:text-tech-slate hover:bg-zinc-200/80 border border-border-default/60"
+                  : "bg-mist-gray text-text-secondary hover:text-tech-slate hover:bg-surface-hover border border-border-default/60"
               }`}
             >
               All Brands
@@ -255,7 +255,7 @@ export default function ModelsScrollSection({
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold shrink-0 transition-all ${
                   selectedBrandSlug === brand.slug
                     ? "bg-flash-orange text-clean-white shadow-2xs"
-                    : "bg-mist-gray text-text-secondary hover:text-tech-slate hover:bg-zinc-200/80 border border-border-default/60"
+                    : "bg-mist-gray text-text-secondary hover:text-tech-slate hover:bg-surface-hover border border-border-default/60"
                 }`}
               >
                 {brand.name}
@@ -299,7 +299,7 @@ export default function ModelsScrollSection({
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-mist-gray hover:bg-zinc-200 text-tech-slate border border-border-default transition-all"
+                className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-mist-gray hover:bg-surface-hover text-tech-slate border border-border-default transition-all"
               >
                 <RotateCcw className="w-3.5 h-3.5 text-flash-orange" />
                 <span>{clearSearchLabel}</span>

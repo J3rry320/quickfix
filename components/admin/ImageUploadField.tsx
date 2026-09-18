@@ -82,12 +82,12 @@ export default function ImageUploadField({
     <div className="space-y-1.5">
       {/* Label and Upload CTA */}
       <div className="flex items-center justify-between">
-        <label className="block text-xs font-bold text-zinc-700">
+        <label className="block text-xs font-bold text-text-secondary">
           {label}
-          {required && <span className="text-red-500 ml-0.5">*</span>}
+          {required && <span className="text-error ml-0.5">*</span>}
         </label>
         {uploadSuccess && (
-          <span className="inline-flex items-center gap-1 text-2xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">
+          <span className="inline-flex items-center gap-1 text-2xs font-bold text-success bg-success-light px-2 py-0.5 rounded-md">
             <CheckCircle2 className="h-3 w-3" /> Uploaded to ImgBB
           </span>
         )}
@@ -116,7 +116,7 @@ export default function ImageUploadField({
             }}
             placeholder={placeholder}
             disabled={disabled || isUploading}
-            className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden disabled:bg-zinc-50 disabled:text-zinc-400 transition-colors"
+            className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden disabled:bg-surface-disabled disabled:text-text-disabled transition-colors"
           />
         </div>
 
@@ -125,7 +125,7 @@ export default function ImageUploadField({
           type="button"
           onClick={() => fileInputRef.current?.click()}
           disabled={disabled || isUploading}
-          className="inline-flex items-center gap-1.5 rounded-xl bg-zinc-900 px-3 py-2 text-xs font-bold text-clean-white hover:bg-zinc-800 disabled:opacity-50 transition-all shrink-0 cursor-pointer shadow-2xs"
+          className="inline-flex items-center gap-1.5 rounded-xl bg-tech-slate px-3 py-2 text-xs font-bold text-clean-white hover:bg-tech-slate-dark disabled:opacity-50 transition-all shrink-0 cursor-pointer shadow-2xs"
           title="Upload image directly to ImgBB"
         >
           {isUploading ? (
@@ -144,8 +144,8 @@ export default function ImageUploadField({
 
       {/* Live Preview Thumbnail */}
       {hasValue && (
-        <div className="flex items-center gap-3 p-2 bg-zinc-50 border border-zinc-200 rounded-xl">
-          <div className="h-12 w-12 rounded-lg bg-clean-white border border-zinc-200 flex items-center justify-center overflow-hidden shrink-0">
+        <div className="flex items-center gap-3 p-2 bg-mist-gray border border-border-default rounded-xl">
+          <div className="h-12 w-12 rounded-lg bg-clean-white border border-border-default flex items-center justify-center overflow-hidden shrink-0">
             {!imageLoadError ? (
               /* eslint-disable-next-line @next/next/no-img-element */
               <img
@@ -155,15 +155,15 @@ export default function ImageUploadField({
                 className="h-full w-full object-contain p-0.5"
               />
             ) : (
-              <ImageIcon className="h-5 w-5 text-zinc-300" />
+              <ImageIcon className="h-5 w-5 text-border-strong" />
             )}
           </div>
 
           <div className="flex-1 min-w-0">
-            <p className="text-2xs font-semibold text-zinc-700 truncate">
+            <p className="text-2xs font-semibold text-text-secondary truncate">
               {imageLoadError ? "Could not preview image URL" : "Preview image"}
             </p>
-            <p className="text-2xs text-zinc-400 truncate">{value}</p>
+            <p className="text-2xs text-text-muted truncate">{value}</p>
           </div>
 
           <div className="flex items-center gap-1 shrink-0">
@@ -171,7 +171,7 @@ export default function ImageUploadField({
               href={value}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-1 rounded-md text-zinc-400 hover:text-tech-slate hover:bg-zinc-200 transition-colors cursor-pointer"
+              className="p-1 rounded-md text-text-muted hover:text-tech-slate hover:bg-surface-hover transition-colors cursor-pointer"
               title="Open image in new tab"
             >
               <ExternalLink className="h-3.5 w-3.5" />
@@ -179,7 +179,7 @@ export default function ImageUploadField({
             <button
               type="button"
               onClick={handleClear}
-              className="p-1 rounded-md text-zinc-400 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
+              className="p-1 rounded-md text-text-muted hover:text-error hover:bg-error-light transition-colors cursor-pointer"
               title="Remove image"
             >
               <X className="h-3.5 w-3.5" />
@@ -190,12 +190,12 @@ export default function ImageUploadField({
 
       {/* Helper text */}
       {helperText && !uploadError && (
-        <p className="text-2xs text-zinc-500">{helperText}</p>
+        <p className="text-2xs text-text-muted">{helperText}</p>
       )}
 
       {/* Error Message */}
       {uploadError && (
-        <div className="flex items-start gap-1.5 p-2.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-2xs">
+        <div className="flex items-start gap-1.5 p-2.5 rounded-xl bg-error-light border border-error-border text-error-text text-2xs">
           <AlertCircle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
           <div className="flex-1">
             <p className="font-semibold">{uploadError}</p>
@@ -203,7 +203,7 @@ export default function ImageUploadField({
           <button
             type="button"
             onClick={() => setUploadError(null)}
-            className="text-red-500 hover:text-red-800 cursor-pointer"
+            className="text-error hover:text-error-text cursor-pointer"
           >
             <X className="h-3 w-3" />
           </button>

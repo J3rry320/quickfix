@@ -137,7 +137,7 @@ export default function ServicesCatalog() {
   return (
     <section
       id="services"
-      className="py-10 sm:py-16 lg:py-20 bg-mist-gray/60 border-b border-zinc-200"
+      className="py-10 sm:py-16 lg:py-20 bg-mist-gray/60 border-b border-border-default"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
@@ -167,7 +167,7 @@ export default function ServicesCatalog() {
                   className={`shrink-0 rounded-xl px-4 sm:px-5 py-2 text-xs font-extrabold transition-all cursor-pointer ${
                     activeFilter === tab.id
                       ? "bg-tech-slate text-clean-white shadow-md"
-                      : "bg-clean-white text-zinc-700 hover:bg-zinc-100 border border-zinc-200"
+                      : "bg-clean-white text-text-secondary hover:bg-surface-hover border border-border-default"
                   }`}
                 >
                   {tab.label}
@@ -183,7 +183,7 @@ export default function ServicesCatalog() {
             {[...Array(4)].map((_, i) => (
               <div
                 key={i}
-                className="w-[285px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl bg-clean-white border border-zinc-200 p-5 sm:p-6 shadow-xs flex flex-col justify-between"
+                className="w-[285px] sm:w-[320px] md:w-[350px] shrink-0 rounded-2xl bg-clean-white border border-border-default p-5 sm:p-6 shadow-xs flex flex-col justify-between"
               >
                 <div>
                   <Skeleton className="w-full aspect-16/9 rounded-xl mb-4" />
@@ -195,7 +195,7 @@ export default function ServicesCatalog() {
                     <Skeleton className="h-4 w-24 rounded" />
                   </div>
                 </div>
-                <div className="pt-4 border-t border-zinc-100 flex items-center justify-between">
+                <div className="pt-4 border-t border-border-default flex items-center justify-between">
                   <Skeleton className="h-6 w-20 rounded" />
                   <Skeleton className="h-9 w-28 rounded-xl" />
                 </div>
@@ -221,7 +221,7 @@ export default function ServicesCatalog() {
               aria-label="Scroll previous services"
               onClick={() => handleScroll("left")}
               disabled={!canScrollLeft}
-              className={`hidden md:flex absolute -left-4 sm:-left-5 top-1/2 -translate-y-1/2 z-20 h-11 w-11 items-center justify-center rounded-full bg-clean-white text-tech-slate shadow-lg border border-zinc-200 transition-all hover:bg-zinc-50 hover:text-flash-orange hover:scale-105 active:scale-95 cursor-pointer ${
+              className={`hidden md:flex absolute -left-4 sm:-left-5 top-1/2 -translate-y-1/2 z-20 h-11 w-11 items-center justify-center rounded-full bg-clean-white text-tech-slate shadow-lg border border-border-default transition-all hover:bg-surface-hover hover:text-flash-orange hover:scale-105 active:scale-95 cursor-pointer ${
                 !canScrollLeft
                   ? "opacity-0 pointer-events-none"
                   : "opacity-90 hover:opacity-100"
@@ -236,7 +236,7 @@ export default function ServicesCatalog() {
               aria-label="Scroll next services"
               onClick={() => handleScroll("right")}
               disabled={!canScrollRight}
-              className={`hidden md:flex absolute -right-4 sm:-right-5 top-1/2 -translate-y-1/2 z-20 h-11 w-11 items-center justify-center rounded-full bg-clean-white text-tech-slate shadow-lg border border-zinc-200 transition-all hover:bg-zinc-50 hover:text-flash-orange hover:scale-105 active:scale-95 cursor-pointer ${
+              className={`hidden md:flex absolute -right-4 sm:-right-5 top-1/2 -translate-y-1/2 z-20 h-11 w-11 items-center justify-center rounded-full bg-clean-white text-tech-slate shadow-lg border border-border-default transition-all hover:bg-surface-hover hover:text-flash-orange hover:scale-105 active:scale-95 cursor-pointer ${
                 !canScrollRight
                   ? "opacity-0 pointer-events-none"
                   : "opacity-90 hover:opacity-100"
@@ -256,13 +256,13 @@ export default function ServicesCatalog() {
                 return (
                   <div
                     key={service._id}
-                    className="w-[285px] sm:w-[320px] md:w-[350px] shrink-0 snap-start flex flex-col justify-between rounded-2xl bg-clean-white border border-zinc-200 p-5 sm:p-6 shadow-xs hover:shadow-lg hover:border-flash-orange/50 transition-all group"
+                    className="w-[285px] sm:w-[320px] md:w-[350px] shrink-0 snap-start flex flex-col justify-between rounded-2xl bg-clean-white border border-border-default p-5 sm:p-6 shadow-xs hover:shadow-lg hover:border-flash-orange/50 transition-all group"
                   >
                     <div>
                       {/* Visual: Image or Stylized Feature Icon */}
                       <Link
                         href={`/services/${service.slug}`}
-                        className="relative mb-5 aspect-16/9 w-full overflow-hidden rounded-xl bg-gradient-to-br from-mist-gray to-zinc-200 flex items-center justify-center border border-zinc-100 block"
+                        className="relative mb-5 aspect-16/9 w-full overflow-hidden rounded-xl bg-gradient-to-br from-mist-gray to-border-default flex items-center justify-center border border-border-default block"
                       >
                         {service.image ? (
                           <Image
@@ -298,12 +298,12 @@ export default function ServicesCatalog() {
                         )}
                       </div>
 
-                      <p className="text-xs sm:text-sm text-zinc-600 font-body leading-relaxed mb-4 line-clamp-2">
+                      <p className="text-xs sm:text-sm text-text-secondary font-body leading-relaxed mb-4 line-clamp-2">
                         {service.description}
                       </p>
 
                       {/* Turnaround & Warranty tags */}
-                      <div className="flex items-center gap-3 text-xs font-semibold text-zinc-500 mb-5">
+                      <div className="flex items-center gap-3 text-xs font-semibold text-text-muted mb-5">
                         <span className="inline-flex items-center gap-1">
                           <Clock className="h-3.5 w-3.5 text-flash-orange" />
                           {service.estimatedTimeMinutes} mins
@@ -317,9 +317,9 @@ export default function ServicesCatalog() {
                     </div>
 
                     {/* Pricing & CTA */}
-                    <div className="pt-4 border-t border-zinc-100 flex items-center justify-between mt-auto">
+                    <div className="pt-4 border-t border-border-default flex items-center justify-between mt-auto">
                       <div>
-                        <span className="text-[10px] sm:text-[11px] font-semibold text-zinc-400 uppercase block">
+                        <span className="text-[10px] sm:text-[11px] font-semibold text-text-muted uppercase block">
                           {t("startingAt")}
                         </span>
                         <p className="text-lg sm:text-xl font-extrabold font-heading text-tech-slate">

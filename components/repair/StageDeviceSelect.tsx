@@ -95,7 +95,7 @@ export default function StageDeviceSelect() {
             {Array.from({ length: 8 }).map((_, i) => (
               <div
                 key={i}
-                className="h-11 rounded-xl bg-zinc-100 animate-pulse border border-zinc-200"
+                className="h-11 rounded-xl bg-surface-hover animate-pulse border border-border-default"
               />
             ))}
           </div>
@@ -121,7 +121,7 @@ export default function StageDeviceSelect() {
                     className={`relative p-2.5 sm:p-3 rounded-xl text-xs sm:text-sm font-bold border transition-all text-center cursor-pointer flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-flash-orange focus-visible:outline-hidden ${
                       isSelected
                         ? "border-flash-orange bg-flash-orange/10 text-flash-orange shadow-xs ring-2 ring-flash-orange/20"
-                        : "border-border-default bg-clean-white text-tech-slate hover:border-zinc-300 hover:bg-zinc-50"
+                        : "border-border-default bg-clean-white text-tech-slate hover:border-border-strong hover:bg-surface-hover"
                     }`}
                   >
                     {brand.logoUrl && (
@@ -163,7 +163,7 @@ export default function StageDeviceSelect() {
                       handleSelectBrand(matched);
                     }
                   }}
-                  className="w-full h-11 rounded-xl border border-border-default bg-zinc-50/70 px-3.5 text-xs font-medium text-tech-slate cursor-pointer focus-visible:ring-2 focus-visible:ring-flash-orange focus-visible:outline-hidden transition-colors"
+                  className="w-full h-11 rounded-xl border border-border-default bg-elevated-surface px-3.5 text-xs font-medium text-tech-slate cursor-pointer focus-visible:ring-2 focus-visible:ring-flash-orange focus-visible:outline-hidden transition-colors"
                 >
                   <option value="">{t("otherBrandPlaceholder")}</option>
                   {otherBrands.map((b) => (
@@ -197,7 +197,7 @@ export default function StageDeviceSelect() {
           </div>
 
           {isLoadingModels ? (
-            <div className="flex items-center justify-center gap-2.5 p-6 rounded-xl bg-zinc-50 border border-border-default text-xs text-text-muted">
+            <div className="flex items-center justify-center gap-2.5 p-6 rounded-xl bg-elevated-surface border border-border-default text-xs text-text-muted">
               <Loader2 className="h-4 w-4 animate-spin text-flash-orange" />
               <span>{t("loadingModels", { brand: selectedBrand.name })}</span>
             </div>
@@ -228,11 +228,11 @@ export default function StageDeviceSelect() {
                           className={`group relative p-2 sm:p-2.5 rounded-xl border transition-all text-left cursor-pointer flex items-center gap-2 sm:gap-2.5 focus-visible:ring-2 focus-visible:ring-flash-orange focus-visible:outline-hidden ${
                             isSelected
                               ? "border-flash-orange bg-flash-orange/10 text-tech-slate shadow-xs ring-2 ring-flash-orange/20 font-bold"
-                              : "border-border-default bg-clean-white text-tech-slate hover:border-zinc-300 hover:bg-zinc-50/80 shadow-2xs"
+                              : "border-border-default bg-clean-white text-tech-slate hover:border-border-strong hover:bg-surface-hover shadow-2xs"
                           }`}
                         >
                           {/* Device Image Thumbnail */}
-                          <div className="relative h-8 w-8 sm:h-9 sm:w-9 rounded-lg bg-mist-gray/60 border border-zinc-200/60 shrink-0 overflow-hidden flex items-center justify-center p-0.5">
+                          <div className="relative h-8 w-8 sm:h-9 sm:w-9 rounded-lg bg-mist-gray/60 border border-border-default/60 shrink-0 overflow-hidden flex items-center justify-center p-0.5">
                             {m.imageUrl ? (
                               <Image
                                 src={m.imageUrl}
@@ -242,7 +242,7 @@ export default function StageDeviceSelect() {
                                 className="h-full w-full object-contain group-hover:scale-105 transition-transform"
                               />
                             ) : (
-                              <Smartphone className="h-4 w-4 text-zinc-400" aria-hidden="true" />
+                              <Smartphone className="h-4 w-4 text-text-muted" aria-hidden="true" />
                             )}
                           </div>
 
@@ -272,7 +272,7 @@ export default function StageDeviceSelect() {
               {/* Instant Search or Manual Type Input with Combobox ARIA */}
               <div className="relative">
                 <Search
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400 pointer-events-none"
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted pointer-events-none"
                   aria-hidden="true"
                 />
                 <input
@@ -297,7 +297,7 @@ export default function StageDeviceSelect() {
                       }
                     }, 200);
                   }}
-                  className="w-full h-11 rounded-xl border border-border-default bg-zinc-50/70 pl-10 pr-3.5 text-xs sm:text-sm font-medium text-tech-slate focus:bg-clean-white focus-visible:ring-2 focus-visible:ring-flash-orange focus-visible:outline-hidden transition-colors"
+                  className="w-full h-11 rounded-xl border border-border-default bg-elevated-surface pl-10 pr-3.5 text-xs sm:text-sm font-medium text-tech-slate focus:bg-clean-white focus-visible:ring-2 focus-visible:ring-flash-orange focus-visible:outline-hidden transition-colors"
                 />
 
                 {/* Autocomplete suggestions dropdown when typing */}
@@ -322,7 +322,7 @@ export default function StageDeviceSelect() {
                         className="w-full text-left px-2.5 py-2 rounded-lg text-xs font-medium text-tech-slate hover:bg-flash-orange/10 hover:text-flash-orange flex items-center justify-between cursor-pointer transition-colors"
                       >
                         <div className="flex items-center gap-2.5 min-w-0">
-                          <div className="relative h-7 w-7 rounded-md bg-mist-gray border border-zinc-200/80 shrink-0 overflow-hidden flex items-center justify-center p-0.5">
+                          <div className="relative h-7 w-7 rounded-md bg-mist-gray border border-border-default shrink-0 overflow-hidden flex items-center justify-center p-0.5">
                             {m.imageUrl ? (
                               <Image
                                 src={m.imageUrl}
@@ -332,7 +332,7 @@ export default function StageDeviceSelect() {
                                 className="h-full w-full object-contain"
                               />
                             ) : (
-                              <Smartphone className="h-3.5 w-3.5 text-zinc-400" />
+                              <Smartphone className="h-3.5 w-3.5 text-text-muted" />
                             )}
                           </div>
                           <span className="font-bold truncate">{m.name}</span>
@@ -364,7 +364,7 @@ export default function StageDeviceSelect() {
           className={`h-11 inline-flex items-center justify-center gap-2 rounded-xl px-6 sm:px-8 text-xs sm:text-sm font-bold transition-all ${
             canProceed
               ? "bg-flash-orange text-clean-white hover:bg-flash-orange-hover shadow-md hover:shadow-lg active:scale-[0.99] cursor-pointer"
-              : "bg-zinc-200 text-zinc-400 cursor-not-allowed"
+              : "bg-surface-disabled text-text-disabled cursor-not-allowed"
           }`}
         >
           <span>{t("continueBtn")}</span>

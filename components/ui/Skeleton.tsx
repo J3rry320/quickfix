@@ -6,7 +6,7 @@ export function Skeleton({ className = "" }: SkeletonProps) {
   return (
     <div
       aria-hidden="true"
-      className={`animate-pulse rounded-md bg-zinc-200/80 ${className}`}
+      className={`animate-pulse rounded-md bg-surface-disabled/80 ${className}`}
     />
   );
 }
@@ -21,7 +21,7 @@ export function SkeletonCard({ aspectRatio = "16/9" }: { aspectRatio?: "16/9" | 
   return (
     <div
       aria-busy="true"
-      className="rounded-2xl bg-clean-white border border-zinc-200 p-6 shadow-xs flex flex-col justify-between"
+      className="rounded-2xl bg-clean-white border border-border-default p-6 shadow-xs flex flex-col justify-between"
     >
       <div>
         <Skeleton className={`w-full ${aspectClass} rounded-xl mb-4`} />
@@ -29,7 +29,7 @@ export function SkeletonCard({ aspectRatio = "16/9" }: { aspectRatio?: "16/9" | 
         <Skeleton className="h-4 w-full mb-1.5 rounded" />
         <Skeleton className="h-4 w-2/3 rounded mb-4" />
       </div>
-      <div className="pt-4 border-t border-zinc-100 flex items-center justify-between">
+      <div className="pt-4 border-t border-border-subtle flex items-center justify-between">
         <Skeleton className="h-6 w-20 rounded" />
         <Skeleton className="h-8 w-24 rounded-xl" />
       </div>
@@ -59,7 +59,7 @@ export function SkeletonBrandStrip({ count = 8 }: { count?: number }) {
       {[...Array(count)].map((_, i) => (
         <div
           key={i}
-          className="flex flex-col items-center justify-center p-4 rounded-xl bg-mist-gray/80 border border-zinc-200/80"
+          className="flex flex-col items-center justify-center p-4 rounded-xl bg-mist-gray/80 border border-border-default/80"
         >
           <Skeleton className="h-12 w-12 rounded-lg mb-2" />
           <Skeleton className="h-3 w-16 rounded" />

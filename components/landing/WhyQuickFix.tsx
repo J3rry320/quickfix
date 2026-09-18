@@ -41,7 +41,7 @@ export default function WhyQuickFix() {
   return (
     <section
       id="why-us"
-      className="py-10 sm:py-16 lg:py-20 bg-mist-gray/60 border-b border-zinc-200"
+      className="py-10 sm:py-16 lg:py-20 bg-mist-gray/60 border-b border-border-default"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -71,7 +71,7 @@ export default function WhyQuickFix() {
                     <Check className="h-3.5 w-3.5 font-black" />
                   </div>
                   <div>
-                    <span className="text-[11px] font-bold uppercase text-zinc-400 block">
+                    <span className="text-[11px] font-bold uppercase text-text-muted block">
                       {row.feature}
                     </span>
                     <span className="text-xs font-bold text-tech-slate">
@@ -85,28 +85,28 @@ export default function WhyQuickFix() {
 
           {/* Service Centers vs Local Shops Comparison Card */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="rounded-2xl bg-clean-white border border-zinc-200 p-4 shadow-xs">
-              <h4 className="font-heading text-sm font-bold text-zinc-500 mb-3">
+            <div className="rounded-2xl bg-clean-white border border-border-default p-4 shadow-xs">
+              <h4 className="font-heading text-sm font-bold text-text-muted mb-3">
                 {t("thServiceCenter")}
               </h4>
-              <ul className="space-y-2.5 text-xs text-zinc-600">
+              <ul className="space-y-2.5 text-xs text-text-secondary">
                 {comparisonRows.map((row, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <X className="h-4 w-4 text-zinc-400 shrink-0 mt-0.5" />
+                    <X className="h-4 w-4 text-text-muted shrink-0 mt-0.5" />
                     <span>{row.official}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="rounded-2xl bg-clean-white border border-zinc-200 p-4 shadow-xs">
-              <h4 className="font-heading text-sm font-bold text-zinc-500 mb-3">
+            <div className="rounded-2xl bg-clean-white border border-border-default p-4 shadow-xs">
+              <h4 className="font-heading text-sm font-bold text-text-muted mb-3">
                 {t("thLocalShop")}
               </h4>
-              <ul className="space-y-2.5 text-xs text-zinc-600">
+              <ul className="space-y-2.5 text-xs text-text-secondary">
                 {comparisonRows.map((row, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <X className="h-4 w-4 text-zinc-400 shrink-0 mt-0.5" />
+                    <X className="h-4 w-4 text-text-muted shrink-0 mt-0.5" />
                     <span>{row.local}</span>
                   </li>
                 ))}
@@ -118,29 +118,29 @@ export default function WhyQuickFix() {
         {/* Desktop View: Full Table (>= md) */}
         <div className="hidden md:grid md:grid-cols-12 gap-8 items-start">
           {/* Comparison Table */}
-          <div className="md:col-span-8 overflow-hidden rounded-2xl bg-clean-white border border-zinc-200 shadow-md">
+          <div className="md:col-span-8 overflow-hidden rounded-2xl bg-clean-white border border-border-default shadow-md">
             <table className="w-full text-left border-collapse text-sm">
               <thead>
-                <tr className="border-b border-zinc-200 bg-zinc-50">
+                <tr className="border-b border-border-default bg-elevated-surface">
                   <th className="py-4 px-6 font-extrabold text-tech-slate">
                     {t("thFeature")}
                   </th>
                   <th className="py-4 px-6 font-extrabold text-flash-orange bg-flash-orange/10 border-x border-flash-orange/20">
                     {t("thQuickFix")}
                   </th>
-                  <th className="py-4 px-6 font-bold text-zinc-500">
+                  <th className="py-4 px-6 font-bold text-text-muted">
                     {t("thServiceCenter")}
                   </th>
-                  <th className="py-4 px-6 font-bold text-zinc-500">
+                  <th className="py-4 px-6 font-bold text-text-muted">
                     {t("thLocalShop")}
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-200 font-medium">
+              <tbody className="divide-y divide-border-default font-medium">
                 {comparisonRows.map((row, idx) => (
                   <tr
                     key={idx}
-                    className="hover:bg-zinc-50/60 transition-colors"
+                    className="hover:bg-surface-hover/60 transition-colors"
                   >
                     <td className="py-4 px-6 font-bold text-tech-slate">
                       {row.feature}
@@ -151,15 +151,15 @@ export default function WhyQuickFix() {
                         <span>{row.quickfix}</span>
                       </div>
                     </td>
-                    <td className="py-4 px-6 text-zinc-500">
+                    <td className="py-4 px-6 text-text-muted">
                       <div className="flex items-center gap-1.5">
-                        <X className="h-4 w-4 text-zinc-400 shrink-0" />
+                        <X className="h-4 w-4 text-text-muted shrink-0" />
                         <span>{row.official}</span>
                       </div>
                     </td>
-                    <td className="py-4 px-6 text-zinc-500">
+                    <td className="py-4 px-6 text-text-muted">
                       <div className="flex items-center gap-1.5">
-                        <X className="h-4 w-4 text-zinc-400 shrink-0" />
+                        <X className="h-4 w-4 text-text-muted shrink-0" />
                         <span>{row.local}</span>
                       </div>
                     </td>

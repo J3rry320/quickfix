@@ -67,7 +67,7 @@ export default function AdminModal({
   const content = (
     <div className="space-y-4">
       {error && (
-        <div className="p-3 rounded-xl bg-red-50 text-red-700 text-xs border border-red-200 font-medium">
+        <div className="p-3 rounded-xl bg-error-light text-error-text text-xs border border-error-border font-medium">
           {error}
         </div>
       )}
@@ -78,19 +78,19 @@ export default function AdminModal({
       {footer !== undefined ? (
         footer
       ) : onSubmit ? (
-        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 pt-4 border-t border-zinc-200">
+        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 pt-4 border-t border-border-default">
           <button
             type="button"
             onClick={onClose}
             disabled={isSubmitting}
-            className="w-full sm:w-auto text-center rounded-xl px-4 py-2.5 sm:py-2 text-xs font-bold text-zinc-600 hover:bg-zinc-100 transition-colors cursor-pointer disabled:opacity-50"
+            className="w-full sm:w-auto text-center rounded-xl px-4 py-2.5 sm:py-2 text-xs font-bold text-text-secondary hover:bg-surface-hover transition-colors cursor-pointer disabled:opacity-50"
           >
             {cancelText}
           </button>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-5 py-2.5 sm:py-2 text-xs font-bold text-clean-white hover:bg-orange-600 shadow-md shadow-orange-500/20 active:scale-95 transition-all cursor-pointer disabled:opacity-50"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-5 py-2.5 sm:py-2 text-xs font-bold text-clean-white hover:bg-flash-orange-hover shadow-md shadow-flash-orange/20 active:scale-95 transition-all cursor-pointer disabled:opacity-50"
           >
             {isSubmitting && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
             <span>{submitText}</span>
@@ -102,7 +102,7 @@ export default function AdminModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-2 sm:p-4 backdrop-blur-xs overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-tech-slate-dark/50 p-2 sm:p-4 backdrop-blur-xs overflow-y-auto"
       onClick={(e) => {
         if (e.target === e.currentTarget && !isSubmitting) {
           onClose();
@@ -116,20 +116,20 @@ export default function AdminModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-start justify-between border-b border-zinc-200 pb-3 shrink-0">
+        <div className="flex items-start justify-between border-b border-border-default pb-3 shrink-0">
           <div className="min-w-0 pr-3">
             <h3 className="font-heading text-base sm:text-lg font-bold text-tech-slate truncate">
               {title}
             </h3>
             {subtitle && (
-              <p className="text-xs text-zinc-500 truncate mt-0.5">{subtitle}</p>
+              <p className="text-xs text-text-muted truncate mt-0.5">{subtitle}</p>
             )}
           </div>
           <button
             type="button"
             onClick={onClose}
             disabled={isSubmitting}
-            className="rounded-lg p-1.5 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 transition-colors cursor-pointer shrink-0 disabled:opacity-50"
+            className="rounded-lg p-1.5 text-text-muted hover:bg-surface-hover hover:text-text-secondary transition-colors cursor-pointer shrink-0 disabled:opacity-50"
             aria-label="Close modal"
           >
             <X className="h-5 w-5" />

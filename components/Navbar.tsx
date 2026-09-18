@@ -443,7 +443,7 @@ export default function Navbar() {
                 onClick={closeMenus}
                 className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-bold text-tech-slate hover:bg-mist-gray transition-colors"
               >
-                <MapPin className="h-4 w-4 text-emerald-600 shrink-0" />
+                <MapPin className="h-4 w-4 text-success shrink-0" />
                 <span>{t("explore.locations")}</span>
               </Link>
             </div>

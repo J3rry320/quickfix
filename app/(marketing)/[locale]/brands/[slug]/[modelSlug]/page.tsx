@@ -170,13 +170,13 @@ export default async function ModelDetailPage({
             icon: ShieldCheck,
             label: t("hero.highlights.warranty"),
             value: t("hero.highlights.warrantyVal"),
-            color: "text-blue-500",
+            color: "text-info",
           },
           // {
           //   icon: Lock,
           //   label: t("hero.highlights.privacy"),
           //   value: t("hero.highlights.privacyVal"),
-          //   color: "text-emerald-500",
+          //   color: "text-success",
           // },
           {
             icon: Zap,
@@ -189,7 +189,7 @@ export default async function ModelDetailPage({
           <>
             <Link
               href={`/book-repair?brand=${brand.slug}&model=${encodeURIComponent(model.name)}`}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-orange-600 active:scale-95 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-flash-orange-hover active:scale-95 transition-all"
             >
               <span>
                 {t("hero.actions.bookModel", { modelName: model.name })}
@@ -199,7 +199,7 @@ export default async function ModelDetailPage({
 
             <a
               href={`tel:${contactConfig.phone.value}`}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-zinc-300 text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-border-strong text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
             >
               <Phone className="h-4 w-4 text-flash-orange" />
               <span>
@@ -231,7 +231,7 @@ export default async function ModelDetailPage({
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
               {t("pricing.title", { modelName: model.name })}
             </h2>
-            <p className="mt-2 text-xs sm:text-sm text-zinc-600">
+            <p className="mt-2 text-xs sm:text-sm text-text-secondary">
               {t("pricing.subtitle")}
             </p>
           </div>
@@ -240,7 +240,7 @@ export default async function ModelDetailPage({
             {modelServices.map((service) => (
               <div
                 key={service.slug}
-                className="p-5 rounded-2xl bg-clean-white border border-zinc-200/90 hover:border-flash-orange/50 hover:shadow-md transition-all flex flex-col justify-between group"
+                className="p-5 rounded-2xl bg-clean-white border border-border-default/90 hover:border-flash-orange/50 hover:shadow-md transition-all flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-2">
@@ -254,13 +254,13 @@ export default async function ModelDetailPage({
                   <h3 className="font-heading text-sm sm:text-base font-bold text-tech-slate">
                     {service.name}
                   </h3>
-                  <p className="mt-1.5 text-xs text-zinc-600 leading-relaxed line-clamp-2">
+                  <p className="mt-1.5 text-xs text-text-secondary leading-relaxed line-clamp-2">
                     {service.description}
                   </p>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between">
-                  <div className="flex items-center gap-3 text-[11px] text-zinc-500 font-semibold">
+                <div className="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between">
+                  <div className="flex items-center gap-3 text-[11px] text-text-muted font-semibold">
                     <span className="flex items-center gap-1">
                       <Clock className="h-3 w-3" />
                       {t("pricing.mins", { minutes: service.time })}

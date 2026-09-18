@@ -365,21 +365,21 @@ function JobSheetModalContent({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-5 overflow-y-auto bg-black/60 backdrop-blur-xs">
-      <div className="relative w-full max-w-5xl rounded-xl sm:rounded-2xl bg-white shadow-2xl border border-zinc-200 overflow-hidden my-auto max-h-[96vh] sm:max-h-[94vh] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-5 overflow-y-auto bg-tech-slate-dark/60 backdrop-blur-xs">
+      <div className="relative w-full max-w-5xl rounded-xl sm:rounded-2xl bg-clean-white shadow-2xl border border-border-default overflow-hidden my-auto max-h-[96vh] sm:max-h-[94vh] flex flex-col">
         {/* Modal Top Bar (Responsive 2-tier layout) */}
-        <div className="flex flex-col border-b border-zinc-200 bg-zinc-50/90 shrink-0">
+        <div className="flex flex-col border-b border-border-default bg-mist-gray shrink-0">
           {/* Top Row: Title, Job Sheet No, Close */}
-          <div className="flex items-center justify-between px-3.5 sm:px-5 py-2.5 sm:py-3 border-b border-zinc-200/70 sm:border-b-0">
+          <div className="flex items-center justify-between px-3.5 sm:px-5 py-2.5 sm:py-3 border-b border-border-default sm:border-b-0">
             <div className="flex items-center gap-2.5 min-w-0 flex-1 mr-2">
-              <div className="h-8 w-8 shrink-0 rounded-lg bg-orange-100 border border-orange-200 flex items-center justify-center text-orange-600">
+              <div className="h-8 w-8 shrink-0 rounded-lg bg-flash-orange/10 border border-flash-orange/30 flex items-center justify-center text-flash-orange">
                 <FileText className="h-4 w-4" />
               </div>
               <div className="min-w-0 flex-1">
-                <h2 className="font-heading font-extrabold text-xs sm:text-base text-zinc-900 leading-tight truncate">
+                <h2 className="font-heading font-extrabold text-xs sm:text-base text-tech-slate leading-tight truncate">
                   Job Sheet • {jobSheetNo}
                 </h2>
-                <p className="text-[10px] sm:text-[11px] text-zinc-500 truncate">
+                <p className="text-[10px] sm:text-[11px] text-text-muted truncate">
                   {brand} {model} • Pune Service
                 </p>
               </div>
@@ -392,7 +392,7 @@ function JobSheetModalContent({
                   href={`/admin/repairs/${repair._id}/jobsheet`}
                   target="_blank"
                   rel="noreferrer"
-                  className="hidden md:inline-flex items-center gap-1 rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-medium text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 cursor-pointer"
+                  className="hidden md:inline-flex items-center gap-1 rounded-lg border border-border-default bg-clean-white px-2.5 py-1.5 text-xs font-medium text-text-secondary hover:bg-surface-hover hover:text-tech-slate cursor-pointer"
                   title="Open in new window"
                 >
                   <ExternalLink className="h-3.5 w-3.5" />
@@ -402,7 +402,7 @@ function JobSheetModalContent({
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-lg p-1.5 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 cursor-pointer"
+                className="rounded-lg p-1.5 text-text-muted hover:bg-surface-hover hover:text-text-secondary cursor-pointer"
                 aria-label="Close modal"
               >
                 <X className="h-5 w-5" />
@@ -411,16 +411,16 @@ function JobSheetModalContent({
           </div>
 
           {/* Sub Row: Tab switchers & Action buttons */}
-          <div className="flex flex-col xs:flex-row items-stretch xs:items-center justify-between gap-2 px-3.5 sm:px-5 py-2 bg-white sm:bg-transparent">
+          <div className="flex flex-col xs:flex-row items-stretch xs:items-center justify-between gap-2 px-3.5 sm:px-5 py-2 bg-clean-white sm:bg-transparent">
             {/* Tab switchers */}
-            <div className="flex items-center rounded-lg border border-zinc-200 bg-zinc-100/90 p-0.5 text-xs font-bold w-full xs:w-auto">
+            <div className="flex items-center rounded-lg border border-border-default bg-surface-hover p-0.5 text-xs font-bold w-full xs:w-auto">
               <button
                 type="button"
                 onClick={() => setActiveTab("preview")}
                 className={`flex-1 xs:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md transition-all cursor-pointer ${
                   activeTab === "preview"
-                    ? "bg-zinc-900 text-white shadow-xs"
-                    : "text-zinc-600 hover:text-zinc-950"
+                    ? "bg-tech-slate-dark text-clean-white shadow-xs"
+                    : "text-text-secondary hover:text-tech-slate"
                 }`}
               >
                 <Eye className="h-3.5 w-3.5" />
@@ -431,8 +431,8 @@ function JobSheetModalContent({
                 onClick={() => setActiveTab("customize")}
                 className={`flex-1 xs:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md transition-all cursor-pointer ${
                   activeTab === "customize"
-                    ? "bg-zinc-900 text-white shadow-xs"
-                    : "text-zinc-600 hover:text-zinc-950"
+                    ? "bg-tech-slate-dark text-clean-white shadow-xs"
+                    : "text-text-secondary hover:text-tech-slate"
                 }`}
               >
                 <Edit3 className="h-3.5 w-3.5" />
@@ -446,7 +446,7 @@ function JobSheetModalContent({
                 type="button"
                 onClick={handleDownloadPdf}
                 disabled={isDownloadingPdf}
-                className="flex-1 xs:flex-initial inline-flex items-center justify-center gap-1.5 rounded-lg bg-orange-600 px-3.5 py-1.5 text-xs font-bold text-white hover:bg-orange-700 transition-all shadow-xs cursor-pointer disabled:opacity-50"
+                className="flex-1 xs:flex-initial inline-flex items-center justify-center gap-1.5 rounded-lg bg-flash-orange px-3.5 py-1.5 text-xs font-bold text-clean-white hover:bg-flash-orange-hover transition-all shadow-xs cursor-pointer disabled:opacity-50"
               >
                 {isDownloadingPdf ? (
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -459,7 +459,7 @@ function JobSheetModalContent({
               <button
                 type="button"
                 onClick={handlePrint}
-                className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 transition-all shadow-xs cursor-pointer"
+                className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-border-default bg-clean-white px-3 py-1.5 text-xs font-semibold text-text-secondary hover:bg-surface-hover transition-all shadow-xs cursor-pointer"
               >
                 <Printer className="h-3.5 w-3.5" />
                 <span className="hidden xs:inline">Print</span>
@@ -469,7 +469,7 @@ function JobSheetModalContent({
         </div>
 
         {/* Modal Body */}
-        <div className="overflow-y-auto p-2.5 sm:p-6 grow bg-zinc-100/60 min-h-0">
+        <div className="overflow-y-auto p-2.5 sm:p-6 grow bg-surface-hover min-h-0">
           {/* Live A4 Preview Container */}
           <div
             aria-hidden={activeTab !== "preview"}
@@ -480,13 +480,13 @@ function JobSheetModalContent({
             }
           >
             {/* Mobile Swipe Hint */}
-            <div className="w-full max-w-[210mm] flex items-center justify-between pb-2 px-1 text-[11px] text-zinc-500 sm:hidden">
+            <div className="w-full max-w-[210mm] flex items-center justify-between pb-2 px-1 text-[11px] text-text-muted sm:hidden">
               <span>Swipe horizontally to inspect A4 document</span>
-              <span className="font-semibold text-orange-600">A4 Preview</span>
+              <span className="font-semibold text-flash-orange">A4 Preview</span>
             </div>
 
             <div className="w-full max-w-full overflow-x-auto p-1 pb-4 flex justify-center [scrollbar-width:thin] touch-pan-x">
-              <div className="w-full max-w-[210mm] min-w-[320px] sm:min-w-[650px] md:min-w-[210mm] bg-white shadow-lg rounded-lg overflow-hidden border border-zinc-200 shrink-0">
+              <div className="w-full max-w-[210mm] min-w-[320px] sm:min-w-[650px] md:min-w-[210mm] bg-clean-white shadow-lg rounded-lg overflow-hidden border border-border-default shrink-0">
                 <RepairJobSheet
                   data={jobSheetData}
                   id={`jobsheet-preview-${jobSheetData.jobSheetNumber}`}
@@ -497,21 +497,21 @@ function JobSheetModalContent({
 
           {/* Customize & Edit Tab */}
           {activeTab === "customize" && (
-            <div className="max-w-4xl mx-auto space-y-6 bg-white p-5 rounded-xl border border-zinc-200 shadow-xs text-xs">
+            <div className="max-w-4xl mx-auto space-y-6 bg-clean-white p-5 rounded-xl border border-border-default shadow-xs text-xs">
               {/* Section 1: Device & Brand Selection */}
               <div>
-                <h3 className="font-heading text-sm font-bold text-zinc-900 border-b border-zinc-200 pb-2 mb-3 flex items-center gap-2">
-                  <Smartphone className="h-4 w-4 text-orange-600" />
+                <h3 className="font-heading text-sm font-bold text-tech-slate border-b border-border-default pb-2 mb-3 flex items-center gap-2">
+                  <Smartphone className="h-4 w-4 text-flash-orange" />
                   <span>Device & Brand Selection</span>
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div className="space-y-1">
-                    <label className="font-bold text-zinc-600">Brand</label>
+                    <label className="font-bold text-text-secondary">Brand</label>
                     <div className="flex gap-1.5">
                       <select
                         value={brand}
                         onChange={(e) => setBrand(e.target.value)}
-                        className="w-full rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-zinc-900 focus:border-orange-500 focus:outline-hidden"
+                        className="w-full rounded-lg border border-border-default bg-clean-white px-2.5 py-1.5 text-xs font-semibold text-tech-slate focus:border-flash-orange focus:outline-hidden"
                       >
                         {brandsList.length > 0 ? (
                           brandsList.map((b) => (
@@ -537,63 +537,63 @@ function JobSheetModalContent({
                         placeholder="Custom Brand"
                         value={brand}
                         onChange={(e) => setBrand(e.target.value)}
-                        className="w-32 rounded-lg border border-zinc-200 px-2 py-1.5 text-xs"
+                        className="w-32 rounded-lg border border-border-default px-2 py-1.5 text-xs"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-bold text-zinc-600">Model Name</label>
+                    <label className="font-bold text-text-secondary">Model Name</label>
                     <input
                       type="text"
                       placeholder="e.g. iPhone 14 Pro / Galaxy S23"
                       value={model}
                       onChange={(e) => setModel(e.target.value)}
-                      className="w-full rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-zinc-900 focus:border-orange-500 focus:outline-hidden"
+                      className="w-full rounded-lg border border-border-default bg-clean-white px-2.5 py-1.5 text-xs font-semibold text-tech-slate focus:border-flash-orange focus:outline-hidden"
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-bold text-zinc-600">Color / Finish</label>
+                    <label className="font-bold text-text-secondary">Color / Finish</label>
                     <input
                       type="text"
                       placeholder="e.g. Space Gray, Silver"
                       value={color}
                       onChange={(e) => setColor(e.target.value)}
-                      className="w-full rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs text-zinc-900"
+                      className="w-full rounded-lg border border-border-default bg-clean-white px-2.5 py-1.5 text-xs text-tech-slate"
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-bold text-zinc-600">IMEI / Serial Number</label>
+                    <label className="font-bold text-text-secondary">IMEI / Serial Number</label>
                     <input
                       type="text"
                       placeholder="15-digit IMEI or Serial"
                       value={imei}
                       onChange={(e) => setImei(e.target.value)}
-                      className="w-full rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-mono"
+                      className="w-full rounded-lg border border-border-default bg-clean-white px-2.5 py-1.5 text-xs font-mono"
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-bold text-zinc-600">Screen Lock PIN / Passcode</label>
+                    <label className="font-bold text-text-secondary">Screen Lock PIN / Passcode</label>
                     <input
                       type="text"
                       placeholder="For QA testing (e.g. 1234 or Pattern)"
                       value={passcode}
                       onChange={(e) => setPasscode(e.target.value)}
-                      className="w-full rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-mono"
+                      className="w-full rounded-lg border border-border-default bg-clean-white px-2.5 py-1.5 text-xs font-mono"
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-bold text-zinc-600">Service Mode</label>
+                    <label className="font-bold text-text-secondary">Service Mode</label>
                     <select
                       value={serviceMode}
                       onChange={(e) =>
                         setServiceMode(e.target.value as "doorstep" | "pickup_drop" | "walk_in")
                       }
-                      className="w-full rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 text-xs font-semibold capitalize"
+                      className="w-full rounded-lg border border-border-default bg-clean-white px-2.5 py-1.5 text-xs font-semibold capitalize"
                     >
                       <option value="doorstep">Doorstep Pune (On-Site)</option>
                       <option value="walk_in">Hub Walk-in (Sadashiv Peth)</option>
@@ -605,62 +605,62 @@ function JobSheetModalContent({
 
               {/* Section 2: Customer Details */}
               <div>
-                <h3 className="font-heading text-sm font-bold text-zinc-900 border-b border-zinc-200 pb-2 mb-3">
+                <h3 className="font-heading text-sm font-bold text-tech-slate border-b border-border-default pb-2 mb-3">
                   Customer & Service Location
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div className="space-y-1">
-                    <label className="font-bold text-zinc-600">Customer Name</label>
+                    <label className="font-bold text-text-secondary">Customer Name</label>
                     <input
                       type="text"
                       value={custName}
                       onChange={(e) => setCustName(e.target.value)}
-                      className="w-full rounded-lg border border-zinc-200 px-2.5 py-1.5 text-xs"
+                      className="w-full rounded-lg border border-border-default px-2.5 py-1.5 text-xs"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="font-bold text-zinc-600">Phone Number</label>
+                    <label className="font-bold text-text-secondary">Phone Number</label>
                     <input
                       type="text"
                       value={custPhone}
                       onChange={(e) => setCustPhone(e.target.value)}
-                      className="w-full rounded-lg border border-zinc-200 px-2.5 py-1.5 text-xs font-mono"
+                      className="w-full rounded-lg border border-border-default px-2.5 py-1.5 text-xs font-mono"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="font-bold text-zinc-600">Alt Phone / WhatsApp</label>
+                    <label className="font-bold text-text-secondary">Alt Phone / WhatsApp</label>
                     <input
                       type="text"
                       value={custAltPhone}
                       onChange={(e) => setCustAltPhone(e.target.value)}
-                      className="w-full rounded-lg border border-zinc-200 px-2.5 py-1.5 text-xs font-mono"
+                      className="w-full rounded-lg border border-border-default px-2.5 py-1.5 text-xs font-mono"
                     />
                   </div>
                   <div className="sm:col-span-2 space-y-1">
-                    <label className="font-bold text-zinc-600">Street Address</label>
+                    <label className="font-bold text-text-secondary">Street Address</label>
                     <input
                       type="text"
                       value={custAddress}
                       onChange={(e) => setCustAddress(e.target.value)}
-                      className="w-full rounded-lg border border-zinc-200 px-2.5 py-1.5 text-xs"
+                      className="w-full rounded-lg border border-border-default px-2.5 py-1.5 text-xs"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="font-bold text-zinc-600">Pune Area / Pincode</label>
+                    <label className="font-bold text-text-secondary">Pune Area / Pincode</label>
                     <div className="grid grid-cols-2 gap-2">
                       <input
                         type="text"
                         placeholder="Area"
                         value={custArea}
                         onChange={(e) => setCustArea(e.target.value)}
-                        className="rounded-lg border border-zinc-200 px-2.5 py-1.5 text-xs"
+                        className="rounded-lg border border-border-default px-2.5 py-1.5 text-xs"
                       />
                       <input
                         type="text"
                         placeholder="Pincode"
                         value={custPincode}
                         onChange={(e) => setCustPincode(e.target.value)}
-                        className="rounded-lg border border-zinc-200 px-2.5 py-1.5 text-xs font-mono"
+                        className="rounded-lg border border-border-default px-2.5 py-1.5 text-xs font-mono"
                       />
                     </div>
                   </div>
@@ -669,33 +669,33 @@ function JobSheetModalContent({
 
               {/* Section 3: Diagnostic Checklist & Accessories */}
               <div>
-                <h3 className="font-heading text-sm font-bold text-zinc-900 border-b border-zinc-200 pb-2 mb-3 flex items-center gap-2">
-                  <ShieldCheck className="h-4 w-4 text-orange-600" />
+                <h3 className="font-heading text-sm font-bold text-tech-slate border-b border-border-default pb-2 mb-3 flex items-center gap-2">
+                  <ShieldCheck className="h-4 w-4 text-flash-orange" />
                   <span>Physical Intake Inspection & Accessories</span>
                 </h3>
 
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-[11px] text-zinc-500">
+                  <p className="text-[11px] text-text-muted">
                     Online bookings default to &quot;Untested&quot; so the technician can physically verify faults upon intake.
                   </p>
                   <button
                     type="button"
                     onClick={() => setChecklist(DEFAULT_CHECKLIST)}
-                    className="text-[10px] font-bold text-orange-600 hover:text-orange-700 underline"
+                    className="text-[10px] font-bold text-flash-orange hover:text-flash-orange-hover underline"
                   >
                     Reset All to Untested
                   </button>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 bg-zinc-50 p-3 rounded-lg border border-zinc-200 mb-3">
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 bg-mist-gray p-3 rounded-lg border border-border-default mb-3">
                   <div className="space-y-1">
-                    <label className="font-semibold text-zinc-600 text-[10px]">1. Power On</label>
+                    <label className="font-semibold text-text-secondary text-[10px]">1. Power On</label>
                     <select
                       value={checklist.powerOn}
                       onChange={(e) =>
                         setChecklist({ ...checklist, powerOn: e.target.value as "yes" | "no" | "untested" })
                       }
-                      className="w-full rounded border border-zinc-200 bg-white p-1 text-xs"
+                      className="w-full rounded border border-border-default bg-clean-white p-1 text-xs"
                     >
                       <option value="untested">Untested (Check at Intake)</option>
                       <option value="yes">Yes (Powers On)</option>
@@ -704,7 +704,7 @@ function JobSheetModalContent({
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-semibold text-zinc-600 text-[10px]">2. Display Screen</label>
+                    <label className="font-semibold text-text-secondary text-[10px]">2. Display Screen</label>
                     <select
                       value={checklist.screenCondition}
                       onChange={(e) =>
@@ -713,7 +713,7 @@ function JobSheetModalContent({
                           screenCondition: e.target.value as "good" | "scratched" | "cracked" | "no_display" | "untested",
                         })
                       }
-                      className="w-full rounded border border-zinc-200 bg-white p-1 text-xs"
+                      className="w-full rounded border border-border-default bg-clean-white p-1 text-xs"
                     >
                       <option value="untested">Untested (Check at Intake)</option>
                       <option value="good">Good / Intact</option>
@@ -724,7 +724,7 @@ function JobSheetModalContent({
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-semibold text-zinc-600 text-[10px]">3. Touch Function</label>
+                    <label className="font-semibold text-text-secondary text-[10px]">3. Touch Function</label>
                     <select
                       value={checklist.touchFunction}
                       onChange={(e) =>
@@ -733,7 +733,7 @@ function JobSheetModalContent({
                           touchFunction: e.target.value as "working" | "faulty" | "untested",
                         })
                       }
-                      className="w-full rounded border border-zinc-200 bg-white p-1 text-xs"
+                      className="w-full rounded border border-border-default bg-clean-white p-1 text-xs"
                     >
                       <option value="untested">Untested (Check at Intake)</option>
                       <option value="working">Working</option>
@@ -742,7 +742,7 @@ function JobSheetModalContent({
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-semibold text-zinc-600 text-[10px]">4. Body / Frame</label>
+                    <label className="font-semibold text-text-secondary text-[10px]">4. Body / Frame</label>
                     <select
                       value={checklist.backGlassBody}
                       onChange={(e) =>
@@ -751,7 +751,7 @@ function JobSheetModalContent({
                           backGlassBody: e.target.value as "good" | "scratched" | "dented" | "cracked" | "untested",
                         })
                       }
-                      className="w-full rounded border border-zinc-200 bg-white p-1 text-xs"
+                      className="w-full rounded border border-border-default bg-clean-white p-1 text-xs"
                     >
                       <option value="untested">Untested (Check at Intake)</option>
                       <option value="good">Good / Intact</option>
@@ -762,7 +762,7 @@ function JobSheetModalContent({
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-semibold text-zinc-600 text-[10px]">5. Cameras</label>
+                    <label className="font-semibold text-text-secondary text-[10px]">5. Cameras</label>
                     <select
                       value={checklist.frontCamera === "working" && checklist.rearCamera === "working" ? "working" : checklist.frontCamera === "faulty" || checklist.rearCamera === "faulty" ? "faulty" : "untested"}
                       onChange={(e) =>
@@ -772,7 +772,7 @@ function JobSheetModalContent({
                           rearCamera: e.target.value as "working" | "faulty" | "untested",
                         })
                       }
-                      className="w-full rounded border border-zinc-200 bg-white p-1 text-xs"
+                      className="w-full rounded border border-border-default bg-clean-white p-1 text-xs"
                     >
                       <option value="untested">Untested (Check at Intake)</option>
                       <option value="working">Both Working / Clear</option>
@@ -781,7 +781,7 @@ function JobSheetModalContent({
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-semibold text-zinc-600 text-[10px]">6. Charging Port</label>
+                    <label className="font-semibold text-text-secondary text-[10px]">6. Charging Port</label>
                     <select
                       value={checklist.chargingPort}
                       onChange={(e) =>
@@ -790,7 +790,7 @@ function JobSheetModalContent({
                           chargingPort: e.target.value as "working" | "loose" | "faulty" | "untested",
                         })
                       }
-                      className="w-full rounded border border-zinc-200 bg-white p-1 text-xs"
+                      className="w-full rounded border border-border-default bg-clean-white p-1 text-xs"
                     >
                       <option value="untested">Untested (Check at Intake)</option>
                       <option value="working">Normal Fast Charging</option>
@@ -800,7 +800,7 @@ function JobSheetModalContent({
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-semibold text-zinc-600 text-[10px]">7. Battery Health</label>
+                    <label className="font-semibold text-text-secondary text-[10px]">7. Battery Health</label>
                     <select
                       value={checklist.batteryCondition}
                       onChange={(e) =>
@@ -809,7 +809,7 @@ function JobSheetModalContent({
                           batteryCondition: e.target.value as "normal" | "service_needed" | "swollen" | "untested",
                         })
                       }
-                      className="w-full rounded border border-zinc-200 bg-white p-1 text-xs"
+                      className="w-full rounded border border-border-default bg-clean-white p-1 text-xs"
                     >
                       <option value="untested">Untested (Check at Intake)</option>
                       <option value="normal">Normal / Good</option>
@@ -819,7 +819,7 @@ function JobSheetModalContent({
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-semibold text-zinc-600 text-[10px]">8. Audio (Spk/Mic)</label>
+                    <label className="font-semibold text-text-secondary text-[10px]">8. Audio (Spk/Mic)</label>
                     <select
                       value={checklist.speakerEarpiece === "working" && checklist.microphone === "working" ? "working" : checklist.speakerEarpiece === "faulty" || checklist.microphone === "faulty" ? "faulty" : "untested"}
                       onChange={(e) =>
@@ -829,7 +829,7 @@ function JobSheetModalContent({
                           microphone: e.target.value as "working" | "faulty" | "untested",
                         })
                       }
-                      className="w-full rounded border border-zinc-200 bg-white p-1 text-xs"
+                      className="w-full rounded border border-border-default bg-clean-white p-1 text-xs"
                     >
                       <option value="untested">Untested (Check at Intake)</option>
                       <option value="working">Loud & Clear</option>
@@ -838,7 +838,7 @@ function JobSheetModalContent({
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-semibold text-zinc-600 text-[10px]">9. WiFi / Network</label>
+                    <label className="font-semibold text-text-secondary text-[10px]">9. WiFi / Network</label>
                     <select
                       value={checklist.networkWifi}
                       onChange={(e) =>
@@ -847,7 +847,7 @@ function JobSheetModalContent({
                           networkWifi: e.target.value as "working" | "faulty" | "untested",
                         })
                       }
-                      className="w-full rounded border border-zinc-200 bg-white p-1 text-xs"
+                      className="w-full rounded border border-border-default bg-clean-white p-1 text-xs"
                     >
                       <option value="untested">Untested (Check at Intake)</option>
                       <option value="working">Normal Connection</option>
@@ -856,7 +856,7 @@ function JobSheetModalContent({
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-semibold text-zinc-600 text-[10px]">10. Liquid Ingress</label>
+                    <label className="font-semibold text-text-secondary text-[10px]">10. Liquid Ingress</label>
                     <select
                       value={checklist.liquidDamage}
                       onChange={(e) =>
@@ -865,7 +865,7 @@ function JobSheetModalContent({
                           liquidDamage: e.target.value as "none" | "suspected" | "detected" | "untested",
                         })
                       }
-                      className="w-full rounded border border-zinc-200 bg-white p-1 text-xs"
+                      className="w-full rounded border border-border-default bg-clean-white p-1 text-xs"
                     >
                       <option value="untested">Untested (Check at Intake)</option>
                       <option value="none">None (Clean)</option>
@@ -877,14 +877,14 @@ function JobSheetModalContent({
 
                 {/* Accessories Checkboxes */}
                 <div className="space-y-1">
-                  <label className="font-bold text-zinc-600">Accessories Received with Handset</label>
+                  <label className="font-bold text-text-secondary">Accessories Received with Handset</label>
                   <div className="flex flex-wrap gap-4 pt-1">
                     <label className="inline-flex items-center gap-1.5 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={accessories.simTray}
                         onChange={(e) => setAccessories({ ...accessories, simTray: e.target.checked })}
-                        className="rounded border-zinc-300 text-orange-600"
+                        className="rounded border-border-strong text-flash-orange"
                       />
                       <span>SIM Tray</span>
                     </label>
@@ -893,7 +893,7 @@ function JobSheetModalContent({
                         type="checkbox"
                         checked={accessories.simCard}
                         onChange={(e) => setAccessories({ ...accessories, simCard: e.target.checked })}
-                        className="rounded border-zinc-300 text-orange-600"
+                        className="rounded border-border-strong text-flash-orange"
                       />
                       <span>SIM Card</span>
                     </label>
@@ -902,7 +902,7 @@ function JobSheetModalContent({
                         type="checkbox"
                         checked={accessories.memoryCard}
                         onChange={(e) => setAccessories({ ...accessories, memoryCard: e.target.checked })}
-                        className="rounded border-zinc-300 text-orange-600"
+                        className="rounded border-border-strong text-flash-orange"
                       />
                       <span>MicroSD Card</span>
                     </label>
@@ -911,7 +911,7 @@ function JobSheetModalContent({
                         type="checkbox"
                         checked={accessories.protectiveCase}
                         onChange={(e) => setAccessories({ ...accessories, protectiveCase: e.target.checked })}
-                        className="rounded border-zinc-300 text-orange-600"
+                        className="rounded border-border-strong text-flash-orange"
                       />
                       <span>Case / Back Cover</span>
                     </label>
@@ -920,7 +920,7 @@ function JobSheetModalContent({
                         type="checkbox"
                         checked={accessories.chargerCable}
                         onChange={(e) => setAccessories({ ...accessories, chargerCable: e.target.checked })}
-                        className="rounded border-zinc-300 text-orange-600"
+                        className="rounded border-border-strong text-flash-orange"
                       />
                       <span>Charger / Cable</span>
                     </label>
@@ -930,15 +930,15 @@ function JobSheetModalContent({
 
               {/* Section 4: Services, Spare Parts & Pricing */}
               <div>
-                <div className="flex items-center justify-between border-b border-zinc-200 pb-2 mb-3">
-                  <h3 className="font-heading text-sm font-bold text-zinc-900 flex items-center gap-2">
-                    <CreditCard className="h-4 w-4 text-orange-600" />
+                <div className="flex items-center justify-between border-b border-border-default pb-2 mb-3">
+                  <h3 className="font-heading text-sm font-bold text-tech-slate flex items-center gap-2">
+                    <CreditCard className="h-4 w-4 text-flash-orange" />
                     <span>Repair Services, Spare Parts & Pricing</span>
                   </h3>
                   <button
                     type="button"
                     onClick={handleAddItem}
-                    className="inline-flex items-center gap-1 text-[11px] font-bold text-orange-600 hover:text-orange-700 cursor-pointer"
+                    className="inline-flex items-center gap-1 text-[11px] font-bold text-flash-orange hover:text-flash-orange-hover cursor-pointer"
                   >
                     <Plus className="h-3.5 w-3.5" />
                     <span>Add Line Item</span>
@@ -949,10 +949,10 @@ function JobSheetModalContent({
                   {items.map((item, idx) => (
                     <div
                       key={idx}
-                      className="flex flex-col sm:grid sm:grid-cols-12 gap-2 sm:items-center bg-zinc-50 p-2.5 sm:p-2 rounded-xl border border-zinc-200"
+                      className="flex flex-col sm:grid sm:grid-cols-12 gap-2 sm:items-center bg-mist-gray p-2.5 sm:p-2 rounded-xl border border-border-default"
                     >
                       <div className="w-full sm:col-span-5 md:col-span-6">
-                        <label className="text-[10px] font-bold text-zinc-500 sm:hidden block mb-0.5">
+                        <label className="text-[10px] font-bold text-text-muted sm:hidden block mb-0.5">
                           Item Description
                         </label>
                         <input
@@ -960,18 +960,18 @@ function JobSheetModalContent({
                           value={item.description}
                           onChange={(e) => handleItemChange(idx, "description", e.target.value)}
                           placeholder="Service or part description"
-                          className="w-full rounded-lg border border-zinc-200 bg-white px-2.5 py-1.5 sm:py-1 text-xs"
+                          className="w-full rounded-lg border border-border-default bg-clean-white px-2.5 py-1.5 sm:py-1 text-xs"
                         />
                       </div>
                       <div className="grid grid-cols-12 gap-2 items-center sm:contents">
                         <div className="col-span-5 sm:col-span-2">
-                          <label className="text-[10px] font-bold text-zinc-500 sm:hidden block mb-0.5">
+                          <label className="text-[10px] font-bold text-text-muted sm:hidden block mb-0.5">
                             Type
                           </label>
                           <select
                             value={item.type}
                             onChange={(e) => handleItemChange(idx, "type", e.target.value)}
-                            className="w-full rounded-lg border border-zinc-200 bg-white p-1.5 sm:p-1 text-xs capitalize"
+                            className="w-full rounded-lg border border-border-default bg-clean-white p-1.5 sm:p-1 text-xs capitalize"
                           >
                             <option value="service">Service</option>
                             <option value="part">Part</option>
@@ -979,7 +979,7 @@ function JobSheetModalContent({
                           </select>
                         </div>
                         <div className="col-span-3 sm:col-span-1">
-                          <label className="text-[10px] font-bold text-zinc-500 sm:hidden block mb-0.5">
+                          <label className="text-[10px] font-bold text-text-muted sm:hidden block mb-0.5">
                             Qty
                           </label>
                           <input
@@ -987,11 +987,11 @@ function JobSheetModalContent({
                             min="1"
                             value={item.quantity}
                             onChange={(e) => handleItemChange(idx, "quantity", Number(e.target.value))}
-                            className="w-full rounded-lg border border-zinc-200 bg-white p-1.5 sm:p-1 text-xs text-center"
+                            className="w-full rounded-lg border border-border-default bg-clean-white p-1.5 sm:p-1 text-xs text-center"
                           />
                         </div>
                         <div className="col-span-4 sm:col-span-2 md:col-span-2">
-                          <label className="text-[10px] font-bold text-zinc-500 sm:hidden block mb-0.5">
+                          <label className="text-[10px] font-bold text-text-muted sm:hidden block mb-0.5">
                             Unit Price (₹)
                           </label>
                           <input
@@ -1000,21 +1000,21 @@ function JobSheetModalContent({
                             value={item.unitPrice}
                             onChange={(e) => handleItemChange(idx, "unitPrice", Number(e.target.value))}
                             placeholder="Price (₹)"
-                            className="w-full rounded-lg border border-zinc-200 bg-white p-1.5 sm:p-1 text-xs font-mono text-right"
+                            className="w-full rounded-lg border border-border-default bg-clean-white p-1.5 sm:p-1 text-xs font-mono text-right"
                           />
                         </div>
-                        <div className="col-span-12 sm:col-span-1 flex items-center justify-between sm:justify-end pt-1 sm:pt-0 border-t sm:border-t-0 border-zinc-200/60">
-                          <span className="sm:hidden text-xs font-bold text-zinc-700">
+                        <div className="col-span-12 sm:col-span-1 flex items-center justify-between sm:justify-end pt-1 sm:pt-0 border-t sm:border-t-0 border-border-default">
+                          <span className="sm:hidden text-xs font-bold text-text-secondary">
                             Line Total: ₹{(Number(item.quantity || 1) * Number(item.unitPrice || 0)).toLocaleString("en-IN")}
                           </span>
                           <button
                             type="button"
                             onClick={() => handleRemoveItem(idx)}
-                            className="inline-flex items-center gap-1 text-zinc-400 hover:text-red-600 p-1.5 rounded-md hover:bg-red-50 cursor-pointer"
+                            className="inline-flex items-center gap-1 text-text-muted hover:text-error p-1.5 rounded-md hover:bg-error-light cursor-pointer"
                             title="Remove line item"
                           >
                             <Trash2 className="h-4 w-4" />
-                            <span className="text-[11px] sm:hidden text-red-600 font-semibold">Delete</span>
+                            <span className="text-[11px] sm:hidden text-error font-semibold">Delete</span>
                           </button>
                         </div>
                       </div>
@@ -1023,33 +1023,33 @@ function JobSheetModalContent({
                 </div>
 
                 {/* Financial Totals */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-zinc-50 p-3 rounded-lg border border-zinc-200">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-mist-gray p-3 rounded-lg border border-border-default">
                   <div className="space-y-1">
-                    <label className="font-bold text-zinc-600">Total Estimate (₹)</label>
+                    <label className="font-bold text-text-secondary">Total Estimate (₹)</label>
                     <input
                       type="number"
                       value={totalPrice}
                       onChange={(e) => setTotalPrice(Number(e.target.value))}
-                      className="w-full rounded border border-zinc-200 bg-white p-1.5 text-xs font-bold text-zinc-900"
+                      className="w-full rounded border border-border-default bg-clean-white p-1.5 text-xs font-bold text-tech-slate"
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-bold text-zinc-600">Advance Paid (₹)</label>
+                    <label className="font-bold text-text-secondary">Advance Paid (₹)</label>
                     <input
                       type="number"
                       value={advancePaid}
                       onChange={(e) => setAdvancePaid(Number(e.target.value))}
-                      className="w-full rounded border border-zinc-200 bg-white p-1.5 text-xs font-mono"
+                      className="w-full rounded border border-border-default bg-clean-white p-1.5 text-xs font-mono"
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-bold text-zinc-600">Payment Status</label>
+                    <label className="font-bold text-text-secondary">Payment Status</label>
                     <select
                       value={paymentStatus}
                       onChange={(e) => setPaymentStatus(e.target.value as "unpaid" | "paid" | "cod")}
-                      className="w-full rounded border border-zinc-200 bg-white p-1.5 text-xs font-semibold capitalize"
+                      className="w-full rounded border border-border-default bg-clean-white p-1.5 text-xs font-semibold capitalize"
                     >
                       <option value="unpaid">Unpaid (Post-Repair)</option>
                       <option value="paid">Paid (Online / Cash)</option>
@@ -1058,8 +1058,8 @@ function JobSheetModalContent({
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-bold text-zinc-600">Balance Due (₹)</label>
-                    <div className="font-mono text-sm font-extrabold text-orange-600 py-1.5">
+                    <label className="font-bold text-text-secondary">Balance Due (₹)</label>
+                    <div className="font-mono text-sm font-extrabold text-flash-orange py-1.5">
                       ₹{balanceDue.toLocaleString("en-IN")}
                     </div>
                   </div>
@@ -1068,19 +1068,19 @@ function JobSheetModalContent({
 
               {/* Section 5: Workshop Inspection Notes */}
               <div>
-                <h3 className="font-heading text-sm font-bold text-zinc-900 border-b border-zinc-200 pb-2 mb-3">
+                <h3 className="font-heading text-sm font-bold text-tech-slate border-b border-border-default pb-2 mb-3">
                   Workshop Inspection Notes (Optional)
                 </h3>
                 <div className="space-y-1">
-                  <label className="font-bold text-zinc-600">Inspection & Lab Observations</label>
+                  <label className="font-bold text-text-secondary">Inspection & Lab Observations</label>
                   <textarea
                     rows={3}
                     placeholder="Leave blank to print ruled lines for handwritten notes..."
                     value={workshopNotes}
                     onChange={(e) => setWorkshopNotes(e.target.value)}
-                    className="w-full rounded-lg border border-zinc-200 px-2.5 py-1.5 text-xs text-zinc-900 placeholder:text-zinc-400"
+                    className="w-full rounded-lg border border-border-default px-2.5 py-1.5 text-xs text-tech-slate placeholder:text-text-muted"
                   />
-                  <p className="text-[10px] text-zinc-500">
+                  <p className="text-[10px] text-text-muted">
                     If left empty, the printed job card will display ruled lines for writing observations by hand.
                   </p>
                 </div>
@@ -1093,7 +1093,7 @@ function JobSheetModalContent({
                     type="button"
                     onClick={handleSaveToDatabase}
                     disabled={isSaving}
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-zinc-900 px-4 py-2 text-xs font-bold text-white hover:bg-zinc-800 transition-all cursor-pointer"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-tech-slate-dark px-4 py-2 text-xs font-bold text-clean-white hover:bg-tech-slate-dark transition-all cursor-pointer"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5" />
                     <span>{isSaving ? "Saving..." : "Update Repair Booking Record"}</span>
@@ -1105,15 +1105,15 @@ function JobSheetModalContent({
         </div>
 
         {/* Modal Footer */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-3.5 sm:px-5 py-3 border-t border-zinc-200 bg-zinc-50 shrink-0">
-          <div className="text-[11px] text-zinc-500 font-medium text-center sm:text-left">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-3.5 sm:px-5 py-3 border-t border-border-default bg-mist-gray shrink-0">
+          <div className="text-[11px] text-text-muted font-medium text-center sm:text-left">
             Standard Mobile Repair Sheet • Hub: Sadashiv Peth, Pune
           </div>
           <div className="flex flex-wrap items-center justify-center sm:justify-end gap-2 w-full sm:w-auto">
             <button
               type="button"
               onClick={() => setActiveTab(activeTab === "preview" ? "customize" : "preview")}
-              className="flex-1 sm:flex-initial rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs font-bold text-zinc-700 hover:bg-zinc-50 cursor-pointer"
+              className="flex-1 sm:flex-initial rounded-lg border border-border-default bg-clean-white px-3 py-1.5 text-xs font-bold text-text-secondary hover:bg-mist-gray cursor-pointer"
             >
               {activeTab === "preview" ? "Edit Data" : "View Preview"}
             </button>
@@ -1121,7 +1121,7 @@ function JobSheetModalContent({
               type="button"
               onClick={handleDownloadPdf}
               disabled={isDownloadingPdf}
-              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-lg bg-orange-600 px-4 py-1.5 text-xs font-bold text-white hover:bg-orange-700 transition-all shadow-xs cursor-pointer disabled:opacity-50"
+              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-lg bg-flash-orange px-4 py-1.5 text-xs font-bold text-clean-white hover:bg-flash-orange-hover transition-all shadow-xs cursor-pointer disabled:opacity-50"
             >
               {isDownloadingPdf ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -1133,7 +1133,7 @@ function JobSheetModalContent({
             <button
               type="button"
               onClick={handlePrint}
-              className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-100 transition-all shadow-xs cursor-pointer"
+              className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-border-default bg-clean-white px-3.5 py-1.5 text-xs font-semibold text-text-secondary hover:bg-surface-hover transition-all shadow-xs cursor-pointer"
             >
               <Printer className="h-3.5 w-3.5" />
               <span>Print</span>

@@ -27,7 +27,7 @@ export default function AdminPagination({
 
   return (
     <div
-      className={`flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-zinc-500 px-2 py-1 ${className}`}
+      className={`flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-text-muted px-2 py-1 ${className}`}
     >
       <div className="text-center sm:text-left">
         Showing <span className="font-bold text-tech-slate">{start}</span> to{" "}
@@ -41,7 +41,7 @@ export default function AdminPagination({
             type="button"
             onClick={() => onPageChange(page - 1)}
             disabled={page <= 1}
-            className="inline-flex items-center justify-center h-9 sm:h-8 min-w-[36px] px-2.5 sm:px-3 rounded-lg border border-zinc-200 bg-clean-white text-zinc-600 hover:bg-zinc-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95 cursor-pointer shadow-2xs font-bold"
+            className="inline-flex items-center justify-center h-9 sm:h-8 min-w-[36px] px-2.5 sm:px-3 rounded-lg border border-border-default bg-clean-white text-text-secondary hover:bg-mist-gray disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95 cursor-pointer shadow-2xs font-bold"
             aria-label="Previous page"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -56,7 +56,7 @@ export default function AdminPagination({
             type="button"
             onClick={() => onPageChange(page + 1)}
             disabled={page >= totalPages}
-            className="inline-flex items-center justify-center h-9 sm:h-8 min-w-[36px] px-2.5 sm:px-3 rounded-lg border border-zinc-200 bg-clean-white text-zinc-600 hover:bg-zinc-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95 cursor-pointer shadow-2xs font-bold"
+            className="inline-flex items-center justify-center h-9 sm:h-8 min-w-[36px] px-2.5 sm:px-3 rounded-lg border border-border-default bg-clean-white text-text-secondary hover:bg-mist-gray disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95 cursor-pointer shadow-2xs font-bold"
             aria-label="Next page"
           >
             <span className="hidden sm:inline mr-1">Next</span>

@@ -187,7 +187,7 @@ export default function AdminBrandsPage() {
             type="button"
             onClick={() => setRefreshIndex((k) => k + 1)}
             disabled={loading}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-clean-white px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-bold text-zinc-600 hover:bg-zinc-50 cursor-pointer"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-border-default bg-clean-white px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-bold text-text-secondary hover:bg-mist-gray cursor-pointer"
           >
             <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
             <span className="hidden sm:inline">Refresh</span>
@@ -195,7 +195,7 @@ export default function AdminBrandsPage() {
           <button
             type="button"
             onClick={openCreateModal}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-flash-orange px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs font-bold text-clean-white hover:bg-orange-600 shadow-md shadow-orange-500/20 active:scale-95 transition-all cursor-pointer"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-flash-orange px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs font-bold text-clean-white hover:bg-flash-orange-hover shadow-md shadow-flash-orange/20 active:scale-95 transition-all cursor-pointer"
           >
             <Plus className="h-4 w-4" />
             <span className="hidden sm:inline">Add Brand</span>
@@ -230,7 +230,7 @@ export default function AdminBrandsPage() {
           emptyDescription="There are no smartphone brands matching your active filters."
         >
           {brands.map((b) => (
-            <tr key={b._id} className="hover:bg-zinc-50/80 transition-colors">
+            <tr key={b._id} className="hover:bg-mist-gray/80 transition-colors">
               {/* Brand Logo & Name */}
               <td className="px-5 py-4">
                 <div className="flex items-center gap-3">
@@ -238,24 +238,24 @@ export default function AdminBrandsPage() {
                     src={b.logoUrl}
                     alt={b.name}
                     fallbackText={b.name[0]?.toUpperCase()}
-                    containerClassName="h-9 w-9 shrink-0 rounded-lg bg-white border border-zinc-200 p-1 flex items-center justify-center shadow-2xs"
+                    containerClassName="h-9 w-9 shrink-0 rounded-lg bg-clean-white border border-border-default p-1 flex items-center justify-center shadow-2xs"
                   />
                   <span className="font-bold text-tech-slate">{b.name}</span>
                 </div>
               </td>
 
               {/* Slug */}
-              <td className="px-5 py-4 font-mono text-zinc-500">{b.slug}</td>
+              <td className="px-5 py-4 font-mono text-text-muted">{b.slug}</td>
 
               {/* Display Order */}
-              <td className="px-5 py-4 text-zinc-600 font-mono">#{b.displayOrder}</td>
+              <td className="px-5 py-4 text-text-secondary font-mono">#{b.displayOrder}</td>
 
               {/* Popular */}
               <td className="px-5 py-4">
                 {b.isPopular ? (
                   <AdminStatusBadge status="popular" label="Popular" />
                 ) : (
-                  <span className="text-zinc-300">-</span>
+                  <span className="text-border-strong">-</span>
                 )}
               </td>
 
@@ -269,7 +269,7 @@ export default function AdminBrandsPage() {
                 <button
                   type="button"
                   onClick={() => openEditModal(b)}
-                  className="rounded-lg p-1.5 text-zinc-500 hover:bg-zinc-100 hover:text-tech-slate cursor-pointer"
+                  className="rounded-lg p-1.5 text-text-muted hover:bg-mist-gray hover:text-tech-slate cursor-pointer"
                   title="Edit Brand"
                 >
                   <Edit2 className="h-4 w-4" />
@@ -277,7 +277,7 @@ export default function AdminBrandsPage() {
                 <button
                   type="button"
                   onClick={() => setBrandToDelete(b)}
-                  className="rounded-lg p-1.5 text-zinc-500 hover:bg-red-50 hover:text-red-600 cursor-pointer"
+                  className="rounded-lg p-1.5 text-text-muted hover:bg-error-light hover:text-error cursor-pointer"
                   title="Delete Brand"
                 >
                   <Trash2 className="h-4 w-4" />
@@ -311,19 +311,19 @@ export default function AdminBrandsPage() {
           >
             <div className="space-y-4 text-xs">
               <div className="space-y-1">
-                <label className="font-bold text-zinc-700">Brand Name *</label>
+                <label className="font-bold text-text-secondary">Brand Name *</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Apple, Samsung, OnePlus"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                  className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-zinc-700">
+                <label className="font-bold text-text-secondary">
                   Slug (optional auto-generated)
                 </label>
                 <input
@@ -331,7 +331,7 @@ export default function AdminBrandsPage() {
                   placeholder="e.g. apple"
                   value={slug}
                   onChange={(e) => setSlug(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs font-mono text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                  className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs font-mono text-tech-slate focus:border-flash-orange focus:outline-hidden"
                 />
               </div>
 
@@ -344,32 +344,32 @@ export default function AdminBrandsPage() {
               />
 
               <div className="space-y-1">
-                <label className="font-bold text-zinc-700">Display Order</label>
+                <label className="font-bold text-text-secondary">Display Order</label>
                 <input
                   type="number"
                   value={displayOrder}
                   onChange={(e) => setDisplayOrder(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                  className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
                 />
               </div>
 
               <div className="flex items-center gap-6 pt-2">
-                <label className="inline-flex items-center gap-2 font-bold text-zinc-700 cursor-pointer">
+                <label className="inline-flex items-center gap-2 font-bold text-text-secondary cursor-pointer">
                   <input
                     type="checkbox"
                     checked={isPopular}
                     onChange={(e) => setIsPopular(e.target.checked)}
-                    className="rounded border-zinc-300 text-flash-orange focus:ring-flash-orange"
+                    className="rounded border-border-strong text-flash-orange focus:ring-flash-orange"
                   />
                   <span>Popular Brand</span>
                 </label>
 
-                <label className="inline-flex items-center gap-2 font-bold text-zinc-700 cursor-pointer">
+                <label className="inline-flex items-center gap-2 font-bold text-text-secondary cursor-pointer">
                   <input
                     type="checkbox"
                     checked={isActive}
                     onChange={(e) => setIsActive(e.target.checked)}
-                    className="rounded border-zinc-300 text-flash-orange focus:ring-flash-orange"
+                    className="rounded border-border-strong text-flash-orange focus:ring-flash-orange"
                   />
                   <span>Active</span>
                 </label>

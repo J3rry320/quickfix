@@ -88,13 +88,13 @@ export default async function BrandsHubPage({
             icon: Clock,
             label: "Turnaround",
             value: "Same-Day Return",
-            color: "text-blue-500",
+            color: "text-info",
           },
           {
             icon: ShieldCheck,
             label: "Warranty",
             value: "90-Day Guarantee",
-            color: "text-emerald-500",
+            color: "text-success",
           },
         ]}
       />
@@ -109,18 +109,18 @@ export default async function BrandsHubPage({
                 <Link
                   key={brand.slug}
                   href={`/brands/${brand.slug}`}
-                  className="p-5 rounded-2xl bg-clean-white border border-zinc-200/90 hover:border-flash-orange/50 hover:shadow-md transition-all group flex flex-col justify-between"
+                  className="p-5 rounded-2xl bg-clean-white border border-border-default/90 hover:border-flash-orange/50 hover:shadow-md transition-all group flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center gap-4 mb-4">
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-mist-gray border border-zinc-200 font-heading font-black text-sm text-tech-slate">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-mist-gray border border-border-default font-heading font-black text-sm text-tech-slate">
                         {brand.name.slice(0, 2).toUpperCase()}
                       </div>
                       <div>
                         <h2 className="font-heading text-lg font-bold text-tech-slate group-hover:text-flash-orange transition-colors">
                           {brand.name}
                         </h2>
-                        <span className="text-xs text-zinc-500">
+                        <span className="text-xs text-text-muted">
                           {brandModels.length > 0 ? `${brandModels.length} models supported` : "All models supported"}
                         </span>
                       </div>
@@ -131,13 +131,13 @@ export default async function BrandsHubPage({
                         {brandModels.slice(0, 4).map((modelName) => (
                           <span
                             key={modelName}
-                            className="text-[11px] font-semibold text-zinc-600 bg-mist-gray/80 px-2 py-0.5 rounded"
+                            className="text-[11px] font-semibold text-text-secondary bg-mist-gray/80 px-2 py-0.5 rounded"
                           >
                             {modelName}
                           </span>
                         ))}
                         {brandModels.length > 4 && (
-                          <span className="text-[11px] font-semibold text-zinc-400 px-2 py-0.5">
+                          <span className="text-[11px] font-semibold text-text-muted px-2 py-0.5">
                             +{brandModels.length - 4} more
                           </span>
                         )}
@@ -145,7 +145,7 @@ export default async function BrandsHubPage({
                     )}
                   </div>
 
-                  <div className="pt-3 border-t border-zinc-100 flex items-center justify-between text-xs font-bold text-flash-orange">
+                  <div className="pt-3 border-t border-border-subtle flex items-center justify-between text-xs font-bold text-flash-orange">
                     <span>View Models & Pricing</span>
                     <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>

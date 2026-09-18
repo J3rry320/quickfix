@@ -160,7 +160,7 @@ export default async function ServiceDetailPage({
             value: t("highlights.turnaroundValue", {
               minutes: service.estimatedTimeMinutes,
             }),
-            color: "text-blue-500",
+            color: "text-info",
           },
           {
             icon: ShieldCheck,
@@ -168,7 +168,7 @@ export default async function ServiceDetailPage({
             value: t("highlights.warrantyValue", {
               days: service.warrantyDays,
             }),
-            color: "text-emerald-500",
+            color: "text-success",
           },
           {
             icon: Zap,
@@ -181,7 +181,7 @@ export default async function ServiceDetailPage({
           <>
             <Link
               href={`/book-repair?service=${encodeURIComponent(service.slug)}`}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-orange-600 active:scale-95 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-flash-orange-hover active:scale-95 transition-all"
             >
               <span>
                 {t("actions.bookService", { serviceName: service.name })}
@@ -191,7 +191,7 @@ export default async function ServiceDetailPage({
 
             <a
               href={`tel:${contactConfig.phone.value}`}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-zinc-300 text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-border-strong text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
             >
               <Phone className="h-4 w-4 text-flash-orange" />
               <span>
@@ -224,7 +224,7 @@ export default async function ServiceDetailPage({
               <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
                 {t("issues.title")}
               </h2>
-              <p className="mt-2 text-xs sm:text-sm text-zinc-600">
+              <p className="mt-2 text-xs sm:text-sm text-text-secondary">
                 {t("issues.subtitle", {
                   minutes: service.estimatedTimeMinutes,
                 })}
@@ -235,7 +235,7 @@ export default async function ServiceDetailPage({
               {service.commonIssues.map((issue, idx) => (
                 <div
                   key={idx}
-                  className="flex items-start gap-3 p-4 rounded-xl bg-clean-white border border-zinc-200 shadow-2xs"
+                  className="flex items-start gap-3 p-4 rounded-xl bg-clean-white border border-border-default shadow-2xs"
                 >
                   <CheckCircle2 className="h-5 w-5 text-flash-orange shrink-0 mt-0.5" />
                   <span className="text-xs sm:text-sm font-medium text-tech-slate">
@@ -266,7 +266,7 @@ export default async function ServiceDetailPage({
               <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
                 {t("brands.title", { serviceName: service.name })}
               </h2>
-              <p className="mt-2 text-xs sm:text-sm text-zinc-600">
+              <p className="mt-2 text-xs sm:text-sm text-text-secondary">
                 {t("brands.subtitle")}
               </p>
             </div>
@@ -298,7 +298,7 @@ export default async function ServiceDetailPage({
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
               {t("faqs.title", { serviceName: service.name })}
             </h2>
-            <p className="mt-2 text-xs sm:text-sm text-zinc-600">
+            <p className="mt-2 text-xs sm:text-sm text-text-secondary">
               {t("faqs.subtitle")}
             </p>
           </div>

@@ -162,19 +162,19 @@ export default async function BlogPostDetailPage({
             icon: Calendar,
             label: "Published",
             value: formattedDate,
-            color: "text-blue-500",
+            color: "text-info",
           },
           {
             icon: Clock,
             label: "Read Time",
             value: `${post.readingTimeMinutes || 5} min read`,
-            color: "text-emerald-500",
+            color: "text-success",
           },
           {
             icon: Tag,
             label: "Category",
             value: post.category,
-            color: "text-purple-500",
+            color: "text-electric-amber",
           },
         ]}
         actions={

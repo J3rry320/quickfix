@@ -54,37 +54,37 @@ export default async function PrivacyPage({
       <Section variant="white" padding="default">
         <Container size="narrow">
           {/* Key Privacy Highlights Card */}
-          <div className="mb-10 rounded-2xl bg-emerald-50/70 border border-emerald-200 p-6 sm:p-8">
+          <div className="mb-10 rounded-2xl bg-success-light/70 border border-success-border p-6 sm:p-8">
             <div className="flex items-center gap-3 mb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-600 text-clean-white">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success text-clean-white">
                 <Shield className="h-5 w-5" />
               </div>
-              <h2 className="font-heading text-lg sm:text-xl font-bold text-emerald-900">
+              <h2 className="font-heading text-lg sm:text-xl font-bold text-success-text">
                 Our Zero-Privacy-Invasion Commitment
               </h2>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm font-medium text-emerald-800">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm font-medium text-success-text">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                <CheckCircle2 className="h-4 w-4 text-success shrink-0" />
                 <span>Never ask for your device passcode</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                <CheckCircle2 className="h-4 w-4 text-success shrink-0" />
                 <span>Zero phone data resets or wiping required</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                <CheckCircle2 className="h-4 w-4 text-success shrink-0" />
                 <span>Repaired on-site in your presence</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                <CheckCircle2 className="h-4 w-4 text-success shrink-0" />
                 <span>No photos, chats, or apps accessed</span>
               </div>
             </div>
           </div>
 
           {/* Policy Content Sections */}
-          <div className="space-y-8 text-xs sm:text-sm md:text-base text-zinc-700 font-body leading-relaxed">
+          <div className="space-y-8 text-xs sm:text-sm md:text-base text-text-secondary font-body leading-relaxed">
             <div>
               <h3 className="font-heading text-lg font-bold text-tech-slate mb-2">
                 1. Information We Collect
@@ -94,7 +94,7 @@ export default async function PrivacyPage({
                 we collect only the necessary details required to dispatch a
                 certified technician to your home or workplace in Pune:
               </p>
-              <ul className="mt-2 list-disc list-inside space-y-1 text-zinc-600 pl-2">
+              <ul className="mt-2 list-disc list-inside space-y-1 text-text-muted pl-2">
                 <li>Your full name and 10-digit Indian contact number.</li>
                 <li>
                   Your Pune doorstep address, locality, and optional landmark.
@@ -120,7 +120,7 @@ export default async function PrivacyPage({
                 <strong>Zero Data Access Protocol</strong>. Because our service
                 requires zero access to your operating system or storage:
               </p>
-              <ul className="mt-2 list-disc list-inside space-y-1 text-zinc-600 pl-2">
+              <ul className="mt-2 list-disc list-inside space-y-1 text-text-muted pl-2">
                 <li>
                   You never share your device PIN, passcode, pattern, or
                   biometric credentials.
@@ -175,7 +175,7 @@ export default async function PrivacyPage({
                 request deletion of your contact profile, please contact our
                 Pune dispatch hub:
               </p>
-              <div className="mt-3 rounded-xl bg-mist-gray p-4 text-xs sm:text-sm text-zinc-700">
+              <div className="mt-3 rounded-xl bg-mist-gray p-4 text-xs sm:text-sm text-text-secondary">
                 <p className="font-bold text-tech-slate">
                   {contactConfig.legalName}
                 </p>

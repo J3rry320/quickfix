@@ -233,7 +233,7 @@ export default function AdminReviewsPage() {
 
         <div className="bg-clean-white border border-border-default rounded-2xl p-4 shadow-2xs">
           <div className="flex items-center gap-2 text-text-muted text-xs font-medium">
-            <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+            <CheckCircle2 className="h-4 w-4 text-success" />
             <span>Approved</span>
           </div>
           <div className="font-heading text-2xl font-extrabold text-tech-slate mt-2">
@@ -243,7 +243,7 @@ export default function AdminReviewsPage() {
 
         <div className="bg-clean-white border border-border-default rounded-2xl p-4 shadow-2xs">
           <div className="flex items-center gap-2 text-text-muted text-xs font-medium">
-            <XCircle className="h-4 w-4 text-zinc-400" />
+            <XCircle className="h-4 w-4 text-text-muted" />
             <span>Rejected</span>
           </div>
           <div className="font-heading text-2xl font-extrabold text-tech-slate mt-2">
@@ -370,7 +370,7 @@ export default function AdminReviewsPage() {
                         type="button"
                         onClick={() => handleQuickStatusChange(rev._id, "approved")}
                         title="Approve Review"
-                        className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-colors cursor-pointer"
+                        className="p-1.5 rounded-lg bg-success-light text-success hover:bg-success-border/50 transition-colors cursor-pointer"
                       >
                         <Check className="h-3.5 w-3.5" />
                       </button>
@@ -378,7 +378,7 @@ export default function AdminReviewsPage() {
                         type="button"
                         onClick={() => handleQuickStatusChange(rev._id, "rejected")}
                         title="Reject Review"
-                        className="p-1.5 rounded-lg bg-zinc-100 text-zinc-600 hover:bg-zinc-200 transition-colors cursor-pointer"
+                        className="p-1.5 rounded-lg bg-mist-gray text-text-secondary hover:bg-surface-hover transition-colors cursor-pointer"
                       >
                         <X className="h-3.5 w-3.5" />
                       </button>
@@ -398,7 +398,7 @@ export default function AdminReviewsPage() {
                     type="button"
                     onClick={() => setReviewToDelete(rev)}
                     title="Delete Review"
-                    className="p-1.5 rounded-lg text-zinc-400 hover:text-error hover:bg-error-light transition-colors cursor-pointer"
+                    className="p-1.5 rounded-lg text-text-muted hover:text-error hover:bg-error-light transition-colors cursor-pointer"
                   >
                     <Trash2 className="h-3.5 w-3.5" />
                   </button>

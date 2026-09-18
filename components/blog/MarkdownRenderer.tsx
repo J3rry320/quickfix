@@ -34,42 +34,42 @@ const CALLOUT_CONFIGS: Record<CalloutType, CalloutConfig> = {
   note: {
     icon: Info,
     title: "Note",
-    borderClass: "border-blue-500",
-    bgClass: "bg-blue-50/70 dark:bg-blue-950/20",
-    textClass: "text-blue-950 dark:text-blue-200",
-    iconClass: "text-blue-600 dark:text-blue-400",
+    borderClass: "border-info",
+    bgClass: "bg-info-light/70",
+    textClass: "text-info-text",
+    iconClass: "text-info",
   },
   tip: {
     icon: Lightbulb,
     title: "Pro Tip",
-    borderClass: "border-emerald-500",
-    bgClass: "bg-emerald-50/70 dark:bg-emerald-950/20",
-    textClass: "text-emerald-950 dark:text-emerald-200",
-    iconClass: "text-emerald-600 dark:text-emerald-400",
+    borderClass: "border-success",
+    bgClass: "bg-success-light/70",
+    textClass: "text-success-text",
+    iconClass: "text-success",
   },
   warning: {
     icon: AlertTriangle,
     title: "Warning",
-    borderClass: "border-amber-500",
-    bgClass: "bg-amber-50/70 dark:bg-amber-950/20",
-    textClass: "text-amber-950 dark:text-amber-200",
-    iconClass: "text-amber-600 dark:text-amber-400",
+    borderClass: "border-warning",
+    bgClass: "bg-warning-light/70",
+    textClass: "text-warning-text",
+    iconClass: "text-warning",
   },
   important: {
     icon: CheckCircle2,
     title: "Important",
     borderClass: "border-flash-orange",
-    bgClass: "bg-orange-50/70 dark:bg-orange-950/20",
-    textClass: "text-orange-950 dark:text-orange-200",
+    bgClass: "bg-flash-orange/10",
+    textClass: "text-tech-slate",
     iconClass: "text-flash-orange",
   },
   caution: {
     icon: AlertOctagon,
     title: "Caution",
-    borderClass: "border-red-500",
-    bgClass: "bg-red-50/70 dark:bg-red-950/20",
-    textClass: "text-red-950 dark:text-red-200",
-    iconClass: "text-red-600 dark:text-red-400",
+    borderClass: "border-error",
+    bgClass: "bg-error-light/70",
+    textClass: "text-error-text",
+    iconClass: "text-error",
   },
 };
 
@@ -109,7 +109,7 @@ function renderInline(text: string): React.ReactNode[] {
           <Link
             key={`l-${keyIndex++}`}
             href={href}
-            className="font-medium text-flash-orange hover:text-orange-600 underline decoration-flash-orange/40 hover:decoration-flash-orange transition-colors"
+            className="font-medium text-flash-orange hover:text-flash-orange-hover underline decoration-flash-orange/40 hover:decoration-flash-orange transition-colors"
           >
             {label}
           </Link>
@@ -121,7 +121,7 @@ function renderInline(text: string): React.ReactNode[] {
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-flash-orange hover:text-orange-600 underline decoration-flash-orange/40 hover:decoration-flash-orange transition-colors"
+            className="font-medium text-flash-orange hover:text-flash-orange-hover underline decoration-flash-orange/40 hover:decoration-flash-orange transition-colors"
           >
             {label}
           </a>
@@ -149,7 +149,7 @@ function renderInline(text: string): React.ReactNode[] {
       elements.push(
         <code
           key={`c-${keyIndex++}`}
-          className="rounded-md bg-mist-gray px-1.5 py-0.5 font-mono text-xs sm:text-sm font-semibold text-tech-slate border border-zinc-200"
+          className="rounded-md bg-mist-gray px-1.5 py-0.5 font-mono text-xs sm:text-sm font-semibold text-tech-slate border border-border-default"
         >
           {token.slice(1, -1)}
         </code>
@@ -157,7 +157,7 @@ function renderInline(text: string): React.ReactNode[] {
     } else if (token.startsWith("~~") && token.endsWith("~~")) {
       // Strikethrough
       elements.push(
-        <del key={`d-${keyIndex++}`} className="line-through text-zinc-400">
+        <del key={`d-${keyIndex++}`} className="line-through text-text-muted">
           {token.slice(2, -2)}
         </del>
       );
@@ -199,21 +199,21 @@ function CodeBlock({ code, language }: { code: string; language?: string }) {
   };
 
   return (
-    <div className="relative my-6 rounded-2xl overflow-hidden bg-tech-slate border border-zinc-800 shadow-md">
-      <div className="flex items-center justify-between px-4 py-2.5 bg-zinc-900 border-b border-zinc-800 text-xs font-mono text-zinc-400">
+    <div className="relative my-6 rounded-2xl overflow-hidden bg-tech-slate border border-border-dark shadow-md">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-tech-slate-dark border-b border-border-dark text-xs font-mono text-text-muted">
         <span className="uppercase tracking-wider font-semibold">
           {language || "code"}
         </span>
         <button
           type="button"
           onClick={handleCopy}
-          className="flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-2xs font-semibold text-zinc-300 hover:text-clean-white hover:bg-zinc-800 transition-colors"
+          className="flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-2xs font-semibold text-text-muted hover:text-clean-white hover:bg-tech-slate transition-colors"
           title="Copy code"
         >
           {copied ? (
             <>
-              <Check className="h-3.5 w-3.5 text-emerald-400" />
-              <span className="text-emerald-400">Copied</span>
+              <Check className="h-3.5 w-3.5 text-success" />
+              <span className="text-success">Copied</span>
             </>
           ) : (
             <>
@@ -223,7 +223,7 @@ function CodeBlock({ code, language }: { code: string; language?: string }) {
           )}
         </button>
       </div>
-      <pre className="p-4 sm:p-5 overflow-x-auto text-xs sm:text-sm font-mono text-zinc-200 leading-relaxed">
+      <pre className="p-4 sm:p-5 overflow-x-auto text-xs sm:text-sm font-mono text-mist-gray leading-relaxed">
         <code>{code}</code>
       </pre>
     </div>
@@ -271,7 +271,7 @@ export default function MarkdownRenderer({ content, className = "" }: MarkdownRe
       // 2. Horizontal Rule: --- or ***
       if (/^(\s*[-*_]\s*){3,}$/.test(line)) {
         nodes.push(
-          <hr key={`hr-${nodeKey++}`} className="my-8 border-t border-zinc-200" />
+          <hr key={`hr-${nodeKey++}`} className="my-8 border-t border-border-default" />
         );
         i++;
         continue;
@@ -301,7 +301,7 @@ export default function MarkdownRenderer({ content, className = "" }: MarkdownRe
               <h2
                 key={`h2-${nodeKey++}`}
                 id={id}
-                className="scroll-mt-24 font-heading text-xl sm:text-2xl font-bold text-tech-slate tracking-tight mt-8 mb-3.5 pb-2 border-b border-zinc-200"
+                className="scroll-mt-24 font-heading text-xl sm:text-2xl font-bold text-tech-slate tracking-tight mt-8 mb-3.5 pb-2 border-b border-border-default"
               >
                 {renderInline(text)}
               </h2>
@@ -378,7 +378,7 @@ export default function MarkdownRenderer({ content, className = "" }: MarkdownRe
           nodes.push(
             <blockquote
               key={`quote-${nodeKey++}`}
-              className="my-6 rounded-r-2xl border-l-4 border-flash-orange bg-mist-gray/60 p-4 sm:p-5 text-zinc-700 italic text-sm sm:text-base leading-relaxed"
+              className="my-6 rounded-r-2xl border-l-4 border-flash-orange bg-mist-gray/60 p-4 sm:p-5 text-text-secondary italic text-sm sm:text-base leading-relaxed"
             >
               {quoteLines.map((qLine, qIdx) => (
                 <p key={qIdx} className={qIdx > 0 ? "mt-2" : ""}>
@@ -421,10 +421,10 @@ export default function MarkdownRenderer({ content, className = "" }: MarkdownRe
           nodes.push(
             <div
               key={`table-${nodeKey++}`}
-              className="my-6 overflow-x-auto rounded-2xl border border-zinc-200 shadow-2xs bg-clean-white"
+              className="my-6 overflow-x-auto rounded-2xl border border-border-default shadow-2xs bg-clean-white"
             >
               <table className="w-full text-left text-xs sm:text-sm">
-                <thead className="bg-mist-gray border-b border-zinc-200">
+                <thead className="bg-mist-gray border-b border-border-default">
                   <tr>
                     {headers.map((h, hIdx) => (
                       <th
@@ -436,16 +436,16 @@ export default function MarkdownRenderer({ content, className = "" }: MarkdownRe
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-zinc-200">
+                <tbody className="divide-y divide-border-default">
                   {dataRows.map((row, rIdx) => (
                     <tr
                       key={rIdx}
-                      className={rIdx % 2 === 0 ? "bg-clean-white" : "bg-zinc-50/50"}
+                      className={rIdx % 2 === 0 ? "bg-clean-white" : "bg-elevated-surface/50"}
                     >
                       {row.map((cell, cIdx) => (
                         <td
                           key={cIdx}
-                          className="px-4 py-3 text-zinc-700 font-medium"
+                          className="px-4 py-3 text-text-secondary font-medium"
                         >
                           {renderInline(cell)}
                         </td>
@@ -513,14 +513,14 @@ export default function MarkdownRenderer({ content, className = "" }: MarkdownRe
               {listItems.map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex items-start gap-2.5 text-xs sm:text-sm text-zinc-700"
+                  className="flex items-start gap-2.5 text-xs sm:text-sm text-text-secondary"
                 >
                   {item.checked ? (
-                    <CheckSquare className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                    <CheckSquare className="h-4 w-4 text-success shrink-0 mt-0.5" />
                   ) : (
-                    <Square className="h-4 w-4 text-zinc-400 shrink-0 mt-0.5" />
+                    <Square className="h-4 w-4 text-text-muted shrink-0 mt-0.5" />
                   )}
-                  <span className={item.checked ? "line-through text-zinc-400" : ""}>
+                  <span className={item.checked ? "line-through text-text-muted" : ""}>
                     {renderInline(item.text)}
                   </span>
                 </div>
@@ -531,7 +531,7 @@ export default function MarkdownRenderer({ content, className = "" }: MarkdownRe
           nodes.push(
             <ol
               key={`ol-${nodeKey++}`}
-              className="my-5 list-decimal pl-5 space-y-2 text-xs sm:text-sm sm:leading-relaxed text-zinc-700 marker:font-bold marker:text-flash-orange"
+              className="my-5 list-decimal pl-5 space-y-2 text-xs sm:text-sm sm:leading-relaxed text-text-secondary marker:font-bold marker:text-flash-orange"
             >
               {listItems.map((item, idx) => (
                 <li key={idx} className="pl-1">
@@ -544,7 +544,7 @@ export default function MarkdownRenderer({ content, className = "" }: MarkdownRe
           nodes.push(
             <ul
               key={`ul-${nodeKey++}`}
-              className="my-5 list-disc pl-5 space-y-2 text-xs sm:text-sm sm:leading-relaxed text-zinc-700 marker:text-flash-orange"
+              className="my-5 list-disc pl-5 space-y-2 text-xs sm:text-sm sm:leading-relaxed text-text-secondary marker:text-flash-orange"
             >
               {listItems.map((item, idx) => (
                 <li key={idx} className="pl-1">
@@ -584,7 +584,7 @@ export default function MarkdownRenderer({ content, className = "" }: MarkdownRe
         nodes.push(
           <p
             key={`p-${nodeKey++}`}
-            className="my-3.5 text-xs sm:text-sm sm:text-base leading-relaxed text-zinc-700 font-normal"
+            className="my-3.5 text-xs sm:text-sm sm:text-base leading-relaxed text-text-secondary font-normal"
           >
             {renderInline(paraLines.join(" "))}
           </p>

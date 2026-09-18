@@ -136,7 +136,7 @@ function SidebarNavigation({
       {/* Brand Logo (when enabled) */}
       {showLogo && (
         <div className="flex items-center gap-3 px-3 py-2 shrink-0 mb-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-flash-orange text-clean-white shadow-md shadow-orange-500/20">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-flash-orange text-clean-white shadow-md shadow-flash-orange/20">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -154,7 +154,7 @@ function SidebarNavigation({
             <span className="font-heading text-lg font-extrabold text-tech-slate tracking-tight">
               Quick<span className="text-flash-orange">Fix</span>
             </span>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-text-muted">
               Admin Portal
             </span>
           </div>
@@ -162,11 +162,11 @@ function SidebarNavigation({
       )}
 
       {/* Navigation Groups (Scrollable) */}
-      <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain pr-1 -mr-1 space-y-6 [scrollbar-width:thin] [scrollbar-color:theme(colors.zinc.200)_transparent] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-zinc-200 hover:[&::-webkit-scrollbar-thumb]:bg-zinc-300">
+      <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain pr-1 -mr-1 space-y-6 [scrollbar-width:thin] [scrollbar-color:var(--color-border-default)_transparent] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-border-default hover:[&::-webkit-scrollbar-thumb]:bg-border-strong">
         <nav className="space-y-6 px-1 py-1">
           {NAV_GROUPS.map((group) => (
             <div key={group.group} className="space-y-1.5">
-              <div className="px-3 text-[10px] font-extrabold uppercase tracking-widest text-zinc-400">
+              <div className="px-3 text-[10px] font-extrabold uppercase tracking-widest text-text-muted">
                 {group.group}
               </div>
               <div className="space-y-1">
@@ -181,7 +181,7 @@ function SidebarNavigation({
                       className={`group flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-bold transition-all ${
                         active
                           ? "bg-tech-slate text-clean-white shadow-sm"
-                          : "text-zinc-600 hover:bg-zinc-100 hover:text-tech-slate"
+                          : "text-text-secondary hover:bg-surface-hover hover:text-tech-slate"
                       }`}
                     >
                       <div className="flex items-center gap-3">
@@ -189,13 +189,13 @@ function SidebarNavigation({
                           className={`h-4 w-4 transition-colors ${
                             active
                               ? "text-flash-orange"
-                              : "text-zinc-400 group-hover:text-tech-slate"
+                              : "text-text-muted group-hover:text-tech-slate"
                           }`}
                         />
                         <span>{item.label}</span>
                       </div>
                       {active && (
-                        <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
+                        <ChevronRight className="h-3.5 w-3.5 text-text-muted" />
                       )}
                     </Link>
                   );
@@ -207,8 +207,8 @@ function SidebarNavigation({
       </div>
 
       {/* Sidebar Footer / User Profile */}
-      <div className="shrink-0 border-t border-zinc-200 pt-3.5 space-y-2.5 px-1 mt-auto">
-        <div className="flex items-center gap-2.5 rounded-xl bg-zinc-50 p-2.5 border border-zinc-200/80">
+      <div className="shrink-0 border-t border-border-default pt-3.5 space-y-2.5 px-1 mt-auto">
+        <div className="flex items-center gap-2.5 rounded-xl bg-mist-gray p-2.5 border border-border-default/80">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-tech-slate text-clean-white text-xs font-bold uppercase">
             {user?.name?.[0] || user?.email?.[0] || "A"}
           </div>
@@ -216,7 +216,7 @@ function SidebarNavigation({
             <span className="text-xs font-bold text-tech-slate truncate">
               {user?.name || "Administrator"}
             </span>
-            <span className="text-[10px] text-zinc-500 truncate">
+            <span className="text-[10px] text-text-muted truncate">
               {user?.email || "admin@quickfixmobile.in"}
             </span>
           </div>
@@ -225,9 +225,9 @@ function SidebarNavigation({
         <Link
           href="/"
           target="_blank"
-          className="flex w-full items-center justify-center gap-2 rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs font-bold text-zinc-600 hover:text-tech-slate hover:bg-zinc-50 transition-all shadow-2xs"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs font-bold text-text-secondary hover:text-tech-slate hover:bg-mist-gray transition-all shadow-2xs"
         >
-          <ExternalLink className="h-3.5 w-3.5 text-zinc-400" />
+          <ExternalLink className="h-3.5 w-3.5 text-text-muted" />
           <span>View Public Site</span>
         </Link>
 
@@ -235,7 +235,7 @@ function SidebarNavigation({
           type="button"
           onClick={onLogout}
           disabled={loggingOut}
-          className="flex w-full items-center justify-center gap-2 rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs font-bold text-zinc-600 hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-all cursor-pointer"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs font-bold text-text-secondary hover:bg-error-light hover:text-error hover:border-error-border transition-all cursor-pointer"
         >
           <LogOut className="h-3.5 w-3.5" />
           <span>{loggingOut ? "Signing out..." : "Sign Out"}</span>
@@ -295,9 +295,9 @@ export default function AdminShell({
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 flex flex-col md:flex-row w-full max-w-full overflow-x-clip">
+    <div className="min-h-screen bg-mist-gray flex flex-col md:flex-row w-full max-w-full overflow-x-clip">
       {/* Desktop Sidebar (Permanent) */}
-      <aside className="hidden md:flex fixed inset-y-0 left-0 z-30 w-64 flex-col border-r border-zinc-200 bg-clean-white p-4 h-full max-h-screen">
+      <aside className="hidden md:flex fixed inset-y-0 left-0 z-30 w-64 flex-col border-r border-border-default bg-clean-white p-4 h-full max-h-screen">
         <SidebarNavigation
           pathname={pathname}
           user={user}
@@ -309,7 +309,7 @@ export default function AdminShell({
       {/* Mobile Slide-over Drawer Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs md:hidden transition-opacity"
+          className="fixed inset-0 z-50 bg-tech-slate-dark/40 backdrop-blur-xs md:hidden transition-opacity"
           onClick={() => setIsMobileMenuOpen(false)}
           aria-hidden="true"
         />
@@ -324,7 +324,7 @@ export default function AdminShell({
         }`}
         aria-hidden={!isMobileMenuOpen}
       >
-        <div className="flex items-center justify-between pb-4 border-b border-zinc-200 mb-3 shrink-0">
+        <div className="flex items-center justify-between pb-4 border-b border-border-default mb-3 shrink-0">
           <div className="flex items-center gap-2.5">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-flash-orange text-clean-white font-bold">
               Q
@@ -336,7 +336,7 @@ export default function AdminShell({
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="rounded-lg p-1.5 text-zinc-500 hover:bg-zinc-100 cursor-pointer"
+            className="rounded-lg p-1.5 text-text-muted hover:bg-surface-hover cursor-pointer"
             aria-label="Close menu"
           >
             <X className="h-5 w-5" />
@@ -357,13 +357,13 @@ export default function AdminShell({
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 w-full max-w-full md:pl-64">
         {/* Sticky Top Header */}
-        <header className="sticky top-0 z-20 flex h-16 w-full max-w-full items-center justify-between border-b border-zinc-200 bg-clean-white/90 backdrop-blur-md px-3 sm:px-6 md:px-8">
+        <header className="sticky top-0 z-20 flex h-16 w-full max-w-full items-center justify-between border-b border-border-default bg-clean-white/90 backdrop-blur-md px-3 sm:px-6 md:px-8">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 mr-2">
             {/* Mobile Hamburger Button */}
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(true)}
-              className="rounded-lg p-2 text-zinc-600 hover:bg-zinc-100 md:hidden cursor-pointer shrink-0"
+              className="rounded-lg p-2 text-text-secondary hover:bg-surface-hover md:hidden cursor-pointer shrink-0"
               aria-label="Open menu"
             >
               <Menu className="h-5 w-5" />
@@ -375,7 +375,7 @@ export default function AdminShell({
                 {title || "Admin Dashboard"}
               </h1>
               {subtitle && (
-                <p className="text-[11px] text-zinc-500 hidden sm:block truncate">
+                <p className="text-[11px] text-text-muted hidden sm:block truncate">
                   {subtitle}
                 </p>
               )}
@@ -390,15 +390,15 @@ export default function AdminShell({
               href="/"
               target="_blank"
               title="View Public Site"
-              className="hidden sm:inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-clean-white px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-zinc-600 hover:text-flash-orange hover:border-flash-orange/40 transition-colors shadow-2xs shrink-0"
+              className="hidden sm:inline-flex items-center gap-1.5 rounded-lg border border-border-default bg-clean-white px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-text-secondary hover:text-flash-orange hover:border-flash-orange/40 transition-colors shadow-2xs shrink-0"
             >
               <span className="hidden md:inline">View Public Site</span>
               <ExternalLink className="h-3.5 w-3.5" />
             </Link>
 
             {user && (
-              <div className="hidden lg:flex items-center gap-2 rounded-full bg-zinc-100 px-3 py-1 text-xs font-bold text-tech-slate border border-zinc-200/80 shrink-0">
-                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              <div className="hidden lg:flex items-center gap-2 rounded-full bg-surface-hover px-3 py-1 text-xs font-bold text-tech-slate border border-border-default/80 shrink-0">
+                <span className="h-2 w-2 rounded-full bg-success animate-pulse" />
                 <span className="max-w-[140px] truncate">
                   Welcome, {user.name || user.email.split("@")[0]}
                 </span>

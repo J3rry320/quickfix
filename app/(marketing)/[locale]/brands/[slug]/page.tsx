@@ -163,7 +163,7 @@ export default async function BrandDetailPage({
                 size="md"
                 className="shadow-md"
               />
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-100 text-orange-800 px-3 py-1 text-xs font-extrabold uppercase tracking-wider">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-flash-orange/10 text-flash-orange px-3 py-1 text-xs font-extrabold uppercase tracking-wider">
                 <span className="h-1.5 w-1.5 rounded-full bg-flash-orange animate-pulse" />
                 <span>{t("hero.badge")}</span>
               </span>
@@ -183,13 +183,13 @@ export default async function BrandDetailPage({
             icon: Lock,
             label: t("hero.highlights.privacy"),
             value: t("hero.highlights.privacyVal"),
-            color: "text-emerald-500",
+            color: "text-success",
           },
           {
             icon: ShieldCheck,
             label: t("hero.highlights.warranty"),
             value: t("hero.highlights.warrantyVal"),
-            color: "text-blue-500",
+            color: "text-info",
           },
           {
             icon: Zap,
@@ -202,7 +202,7 @@ export default async function BrandDetailPage({
           <>
             <Link
               href={`/book-repair?brand=${encodeURIComponent(brand.slug)}`}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-orange-600 active:scale-95 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-flash-orange-hover active:scale-95 transition-all"
             >
               <span>
                 {t("hero.actions.bookBrand", { brandName: brand.name })}
@@ -212,7 +212,7 @@ export default async function BrandDetailPage({
 
             <a
               href={`tel:${contactConfig.phone.value}`}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-zinc-300 text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-border-strong text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
             >
               <Phone className="h-4 w-4 text-flash-orange" />
               <span>
@@ -225,7 +225,7 @@ export default async function BrandDetailPage({
         }
         media={
           /* Redesigned Brand Showcase Hero Card with Small Brand Logo from DB */
-          <div className="relative w-full rounded-3xl bg-gradient-to-br from-mist-gray via-clean-white to-orange-50/50 p-6 sm:p-8 border border-border-default/80 shadow-md flex flex-col justify-between overflow-hidden">
+          <div className="relative w-full rounded-3xl bg-gradient-to-br from-mist-gray via-clean-white to-flash-orange/5 p-6 sm:p-8 border border-border-default/80 shadow-md flex flex-col justify-between overflow-hidden">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <BrandLogo
@@ -243,7 +243,7 @@ export default async function BrandDetailPage({
                   </span>
                 </div>
               </div>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-success-light text-success-text border border-success-border px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider">
                 <CheckCircle2 className="h-3.5 w-3.5" />
                 <span>Verified OEM</span>
               </span>
@@ -258,7 +258,7 @@ export default async function BrandDetailPage({
               </div>
               <div className="flex items-center justify-between">
                 <span>Replacement Warranty:</span>
-                <strong className="text-emerald-600 font-bold">
+                <strong className="text-success font-bold">
                   90 Days Full Replacement
                 </strong>
               </div>
@@ -307,7 +307,7 @@ export default async function BrandDetailPage({
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
               {t("standards.title", { brandName: brand.name })}
             </h2>
-            <p className="mt-2 text-xs sm:text-sm text-zinc-600">
+            <p className="mt-2 text-xs sm:text-sm text-text-secondary">
               {t("standards.subtitle")}
             </p>
           </div>
@@ -346,7 +346,7 @@ export default async function BrandDetailPage({
               <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
                 Popular Repairs for {brand.name} Phones
               </h2>
-              <p className="mt-2 text-xs sm:text-sm text-zinc-600">
+              <p className="mt-2 text-xs sm:text-sm text-text-secondary">
                 All services performed live on-site with zero hidden diagnostic
                 fees.
               </p>

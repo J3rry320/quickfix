@@ -54,40 +54,40 @@ export default async function TermsPage({
       <Section variant="white" padding="default">
         <Container size="narrow">
           {/* Warranty Terms Card */}
-          <div className="mb-10 rounded-2xl bg-amber-50/80 border border-electric-amber/30 p-6 sm:p-8">
+          <div className="mb-10 rounded-2xl bg-warning-light/80 border border-warning-border p-6 sm:p-8">
             <div className="flex items-center gap-3 mb-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-electric-amber text-tech-slate">
                 <ShieldCheck className="h-5 w-5" />
               </div>
-              <h2 className="font-heading text-lg sm:text-xl font-bold text-amber-950">
+              <h2 className="font-heading text-lg sm:text-xl font-bold text-warning-text">
                 90-Day Hassle-Free Warranty Terms
               </h2>
             </div>
-            <p className="text-xs sm:text-sm text-amber-900 leading-relaxed mb-4">
+            <p className="text-xs sm:text-sm text-warning-text leading-relaxed mb-4">
               All OEM-grade screens, batteries, charging ports, and camera modules installed by QuickFix are covered under our comprehensive 90-day parts replacement warranty.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm font-semibold text-amber-900">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm font-semibold text-warning-text">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                <CheckCircle2 className="h-4 w-4 text-success shrink-0" />
                 <span>Covers touch malfunction & screen flickering</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                <CheckCircle2 className="h-4 w-4 text-success shrink-0" />
                 <span>Covers battery degradation & sudden drops</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                <CheckCircle2 className="h-4 w-4 text-success shrink-0" />
                 <span>Free doorstep technician re-visit if part fails</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                <CheckCircle2 className="h-4 w-4 text-success shrink-0" />
                 <span>Instant free replacement with valid booking ID</span>
               </div>
             </div>
           </div>
 
           {/* Terms Articles */}
-          <div className="space-y-8 text-xs sm:text-sm md:text-base text-zinc-700 font-body leading-relaxed">
+          <div className="space-y-8 text-xs sm:text-sm md:text-base text-text-secondary font-body leading-relaxed">
             <div>
               <h3 className="font-heading text-lg font-bold text-tech-slate mb-2">
                 1. Doorstep Service Protocol & Turnaround
@@ -122,7 +122,7 @@ export default async function TermsPage({
               <p>
                 Our 90-day parts warranty applies strictly to manufacturing defects and performance failures of the installed component. The warranty is automatically voided under the following post-repair conditions:
               </p>
-              <ul className="mt-2 list-disc list-inside space-y-1 text-zinc-600 pl-2">
+              <ul className="mt-2 list-disc list-inside space-y-1 text-text-muted pl-2">
                 <li>Subsequent physical drops, hairline cracks, or impact marks on display or back glass.</li>
                 <li>Water or moisture ingress occurring after the repair completion.</li>
                 <li>Tampering or opening of the device by an unauthorized third-party technician.</li>
@@ -145,7 +145,7 @@ export default async function TermsPage({
               <p>
                 To raise a warranty re-visit or clarify any billing question, simply reference your unique Booking ID (e.g. QF-2609-XXXXX) via WhatsApp or phone:
               </p>
-              <div className="mt-3 rounded-xl bg-mist-gray p-4 text-xs sm:text-sm text-zinc-700">
+              <div className="mt-3 rounded-xl bg-mist-gray p-4 text-xs sm:text-sm text-text-secondary">
                 <p className="font-bold text-tech-slate">{contactConfig.brand}</p>
                 <p>Phone: {contactConfig.phone.display} • WhatsApp: {contactConfig.whatsapp.display}</p>
                 <p>Hub: {contactConfig.address.full}</p>

@@ -13,7 +13,7 @@ export default function WizardDeviceSummary() {
   if (!formData.brand) return null;
 
   return (
-    <div className="mb-5 rounded-xl bg-zinc-50 border border-border-default/80 px-3.5 py-2.5 text-xs">
+    <div className="mb-5 rounded-xl bg-elevated-surface border border-border-default/80 px-3.5 py-2.5 text-xs">
       <div className="flex flex-wrap items-center justify-between gap-2.5">
         {/* Breadcrumb Items */}
         <div className="flex flex-wrap items-center gap-2 text-tech-slate min-w-0">
@@ -39,9 +39,9 @@ export default function WizardDeviceSummary() {
           {/* Service (Stages 2 and 3) */}
           {formData.issueDescription && currentStage === 3 && (
             <>
-              <span className="text-zinc-300 font-bold select-none">•</span>
+              <span className="text-border-strong font-bold select-none">•</span>
               <div className="inline-flex items-center gap-1.5 font-medium">
-                <Wrench className="h-3.5 w-3.5 text-zinc-500 shrink-0" aria-hidden="true" />
+                <Wrench className="h-3.5 w-3.5 text-text-muted shrink-0" aria-hidden="true" />
                 <span className="font-bold text-tech-slate">
                   {formData.issueDescription}
                 </span>

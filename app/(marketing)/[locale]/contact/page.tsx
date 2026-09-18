@@ -71,13 +71,13 @@ export default async function ContactPage({
             icon: MessageSquare,
             label: "WhatsApp",
             value: "Instant Support",
-            color: "text-emerald-500",
+            color: "text-success",
           },
           {
             icon: MapPin,
             label: "Lab",
             value: "Sadashiv Peth",
-            color: "text-blue-500",
+            color: "text-info",
           },
           {
             icon: ShieldCheck,
@@ -94,7 +94,7 @@ export default async function ContactPage({
         {/* 3 Quick Action Contact Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-12">
           {/* Hotline Card */}
-          <div className="rounded-2xl border border-zinc-200 bg-clean-white p-6 shadow-sm flex flex-col justify-between hover:border-flash-orange/40 transition-colors">
+          <div className="rounded-2xl border border-border-default bg-clean-white p-6 shadow-sm flex flex-col justify-between hover:border-flash-orange/40 transition-colors">
             <div>
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-flash-orange/10 text-flash-orange mb-4">
                 <Phone className="h-5 w-5" />
@@ -102,7 +102,7 @@ export default async function ContactPage({
               <h3 className="font-heading text-lg font-bold text-tech-slate">
                 {t("hotline.title")}
               </h3>
-              <p className="mt-1 text-xs text-zinc-500 font-body">
+              <p className="mt-1 text-xs text-text-muted font-body">
                 {t("hotline.desc")}
               </p>
               <div className="mt-4 font-mono text-base font-extrabold text-tech-slate">
@@ -111,7 +111,7 @@ export default async function ContactPage({
             </div>
             <a
               href={`tel:${contactConfig.phone.value}`}
-              className="mt-5 inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-4 py-2.5 text-xs font-bold text-clean-white hover:bg-orange-600 transition-colors"
+              className="mt-5 inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-4 py-2.5 text-xs font-bold text-clean-white hover:bg-flash-orange-hover transition-colors"
             >
               <Phone className="h-3.5 w-3.5" />
               <span>{t("hotline.action")}</span>
@@ -119,15 +119,15 @@ export default async function ContactPage({
           </div>
 
           {/* WhatsApp Card */}
-          <div className="rounded-2xl border border-zinc-200 bg-clean-white p-6 shadow-sm flex flex-col justify-between hover:border-emerald-500/40 transition-colors">
+          <div className="rounded-2xl border border-border-default bg-clean-white p-6 shadow-sm flex flex-col justify-between hover:border-whatsapp/40 transition-colors">
             <div>
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 mb-4">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-whatsapp/10 text-whatsapp mb-4">
                 <MessageSquare className="h-5 w-5" />
               </div>
               <h3 className="font-heading text-lg font-bold text-tech-slate">
                 {t("whatsapp.title")}
               </h3>
-              <p className="mt-1 text-xs text-zinc-500 font-body">
+              <p className="mt-1 text-xs text-text-muted font-body">
                 {t("whatsapp.desc")}
               </p>
               <div className="mt-4 font-mono text-base font-extrabold text-tech-slate">
@@ -138,7 +138,7 @@ export default async function ContactPage({
               href={contactConfig.whatsapp.getDefaultUrl("Hello QuickFix, I need support regarding a phone repair.")}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-5 inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-2.5 text-xs font-bold text-clean-white hover:bg-[#20bd5a] transition-colors"
+              className="mt-5 inline-flex items-center justify-center gap-2 rounded-xl bg-whatsapp px-4 py-2.5 text-xs font-bold text-clean-white hover:bg-whatsapp-hover transition-colors"
             >
               <MessageSquare className="h-3.5 w-3.5" />
               <span>{t("whatsapp.action")}</span>
@@ -146,15 +146,15 @@ export default async function ContactPage({
           </div>
 
           {/* Email Card */}
-          <div className="rounded-2xl border border-zinc-200 bg-clean-white p-6 shadow-sm flex flex-col justify-between hover:border-zinc-400 transition-colors">
+          <div className="rounded-2xl border border-border-default bg-clean-white p-6 shadow-sm flex flex-col justify-between hover:border-border-strong transition-colors">
             <div>
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-zinc-100 text-zinc-700 mb-4">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-surface-hover text-tech-slate mb-4">
                 <Mail className="h-5 w-5" />
               </div>
               <h3 className="font-heading text-lg font-bold text-tech-slate">
                 {t("email.title")}
               </h3>
-              <p className="mt-1 text-xs text-zinc-500 font-body">
+              <p className="mt-1 text-xs text-text-muted font-body">
                 {t("email.desc")}
               </p>
               <div className="mt-4 text-xs font-bold text-tech-slate break-all">
@@ -163,7 +163,7 @@ export default async function ContactPage({
             </div>
             <a
               href={`mailto:${contactConfig.email}`}
-              className="mt-5 inline-flex items-center justify-center gap-2 rounded-xl border border-zinc-300 bg-clean-white px-4 py-2.5 text-xs font-bold text-tech-slate hover:bg-zinc-50 transition-colors"
+              className="mt-5 inline-flex items-center justify-center gap-2 rounded-xl border border-border-strong bg-clean-white px-4 py-2.5 text-xs font-bold text-tech-slate hover:bg-surface-hover transition-colors"
             >
               <Mail className="h-3.5 w-3.5" />
               <span>{t("email.action")}</span>
@@ -176,13 +176,13 @@ export default async function ContactPage({
           {/* Left Column: Central Hub, Hours & Coverage */}
           <div className="lg:col-span-6 space-y-6">
             {/* Sadashiv Peth Central Hub Card */}
-            <div className="rounded-3xl border border-zinc-200 bg-clean-white p-6 sm:p-8 shadow-sm">
+            <div className="rounded-3xl border border-border-default bg-clean-white p-6 sm:p-8 shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-flash-orange">
                   {t("hub.badge")}
                 </span>
-                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-success bg-success-light px-2.5 py-0.5 rounded-full">
+                  <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
                   Open Today
                 </span>
               </div>
@@ -191,12 +191,12 @@ export default async function ContactPage({
                 {t("hub.title")}
               </h3>
 
-              <div className="space-y-3.5 text-xs sm:text-sm text-zinc-600 font-medium">
+              <div className="space-y-3.5 text-xs sm:text-sm text-text-secondary font-medium">
                 <div className="flex items-start gap-3">
                   <MapPin className="h-4 w-4 text-flash-orange shrink-0 mt-0.5" />
                   <div>
                     <p className="font-bold text-tech-slate">{t("hub.address")}</p>
-                    <p className="text-xs text-zinc-400 mt-0.5">{t("hub.landmark")}</p>
+                    <p className="text-xs text-text-muted mt-0.5">{t("hub.landmark")}</p>
                   </div>
                 </div>
 
@@ -206,8 +206,8 @@ export default async function ContactPage({
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0" />
-                  <span className="text-emerald-700 font-bold">{t("hub.sla")}</span>
+                  <ShieldCheck className="h-4 w-4 text-success shrink-0" />
+                  <span className="text-success-text font-bold">{t("hub.sla")}</span>
                 </div>
               </div>
 
@@ -219,12 +219,12 @@ export default async function ContactPage({
                 />
               </div>
 
-              <div className="mt-5 pt-4 border-t border-zinc-100 flex flex-col sm:flex-row gap-3">
+              <div className="mt-5 pt-4 border-t border-border-default flex flex-col sm:flex-row gap-3">
                 <a
                   href={contactConfig.mapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-tech-slate px-5 py-3 text-xs font-bold text-clean-white hover:bg-zinc-800 transition-colors shadow-xs"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-tech-slate px-5 py-3 text-xs font-bold text-clean-white hover:bg-tech-slate-dark transition-colors shadow-xs"
                 >
                   <Navigation className="h-3.5 w-3.5 text-electric-amber" />
                   <span>{t("hub.directionsAction")}</span>
@@ -233,28 +233,28 @@ export default async function ContactPage({
             </div>
 
             {/* Coverage Zones Summary */}
-            <div className="rounded-3xl border border-zinc-200 bg-clean-white p-6 sm:p-8 shadow-sm">
+            <div className="rounded-3xl border border-border-default bg-clean-white p-6 sm:p-8 shadow-sm">
               <h4 className="font-heading text-base font-extrabold text-tech-slate mb-2">
                 {t("coverage.title")}
               </h4>
-              <p className="text-xs text-zinc-500 mb-4">
+              <p className="text-xs text-text-muted mb-4">
                 {t("coverage.subtitle")}
               </p>
 
-              <div className="space-y-2.5 text-xs font-medium text-zinc-700">
-                <div className="p-3 rounded-xl bg-mist-gray/80 border border-zinc-200/60">
+              <div className="space-y-2.5 text-xs font-medium text-text-secondary">
+                <div className="p-3 rounded-xl bg-mist-gray/80 border border-border-default/60">
                   {t("coverage.zones.west")}
                 </div>
-                <div className="p-3 rounded-xl bg-mist-gray/80 border border-zinc-200/60">
+                <div className="p-3 rounded-xl bg-mist-gray/80 border border-border-default/60">
                   {t("coverage.zones.east")}
                 </div>
-                <div className="p-3 rounded-xl bg-mist-gray/80 border border-zinc-200/60">
+                <div className="p-3 rounded-xl bg-mist-gray/80 border border-border-default/60">
                   {t("coverage.zones.central")}
                 </div>
-                <div className="p-3 rounded-xl bg-mist-gray/80 border border-zinc-200/60">
+                <div className="p-3 rounded-xl bg-mist-gray/80 border border-border-default/60">
                   {t("coverage.zones.south")}
                 </div>
-                <div className="p-3 rounded-xl bg-mist-gray/80 border border-zinc-200/60">
+                <div className="p-3 rounded-xl bg-mist-gray/80 border border-border-default/60">
                   {t("coverage.zones.north")}
                 </div>
               </div>

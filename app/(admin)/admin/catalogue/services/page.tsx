@@ -213,7 +213,7 @@ export default function AdminServicesPage() {
             type="button"
             onClick={() => setRefreshIndex((k) => k + 1)}
             disabled={loading}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-clean-white px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-bold text-zinc-600 hover:bg-zinc-50 cursor-pointer"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-border-default bg-clean-white px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-bold text-text-secondary hover:bg-mist-gray cursor-pointer"
           >
             <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
             <span className="hidden sm:inline">Refresh</span>
@@ -221,7 +221,7 @@ export default function AdminServicesPage() {
           <button
             type="button"
             onClick={openCreateModal}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-flash-orange px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs font-bold text-clean-white hover:bg-orange-600 shadow-md shadow-orange-500/20 active:scale-95 transition-all cursor-pointer"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-flash-orange px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs font-bold text-clean-white hover:bg-flash-orange-hover shadow-md shadow-flash-orange/20 active:scale-95 transition-all cursor-pointer"
           >
             <Plus className="h-4 w-4" />
             <span className="hidden sm:inline">Add Service</span>
@@ -256,7 +256,7 @@ export default function AdminServicesPage() {
           emptyDescription="There are no repair services matching your active filters."
         >
           {services.map((s) => (
-            <tr key={s._id} className="hover:bg-zinc-50/80 transition-colors">
+            <tr key={s._id} className="hover:bg-mist-gray/80 transition-colors">
               {/* Service Details */}
               <td className="px-5 py-4">
                 <div className="flex items-center gap-3">
@@ -264,11 +264,11 @@ export default function AdminServicesPage() {
                     src={s.image}
                     alt={s.name}
                     fallbackIcon={Wrench}
-                    containerClassName="h-9 w-9 rounded-lg bg-orange-50 text-flash-orange border border-orange-200 p-1 flex items-center justify-center shrink-0 shadow-2xs"
+                    containerClassName="h-9 w-9 rounded-lg bg-flash-orange-subtle text-flash-orange border border-flash-orange/30 p-1 flex items-center justify-center shrink-0 shadow-2xs"
                   />
                   <div>
                     <span className="font-bold text-tech-slate block">{s.name}</span>
-                    <span className="text-[11px] text-zinc-500 truncate max-w-xs block">
+                    <span className="text-[11px] text-text-muted truncate max-w-xs block">
                       {s.description}
                     </span>
                   </div>
@@ -281,17 +281,17 @@ export default function AdminServicesPage() {
               </td>
 
               {/* Estimated Time */}
-              <td className="px-5 py-4 text-zinc-600 whitespace-nowrap">
+              <td className="px-5 py-4 text-text-secondary whitespace-nowrap">
                 <span className="inline-flex items-center gap-1">
-                  <Clock className="h-3 w-3 text-zinc-400" />
+                  <Clock className="h-3 w-3 text-text-muted" />
                   <span>{s.estimatedTimeMinutes} mins</span>
                 </span>
               </td>
 
               {/* Warranty */}
-              <td className="px-5 py-4 text-zinc-600 whitespace-nowrap">
+              <td className="px-5 py-4 text-text-secondary whitespace-nowrap">
                 <span className="inline-flex items-center gap-1">
-                  <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
+                  <ShieldCheck className="h-3.5 w-3.5 text-success" />
                   <span>{s.warrantyDays} days</span>
                 </span>
               </td>
@@ -301,7 +301,7 @@ export default function AdminServicesPage() {
                 {s.isPopular ? (
                   <AdminStatusBadge status="popular" label="Popular" />
                 ) : (
-                  <span className="text-zinc-300">-</span>
+                  <span className="text-border-strong">-</span>
                 )}
               </td>
 
@@ -315,7 +315,7 @@ export default function AdminServicesPage() {
                 <button
                   type="button"
                   onClick={() => openEditModal(s)}
-                  className="rounded-lg p-1.5 text-zinc-500 hover:bg-zinc-100 hover:text-tech-slate cursor-pointer"
+                  className="rounded-lg p-1.5 text-text-muted hover:bg-mist-gray hover:text-tech-slate cursor-pointer"
                   title="Edit Service"
                 >
                   <Edit2 className="h-4 w-4" />
@@ -323,7 +323,7 @@ export default function AdminServicesPage() {
                 <button
                   type="button"
                   onClick={() => setServiceToDelete(s)}
-                  className="rounded-lg p-1.5 text-zinc-500 hover:bg-red-50 hover:text-red-600 cursor-pointer"
+                  className="rounded-lg p-1.5 text-text-muted hover:bg-error-light hover:text-error cursor-pointer"
                   title="Delete Service"
                 >
                   <Trash2 className="h-4 w-4" />
@@ -357,57 +357,57 @@ export default function AdminServicesPage() {
           >
             <div className="space-y-4 text-xs">
               <div className="space-y-1">
-                <label className="font-bold text-zinc-700">Service Name *</label>
+                <label className="font-bold text-text-secondary">Service Name *</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Screen Replacement, Battery Replacement"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                  className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="space-y-1">
-                  <label className="font-bold text-zinc-700">Starting Price (₹) *</label>
+                  <label className="font-bold text-text-secondary">Starting Price (₹) *</label>
                   <input
                     type="number"
                     min={0}
                     required
                     value={startingPrice}
                     onChange={(e) => setStartingPrice(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs font-bold text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                    className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs font-bold text-tech-slate focus:border-flash-orange focus:outline-hidden"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-bold text-zinc-700">Est. Time (Mins) *</label>
+                  <label className="font-bold text-text-secondary">Est. Time (Mins) *</label>
                   <input
                     type="number"
                     min={5}
                     required
                     value={estimatedTimeMinutes}
                     onChange={(e) => setEstimatedTimeMinutes(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                    className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-bold text-zinc-700">Warranty (Days) *</label>
+                  <label className="font-bold text-text-secondary">Warranty (Days) *</label>
                   <input
                     type="number"
                     min={0}
                     required
                     value={warrantyDays}
                     onChange={(e) => setWarrantyDays(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                    className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
                   />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-zinc-700">
+                <label className="font-bold text-text-secondary">
                   Slug (optional auto-generated)
                 </label>
                 <input
@@ -415,7 +415,7 @@ export default function AdminServicesPage() {
                   placeholder="e.g. screen-replacement"
                   value={slug}
                   onChange={(e) => setSlug(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 bg-clean-white px-3 py-2 text-xs font-mono text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                  className="w-full rounded-xl border border-border-default bg-clean-white px-3 py-2 text-xs font-mono text-tech-slate focus:border-flash-orange focus:outline-hidden"
                 />
               </div>
 
@@ -428,19 +428,19 @@ export default function AdminServicesPage() {
               />
 
               <div className="space-y-1">
-                <label className="font-bold text-zinc-700">Service Description *</label>
+                <label className="font-bold text-text-secondary">Service Description *</label>
                 <textarea
                   rows={3}
                   required
                   placeholder="Short description of the repair service..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 bg-clean-white p-3 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                  className="w-full rounded-xl border border-border-default bg-clean-white p-3 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-zinc-700">
+                <label className="font-bold text-text-secondary">
                   Common Issues (One per line)
                 </label>
                 <textarea
@@ -448,27 +448,27 @@ export default function AdminServicesPage() {
                   placeholder="Cracked glass&#10;Touch not responsive&#10;Black screen"
                   value={commonIssuesText}
                   onChange={(e) => setCommonIssuesText(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-200 bg-clean-white p-3 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
+                  className="w-full rounded-xl border border-border-default bg-clean-white p-3 text-xs text-tech-slate focus:border-flash-orange focus:outline-hidden"
                 />
               </div>
 
               <div className="flex items-center gap-6 pt-2">
-                <label className="inline-flex items-center gap-2 font-bold text-zinc-700 cursor-pointer">
+                <label className="inline-flex items-center gap-2 font-bold text-text-secondary cursor-pointer">
                   <input
                     type="checkbox"
                     checked={isPopular}
                     onChange={(e) => setIsPopular(e.target.checked)}
-                    className="rounded border-zinc-300 text-flash-orange focus:ring-flash-orange"
+                    className="rounded border-border-strong text-flash-orange focus:ring-flash-orange"
                   />
                   <span>Popular Service</span>
                 </label>
 
-                <label className="inline-flex items-center gap-2 font-bold text-zinc-700 cursor-pointer">
+                <label className="inline-flex items-center gap-2 font-bold text-text-secondary cursor-pointer">
                   <input
                     type="checkbox"
                     checked={isActive}
                     onChange={(e) => setIsActive(e.target.checked)}
-                    className="rounded border-zinc-300 text-flash-orange focus:ring-flash-orange"
+                    className="rounded border-border-strong text-flash-orange focus:ring-flash-orange"
                   />
                   <span>Active</span>
                 </label>

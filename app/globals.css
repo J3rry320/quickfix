@@ -2,34 +2,72 @@
 @import "lenis/dist/lenis.css";
 
 @theme {
-  /* Color Palette - Direct Names */
+  /* Brand Accents */
   --color-flash-orange: #FF5722;
   --color-flash-orange-hover: #E64A19;
+  --color-flash-orange-subtle: #FFF3EE;
+  --color-electric-amber: #FFA000;
+  --color-electric-amber-hover: #FF8F00;
+
+  /* Dark / Tech Neutrals */
   --color-tech-slate: #181B20;
   --color-tech-slate-hover: #0F1114;
-  --color-electric-amber: #FFA000;
-  --color-mist-gray: #F4F5F7;
-  --color-clean-white: #FFFFFF;
-  --color-success-green: #00C853;
-  --color-elevated-surface: #FAFAFA;
-  --color-caption: #71717A;
-  --color-border-subtle: #E4E4E7;
+  --color-tech-slate-dark: #0B0D10;
 
-  /* Error & Status */
+  /* Surfaces & Backgrounds */
+  --color-clean-white: #FFFFFF;
+  --color-mist-gray: #F4F5F7;
+  --color-elevated-surface: #FAFAFA;
+  --color-surface-hover: #F4F4F5;
+  --color-surface-subtle: #F9FAFB;
+  --color-surface-disabled: #E4E4E7;
+
+  /* Borders */
+  --color-border-default: #E4E4E7;
+  --color-border-subtle: #F0F0F2;
+  --color-border-strong: #D4D4D8;
+  --color-border-dark: #27272A;
+
+  /* Typography / Text */
+  --color-text-primary: #181B20;
+  --color-text-secondary: #52525B;
+  --color-text-muted: #71717A;
+  --color-text-disabled: #A1A1AA;
+  --color-caption: #71717A;
+
+  /* Status - Success */
+  --color-success: #16A34A;
+  --color-success-hover: #15803D;
+  --color-success-light: #F0FDF4;
+  --color-success-border: #BBF7D0;
+  --color-success-text: #15803D;
+  --color-success-green: #00C853;
+
+  /* Status - Error */
   --color-error: #DC2626;
+  --color-error-hover: #B91C1C;
   --color-error-light: #FEF2F2;
   --color-error-border: #FECACA;
+  --color-error-text: #991B1B;
+
+  /* Status - Warning */
+  --color-warning: #D97706;
+  --color-warning-hover: #B45309;
+  --color-warning-light: #FFFBEB;
+  --color-warning-border: #FDE68A;
+  --color-warning-text: #92400E;
+
+  /* Status - Info */
+  --color-info: #2563EB;
+  --color-info-hover: #1D4ED8;
+  --color-info-light: #EFF6FF;
+  --color-info-border: #BFDBFE;
+  --color-info-text: #1E40AF;
 
   /* WhatsApp Brand */
   --color-whatsapp: #25D366;
   --color-whatsapp-hover: #20BD5A;
   --color-whatsapp-dark: #075E54;
-
-  /* Neutral Scale */
-  --color-text-muted: #71717A;
-  --color-text-secondary: #52525B;
-  --color-border-default: #E4E4E7;
-  --color-surface-hover: #F4F4F5;
 
   /* Color Palette - Semantic Roles */
   --color-primary-accent: #FF5722;

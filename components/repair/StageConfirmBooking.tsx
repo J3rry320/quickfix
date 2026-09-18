@@ -154,10 +154,10 @@ export default function StageConfirmBooking() {
                   }}
                   className={`p-3.5 rounded-xl text-left border transition-all flex flex-col justify-between min-h-[76px] ${
                     !isAvailable
-                      ? "border-zinc-200/80 bg-zinc-100/60 text-zinc-400 cursor-not-allowed select-none opacity-60"
+                      ? "border-border-default bg-surface-hover/60 text-text-muted cursor-not-allowed select-none opacity-60"
                       : isSelected
                       ? "border-flash-orange bg-flash-orange/5 text-tech-slate shadow-xs ring-2 ring-flash-orange/20 cursor-pointer"
-                      : "border-border-default bg-clean-white text-tech-slate hover:border-zinc-300 hover:bg-zinc-50 cursor-pointer focus-visible:ring-2 focus-visible:ring-flash-orange focus-visible:outline-hidden"
+                      : "border-border-default bg-clean-white text-tech-slate hover:border-border-strong hover:bg-surface-hover cursor-pointer focus-visible:ring-2 focus-visible:ring-flash-orange focus-visible:outline-hidden"
                   }`}
                 >
                   <div className="flex items-center justify-between gap-1.5">
@@ -165,7 +165,7 @@ export default function StageConfirmBooking() {
                       <div
                         className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-lg ${
                           !isAvailable
-                            ? "bg-zinc-200 text-zinc-400"
+                            ? "bg-surface-disabled text-text-muted"
                             : isSelected
                             ? "bg-flash-orange text-clean-white"
                             : "bg-mist-gray text-tech-slate"
@@ -176,7 +176,7 @@ export default function StageConfirmBooking() {
                       <span
                         className={`text-xs font-bold leading-tight truncate ${
                           !isAvailable
-                            ? "text-zinc-400"
+                            ? "text-text-muted"
                             : isSelected
                             ? "text-flash-orange"
                             : "text-tech-slate"
@@ -187,7 +187,7 @@ export default function StageConfirmBooking() {
                     </div>
 
                     {!isAvailable && disabledReason && (
-                      <span className="text-[10px] font-semibold text-zinc-500 bg-zinc-200/80 px-1.5 py-0.5 rounded-md shrink-0">
+                      <span className="text-[10px] font-semibold text-text-muted bg-surface-disabled px-1.5 py-0.5 rounded-md shrink-0">
                         {formatDisabledReason(disabledReason)}
                       </span>
                     )}
@@ -195,7 +195,7 @@ export default function StageConfirmBooking() {
 
                   <div
                     className={`text-2xs font-semibold mt-2 pl-8 ${
-                      !isAvailable ? "text-zinc-400 line-through decoration-zinc-300" : "text-text-muted"
+                      !isAvailable ? "text-text-muted line-through decoration-border-strong" : "text-text-muted"
                     }`}
                   >
                     {sub}
@@ -205,7 +205,7 @@ export default function StageConfirmBooking() {
             })}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-xl bg-zinc-50 border border-border-default">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-xl bg-elevated-surface border border-border-default">
             <div>
               <label
                 htmlFor="customDate"
@@ -281,7 +281,7 @@ export default function StageConfirmBooking() {
               {t("addressHeading")}
             </span>
           </div>
-          <span className="text-2xs font-semibold text-text-muted bg-zinc-100 px-2 py-0.5 rounded-md">
+          <span className="text-2xs font-semibold text-text-muted bg-surface-hover px-2 py-0.5 rounded-md">
             {t("optionalBadge")}
           </span>
         </div>
@@ -302,14 +302,14 @@ export default function StageConfirmBooking() {
             onChange={(e) => updateFormData({ streetAddress: e.target.value })}
             aria-invalid={Boolean(addressError)}
             aria-describedby={addressError ? "address-error" : "address-hint"}
-            className={`w-full h-11 rounded-xl border px-3.5 text-xs sm:text-sm font-medium text-tech-slate placeholder:text-zinc-400 focus:bg-clean-white focus-visible:ring-2 focus-visible:outline-hidden transition-colors ${
+            className={`w-full h-11 rounded-xl border px-3.5 text-xs sm:text-sm font-medium text-tech-slate placeholder:text-text-muted focus:bg-clean-white focus-visible:ring-2 focus-visible:outline-hidden transition-colors ${
               addressError
-                ? "border-red-500 bg-red-50/40 focus-visible:ring-red-500"
-                : "border-border-default bg-zinc-50/70 focus-visible:ring-flash-orange"
+                ? "border-error bg-error-light/40 focus-visible:ring-error"
+                : "border-border-default bg-elevated-surface focus-visible:ring-flash-orange"
             }`}
           />
           {addressError ? (
-            <p id="address-error" className="mt-1.5 text-2xs text-red-600 flex items-center gap-1 font-medium animate-in fade-in duration-150">
+            <p id="address-error" className="mt-1.5 text-2xs text-error flex items-center gap-1 font-medium animate-in fade-in duration-150">
               <AlertCircle className="h-3 w-3 shrink-0" aria-hidden="true" />
               <span>{addressError}</span>
             </p>
@@ -348,14 +348,14 @@ export default function StageConfirmBooking() {
               onChange={(e) => updateFormData({ name: e.target.value })}
               aria-invalid={Boolean(nameError)}
               aria-describedby={nameError ? "name-error" : undefined}
-              className={`w-full h-11 rounded-xl border px-3.5 text-xs sm:text-sm font-medium text-tech-slate placeholder:text-zinc-400 focus:bg-clean-white focus-visible:ring-2 focus-visible:outline-hidden transition-colors ${
+              className={`w-full h-11 rounded-xl border px-3.5 text-xs sm:text-sm font-medium text-tech-slate placeholder:text-text-muted focus:bg-clean-white focus-visible:ring-2 focus-visible:outline-hidden transition-colors ${
                 nameError
-                  ? "border-red-500 bg-red-50/40 focus-visible:ring-red-500"
-                  : "border-border-default bg-zinc-50/70 focus-visible:ring-flash-orange"
+                  ? "border-error bg-error-light/40 focus-visible:ring-error"
+                  : "border-border-default bg-elevated-surface focus-visible:ring-flash-orange"
               }`}
             />
             {nameError && (
-              <p id="name-error" className="mt-1 text-2xs text-red-600 flex items-center gap-1 font-medium animate-in fade-in duration-150">
+              <p id="name-error" className="mt-1 text-2xs text-error flex items-center gap-1 font-medium animate-in fade-in duration-150">
                 <AlertCircle className="h-3 w-3 shrink-0" aria-hidden="true" />
                 <span>{nameError}</span>
               </p>
@@ -372,11 +372,11 @@ export default function StageConfirmBooking() {
             <div
               className={`relative flex h-11 rounded-xl border transition-colors focus-within:bg-clean-white focus-within:ring-2 ${
                 phoneError
-                  ? "border-red-500 bg-red-50/40 focus-within:ring-red-500"
-                  : "border-border-default bg-zinc-50/70 focus-within:ring-flash-orange"
+                  ? "border-error bg-error-light/40 focus-within:ring-error"
+                  : "border-border-default bg-elevated-surface focus-within:ring-flash-orange"
               }`}
             >
-              <span className="inline-flex items-center px-3 text-xs font-bold text-zinc-500 border-r border-border-default select-none">
+              <span className="inline-flex items-center px-3 text-xs font-bold text-text-muted border-r border-border-default select-none">
                 +91
               </span>
               <input
@@ -392,11 +392,11 @@ export default function StageConfirmBooking() {
                 onChange={handlePhoneChange}
                 aria-invalid={Boolean(phoneError)}
                 aria-describedby={phoneError ? "phone-error" : undefined}
-                className="w-full bg-transparent px-3 text-xs sm:text-sm font-medium text-tech-slate placeholder:text-zinc-400 focus:outline-hidden"
+                className="w-full bg-transparent px-3 text-xs sm:text-sm font-medium text-tech-slate placeholder:text-text-muted focus:outline-hidden"
               />
             </div>
             {phoneError && (
-              <p id="phone-error" className="mt-1 text-2xs text-red-600 flex items-center gap-1 font-medium animate-in fade-in duration-150">
+              <p id="phone-error" className="mt-1 text-2xs text-error flex items-center gap-1 font-medium animate-in fade-in duration-150">
                 <AlertCircle className="h-3 w-3 shrink-0" aria-hidden="true" />
                 <span>{phoneError}</span>
               </p>
@@ -410,7 +410,7 @@ export default function StageConfirmBooking() {
         <button
           type="button"
           onClick={goToPrevStage}
-          className="h-11 inline-flex items-center gap-1.5 rounded-xl border border-border-default px-4 text-xs sm:text-sm font-bold text-tech-slate hover:bg-zinc-50 cursor-pointer transition-colors"
+          className="h-11 inline-flex items-center gap-1.5 rounded-xl border border-border-default px-4 text-xs sm:text-sm font-bold text-tech-slate hover:bg-surface-hover cursor-pointer transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
           <span>{t("backBtn")}</span>

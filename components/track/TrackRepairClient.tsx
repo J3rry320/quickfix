@@ -393,17 +393,17 @@ export default function TrackRepairClient() {
                 </span>
               )}
               {tracking.status === "confirmed" && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-info-light text-info-text border border-info-border">
                   {t("status.confirmed")}
                 </span>
               )}
               {tracking.status === "in_progress" && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-info-light text-info-text border border-info-border">
                   {t("status.inProgress")}
                 </span>
               )}
               {tracking.status === "completed" && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-success-light text-success-text border border-success-border">
                   {t("status.completed")}
                 </span>
               )}

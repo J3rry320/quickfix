@@ -83,7 +83,7 @@ export default async function AboutPage({
       icon: Eye,
       title: t("pillar1Title"),
       desc: t("pillar1Desc"),
-      color: "bg-blue-500/10 text-blue-600",
+      color: "bg-info-light text-info",
     },
     {
       icon: Clock,
@@ -95,13 +95,13 @@ export default async function AboutPage({
       icon: ShieldCheck,
       title: t("pillar3Title"),
       desc: t("pillar3Desc"),
-      color: "bg-emerald-500/10 text-emerald-600",
+      color: "bg-success-light text-success",
     },
     {
       icon: Cpu,
       title: t("pillar4Title"),
       desc: t("pillar4Desc"),
-      color: "bg-purple-500/10 text-purple-600",
+      color: "bg-electric-amber/10 text-electric-amber",
     },
   ];
 
@@ -129,26 +129,26 @@ export default async function AboutPage({
             icon: Clock,
             label: "Turnaround",
             value: "Same-Day",
-            color: "text-blue-500",
+            color: "text-info",
           },
           {
             icon: ShieldCheck,
             label: "Warranty",
             value: "90 Days",
-            color: "text-emerald-500",
+            color: "text-success",
           },
           {
             icon: MapPin,
             label: "Central Lab",
             value: "Sadashiv Peth",
-            color: "text-purple-500",
+            color: "text-electric-amber",
           },
         ]}
         actions={
           <div className="flex flex-wrap items-center justify-center gap-3.5">
             <Link
               href="/book-repair"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-orange-600 active:scale-95 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-flash-orange-hover active:scale-95 transition-all"
             >
               <span>Schedule a Repair</span>
               <ArrowRight className="h-4 w-4" />
@@ -156,7 +156,7 @@ export default async function AboutPage({
 
             <a
               href={`tel:${contactConfig.phone.value}`}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-zinc-300 text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-border-strong text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
             >
               <Phone className="h-4 w-4 text-flash-orange" />
               <span>Call Helpline: {contactConfig.phone.display}</span>
@@ -174,7 +174,7 @@ export default async function AboutPage({
               return (
                 <div
                   key={i}
-                  className="rounded-2xl bg-clean-white border border-zinc-200 p-5 sm:p-6 shadow-xs hover:border-flash-orange/50 hover:shadow-md transition-all text-center group"
+                  className="rounded-2xl bg-clean-white border border-border-default p-5 sm:p-6 shadow-xs hover:border-flash-orange/50 hover:shadow-md transition-all text-center group"
                 >
                   <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-flash-orange/10 text-flash-orange mb-3 group-hover:scale-110 transition-transform">
                     <Icon className="h-6 w-6" />
@@ -182,7 +182,7 @@ export default async function AboutPage({
                   <p className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate">
                     {stat.value}
                   </p>
-                  <p className="mt-1 text-xs sm:text-sm text-zinc-500 font-medium">
+                  <p className="mt-1 text-xs sm:text-sm text-text-muted font-medium">
                     {stat.label}
                   </p>
                 </div>
@@ -215,14 +215,14 @@ export default async function AboutPage({
                 className="mb-6"
               />
 
-              <div className="space-y-4 text-xs sm:text-sm md:text-base text-zinc-600 font-body leading-relaxed">
+              <div className="space-y-4 text-xs sm:text-sm md:text-base text-text-secondary font-body leading-relaxed">
                 <p>{t("storyP1")}</p>
                 <p>{t("storyP2")}</p>
                 <p>{t("storyP3")}</p>
               </div>
 
               {/* Guarantees Bullet Points */}
-              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 pt-6 border-t border-zinc-200/80">
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 pt-6 border-t border-border-default/80">
                 {[
                   t("guarantee1"),
                   t("guarantee2"),
@@ -230,7 +230,7 @@ export default async function AboutPage({
                   t("guarantee4"),
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
+                    <CheckCircle2 className="h-4 w-4 text-success shrink-0" />
                     <span className="text-xs sm:text-sm font-semibold text-tech-slate">
                       {item}
                     </span>
@@ -257,9 +257,9 @@ export default async function AboutPage({
               return (
                 <div
                   key={i}
-                  className="rounded-2xl bg-clean-white border border-zinc-200/90 p-6 shadow-xs flex flex-col justify-between hover:shadow-lg hover:border-flash-orange/50 transition-all group relative overflow-hidden"
+                  className="rounded-2xl bg-clean-white border border-border-default/90 p-6 shadow-xs flex flex-col justify-between hover:shadow-lg hover:border-flash-orange/50 transition-all group relative overflow-hidden"
                 >
-                  <div className="absolute top-4 right-4 text-xs font-mono font-bold text-zinc-300 group-hover:text-flash-orange/60 transition-colors select-none">
+                  <div className="absolute top-4 right-4 text-xs font-mono font-bold text-border-strong group-hover:text-flash-orange/60 transition-colors select-none">
                     0{i + 1}
                   </div>
                   <div>
@@ -271,7 +271,7 @@ export default async function AboutPage({
                     <h3 className="font-heading text-base sm:text-lg font-bold text-tech-slate mb-2">
                       {pillar.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-zinc-600 font-body leading-relaxed">
+                    <p className="text-xs sm:text-sm text-text-secondary font-body leading-relaxed">
                       {pillar.desc}
                     </p>
                   </div>
@@ -293,7 +293,7 @@ export default async function AboutPage({
                 align="left"
                 className="mb-6"
               />
-              <div className="space-y-3.5 text-xs sm:text-sm text-zinc-600 leading-relaxed">
+              <div className="space-y-3.5 text-xs sm:text-sm text-text-secondary leading-relaxed">
                 <p>
                   QuickFix combines the speed of doorstep technicians with the rigorous testing standards of an ESD-compliant hardware laboratory. Every replacement screen, battery, and camera module is pre-screened on test boards before dispatch.
                 </p>
@@ -308,7 +308,7 @@ export default async function AboutPage({
                   <span>ESD-Protected Mobile Kits</span>
                 </div>
                 <div className="inline-flex items-center gap-2 rounded-xl bg-clean-white border border-border-default px-3.5 py-2 text-xs font-bold text-tech-slate shadow-2xs">
-                  <ShieldCheck className="h-4 w-4 text-emerald-600" />
+                  <ShieldCheck className="h-4 w-4 text-success" />
                   <span>OEM-Batch Serial Verification</span>
                 </div>
               </div>
@@ -342,16 +342,16 @@ export default async function AboutPage({
                   <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-clean-white mt-1">
                     {t("founderName")}
                   </h3>
-                  <p className="text-xs sm:text-sm text-zinc-400 font-medium">
+                  <p className="text-xs sm:text-sm text-text-muted font-medium">
                     {t("founderRole")}
                   </p>
 
-                  <p className="mt-4 text-xs sm:text-sm text-zinc-300 font-body leading-relaxed">
+                  <p className="mt-4 text-xs sm:text-sm text-text-secondary font-body leading-relaxed">
                     {t("founderBio")}
                   </p>
 
                   {/* Quote Box */}
-                  <div className="mt-6 rounded-2xl bg-zinc-800/80 border border-zinc-700/80 p-4 sm:p-5 flex items-start gap-3 text-left">
+                  <div className="mt-6 rounded-2xl bg-tech-slate-dark/80 border border-border-dark/80 p-4 sm:p-5 flex items-start gap-3 text-left">
                     <Quote className="h-5 w-5 text-flash-orange shrink-0 mt-0.5" />
                     <p className="text-xs sm:text-sm font-semibold italic text-clean-white leading-relaxed">
                       &ldquo;{t("founderQuote")}&rdquo;

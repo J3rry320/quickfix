@@ -75,7 +75,7 @@ function BlogListSkeleton() {
           {Array.from({ length: 5 }).map((_, i) => (
             <div
               key={i}
-              className="h-9 w-24 rounded-xl bg-zinc-100 animate-pulse"
+              className="h-9 w-24 rounded-xl bg-mist-gray animate-pulse"
             />
           ))}
         </div>
@@ -83,14 +83,14 @@ function BlogListSkeleton() {
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
-              className="h-72 rounded-2xl border border-border-default bg-zinc-50 p-6 animate-pulse flex flex-col justify-between"
+              className="h-72 rounded-2xl border border-border-default bg-elevated-surface p-6 animate-pulse flex flex-col justify-between"
             >
               <div className="space-y-3">
-                <div className="h-5 w-24 rounded-full bg-zinc-200" />
-                <div className="h-6 w-3/4 rounded bg-zinc-200" />
-                <div className="h-16 w-full rounded bg-zinc-100" />
+                <div className="h-5 w-24 rounded-full bg-surface-hover" />
+                <div className="h-6 w-3/4 rounded bg-surface-hover" />
+                <div className="h-16 w-full rounded bg-mist-gray" />
               </div>
-              <div className="h-5 w-1/3 rounded bg-zinc-200" />
+              <div className="h-5 w-1/3 rounded bg-surface-hover" />
             </div>
           ))}
         </div>
@@ -138,8 +138,8 @@ async function BlogListingSection({
                 }
                 className={`whitespace-nowrap rounded-xl px-4 py-2 text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                   isActive
-                    ? "bg-flash-orange text-clean-white shadow-sm shadow-orange-500/20"
-                    : "bg-mist-gray text-tech-slate hover:bg-zinc-200 border border-border-default"
+                    ? "bg-flash-orange text-clean-white shadow-sm shadow-flash-orange/20"
+                    : "bg-mist-gray text-tech-slate hover:bg-surface-hover border border-border-default"
                 }`}
               >
                 {cat}
@@ -273,13 +273,13 @@ export default async function BlogIndexPage({
             icon: Wrench,
             label: "Repairs",
             value: "Sadashiv Peth Lab",
-            color: "text-blue-500",
+            color: "text-info",
           },
           {
             icon: ShieldCheck,
             label: "Data Safety",
             value: "Zero Access Policy",
-            color: "text-emerald-500",
+            color: "text-success",
           },
           {
             icon: Zap,

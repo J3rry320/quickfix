@@ -19,11 +19,11 @@ export default function Hero() {
     <section className="relative bg-flash-orange text-clean-white overflow-hidden py-10 sm:py-16 lg:py-20">
       {/* Subtle background atmospheric blur accents */}
       <div
-        className="pointer-events-none absolute -top-40 right-0 -z-10 h-96 w-96 rounded-full bg-white/10 blur-3xl"
+        className="pointer-events-none absolute -top-40 right-0 -z-10 h-96 w-96 rounded-full bg-clean-white/10 blur-3xl"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute bottom-0 left-0 -z-10 h-80 w-80 rounded-full bg-black/15 blur-3xl"
+        className="pointer-events-none absolute bottom-0 left-0 -z-10 h-80 w-80 rounded-full bg-tech-slate-dark/15 blur-3xl"
         aria-hidden="true"
       />
 

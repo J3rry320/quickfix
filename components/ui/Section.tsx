@@ -9,8 +9,8 @@ export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
 
 const variantClasses = {
   white: "bg-clean-white text-tech-slate",
-  muted: "bg-mist-gray/70 text-tech-slate border-y border-zinc-200/80",
-  surface: "bg-elevated-surface text-tech-slate border-b border-zinc-200/80",
+  muted: "bg-mist-gray/70 text-tech-slate border-y border-border-default/80",
+  surface: "bg-elevated-surface text-tech-slate border-b border-border-default/80",
   slate: "bg-tech-slate text-clean-white",
 };
 

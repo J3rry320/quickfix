@@ -114,7 +114,7 @@ export default function QuickContactForm() {
   }
 
   return (
-    <section id="contact" className="py-12 sm:py-16 lg:py-24 bg-mist-gray/30 border-b border-zinc-200/80">
+    <section id="contact" className="py-12 sm:py-16 lg:py-24 bg-mist-gray/30 border-b border-border-default/80">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Header, Quick Direct Contact & Interactive Google Map */}
@@ -133,19 +133,19 @@ export default function QuickContactForm() {
               {/* Helpline Call Card */}
               <a
                 href={`tel:${contactConfig.phone.value}`}
-                className="group flex items-center gap-3.5 p-4 rounded-2xl border border-zinc-200/80 bg-clean-white hover:border-flash-orange/40 hover:shadow-xs transition-all"
+                className="group flex items-center gap-3.5 p-4 rounded-2xl border border-border-default/80 bg-clean-white hover:border-flash-orange/40 hover:shadow-xs transition-all"
               >
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-flash-orange/10 text-flash-orange group-hover:bg-flash-orange group-hover:text-clean-white transition-colors shrink-0">
                   <Phone className="h-5 w-5" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
+                  <div className="text-[11px] font-bold text-text-muted uppercase tracking-wider">
                     {t("directCall")}
                   </div>
                   <div className="text-sm font-black text-tech-slate truncate font-mono">
                     {contactConfig.phone.display}
                   </div>
-                  <div className="text-2xs text-zinc-400 mt-0.5">
+                  <div className="text-2xs text-text-muted mt-0.5">
                     {contactConfig.hours.time}
                   </div>
                 </div>
@@ -215,7 +215,7 @@ export default function QuickContactForm() {
 
           {/* Right Column: Clean, High-Conversion Callback Form */}
           <div className="lg:col-span-6">
-            <div className="rounded-3xl border border-zinc-200/90 bg-clean-white p-6 sm:p-8 lg:p-9 shadow-sm">
+            <div className="rounded-3xl border border-border-default/90 bg-clean-white p-6 sm:p-8 lg:p-9 shadow-sm">
               {isSubmitting ? (
                 <FormLoadingState
                   title="Requesting Quick Callback…"
@@ -237,7 +237,7 @@ export default function QuickContactForm() {
                     <h3 className="font-heading text-lg sm:text-xl font-black text-tech-slate">
                       Request a 5-Minute Callback
                     </h3>
-                    <p className="text-xs text-zinc-500 font-body mt-0.5">
+                    <p className="text-xs text-text-muted font-body mt-0.5">
                       Share your issue and our certified technician will call you back shortly.
                     </p>
                   </div>
@@ -267,12 +267,12 @@ export default function QuickContactForm() {
                         aria-describedby={fieldErrors.name ? "quick-name-error" : undefined}
                         className={`w-full rounded-xl border bg-surface-hover/50 px-3.5 py-2.5 text-sm font-medium text-tech-slate placeholder:text-text-muted focus:bg-clean-white focus:outline-hidden focus:ring-2 transition-all ${
                           fieldErrors.name
-                            ? "border-red-500 focus:ring-red-500/15"
+                            ? "border-error focus:ring-error/15"
                             : "border-border-default focus:border-flash-orange focus:ring-flash-orange/15"
                         }`}
                       />
                       {fieldErrors.name && (
-                        <p id="quick-name-error" className="mt-1 text-2xs text-red-600 flex items-center gap-1 font-medium animate-in fade-in duration-150">
+                        <p id="quick-name-error" className="mt-1 text-2xs text-error flex items-center gap-1 font-medium animate-in fade-in duration-150">
                           <AlertCircle className="h-3 w-3 shrink-0" aria-hidden="true" />
                           <span>{fieldErrors.name}</span>
                         </p>
@@ -299,12 +299,12 @@ export default function QuickContactForm() {
                         aria-describedby={fieldErrors.phone ? "quick-phone-error" : undefined}
                         className={`w-full rounded-xl border bg-surface-hover/50 px-3.5 py-2.5 text-sm font-medium text-tech-slate placeholder:text-text-muted focus:bg-clean-white focus:outline-hidden focus:ring-2 transition-all ${
                           fieldErrors.phone
-                            ? "border-red-500 focus:ring-red-500/15"
+                            ? "border-error focus:ring-error/15"
                             : "border-border-default focus:border-flash-orange focus:ring-flash-orange/15"
                         }`}
                       />
                       {fieldErrors.phone && (
-                        <p id="quick-phone-error" className="mt-1 text-2xs text-red-600 flex items-center gap-1 font-medium animate-in fade-in duration-150">
+                        <p id="quick-phone-error" className="mt-1 text-2xs text-error flex items-center gap-1 font-medium animate-in fade-in duration-150">
                           <AlertCircle className="h-3 w-3 shrink-0" aria-hidden="true" />
                           <span>{fieldErrors.phone}</span>
                         </p>
