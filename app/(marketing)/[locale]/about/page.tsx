@@ -380,6 +380,7 @@ export default async function AboutPage({
                 title="ESD-Safe Testing Station"
                 label="Calibrated logic board analysis, thermal profiling & OEM part pre-screening"
                 className="shadow-md"
+                sizes="(max-width: 1024px) 100vw, 480px"
               />
             </div>
           </div>

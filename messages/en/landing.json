@@ -6,9 +6,10 @@
     "ctaPrimary": "Book Doorstep Repair",
     "ctaSecondary": "Call Us",
     "quickNote": "Free pickup & drop available • Transparent on-spot pricing",
-    "mediaPlaceholder": {
-      "title": "Media Placeholder",
-      "hint": "Path is left blank in next/image — ready for your image"
+    "media": {
+      "title": "Doorstep Pickup & Lab Repair",
+      "label": "Free doorstep pickup, ESD-safe lab repair & same-day return",
+      "alt": "QuickFix Pune mobile repair service technicians in lab"
     },
     "trustBadges": {
       "fastService": "30-Min Express Repair",

@@ -10,6 +10,8 @@ export interface HeroMediaImageProps {
   title?: string;
   subtitle?: string;
   aspectRatio?: "4/3" | "16/9" | "1/1";
+  preload?: boolean;
+  sizes?: string;
   className?: string;
 }
 
@@ -21,6 +23,8 @@ export default function HeroMediaImage({
   title,
   subtitle,
   aspectRatio = "4/3",
+  preload = false,
+  sizes,
   className = "",
 }: HeroMediaImageProps) {
   return (
@@ -32,6 +36,8 @@ export default function HeroMediaImage({
       title={title}
       label={subtitle}
       aspectRatio={aspectRatio}
+      preload={preload}
+      sizes={sizes}
       className={className}
     />
   );

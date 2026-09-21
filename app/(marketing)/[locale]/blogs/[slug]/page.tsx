@@ -209,6 +209,7 @@ export default async function BlogPostDetailPage({
             label={`Published by ${post.author?.name || "QuickFix Tech Team"} • ${post.readingTimeMinutes || 5} min read`}
             className="shadow-xl"
             preload={true}
+            sizes="(max-width: 1024px) 100vw, (max-width: 1280px) 42vw, 520px"
           />
         }
       />

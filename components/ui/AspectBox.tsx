@@ -74,7 +74,7 @@ export default function AspectBox({
   // Container styling variants
   const variantStyles = {
     solid: "bg-clean-white border border-border-default/80 shadow-md",
-    glass: "bg-clean-white/10 backdrop-blur-md border border-clean-white/20 shadow-xl text-clean-white",
+    glass: "bg-clean-white/10 backdrop-blur-md border border-clean-white/20 text-clean-white",
     dashed: "bg-mist-gray border-2 border-dashed border-border-strong text-text-muted",
   }[variant] || "bg-clean-white border border-border-default/80 shadow-md";
 
@@ -104,7 +104,7 @@ export default function AspectBox({
             priority={preload}
             sizes={effectiveSizes}
             onError={() => setHasError(true)}
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="object-cover scale-[1.02] transition-transform duration-500 group-hover:scale-105"
           />
 
           {/* Floating Badge Overlay */}

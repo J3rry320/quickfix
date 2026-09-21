@@ -1,11 +1,7 @@
 import AspectBox from "@/components/ui/AspectBox";
 import contactConfig from "@/config/contact";
 import { Link } from "@/i18n/navigation";
-import {
-  ArrowRight,
-  CheckCircle2,
-  Phone,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2, MapPin, Phone } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 // User can set their image/video path here (e.g. "/hero-technician.jpg")
@@ -31,10 +27,11 @@ export default function Hero() {
           {/* Left Column: Headline, Subtitle, High-Contrast CTAs */}
           <div className="lg:col-span-7 flex flex-col items-start text-left">
             {/* Main Headline */}
-            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight text-clean-white leading-[1.15]">
+            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight text-clean-white leading-[1.2] sm:leading-[1.18]">
               {t("titleStart")}{" "}
-              <span className="underline decoration-clean-white/80 decoration-4 underline-offset-8 font-black">
-                {t("titleCity")}
+              <span className="inline-flex items-center gap-1.5 sm:gap-2 rounded-xl sm:rounded-2xl bg-clean-white px-3 sm:px-4 py-0.5 sm:py-1 text-tech-slate font-black shadow-xl shadow-tech-slate/20">
+                <MapPin className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 text-flash-orange shrink-0" />
+                <span className="tracking-normal">{t("titleCity")}</span>
               </span>
             </h1>
 
@@ -75,11 +72,11 @@ export default function Hero() {
               <AspectBox
                 aspectRatio="1/1"
                 src={heroImageSrc}
-                alt="QuickFix Pune mobile repair service"
+                alt={t("media.alt")}
                 variant="glass"
                 fallbackType="lab"
-                title="Doorstep Pickup & Lab Repair"
-                label="Free doorstep pickup, ESD-safe lab repair & same-day return"
+                title={t("media.title")}
+                label={t("media.label")}
                 preload={true}
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 448px, 512px"
               />

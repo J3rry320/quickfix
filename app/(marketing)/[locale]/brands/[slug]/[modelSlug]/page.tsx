@@ -220,6 +220,8 @@ export default async function ModelDetailPage({
             label={t("hero.media.fallbackLabel", { modelName: model.name })}
             aspectRatio="1/1"
             className="shadow-md"
+            preload={true}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 448px, 512px"
           />
         }
       />

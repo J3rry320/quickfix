@@ -210,6 +210,7 @@ export default async function ServiceDetailPage({
             aspectRatio="4/3"
             className="shadow-md"
             preload
+            sizes="(max-width: 1024px) 100vw, (max-width: 1280px) 42vw, 520px"
           />
         }
       />

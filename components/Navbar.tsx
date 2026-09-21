@@ -115,6 +115,7 @@ export default function Navbar() {
               alt="QuickFixMobile.in Logo"
               width={34}
               height={34}
+              priority
               className="h-8 w-8 object-contain rounded-lg group-hover:scale-105 transition-transform"
             />
             <div className="flex items-baseline">

@@ -233,6 +233,8 @@ export default async function BrandDetailPage({
             title={`${brand.name} Repairs`}
             label="OEM-grade components, 90-day warranty & 30-min express turnaround in Pune"
             className="shadow-xl"
+            preload={true}
+            sizes="(max-width: 1024px) 100vw, (max-width: 1280px) 42vw, 520px"
           />
         }
       />

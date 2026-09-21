@@ -98,6 +98,7 @@ export default function ModelCard({
                       src={brandObj.logoUrl}
                       alt={brandName}
                       fill
+                      sizes="28px"
                       className="object-contain"
                     />
                   </div>
