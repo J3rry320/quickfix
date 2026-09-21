@@ -68,7 +68,7 @@ export default async function MarketingPage({
       <WhyQuickFix />
 
       {/* 7. Supported Smartphone Brands */}
-      <BrandsShowcase />
+      <BrandsShowcase initialBrands={brands} />
 
       {/* 7.5 Top Popular Smartphone Models We Repair */}
       {popularModels.length > 0 && (

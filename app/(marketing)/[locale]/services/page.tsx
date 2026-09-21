@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Clock, ShieldCheck, ArrowRight, Zap, Check, X, Phone, Wrench } from "lucide-react";
+import { Clock, ShieldCheck, ArrowRight, Check, X, Phone, Wrench } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { getServicesHubSeoMetadata, siteConfig } from "@/config/seo";
@@ -8,6 +8,7 @@ import { getDbServices, getDbBrands } from "@/lib/db/catalogue";
 import contactConfig from "@/config/contact";
 import JsonLd from "@/components/seo/JsonLd";
 import DoorstepPickupAssurance from "@/components/landing/DoorstepPickupAssurance";
+import BrandsShowcase from "@/components/landing/BrandsShowcase";
 import { Container, Section, CTABlock, PageHero, AspectBox } from "@/components/ui";
 
 export function generateStaticParams() {
@@ -117,12 +118,6 @@ export default async function ServicesHubPage({
             label: "Warranty",
             value: "90-Day Coverage",
             color: "text-success",
-          },
-          {
-            icon: Zap,
-            label: "Coverage",
-            value: "All Pune & PCMC",
-            color: "text-electric-amber",
           },
         ]}
         actions={
@@ -247,39 +242,11 @@ export default async function ServicesHubPage({
         </Container>
       </Section>
 
-      {/* 5. Brands Quick Grid (Loaded from DB) */}
-      <Section variant="muted" padding="default">
-        <Container>
-          <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight mb-2">
-            Repairs by Smartphone Brand
-          </h2>
-          <p className="text-xs sm:text-sm text-text-secondary mb-8">
-            Select your smartphone brand to see model-specific repair options and pricing.
-          </p>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-            {brands.map((brand) => (
-              <Link
-                key={brand.slug}
-                href={`/brands/${brand.slug}`}
-                className="p-4 rounded-xl bg-clean-white border border-border-default hover:border-flash-orange/50 hover:shadow-xs transition-all group flex items-center gap-3"
-              >
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-mist-gray border border-border-default shadow-2xs font-heading font-black text-xs text-tech-slate">
-                  {brand.name.slice(0, 2).toUpperCase()}
-                </div>
-                <div className="overflow-hidden">
-                  <p className="text-xs sm:text-sm font-bold text-tech-slate group-hover:text-flash-orange transition-colors truncate">
-                    {brand.name}
-                  </p>
-                  <span className="text-[11px] text-text-muted">
-                    Doorstep in Pune →
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </Container>
-      </Section>
+      {/* 5. Supported Smartphone Brands (Loaded from DB) */}
+      <BrandsShowcase
+        initialBrands={brands}
+        variant="muted"
+      />
 
       {/* 6. CTA */}
       <Section variant="white" padding="default">

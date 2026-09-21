@@ -56,44 +56,32 @@ export default function PageHero({
             )}
 
             {highlights && highlights.length > 0 && (
-              <div className="mt-6 sm:mt-8 mx-auto max-w-3xl">
-                <div
-                  className={`grid gap-2 sm:gap-2.5 ${
-                    highlights.length === 4
-                      ? "grid-cols-2 sm:grid-cols-4"
-                      : highlights.length === 3
-                      ? "grid-cols-1 sm:grid-cols-3"
-                      : highlights.length === 2
-                      ? "grid-cols-2"
-                      : "grid-cols-2 sm:grid-cols-4"
-                  }`}
-                >
-                  {highlights.map((h, i) => {
-                    const Icon = h.icon;
-                    return (
-                      <div
-                        key={i}
-                        className="flex items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-clean-white px-3 py-2.5 text-xs font-semibold text-tech-slate border border-border-default/90 shadow-2xs hover:border-flash-orange/40 hover:shadow-xs transition-all text-center"
-                      >
-                        {Icon && (
-                          <Icon
-                            className={`h-4 w-4 shrink-0 ${h.color || "text-flash-orange"}`}
-                          />
-                        )}
-                        <span className="text-text-muted truncate">{h.label}</span>
-                        {h.value && (
-                          <strong className="font-bold text-tech-slate shrink-0">
-                            {h.value}
-                          </strong>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
+              <div className="mt-5 sm:mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mx-auto max-w-2xl">
+                {highlights.map((h, i) => {
+                  const Icon = h.icon;
+                  return (
+                    <div
+                      key={i}
+                      className="inline-flex items-center gap-1.5 rounded-lg bg-clean-white px-3 py-1.5 text-xs font-medium text-tech-slate border border-border-default/90 shadow-2xs hover:border-flash-orange/40 transition-all whitespace-nowrap"
+                    >
+                      {Icon && (
+                        <Icon
+                          className={`h-3.5 w-3.5 shrink-0 ${h.color || "text-flash-orange"}`}
+                        />
+                      )}
+                      <span className="text-text-muted">{h.label}</span>
+                      {h.value && (
+                        <strong className="font-bold text-tech-slate">
+                          {h.value}
+                        </strong>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             )}
 
-            {actions && <div className="mt-8 flex flex-wrap items-center justify-center gap-4">{actions}</div>}
+            {actions && <div className="mt-7 sm:mt-8 flex flex-wrap items-center justify-center gap-4">{actions}</div>}
 
             {media && <div className="mt-10 mx-auto max-w-4xl">{media}</div>}
           </div>
@@ -112,32 +100,22 @@ export default function PageHero({
               )}
 
               {highlights && highlights.length > 0 && (
-                <div
-                  className={`mt-6 grid gap-2 sm:gap-2.5 ${
-                    media ? "max-w-lg" : "max-w-2xl"
-                  } ${
-                    highlights.length === 4
-                      ? "grid-cols-2 sm:grid-cols-4"
-                      : highlights.length === 3
-                      ? "grid-cols-1 sm:grid-cols-3"
-                      : "grid-cols-2"
-                  }`}
-                >
+                <div className="mt-5 sm:mt-6 flex flex-wrap items-center gap-2 sm:gap-2.5">
                   {highlights.map((h, i) => {
                     const Icon = h.icon;
                     return (
                       <div
                         key={i}
-                        className="flex items-center gap-2 rounded-xl bg-clean-white px-3.5 py-2.5 text-xs font-semibold text-tech-slate border border-border-default/90 shadow-2xs hover:border-flash-orange/40 transition-all"
+                        className="inline-flex items-center gap-1.5 rounded-lg bg-clean-white px-3 py-1.5 text-xs font-medium text-tech-slate border border-border-default/90 shadow-2xs hover:border-flash-orange/40 transition-all whitespace-nowrap"
                       >
                         {Icon && (
                           <Icon
-                            className={`h-4 w-4 shrink-0 ${h.color || "text-flash-orange"}`}
+                            className={`h-3.5 w-3.5 shrink-0 ${h.color || "text-flash-orange"}`}
                           />
                         )}
-                        <span className="text-text-muted truncate">{h.label}</span>
+                        <span className="text-text-muted">{h.label}</span>
                         {h.value && (
-                          <strong className="font-bold text-tech-slate shrink-0">
+                          <strong className="font-bold text-tech-slate">
                             {h.value}
                           </strong>
                         )}
@@ -147,7 +125,7 @@ export default function PageHero({
                 </div>
               )}
 
-              {actions && <div className="mt-8 flex flex-wrap items-center gap-4">{actions}</div>}
+              {actions && <div className="mt-7 sm:mt-8 flex flex-wrap items-center gap-4">{actions}</div>}
             </div>
 
             {media && <div className="lg:col-span-5">{media}</div>}

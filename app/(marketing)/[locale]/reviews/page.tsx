@@ -9,7 +9,6 @@ import { PageHero } from "@/components/ui";
 import ReviewsClient, { ReviewItem } from "@/components/reviews/ReviewsClient";
 import { connectToDatabase } from "@/lib/mongodb";
 import { Review } from "@/models/Review";
-import { TESTIMONIALS_DATA } from "@/config/testimonials";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -58,42 +57,29 @@ async function getCachedApprovedReviews(): Promise<{
       ]),
     ]);
 
-    if (dbReviews && dbReviews.length > 0) {
-      return {
-        reviews: dbReviews.map((r) => ({
-          _id: String(r._id),
-          name: r.name,
-          rating: r.rating,
-          comment: r.comment,
-          deviceModel: r.deviceModel,
-          serviceType: r.serviceType,
-          area: r.area,
-          isFeatured: r.isFeatured,
-          createdAt: r.createdAt ? new Date(r.createdAt).toISOString() : new Date().toISOString(),
-        })),
-        total,
-        avgRating: aggregate[0]?.avgRating ? Number(aggregate[0].avgRating.toFixed(1)) : 4.9,
-      };
-    }
+    return {
+      reviews: (dbReviews || []).map((r) => ({
+        _id: String(r._id),
+        name: r.name,
+        rating: r.rating,
+        comment: r.comment,
+        deviceModel: r.deviceModel,
+        serviceType: r.serviceType,
+        area: r.area,
+        isFeatured: r.isFeatured,
+        createdAt: r.createdAt ? new Date(r.createdAt).toISOString() : new Date().toISOString(),
+      })),
+      total: total || 0,
+      avgRating: aggregate[0]?.avgRating ? Number(aggregate[0].avgRating.toFixed(1)) : 5.0,
+    };
   } catch (err) {
-    console.warn("Reviews load fallback to static testimonials:", err);
+    console.error("Failed to load reviews from database:", err);
+    return {
+      reviews: [],
+      total: 0,
+      avgRating: 5.0,
+    };
   }
-
-  return {
-    reviews: TESTIMONIALS_DATA.map((t) => ({
-      _id: t.id,
-      name: t.name,
-      rating: t.rating,
-      comment: t.text,
-      deviceModel: t.deviceModel,
-      serviceType: t.serviceType,
-      area: t.area,
-      isFeatured: true,
-      createdAt: new Date().toISOString(),
-    })),
-    total: TESTIMONIALS_DATA.length,
-    avgRating: 4.9,
-  };
 }
 
 export default async function ReviewsPage({

@@ -164,7 +164,7 @@ export default async function BrandDetailPage({
                 className="shadow-md"
               />
               <span className="inline-flex items-center gap-1.5 rounded-full bg-flash-orange/10 text-flash-orange px-3 py-1 text-xs font-extrabold uppercase tracking-wider">
-                <span className="h-1.5 w-1.5 rounded-full bg-flash-orange animate-pulse" />
+                <span className="h-1.5 w-1.5 rounded-full bg-flash-orange" />
                 <span>{t("hero.badge")}</span>
               </span>
             </div>

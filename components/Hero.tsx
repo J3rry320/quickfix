@@ -77,7 +77,6 @@ export default function Hero() {
                 src={heroImageSrc}
                 alt="QuickFix Pune mobile repair service"
                 variant="glass"
-                badge="Sadashiv Peth Lab"
                 fallbackType="lab"
                 title="Doorstep Pickup & Lab Repair"
                 label="Free doorstep pickup, ESD-safe lab repair & same-day return"

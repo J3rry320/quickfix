@@ -9,54 +9,102 @@ import SectionHeader from "@/components/landing/SectionHeader";
 import EmptyState from "@/components/ui/EmptyState";
 import { SkeletonBrandStrip } from "@/components/ui/Skeleton";
 
-interface BrandItem {
-  _id: string;
+export interface BrandItem {
+  _id?: string;
   name: string;
   slug: string;
   logoUrl?: string;
   isPopular?: boolean;
 }
 
-export default function BrandsShowcase() {
+export interface BrandsShowcaseProps {
+  initialBrands?: BrandItem[];
+  title?: string;
+  subtitle?: string;
+  badge?: string;
+  action?: React.ReactNode;
+  variant?: "white" | "muted";
+  showBorder?: boolean;
+  className?: string;
+}
+
+export default function BrandsShowcase({
+  initialBrands,
+  title,
+  subtitle,
+  badge,
+  action,
+  variant = "white",
+  showBorder = true,
+  className = "",
+}: BrandsShowcaseProps = {}) {
   const t = useTranslations("BrandsShowcase");
   const tCommon = useTranslations("Common");
 
-  const [brands, setBrands] = useState<BrandItem[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [fetchedBrands, setFetchedBrands] = useState<BrandItem[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(!initialBrands);
 
   useEffect(() => {
+    if (initialBrands !== undefined) {
+      return;
+    }
+
+    let isMounted = true;
     async function loadBrands() {
       setIsLoading(true);
       try {
         const res = await fetch("/api/brands");
         const data = await res.json();
-        if (data.success && Array.isArray(data.data?.brands)) {
-          setBrands(data.data.brands);
-        } else {
-          setBrands([]);
+        if (isMounted) {
+          if (data.success && Array.isArray(data.data?.brands)) {
+            setFetchedBrands(data.data.brands);
+          } else {
+            setFetchedBrands([]);
+          }
         }
       } catch (err) {
         console.error("Failed to load brands", err);
-        setBrands([]);
+        if (isMounted) setFetchedBrands([]);
       } finally {
-        setIsLoading(false);
+        if (isMounted) setIsLoading(false);
       }
     }
     loadBrands();
-  }, []);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [initialBrands]);
+
+  const brands = initialBrands !== undefined ? initialBrands : fetchedBrands;
+
+  const displayTitle = title || t("title");
+  const displaySubtitle = subtitle || t("subtitle");
+  const displayAction = action || (
+    <span className="rounded-xl bg-mist-gray px-3.5 py-2 text-xs font-bold text-tech-slate border border-border-default shrink-0">
+      {badge || t("supportedCount")}
+    </span>
+  );
+
+  const sectionBg = variant === "muted" ? "bg-mist-gray/40" : "bg-clean-white";
+  const borderClass = showBorder ? "border-b border-border-default" : "";
+  const cardBg =
+    variant === "muted"
+      ? "bg-clean-white border-border-default hover:border-flash-orange hover:shadow-xs"
+      : "bg-mist-gray/80 border-border-default hover:border-flash-orange hover:shadow-xs";
+  const logoBoxBg =
+    variant === "muted"
+      ? "bg-mist-gray/60 border-border-default"
+      : "bg-clean-white border-border-default";
 
   return (
-    <section className="py-10 sm:py-16 lg:py-20 bg-clean-white border-b border-border-default">
+    <section className={`py-10 sm:py-16 lg:py-20 ${sectionBg} ${borderClass} ${className}`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
-          title={t("title")}
-          subtitle={t("subtitle")}
+          title={displayTitle}
+          subtitle={displaySubtitle}
           className="mb-8 sm:mb-10"
-          action={
-            <span className="rounded-xl bg-mist-gray px-3.5 py-2 text-xs font-bold text-tech-slate border border-border-default shrink-0">
-              {t("supportedCount")}
-            </span>
-          }
+          action={displayAction}
         />
 
         {/* Dynamic Content */}
@@ -77,11 +125,11 @@ export default function BrandsShowcase() {
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2.5 sm:gap-4">
             {brands.map((brand) => (
               <Link
-                key={brand._id}
+                key={brand._id || brand.slug}
                 href={`/brands/${brand.slug}`}
-                className="flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl bg-mist-gray/80 border border-border-default hover:border-flash-orange hover:shadow-xs transition-all group text-center"
+                className={`flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl border transition-all group text-center ${cardBg}`}
               >
-                <div className="relative w-10 h-10 sm:w-12 sm:h-12 mb-2 flex items-center justify-center rounded-lg bg-clean-white border border-border-default shadow-2xs group-hover:scale-105 transition-transform">
+                <div className={`relative w-10 h-10 sm:w-12 sm:h-12 mb-2 flex items-center justify-center rounded-lg border shadow-2xs group-hover:scale-105 transition-transform ${logoBoxBg}`}>
                   {brand.logoUrl ? (
                     <Image
                       src={brand.logoUrl}

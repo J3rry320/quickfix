@@ -228,9 +228,10 @@ export function getServiceDetailPageSchema({
   description,
   startingPrice,
   warrantyDays = 90,
-  estimatedTimeMinutes = 30,
+  estimatedTimeMinutes: _estimatedTimeMinutes = 30,
   slug,
   locale = "en",
+  image,
 }: {
   serviceName: string;
   description: string;
@@ -239,8 +240,14 @@ export function getServiceDetailPageSchema({
   estimatedTimeMinutes?: number;
   slug: string;
   locale?: string;
+  image?: string;
 }) {
   const siteUrl = siteConfig.url.replace(/\/$/, "");
+  const fullImageUrl = image
+    ? image.startsWith("http://") || image.startsWith("https://")
+      ? image
+      : `${siteUrl}${image.startsWith("/") ? "" : "/"}${image}`
+    : `${siteUrl}${siteConfig.defaultOgImage}`;
 
   return {
     "@context": "https://schema.org",
@@ -248,6 +255,7 @@ export function getServiceDetailPageSchema({
     "@id": `${siteUrl}/${locale}/services/${slug}#service`,
     name: serviceName,
     description,
+    image: fullImageUrl,
     provider: {
       "@type": "LocalBusiness",
       name: contactConfig.brand,
@@ -265,6 +273,7 @@ export function getServiceDetailPageSchema({
       priceValidUntil: "2027-12-31",
       availability: "https://schema.org/InStock",
       url: `${siteUrl}/${locale}/services/${slug}`,
+      warranty: `${warrantyDays} days warranty`,
     },
     aggregateRating: {
       "@type": "AggregateRating",

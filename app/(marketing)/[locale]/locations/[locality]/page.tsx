@@ -12,7 +12,8 @@ import { getBreadcrumbSchema } from "@/config/jsonld";
 import { getLocationSeoMetadata, siteConfig } from "@/config/seo";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { getDbServices } from "@/lib/db/catalogue";
+import { getDbServices, getDbBrands } from "@/lib/db/catalogue";
+import BrandsShowcase from "@/components/landing/BrandsShowcase";
 import {
   ArrowRight,
   MapPin,
@@ -68,14 +69,17 @@ export default async function LocalityPage({
   cacheLife("days");
 
   const { locale, locality } = await params;
-  cacheTag("locations", `location-${locality}`);
+  cacheTag("locations", `location-${locality}`, "brands");
 
   const loc = LOCALITIES_CATALOG.find((l) => l.slug === locality);
   if (!loc) {
     notFound();
   }
 
-  const services = await getDbServices();
+  const [services, brands] = await Promise.all([
+    getDbServices(),
+    getDbBrands(),
+  ]);
 
   const siteUrl = siteConfig.url.replace(/\/$/, "");
   const breadcrumbSchema = getBreadcrumbSchema([
@@ -223,7 +227,15 @@ export default async function LocalityPage({
         </Container>
       </Section>
 
-      {/* 4. Reusable CTA Block */}
+      {/* 4. Supported Smartphone Brands in Locality */}
+      <BrandsShowcase
+        initialBrands={brands}
+        title={`Smartphone Brands We Service in ${loc.name}`}
+        subtitle={`Doorstep pickup and certified lab repair available for all major brands across ${loc.name} and ${loc.zone}.`}
+        variant="white"
+      />
+
+      {/* 5. Reusable CTA Block */}
       <Section variant="muted" padding="default">
         <Container>
           <CTABlock

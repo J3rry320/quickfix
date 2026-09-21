@@ -166,13 +166,6 @@ export default function DoorstepPickupAssurance({
               onPause={() => setIsPlaying(false)}
             />
 
-            {/* Top Overlay Badge: Lab Location */}
-            <div className="pointer-events-none absolute top-7 left-3 z-20">
-              <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-tech-slate-dark/80 backdrop-blur-md text-[10px] font-bold text-clean-white border border-clean-white/15 shadow-sm">
-                <span className="h-1.5 w-1.5 rounded-full bg-flash-orange animate-pulse" />
-                Sadashiv Peth Lab
-              </span>
-            </div>
 
             {/* Bottom Floating Controls: Mute Toggle */}
             <div className="absolute bottom-3 right-3 z-20">

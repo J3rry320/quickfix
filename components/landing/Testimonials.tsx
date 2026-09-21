@@ -22,7 +22,7 @@ const TESTIMONIAL_ITEMS: TestimonialDefinition[] = [
     initials: "AK",
     rating: 5,
     videoSrc: "/assets/videos/repair.mp4",
-    posterSrc: "/assets/videos/repair-poster.jpg",
+    posterSrc: "/logo.png",
   },
   {
     id: "redmi-13c-5g",
@@ -30,7 +30,7 @@ const TESTIMONIAL_ITEMS: TestimonialDefinition[] = [
     initials: "PD",
     rating: 5,
     videoSrc: "/assets/videos/repair2.mp4",
-    posterSrc: "/assets/videos/repair2-poster.jpg",
+    posterSrc: "/logo.png",
   },
   {
     id: "redmi-9-power",
@@ -38,7 +38,7 @@ const TESTIMONIAL_ITEMS: TestimonialDefinition[] = [
     initials: "RB",
     rating: 5,
     videoSrc: "/assets/videos/repair3.mp4",
-    posterSrc: "/assets/videos/repair3-poster.jpg",
+    posterSrc: "/logo.png",
   },
 ];
 

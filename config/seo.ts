@@ -422,6 +422,7 @@ export interface CustomSeoOptions {
   keywords?: string[];
   locale: string;
   path: string;
+  image?: string;
   overrides?: Partial<Metadata>;
 }
 
@@ -431,6 +432,7 @@ export function getCustomSeoMetadata({
   keywords = [],
   locale,
   path,
+  image,
   overrides = {},
 }: CustomSeoOptions): Metadata {
   const safeLocale = (["en", "hi", "mr"].includes(locale) ? locale : "en") as
@@ -446,6 +448,12 @@ export function getCustomSeoMetadata({
     hi: "hi_IN",
     mr: "mr_IN",
   };
+
+  const imageUrl = image
+    ? image.startsWith("http://") || image.startsWith("https://")
+      ? image
+      : `${siteUrl}${image.startsWith("/") ? "" : "/"}${image}`
+    : `${siteUrl}${siteConfig.defaultOgImage}`;
 
   return {
     title,
@@ -468,21 +476,22 @@ export function getCustomSeoMetadata({
       siteName: siteConfig.name,
       images: [
         {
-          url: siteConfig.defaultOgImage,
-          width: 1000,
-          height: 1000,
+          url: imageUrl,
+          width: 1200,
+          height: 630,
           alt: `${title} | ${siteConfig.name}`,
-          type: "image/png",
         },
       ],
       locale: ogLocaleMap[safeLocale],
       type: "website",
+      ...overrides.openGraph,
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [siteConfig.defaultOgImage],
+      images: [imageUrl],
+      ...overrides.twitter,
     },
     robots: {
       index: true,
@@ -505,12 +514,14 @@ export function getServiceSeoMetadata({
   turnaroundMinutes = 30,
   locale = "en",
   slug,
+  image,
 }: {
   serviceName: string;
   startingPrice: number;
   turnaroundMinutes?: number;
   locale?: string;
   slug: string;
+  image?: string;
 }): Metadata {
   const safeLocale = ["en", "hi", "mr"].includes(locale) ? locale : "en";
 
@@ -537,6 +548,7 @@ export function getServiceSeoMetadata({
     ],
     locale: safeLocale,
     path: `/services/${slug}`,
+    image,
   });
 }
 
@@ -578,7 +590,7 @@ export function getBrandSeoMetadata({
 
 export function getLocationSeoMetadata({
   localityName,
-  zoneName,
+  zoneName: _zoneName,
   dispatchTime = "30 Mins",
   locale = "en",
   slug,

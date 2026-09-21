@@ -169,7 +169,7 @@ export default function QuickContactForm() {
                     Instant Quote
                   </div>
                   <div className="text-2xs text-whatsapp font-semibold mt-0.5 flex items-center gap-1">
-                    <span className="h-1.5 w-1.5 rounded-full bg-whatsapp animate-pulse" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-whatsapp" />
                     Online Now
                   </div>
                 </div>

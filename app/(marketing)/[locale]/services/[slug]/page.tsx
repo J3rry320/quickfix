@@ -27,11 +27,14 @@ import {
   HelpCircle,
   Phone,
   ShieldCheck,
-  Zap,
+  Tag,
 } from "lucide-react";
+import BrandsShowcase from "@/components/landing/BrandsShowcase";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
+
+import { cacheLife, cacheTag } from "next/cache";
 
 export async function generateStaticParams() {
   const slugs = await getStaticServiceSlugs();
@@ -64,10 +67,9 @@ export async function generateMetadata({
     turnaroundMinutes: service.estimatedTimeMinutes,
     locale,
     slug: service.slug,
+    image: service.image,
   });
 }
-
-import { cacheLife, cacheTag } from "next/cache";
 
 export default async function ServiceDetailPage({
   params,
@@ -108,6 +110,7 @@ export default async function ServiceDetailPage({
     estimatedTimeMinutes: service.estimatedTimeMinutes,
     slug: service.slug,
     locale,
+    image: service.image,
   });
 
   const serviceFaqs = [
@@ -150,6 +153,7 @@ export default async function ServiceDetailPage({
         subtitle={service.description}
         highlights={[
           {
+            icon: Tag,
             label: t("highlights.startingFrom"),
             value: `₹${service.startingPrice}`,
             color: "text-flash-orange",
@@ -169,12 +173,6 @@ export default async function ServiceDetailPage({
               days: service.warrantyDays,
             }),
             color: "text-success",
-          },
-          {
-            icon: Zap,
-            label: t("highlights.serviceMode"),
-            value: t("highlights.serviceModeValue"),
-            color: "text-electric-amber",
           },
         ]}
         actions={
@@ -204,7 +202,6 @@ export default async function ServiceDetailPage({
           <AspectBox
             src={service.image}
             alt={service.name}
-            badge={t("heroMedia.badge")}
             fallbackType="service"
             title={service.name}
             label={t("heroMedia.fallbackLabel", {
@@ -212,6 +209,7 @@ export default async function ServiceDetailPage({
             })}
             aspectRatio="4/3"
             className="shadow-md"
+            preload
           />
         }
       />
@@ -260,35 +258,12 @@ export default async function ServiceDetailPage({
 
       {/* 4. Supported Brands for this Service (Fetched from DB) */}
       {supportedBrands && supportedBrands.length > 0 && (
-        <Section variant="muted" padding="default">
-          <Container>
-            <div className="max-w-3xl mb-8">
-              <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
-                {t("brands.title", { serviceName: service.name })}
-              </h2>
-              <p className="mt-2 text-xs sm:text-sm text-text-secondary">
-                {t("brands.subtitle")}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-              {supportedBrands.map((b) => (
-                <Link
-                  key={b.slug}
-                  href={`/brands/${b.slug}`}
-                  className="p-4 rounded-xl bg-clean-white border border-border-default hover:border-flash-orange hover:shadow-xs transition-all text-center group flex flex-col items-center justify-center"
-                >
-                  <span className="font-heading text-sm font-bold text-tech-slate group-hover:text-flash-orange transition-colors">
-                    {b.name}
-                  </span>
-                  <span className="text-2xs text-text-muted mt-1">
-                    {t("brands.viewModels")}
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </Container>
-        </Section>
+        <BrandsShowcase
+          initialBrands={supportedBrands}
+          title={t("brands.title", { serviceName: service.name })}
+          subtitle={t("brands.subtitle")}
+          variant="muted"
+        />
       )}
 
       {/* 5. Service FAQs */}

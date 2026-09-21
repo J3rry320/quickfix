@@ -101,7 +101,7 @@ export default function AspectBox({
             src={src!}
             alt={alt}
             fill
-            preload={preload}
+            priority={preload}
             sizes={effectiveSizes}
             onError={() => setHasError(true)}
             className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -111,7 +111,7 @@ export default function AspectBox({
           {badge && (
             <div className="absolute top-3 left-3 sm:top-3.5 sm:left-3.5 z-10">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-tech-slate/90 backdrop-blur-md px-3 py-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-clean-white shadow-md border border-clean-white/20">
-                <span className="h-1.5 w-1.5 rounded-full bg-flash-orange animate-pulse" />
+                <span className="h-1.5 w-1.5 rounded-full bg-flash-orange" />
                 <span>{badge}</span>
               </span>
             </div>
