@@ -1,0 +1,50 @@
+# Quick Fix (quickfixmobile.in)
+
+> Pune's premier certified doorstep smartphone pickup, central lab repair, and same-day delivery service. 90-day warranty, genuine OEM parts, transparent pricing, and zero visit fee. Central lab located at Sadashiv Peth, Pune.
+
+## Core Services & Booking
+- [Doorstep Mobile Repair Booking](https://quickfixmobile.in/en/book-repair): Online booking wizard for doorstep smartphone pickup across Pune within 30 minutes.
+- [Live Repair Tracking](https://quickfixmobile.in/en/track): Real-time tracking of device pickup, lab diagnosis, repair progress, and return delivery.
+- [Customer Reviews & Ratings](https://quickfixmobile.in/en/reviews): Verified customer reviews and ratings (4.9/5 from 1,450+ Pune customers).
+- [About Quick Fix](https://quickfixmobile.in/en/about): Company background, central repair lab at Sadashiv Peth, certified technician team, and data privacy protocols.
+- [Contact & Support](https://quickfixmobile.in/en/contact): Helpline (+91 83086 86454), 24/7 WhatsApp booking support, and service center location.
+
+## Repair Services
+- [Screen Replacement in Pune](https://quickfixmobile.in/en/services/screen-replacement): OEM display and touchscreen replacement with 90-day warranty.
+- [Battery Replacement in Pune](https://quickfixmobile.in/en/services/battery-replacement): Certified high-capacity OEM battery replacement starting from ₹699.
+- [Charging Port Repair in Pune](https://quickfixmobile.in/en/services/charging-port-repair): Precision dock and flex cable repair starting from ₹499.
+- [Camera Lens Repair in Pune](https://quickfixmobile.in/en/services/camera-lens-repair): Camera module calibration and sapphire glass fix starting from ₹599.
+- [Motherboard Repair in Pune](https://quickfixmobile.in/en/services/motherboard-repair): Chip-level micro-soldering and water damage revival starting from ₹999.
+- [Back Glass Repair in Pune](https://quickfixmobile.in/en/services/back-glass-repair): Laser-assisted back panel replacement starting from ₹799.
+
+## Supported Smartphone Brands
+- [Apple iPhone Repair Pune](https://quickfixmobile.in/en/brands/apple): Expert doorstep pickup and certified lab repair for iPhone models.
+- [Samsung Galaxy Repair Pune](https://quickfixmobile.in/en/brands/samsung): Genuine display and battery repairs for Galaxy S, A, and M series.
+- [OnePlus Repair Pune](https://quickfixmobile.in/en/brands/oneplus): Screen, battery, and Warp charge port fixes for OnePlus devices.
+- [Xiaomi / Redmi Repair Pune](https://quickfixmobile.in/en/brands/xiaomi): Doorstep service for Xiaomi, Redmi, and POCO smartphones.
+- [Google Pixel Repair Pune](https://quickfixmobile.in/en/brands/google-pixel): Precision display and camera repair for Pixel phones.
+- [Vivo Repair Pune](https://quickfixmobile.in/en/brands/vivo): Certified screen and charging port repairs for Vivo devices.
+- [Oppo Repair Pune](https://quickfixmobile.in/en/brands/oppo): Reliable doorstep repair service for Oppo series.
+- [Realme Repair Pune](https://quickfixmobile.in/en/brands/realme): Fast and affordable doorstep service for Realme models.
+
+## Service Localities (Pune)
+- [Mobile Repair in Kothrud](https://quickfixmobile.in/en/locations/kothrud): 30-minute doorstep pickup in Kothrud, Pune.
+- [Mobile Repair in Baner](https://quickfixmobile.in/en/locations/baner): 35-minute doorstep pickup in Baner, Pune.
+- [Mobile Repair in Wakad](https://quickfixmobile.in/en/locations/wakad): 35-minute doorstep pickup in Wakad, Pune.
+- [Mobile Repair in Viman Nagar](https://quickfixmobile.in/en/locations/viman-nagar): 40-minute doorstep pickup in Viman Nagar, Pune.
+- [Mobile Repair in Hadapsar](https://quickfixmobile.in/en/locations/hadapsar): 40-minute doorstep pickup in Hadapsar, Pune.
+- [Mobile Repair in Hinjewadi](https://quickfixmobile.in/en/locations/hinjewadi): 45-minute doorstep pickup in Hinjewadi IT Park, Pune.
+- [Mobile Repair in Sadashiv Peth](https://quickfixmobile.in/en/locations/sadashiv-peth): 15-minute doorstep pickup near our central repair lab.
+- [Mobile Repair in Aundh](https://quickfixmobile.in/en/locations/aundh): 30-minute doorstep pickup in Aundh, Pune.
+- [Mobile Repair in Kalyani Nagar](https://quickfixmobile.in/en/locations/kalyani-nagar): 35-minute doorstep pickup in Kalyani Nagar, Pune.
+- [Mobile Repair in Pimpri-Chinchwad](https://quickfixmobile.in/en/locations/pimpri-chinchwad): 45-minute doorstep pickup in PCMC, Pune.
+
+## Diagnostic Guides & Tech Articles
+- [Smartphone Repair Guides & Tips](https://quickfixmobile.in/en/blogs): Diagnostic tutorials, battery health guides, screen replacement comparisons, and water damage recovery tips.
+
+## Full Context Document
+- [Full LLM Knowledge Base](https://quickfixmobile.in/llms-full.txt): Comprehensive documentation including pricing matrices, diagnostic procedures, warranty terms, and service areas.
+
+## Optional
+- [Privacy Policy](https://quickfixmobile.in/en/privacy): Customer data protection, repair confidentiality, and zero-access privacy guarantee.
+- [Terms of Service](https://quickfixmobile.in/en/terms): Warranty policies, no-fix-no-fee guarantee, and service conditions.

@@ -6,6 +6,7 @@ import {
   getDbServices,
   getAllDbModels,
 } from "@/lib/db/catalogue";
+import { getStaticBlogSlugs } from "@/lib/db/blogs";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = siteConfig.url.replace(/\/$/, "");
@@ -17,6 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/services", changeFrequency: "daily" as const, priority: 0.95 },
     { path: "/brands", changeFrequency: "daily" as const, priority: 0.95 },
     { path: "/book-repair", changeFrequency: "weekly" as const, priority: 0.9 },
+    { path: "/blogs", changeFrequency: "daily" as const, priority: 0.9 },
     { path: "/about", changeFrequency: "monthly" as const, priority: 0.8 },
     { path: "/contact", changeFrequency: "monthly" as const, priority: 0.85 },
     { path: "/reviews", changeFrequency: "daily" as const, priority: 0.9 },
@@ -26,10 +28,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   // Dynamic MongoDB Collections
-  const [brands, services, models] = await Promise.all([
+  const [brands, services, models, blogSlugs] = await Promise.all([
     getDbBrands(),
     getDbServices(),
     getAllDbModels(),
+    getStaticBlogSlugs(),
   ]);
 
   const localitySlugs = LOCALITIES_CATALOG.map((loc) => loc.slug);
@@ -54,6 +57,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: "weekly" as const,
         priority: 0.8,
       })),
+    ...blogSlugs.map((slug) => ({
+      path: `/blogs/${slug}`,
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    })),
     ...localitySlugs.map((slug) => ({
       path: `/locations/${slug}`,
       changeFrequency: "weekly" as const,

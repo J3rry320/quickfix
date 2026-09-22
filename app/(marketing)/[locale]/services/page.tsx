@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Clock, ShieldCheck, ArrowRight, Check, X, Phone, Wrench } from "lucide-react";
+import { getTranslations } from "next-intl/server";
+import { cacheLife, cacheTag } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { getServicesHubSeoMetadata, siteConfig } from "@/config/seo";
-import { getBreadcrumbSchema } from "@/config/jsonld";
+import { getBreadcrumbSchema, getItemListSchema } from "@/config/jsonld";
 import { getDbServices, getDbBrands } from "@/lib/db/catalogue";
 import contactConfig from "@/config/contact";
 import JsonLd from "@/components/seo/JsonLd";
@@ -24,8 +26,6 @@ export async function generateMetadata({
   return getServicesHubSeoMetadata({ locale });
 }
 
-import { cacheLife, cacheTag } from "next/cache";
-
 export default async function ServicesHubPage({
   params,
 }: {
@@ -37,86 +37,106 @@ export default async function ServicesHubPage({
 
   const { locale } = await params;
 
-  const [services, brands] = await Promise.all([
+  const [services, brands, t] = await Promise.all([
     getDbServices(),
     getDbBrands(),
+    getTranslations({ locale, namespace: "ServicesHub" }),
   ]);
 
   const siteUrl = siteConfig.url.replace(/\/$/, "");
   const breadcrumbSchema = getBreadcrumbSchema([
-    { name: "Home", url: `${siteUrl}/${locale}` },
-    { name: "Services", url: `${siteUrl}/${locale}/services` },
+    { name: t("breadcrumbs.home"), url: `${siteUrl}/${locale}` },
+    { name: t("breadcrumbs.services"), url: `${siteUrl}/${locale}/services` },
   ]);
 
   const comparisonFeatures = [
     {
-      feature: "Service Logistics",
-      quickfix: "Free doorstep pickup & same-day return in Pune",
-      localShop: "You commute in traffic & leave phone for days",
+      feature: t("comparison.features.logistics.name"),
+      quickfix: t("comparison.features.logistics.quickfix"),
+      localShop: t("comparison.features.logistics.localShop"),
     },
     {
-      feature: "Data Security & Privacy",
-      quickfix: "100% safe — zero passcodes needed & sealed transit",
-      localShop: "Password required / unattended device risk",
+      feature: t("comparison.features.security.name"),
+      quickfix: t("comparison.features.security.quickfix"),
+      localShop: t("comparison.features.security.localShop"),
     },
     {
-      feature: "Repair Turnaround",
-      quickfix: "Same-day express return to your doorstep",
-      localShop: "2 to 5 days delay",
+      feature: t("comparison.features.turnaround.name"),
+      quickfix: t("comparison.features.turnaround.quickfix"),
+      localShop: t("comparison.features.turnaround.localShop"),
     },
     {
-      feature: "Parts Quality",
-      quickfix: "Certified OEM-grade factory tested",
-      localShop: "Unknown duplicate / refurbished clones",
+      feature: t("comparison.features.parts.name"),
+      quickfix: t("comparison.features.parts.quickfix"),
+      localShop: t("comparison.features.parts.localShop"),
     },
     {
-      feature: "Warranty",
-      quickfix: "Up to 90 days replacement warranty",
-      localShop: "Zero warranty or 7 days verbal",
+      feature: t("comparison.features.warranty.name"),
+      quickfix: t("comparison.features.warranty.quickfix"),
+      localShop: t("comparison.features.warranty.localShop"),
     },
   ];
 
+  const servicesCatalogSchema = getItemListSchema({
+    name: "Smartphone Repair Services in Pune",
+    description: "Certified doorstep smartphone pickup and lab repair services across Pune with 90-day warranty.",
+    url: `${siteUrl}/${locale}/services`,
+    items: services.map((s) => ({
+      name: s.name,
+      url: `${siteUrl}/${locale}/services/${s.slug}`,
+      description: s.description,
+      image: s.image
+        ? s.image.startsWith("http://") || s.image.startsWith("https://")
+          ? s.image
+          : `${siteUrl}${s.image.startsWith("/") ? "" : "/"}${s.image}`
+        : `${siteUrl}${siteConfig.defaultOgImage}`,
+    })),
+  });
+
   return (
     <div className="flex flex-col w-full bg-clean-white">
-      <JsonLd schema={breadcrumbSchema} id="services-hub-structured-data" />
+      <JsonLd
+        schema={[breadcrumbSchema, servicesCatalogSchema]}
+        id="services-hub-structured-data"
+      />
 
       {/* 1. Unified Page Hero with Media */}
       <PageHero
         breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "Services" },
+          { label: t("breadcrumbs.home"), href: "/" },
+          { label: t("breadcrumbs.services") },
         ]}
-        title="Smartphone Repair Services in Pune"
-        subtitle="Doorstep smartphone pickup across Pune with precision repairs in our Sadashiv Peth cleanroom lab, authentic OEM parts, and a 90-day replacement warranty."
+        title={t("hero.title")}
+        subtitle={t("hero.subtitle")}
         align="left"
         media={
           <AspectBox
             aspectRatio="4/3"
             variant="solid"
-            badge="Certified Repair"
+            badge={t("hero.media.badge")}
             fallbackType="service"
-            title="Express Mobile Diagnostics"
-            label="Doorstep pickup & ESD-safe lab repair across all Pune & PCMC zones"
+            title={t("hero.media.title")}
+            label={t("hero.media.label")}
             className="shadow-xl"
           />
         }
         highlights={[
           {
             icon: Wrench,
-            label: "Repairs",
-            value: `${services.length} Core Services`,
+            label: t("hero.highlights.repairs.label"),
+            value: t("hero.highlights.repairs.value", { count: services.length }),
             color: "text-flash-orange",
           },
           {
             icon: Clock,
-            label: "Turnaround",
-            value: "Same-Day Return",
+            label: t("hero.highlights.turnaround.label"),
+            value: t("hero.highlights.turnaround.value"),
             color: "text-info",
           },
           {
             icon: ShieldCheck,
-            label: "Warranty",
-            value: "90-Day Coverage",
+            label: t("hero.highlights.warranty.label"),
+            value: t("hero.highlights.warranty.value"),
             color: "text-success",
           },
         ]}
@@ -126,7 +146,7 @@ export default async function ServicesHubPage({
               href="/book-repair"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-flash-orange-hover active:scale-95 transition-all"
             >
-              <span>Book Doorstep Repair</span>
+              <span>{t("hero.actions.bookRepair")}</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
 
@@ -135,7 +155,7 @@ export default async function ServicesHubPage({
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-border-strong text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
             >
               <Phone className="h-4 w-4 text-flash-orange" />
-              <span>Call Helpline: {contactConfig.phone.display}</span>
+              <span>{t("hero.actions.callHelpline", { phone: contactConfig.phone.display })}</span>
             </a>
           </>
         }
@@ -146,10 +166,10 @@ export default async function ServicesHubPage({
         <Container>
           <div className="max-w-3xl mb-8">
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
-              All Smartphone Repair Services
+              {t("grid.title")}
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-text-secondary">
-              Select any repair to inspect symptoms, turnaround times, and pricing.
+              {t("grid.subtitle")}
             </p>
           </div>
 
@@ -166,7 +186,7 @@ export default async function ServicesHubPage({
                       {service.name.split("&")[0].trim()}
                     </span>
                     <span className="text-xs font-bold text-text-muted">
-                      from ₹{service.startingPrice}
+                      {t("grid.fromPrice", { price: service.startingPrice })}
                     </span>
                   </div>
                   <h3 className="font-heading text-base font-bold text-tech-slate group-hover:text-flash-orange transition-colors">
@@ -180,11 +200,11 @@ export default async function ServicesHubPage({
                   <div className="flex items-center gap-3 text-[11px] text-text-muted font-semibold">
                     <span className="flex items-center gap-1">
                       <Clock className="h-3 w-3" />
-                      {service.estimatedTimeMinutes} mins
+                      {t("grid.estimatedTime", { minutes: service.estimatedTimeMinutes })}
                     </span>
                     <span className="flex items-center gap-1">
                       <ShieldCheck className="h-3 w-3" />
-                      {service.warrantyDays}-day warranty
+                      {t("grid.warrantyDays", { days: service.warrantyDays })}
                     </span>
                   </div>
                   <ArrowRight className="h-3.5 w-3.5 text-flash-orange group-hover:translate-x-1 transition-transform" />
@@ -207,18 +227,18 @@ export default async function ServicesHubPage({
         <Container>
           <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
-              Why Doorstep Repair Wins Over Local Shops
+              {t("comparison.title")}
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-text-secondary">
-              Save hours of travel time and protect your confidential mobile data with live doorstep service.
+              {t("comparison.subtitle")}
             </p>
           </div>
 
           <div className="max-w-4xl mx-auto overflow-hidden rounded-2xl border border-border-default shadow-xs bg-clean-white">
             <div className="grid grid-cols-12 bg-tech-slate text-clean-white p-4 font-heading text-xs sm:text-sm font-bold uppercase tracking-wider">
-              <div className="col-span-4 sm:col-span-4">Service Feature</div>
-              <div className="col-span-4 sm:col-span-4 text-success-light font-black">QuickFix Doorstep</div>
-              <div className="col-span-4 sm:col-span-4 text-text-muted">Traditional Local Shop</div>
+              <div className="col-span-4 sm:col-span-4">{t("comparison.headers.feature")}</div>
+              <div className="col-span-4 sm:col-span-4 text-success-light font-black">{t("comparison.headers.quickfix")}</div>
+              <div className="col-span-4 sm:col-span-4 text-text-muted">{t("comparison.headers.localShop")}</div>
             </div>
 
             <div className="divide-y divide-border-default text-xs sm:text-sm">
@@ -252,8 +272,8 @@ export default async function ServicesHubPage({
       <Section variant="white" padding="default">
         <Container>
           <CTABlock
-            title="Need An Immediate On-Site Diagnostic?"
-            subtitle="Our Pune dispatch hub operates 7 days a week. Book online in 60 seconds."
+            title={t("cta.title")}
+            subtitle={t("cta.subtitle")}
           />
         </Container>
       </Section>

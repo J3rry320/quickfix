@@ -25,6 +25,7 @@ interface ModelsScrollSectionProps {
   subtitle?: string;
   badge?: string;
   brands?: BrandFilterOption[];
+  allBrandsLabel?: string;
   showBrandFilter?: boolean;
   showSearch?: boolean;
   searchPlaceholder?: string;
@@ -44,6 +45,7 @@ export default function ModelsScrollSection({
   subtitle,
   badge,
   brands = [],
+  allBrandsLabel,
   showBrandFilter = false,
   showSearch = false,
   searchPlaceholder = "Search smartphone model...",
@@ -61,6 +63,33 @@ export default function ModelsScrollSection({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
+
+  // Only display brands in the filter tabs that actually have models present in the provided models list
+  const activeFilterBrands = useMemo(() => {
+    if (!brands || brands.length === 0) return [];
+    const modelBrandSlugs = new Set(
+      models
+        .map((m) =>
+          typeof m.brand === "object" && m.brand
+            ? m.brand.slug
+            : typeof m.brand === "string"
+              ? m.brand.toLowerCase()
+              : ""
+        )
+        .filter(Boolean)
+    );
+    return brands.filter((b) => modelBrandSlugs.has(b.slug));
+  }, [brands, models]);
+
+  // Reset filter to 'all' if the selected brand is not in activeFilterBrands
+  useEffect(() => {
+    if (
+      selectedBrandSlug !== "all" &&
+      !activeFilterBrands.some((b) => b.slug === selectedBrandSlug)
+    ) {
+      setSelectedBrandSlug("all");
+    }
+  }, [activeFilterBrands, selectedBrandSlug]);
 
   // Filter models by brand pill and search query
   const filteredModels = useMemo(() => {
@@ -234,7 +263,7 @@ export default function ModelsScrollSection({
         )}
 
         {/* Optional Brand Filter Tabs (for Landing page or hub) */}
-        {showBrandFilter && brands.length > 0 && (
+        {showBrandFilter && activeFilterBrands.length > 0 && (
           <div className="flex items-center gap-2 overflow-x-auto pb-2 mb-6 scrollbar-none">
             <button
               type="button"
@@ -245,9 +274,9 @@ export default function ModelsScrollSection({
                   : "bg-mist-gray text-text-secondary hover:text-tech-slate hover:bg-surface-hover border border-border-default/60"
               }`}
             >
-              All Brands
+              {allBrandsLabel || "All Brands"}
             </button>
-            {brands.map((brand) => (
+            {activeFilterBrands.map((brand) => (
               <button
                 key={brand.slug}
                 type="button"

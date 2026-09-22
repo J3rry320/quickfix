@@ -1,7 +1,7 @@
 import JsonLd from "@/components/seo/JsonLd";
 import { Container, CTABlock, PageHero, Section } from "@/components/ui";
 import contactConfig from "@/config/contact";
-import { getBreadcrumbSchema } from "@/config/jsonld";
+import { getBreadcrumbSchema, getWebPageSchema } from "@/config/jsonld";
 import { getSeoMetadata, siteConfig } from "@/config/seo";
 import { CheckCircle2, Shield } from "lucide-react";
 import type { Metadata } from "next";
@@ -37,9 +37,19 @@ export default async function PrivacyPage({
     { name: "Privacy Policy", url: `${siteUrl}/${locale}/privacy` },
   ]);
 
+  const privacySchema = getWebPageSchema({
+    title: "Privacy Policy | Quick Fix",
+    description: "Quick Fix privacy policy. Understand how we handle device data, customer information, and service communications transparently and securely.",
+    path: "/privacy",
+    locale,
+  });
+
   return (
     <div className="flex flex-col w-full bg-clean-white">
-      <JsonLd schema={breadcrumbSchema} id="privacy-structured-data" />
+      <JsonLd
+        schema={[breadcrumbSchema, privacySchema]}
+        id="privacy-structured-data"
+      />
 
       <PageHero
         breadcrumbs={[

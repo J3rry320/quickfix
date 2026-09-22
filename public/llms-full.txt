@@ -1,0 +1,140 @@
+# Quick Fix (quickfixmobile.in) - Full Knowledge Base
+
+> Comprehensive technical and operational documentation for AI agents, retrieval-augmented generation (RAG), and search indexing.
+
+## Business Overview
+- **Brand Name**: Quick Fix
+- **Legal Entity**: Quick Fix Mobile Solutions
+- **Website Domain**: quickfixmobile.in
+- **Primary Website URL**: https://quickfixmobile.in
+- **Helpline Phone**: +91 83086 86454 (+918308686454)
+- **WhatsApp Assistance**: +918308686454
+- **Support Email**: support@quickfixmobile.in
+- **Operating Hours**: Monday to Sunday, 9:00 AM - 9:00 PM IST
+- **Central Lab Address**: Shop No. 3, Purva Plaza, Sadashiv Peth, Pune, Maharashtra - 411030
+- **Emergency WhatsApp Support**: 24/7 online booking assistance
+
+## How Quick Fix Works
+1. **Online Booking or Call**: Customer books a doorstep pickup via https://quickfixmobile.in/en/book-repair or WhatsApp (+91 83086 86454).
+2. **Doorstep Pickup**: A verified Quick Fix dispatch technician reaches the customer's home or office anywhere in Pune within 30 to 45 minutes.
+3. **Digital Job Sheet & Safe Transit**: Device is inspected, sealed in an anti-static tamper-evident pouch, and issued a digital tracking reference code.
+4. **Lab-Grade Repair**: Precision diagnosis and repair in our dust-controlled Sadashiv Peth central lab using calibrated OEM parts.
+5. **Quality Control & Safe Return**: 20-point diagnostic check (touch, camera, battery thermals, charging, sensors). Device is returned safely to the customer's doorstep same day.
+6. **Payment & Warranty**: Customer inspects the device, pays digitally (UPI, card, cash), and receives a digital 90-day warranty card.
+
+## Repair Services Catalog & Pricing
+
+### Screen Replacement
+- **URL**: https://quickfixmobile.in/en/services/screen-replacement
+- **Starting Price**: ₹899
+- **Turnaround Time**: ~30 minutes
+- **Warranty Coverage**: 90 days
+- **Description**: OEM display and touchscreen digitizer replacement with vivid color calibration and touch sensitivity matching original specifications.
+
+### Battery Replacement
+- **URL**: https://quickfixmobile.in/en/services/battery-replacement
+- **Starting Price**: ₹699
+- **Turnaround Time**: ~25 minutes
+- **Warranty Coverage**: 90 days
+- **Description**: Certified high-capacity OEM battery replacement with full health recognition, thermal testing, and surge protection.
+
+### Charging Port Repair
+- **URL**: https://quickfixmobile.in/en/services/charging-port-repair
+- **Starting Price**: ₹499
+- **Turnaround Time**: ~30 minutes
+- **Warranty Coverage**: 90 days
+- **Description**: Precision microsoldering and OEM Type-C/Lightning connector dock replacement for loose ports, slow charging, or mic issues.
+
+### Camera Lens Repair
+- **URL**: https://quickfixmobile.in/en/services/camera-lens-repair
+- **Starting Price**: ₹599
+- **Turnaround Time**: ~35 minutes
+- **Warranty Coverage**: 90 days
+- **Description**: Camera module calibration, optical stabilization alignment, and sapphire lens glass replacement.
+
+### Motherboard Repair
+- **URL**: https://quickfixmobile.in/en/services/motherboard-repair
+- **Starting Price**: ₹999
+- **Turnaround Time**: ~60 minutes
+- **Warranty Coverage**: 90 days
+- **Description**: Chip-level BGA reballing, power IC diagnosis, short circuit isolation, and ultrasonic liquid damage revival.
+
+### Back Glass Repair
+- **URL**: https://quickfixmobile.in/en/services/back-glass-repair
+- **Starting Price**: ₹799
+- **Turnaround Time**: ~45 minutes
+- **Warranty Coverage**: 90 days
+- **Description**: Laser-assisted back panel removal and factory-grade seamless adhesive replacement.
+
+## Supported Smartphone Brands & Coverage
+We service all major smartphone brands in Pune with certified components:
+- **Apple**: https://quickfixmobile.in/en/brands/apple
+- **Samsung**: https://quickfixmobile.in/en/brands/samsung
+- **OnePlus**: https://quickfixmobile.in/en/brands/oneplus
+- **Xiaomi**: https://quickfixmobile.in/en/brands/xiaomi
+- **Google Pixel**: https://quickfixmobile.in/en/brands/google-pixel
+- **Vivo**: https://quickfixmobile.in/en/brands/vivo
+- **Oppo**: https://quickfixmobile.in/en/brands/oppo
+- **Realme**: https://quickfixmobile.in/en/brands/realme
+
+## Pune Service Localities & Dispatch Times
+### Kothrud
+- **URL**: https://quickfixmobile.in/en/locations/kothrud
+- **Zone**: West Pune
+- **Doorstep Pickup Time**: Within 30 Mins
+
+### Baner
+- **URL**: https://quickfixmobile.in/en/locations/baner
+- **Zone**: West Pune
+- **Doorstep Pickup Time**: Within 35 Mins
+
+### Wakad
+- **URL**: https://quickfixmobile.in/en/locations/wakad
+- **Zone**: Pimpri-Chinchwad / West Pune
+- **Doorstep Pickup Time**: Within 35 Mins
+
+### Viman Nagar
+- **URL**: https://quickfixmobile.in/en/locations/viman-nagar
+- **Zone**: East Pune
+- **Doorstep Pickup Time**: Within 40 Mins
+
+### Hadapsar
+- **URL**: https://quickfixmobile.in/en/locations/hadapsar
+- **Zone**: East Pune
+- **Doorstep Pickup Time**: Within 40 Mins
+
+### Hinjewadi
+- **URL**: https://quickfixmobile.in/en/locations/hinjewadi
+- **Zone**: IT Park / West Pune
+- **Doorstep Pickup Time**: Within 45 Mins
+
+### Sadashiv Peth
+- **URL**: https://quickfixmobile.in/en/locations/sadashiv-peth
+- **Zone**: Central Pune (Central Lab Hub)
+- **Doorstep Pickup Time**: Within 15 Mins
+
+### Aundh
+- **URL**: https://quickfixmobile.in/en/locations/aundh
+- **Zone**: West Pune
+- **Doorstep Pickup Time**: Within 30 Mins
+
+### Kalyani Nagar
+- **URL**: https://quickfixmobile.in/en/locations/kalyani-nagar
+- **Zone**: East Pune
+- **Doorstep Pickup Time**: Within 35 Mins
+
+### Pimpri-Chinchwad
+- **URL**: https://quickfixmobile.in/en/locations/pimpri-chinchwad
+- **Zone**: PCMC Pune
+- **Doorstep Pickup Time**: Within 45 Mins
+
+## Customer Guarantees & Policies
+- **No Fix, No Fee**: If our lab cannot resolve the reported fault, zero repair fee is charged.
+- **Strict Data Privacy**: Devices remain locked; customers are never asked for lock-screen PINs or passwords. No customer data is viewed, copied, or altered.
+- **Genuine OEM Parts**: We only use grade-A OEM certified replacement parts backed by 90-day replacement warranty.
+- **Transparent Pricing**: All estimates are upfront with zero hidden dispatch or diagnostic fees.
+
+## Tracking & Customer Support
+- **Live Status Tracking**: https://quickfixmobile.in/en/track
+- **Customer Reviews**: https://quickfixmobile.in/en/reviews (Average Rating: 4.9/5 based on 1,450+ verified Pune repairs)
+- **Contact Us**: https://quickfixmobile.in/en/contact

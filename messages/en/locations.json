@@ -1,0 +1,46 @@
+{
+  "LocalityPage": {
+    "breadcrumbs": {
+      "home": "Home"
+    },
+    "hero": {
+      "title": "Doorstep Mobile Pickup & Certified Lab Repair in {name}, Pune",
+      "subtitle": "Broke your smartphone screen or struggling with a dead battery in {name}? QuickFix provides rapid doorstep pickup within {dispatchTime}, certified lab repair in Sadashiv Peth, and safe same-day return with a 90-day warranty.",
+      "dispatchZone": "Dispatch Zone",
+      "pickupSla": "Pickup SLA",
+      "landmark": "Landmark",
+      "warranty": "Warranty",
+      "warrantyValue": "90 Days Hassle-Free",
+      "bookPickup": "Book Pickup in {name}",
+      "callNow": "Call {phone}"
+    },
+    "map": {
+      "serviceArea": "Doorstep Service Area",
+      "puneMh": "Pune, MH",
+      "pune": "Pune",
+      "pin": "PIN: {pincode}",
+      "pickupCoverage": "Doorstep pickup & return across {name}",
+      "getDirections": "Get Directions",
+      "openGoogleMaps": "Get Directions"
+    },
+    "neighborhoods": {
+      "title": "Neighborhoods We Visit in & around {name}",
+      "subtitle": "Zero extra travel charges anywhere within this radius. Safe doorstep pickup and return with tamper-proof transit bags."
+    },
+    "repairs": {
+      "title": "Top Smartphone Repairs Ordered in {name}",
+      "subtitle": "Repairs are performed by certified engineers in our Sadashiv Peth cleanroom lab with a 90-day replacement warranty.",
+      "serviceInLocality": "{serviceName} in {name}",
+      "fromPrice": "from ₹{price}",
+      "viewDetails": "View Details & Pricing"
+    },
+    "brands": {
+      "title": "Smartphone Brands We Service in {name}",
+      "subtitle": "Doorstep pickup and certified lab repair available for all major brands across {name} and {zone}."
+    },
+    "cta": {
+      "title": "Doorstep Smartphone Pickup & Lab Repair in {name}",
+      "subtitle": "Technicians active in {zone}. Book in 60 seconds or call our central Pune hotline."
+    }
+  }
+}

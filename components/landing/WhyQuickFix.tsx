@@ -1,6 +1,64 @@
-import { useTranslations } from "next-intl";
-import { ShieldCheck, Check, X, Sparkles } from "lucide-react";
 import SectionHeader from "@/components/landing/SectionHeader";
+import AspectBox from "@/components/ui/AspectBox";
+import { Check, ShieldCheck, Sparkles, X } from "lucide-react";
+import { useTranslations } from "next-intl";
+
+type TranslationFn = (key: string) => string;
+
+function GuaranteeCard({ t }: { t: TranslationFn }) {
+  return (
+    <div className="rounded-2xl bg-clean-white border border-border-default p-5 sm:p-6 shadow-md flex flex-col justify-between">
+      <div>
+        {/* 16:9 Aspect Ratio Media Box for Lab Workbench Image */}
+        <AspectBox
+          aspectRatio="16/9"
+          src="/assets/images/workbench.webp"
+          alt={t("workbenchAlt")}
+          // badge={t("workbenchBadge")}
+          fallbackType="lab"
+          // title={t("workbenchTitle")}
+          // label={t("workbenchLabel")}
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 380px"
+          className="mb-4 shadow-2xs"
+        />
+
+        <div className="flex items-center gap-2 mb-2">
+          <ShieldCheck className="h-5 w-5 text-flash-orange" />
+          <h3 className="font-heading text-base sm:text-lg font-bold text-tech-slate">
+            {t("guaranteeTitle")}
+          </h3>
+        </div>
+        <p className="text-xs text-text-muted font-body mb-4 leading-relaxed">
+          {t("guaranteeDesc")}
+        </p>
+
+        <div className="space-y-2.5 pt-3 border-t border-border-default/60 text-xs">
+          <div className="flex items-center gap-2 text-tech-slate font-semibold">
+            <Check className="h-4 w-4 text-flash-orange shrink-0" />
+            <span>{t("point1")}</span>
+          </div>
+          <div className="flex items-center gap-2 text-tech-slate font-semibold">
+            <Check className="h-4 w-4 text-flash-orange shrink-0" />
+            <span>{t("point2")}</span>
+          </div>
+          <div className="flex items-center gap-2 text-tech-slate font-semibold">
+            <Check className="h-4 w-4 text-flash-orange shrink-0" />
+            <span>{t("point3")}</span>
+          </div>
+          <div className="flex items-center gap-2 text-tech-slate font-semibold">
+            <Check className="h-4 w-4 text-flash-orange shrink-0" />
+            <span>{t("point4")}</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-5 pt-3 border-t border-border-default/60 flex items-center gap-2 text-xs font-bold text-flash-orange">
+        <ShieldCheck className="h-4 w-4 shrink-0" />
+        <span>{t("privacyGuaranteed")}</span>
+      </div>
+    </div>
+  );
+}
 
 export default function WhyQuickFix() {
   const t = useTranslations("WhyQuickFix");
@@ -57,11 +115,11 @@ export default function WhyQuickFix() {
           <div className="rounded-2xl bg-clean-white border-2 border-flash-orange p-5 shadow-lg relative overflow-hidden">
             <div className="absolute top-0 right-0 bg-flash-orange text-clean-white text-[10px] font-black uppercase px-3 py-1 rounded-bl-xl flex items-center gap-1">
               <Sparkles className="h-3 w-3" />
-              <span>Recommended</span>
+              <span>{t("recommended")}</span>
             </div>
 
             <h3 className="font-heading text-lg font-black text-tech-slate mb-3">
-              Quick<span className="text-flash-orange">Fix</span>.in Pickup & Lab
+              {t("mobileCardTitle")}
             </h3>
 
             <div className="space-y-3">
@@ -113,6 +171,9 @@ export default function WhyQuickFix() {
               </ul>
             </div>
           </div>
+
+          {/* Mobile Guarantee Card with Workbench Photo */}
+          <GuaranteeCard t={t} />
         </div>
 
         {/* Desktop View: Full Table (>= md) */}
@@ -169,56 +230,9 @@ export default function WhyQuickFix() {
             </table>
           </div>
 
-          {/* Side Guarantee Card with 4:3 Media Box */}
-          <div className="md:col-span-4 rounded-2xl bg-clean-white border border-border-default p-6 shadow-md flex flex-col justify-between">
-            <div>
-              {/* 4:3 Aspect Ratio Media Box for Toolkit Image */}
-              <div className="relative mb-4 aspect-4/3 w-full rounded-xl bg-mist-gray border border-border-default/80 overflow-hidden flex flex-col items-center justify-center text-center p-4 shadow-2xs select-none">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-flash-orange/10 text-flash-orange mb-2">
-                  <ShieldCheck className="h-5 w-5" />
-                </div>
-                <span className="text-xs font-bold text-tech-slate">
-                  {t("mediaTitle")}
-                </span>
-                <span className="text-[11px] text-text-muted mt-0.5">
-                  Certified Pune Lab • OEM Parts • Tamper-Proof Transit
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2 mb-2">
-                <ShieldCheck className="h-5 w-5 text-flash-orange" />
-                <h3 className="font-heading text-base sm:text-lg font-bold text-tech-slate">
-                  {t("mediaTitle")}
-                </h3>
-              </div>
-              <p className="text-xs text-text-muted font-body mb-4 leading-relaxed">
-                Our doorstep technicians inspect your device, issue an official handover receipt with IMEI verification, and safely transport it to our Sadashiv Peth precision lab.
-              </p>
-
-              <div className="space-y-2.5 pt-3 border-t border-border-default/60 text-xs">
-                <div className="flex items-center gap-2 text-tech-slate font-semibold">
-                  <Check className="h-4 w-4 text-flash-orange shrink-0" />
-                  <span>Free doorstep pickup & same-day return in Pune</span>
-                </div>
-                <div className="flex items-center gap-2 text-tech-slate font-semibold">
-                  <Check className="h-4 w-4 text-flash-orange shrink-0" />
-                  <span>ESD-safe precision repair lab in Sadashiv Peth</span>
-                </div>
-                <div className="flex items-center gap-2 text-tech-slate font-semibold">
-                  <Check className="h-4 w-4 text-flash-orange shrink-0" />
-                  <span>Zero passcode or pattern lock required</span>
-                </div>
-                <div className="flex items-center gap-2 text-tech-slate font-semibold">
-                  <Check className="h-4 w-4 text-flash-orange shrink-0" />
-                  <span>Same-day doorstep delivery with 90-day warranty</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-5 pt-3 border-t border-border-default/60 flex items-center gap-2 text-xs font-bold text-flash-orange">
-              <ShieldCheck className="h-4 w-4 shrink-0" />
-              <span>100% Privacy & Zero Data Access Guaranteed</span>
-            </div>
+          {/* Side Guarantee Card with 16:9 Aspect Box for Workbench Image */}
+          <div className="md:col-span-4">
+            <GuaranteeCard t={t} />
           </div>
         </div>
       </div>

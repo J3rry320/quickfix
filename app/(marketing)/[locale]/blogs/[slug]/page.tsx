@@ -52,14 +52,20 @@ export async function generateMetadata({
 
   if (!post) {
     return {
-      title: "Article Not Found | QuickFixMobile.in",
+      title: "Article Not Found | Quick Fix",
     };
   }
 
   const siteUrl = siteConfig.url.replace(/\/$/, "");
   const canonicalUrl = `${siteUrl}/${locale}/blogs/${post.slug}`;
-  const metaTitle = post.seo?.metaTitle || `${post.title} | QuickFixMobile.in`;
+  const metaTitle = post.seo?.metaTitle || `${post.title} | Quick Fix`;
   const metaDescription = post.seo?.metaDescription || post.excerpt;
+  const postImage =
+    post.coverImage && post.coverImage.trim()
+      ? post.coverImage.startsWith("http://") || post.coverImage.startsWith("https://")
+        ? post.coverImage
+        : `${siteUrl}${post.coverImage.startsWith("/") ? "" : "/"}${post.coverImage}`
+      : `${siteUrl}${siteConfig.defaultOgImage}`;
 
   return {
     title: metaTitle,
@@ -84,13 +90,22 @@ export async function generateMetadata({
       modifiedTime: post.updatedAt
         ? new Date(post.updatedAt).toISOString()
         : undefined,
-      authors: [post.author?.name || "QuickFix Tech Team"],
+      authors: [post.author?.name || "Quick Fix Tech Team"],
       tags: post.tags,
+      images: [
+        {
+          url: postImage,
+          width: 1200,
+          height: 630,
+          alt: metaTitle,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: metaTitle,
       description: metaDescription,
+      images: [postImage],
     },
   };
 }
@@ -125,8 +140,9 @@ export default async function BlogPostDetailPage({
     slug: post.slug,
     publishedAt: post.publishedAt,
     updatedAt: post.updatedAt,
-    authorName: post.author?.name || "QuickFix Tech Team",
+    authorName: post.author?.name || "Quick Fix Tech Team",
     locale,
+    image: post.coverImage || siteConfig.defaultOgImage,
   });
 
   const formattedDate = post.publishedAt

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui";
 import { ModelsScrollSection } from "@/components/models";
 import contactConfig from "@/config/contact";
-import { getBreadcrumbSchema } from "@/config/jsonld";
+import { getBreadcrumbSchema, getBrandServiceSchema } from "@/config/jsonld";
 import { getBrandSeoMetadata, siteConfig } from "@/config/seo";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
@@ -61,7 +61,7 @@ export async function generateMetadata({
 
   if (!brand) {
     return {
-      title: "Brand Not Found | QuickFixMobile.in",
+      title: "Brand Not Found | Quick Fix",
     };
   }
 
@@ -69,6 +69,7 @@ export async function generateMetadata({
     brandName: brand.name,
     locale,
     slug: brand.slug,
+    image: brand.logoUrl || siteConfig.defaultOgImage,
   });
 }
 
@@ -139,10 +140,17 @@ export default async function BrandDetailPage({
     },
   ];
 
+  const brandServiceSchema = getBrandServiceSchema({
+    brandName: brand.name,
+    slug: brand.slug,
+    logoUrl: brand.logoUrl,
+    locale,
+  });
+
   return (
     <div className="flex flex-col w-full bg-clean-white">
       <JsonLd
-        schema={breadcrumbSchema}
+        schema={[breadcrumbSchema, brandServiceSchema]}
         id={`brand-${brand.slug}-structured-data`}
       />
 
@@ -228,10 +236,10 @@ export default async function BrandDetailPage({
             aspectRatio="4/3"
             src={brand.logoUrl}
             alt={brand.name}
-            badge={`${brand.name} Authorized Specs`}
+            badge={t("hero.media.badge", { brandName: brand.name })}
             fallbackType="brand"
-            title={`${brand.name} Repairs`}
-            label="OEM-grade components, 90-day warranty & 30-min express turnaround in Pune"
+            title={t("hero.media.title", { brandName: brand.name })}
+            label={t("hero.media.label")}
             className="shadow-xl"
             preload={true}
             sizes="(max-width: 1024px) 100vw, (max-width: 1280px) 42vw, 520px"
@@ -303,11 +311,10 @@ export default async function BrandDetailPage({
           <Container>
             <div className="max-w-3xl mb-8">
               <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
-                Popular Repairs for {brand.name} Phones
+                {t("services.title", { brandName: brand.name })}
               </h2>
               <p className="mt-2 text-xs sm:text-sm text-text-secondary">
-                All services performed live on-site with zero hidden diagnostic
-                fees.
+                {t("services.subtitle")}
               </p>
             </div>
 
@@ -327,7 +334,7 @@ export default async function BrandDetailPage({
                           <IconComponent className="h-5 w-5 transition-transform group-hover:scale-110 duration-200" />
                         </div>
                         <span className="inline-flex items-center px-2.5 py-1 rounded-xl bg-mist-gray/90 border border-border-default/80 text-xs font-bold text-tech-slate group-hover:border-flash-orange/30 transition-colors">
-                          From ₹{service.startingPrice}
+                          {t("services.startingFrom", { price: service.startingPrice })}
                         </span>
                       </div>
 
@@ -344,10 +351,14 @@ export default async function BrandDetailPage({
                     <div className="mt-5 pt-3.5 border-t border-border-default/60 flex items-center justify-between text-xs font-bold text-flash-orange">
                       <div className="flex items-center gap-1.5 text-3xs text-text-muted font-normal">
                         <Clock className="h-3.5 w-3.5 text-flash-orange/70" />
-                        <span>{service.estimatedTimeMinutes || 30} mins express</span>
+                        <span>
+                          {t("services.expressTime", {
+                            minutes: service.estimatedTimeMinutes || 30,
+                          })}
+                        </span>
                       </div>
                       <span className="inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                        <span>View Details</span>
+                        <span>{t("services.viewDetails")}</span>
                         <ArrowRight className="h-3.5 w-3.5" />
                       </span>
                     </div>

@@ -83,11 +83,19 @@ export function getWebsiteSchema(locale: string = "en") {
     "@type": "WebSite",
     "@id": `${siteUrl}/#website`,
     name: siteConfig.name,
-    alternateName: "QuickFix Mobile Repair Pune",
+    alternateName: ["QuickFix Pune", "QuickFixMobile.in", "Quick Fix Pune"],
     url: `${siteUrl}/${safeLocale}`,
     inLanguage: ["en", "hi", "mr"],
     publisher: {
       "@id": `${siteUrl}/#business`,
+    },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${siteUrl}/${safeLocale}/brands?search={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
     },
   };
 }
@@ -228,7 +236,7 @@ export function getServiceDetailPageSchema({
   description,
   startingPrice,
   warrantyDays = 90,
-  estimatedTimeMinutes: _estimatedTimeMinutes = 30,
+  estimatedTimeMinutes = 30,
   slug,
   locale = "en",
   image,
@@ -243,7 +251,7 @@ export function getServiceDetailPageSchema({
   image?: string;
 }) {
   const siteUrl = siteConfig.url.replace(/\/$/, "");
-  const fullImageUrl = image
+  const fullImageUrl = image && image.trim()
     ? image.startsWith("http://") || image.startsWith("https://")
       ? image
       : `${siteUrl}${image.startsWith("/") ? "" : "/"}${image}`
@@ -261,6 +269,7 @@ export function getServiceDetailPageSchema({
       name: contactConfig.brand,
       telephone: contactConfig.phone.display,
       address: contactConfig.address.full,
+      url: `${siteUrl}/${locale}`,
     },
     areaServed: {
       "@type": "City",
@@ -274,7 +283,14 @@ export function getServiceDetailPageSchema({
       availability: "https://schema.org/InStock",
       url: `${siteUrl}/${locale}/services/${slug}`,
       warranty: `${warrantyDays} days warranty`,
+      seller: {
+        "@type": "LocalBusiness",
+        name: contactConfig.brand,
+        telephone: contactConfig.phone.display,
+        url: `${siteUrl}/${locale}`,
+      },
     },
+    serviceOutput: `${serviceName} completed in approx ${estimatedTimeMinutes} mins with genuine OEM parts`,
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.9",
@@ -290,6 +306,7 @@ export function getModelDetailPageSchema({
   modelSlug,
   startingPrice = 699,
   locale = "en",
+  image,
 }: {
   brandName: string;
   modelName: string;
@@ -297,14 +314,21 @@ export function getModelDetailPageSchema({
   modelSlug: string;
   startingPrice?: number;
   locale?: string;
+  image?: string;
 }) {
   const siteUrl = siteConfig.url.replace(/\/$/, "");
+  const fullImageUrl = image && image.trim()
+    ? image.startsWith("http://") || image.startsWith("https://")
+      ? image
+      : `${siteUrl}${image.startsWith("/") ? "" : "/"}${image}`
+    : `${siteUrl}${siteConfig.defaultOgImage}`;
 
   return {
     "@context": "https://schema.org",
     "@type": "Product",
     name: `${modelName} Repair Service`,
     description: `Professional doorstep repair for ${modelName} in Pune. Screen, battery, camera, and charging port repairs with 90-day warranty.`,
+    image: fullImageUrl,
     brand: {
       "@type": "Brand",
       name: brandName,
@@ -313,11 +337,15 @@ export function getModelDetailPageSchema({
       "@type": "AggregateOffer",
       lowPrice: startingPrice,
       priceCurrency: "INR",
+      priceValidUntil: "2027-12-31",
       availability: "https://schema.org/InStock",
       url: `${siteUrl}/${locale}/brands/${brandSlug}/${modelSlug}`,
-    },
-    provider: {
-      "@id": `${siteUrl}/#business`,
+      seller: {
+        "@type": "LocalBusiness",
+        name: contactConfig.brand,
+        telephone: contactConfig.phone.display,
+        url: `${siteUrl}/${locale}`,
+      },
     },
   };
 }
@@ -330,6 +358,7 @@ export function getBlogPostSchema({
   updatedAt,
   authorName = "QuickFix Tech Team",
   locale = "en",
+  image,
 }: {
   title: string;
   description: string;
@@ -338,14 +367,21 @@ export function getBlogPostSchema({
   updatedAt?: Date | string;
   authorName?: string;
   locale?: string;
+  image?: string;
 }) {
   const siteUrl = siteConfig.url.replace(/\/$/, "");
+  const fullImageUrl = image && image.trim()
+    ? image.startsWith("http://") || image.startsWith("https://")
+      ? image
+      : `${siteUrl}${image.startsWith("/") ? "" : "/"}${image}`
+    : `${siteUrl}${siteConfig.defaultOgImage}`;
 
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: title,
     description,
+    image: fullImageUrl,
     url: `${siteUrl}/${locale}/blogs/${slug}`,
     datePublished: publishedAt ? new Date(publishedAt).toISOString() : undefined,
     dateModified: updatedAt ? new Date(updatedAt).toISOString() : undefined,
@@ -422,6 +458,191 @@ export function getReviewsPageSchema(
       bestRating: "5",
       worstRating: "1",
     },
+  };
+}
+
+export function getLocalityServiceSchema({
+  localityName,
+  zoneName,
+  dispatchTime = "30 Mins",
+  slug,
+  locale = "en",
+}: {
+  localityName: string;
+  zoneName?: string;
+  dispatchTime?: string;
+  slug: string;
+  locale?: string;
+}) {
+  const safeLocale = (["en", "hi", "mr"].includes(locale) ? locale : "en") as
+    | "en"
+    | "hi"
+    | "mr";
+  const siteUrl = siteConfig.url.replace(/\/$/, "");
+  const zoneInfo = zoneName ? ` (${zoneName} Pune)` : "";
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${siteUrl}/${safeLocale}/locations/${slug}#service`,
+    name: `Doorstep Mobile Repair in ${localityName}, Pune`,
+    description: `Certified doorstep smartphone pickup and lab repair in ${localityName}, Pune${zoneInfo}. ${dispatchTime} dispatch, genuine OEM parts, transparent pricing, and 90-day warranty.`,
+    provider: {
+      "@type": "LocalBusiness",
+      name: contactConfig.brand,
+      telephone: contactConfig.phone.display,
+      address: contactConfig.address.full,
+      url: `${siteUrl}/${safeLocale}`,
+    },
+    areaServed: {
+      "@type": "AdministrativeArea",
+      name: `${localityName}, Pune`,
+    },
+    serviceType: "Doorstep Smartphone Repair",
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: "INR",
+      lowPrice: "299",
+      priceValidUntil: "2027-12-31",
+      availability: "https://schema.org/InStock",
+      url: `${siteUrl}/${safeLocale}/locations/${slug}`,
+      description: `Doorstep mobile repair pickup in ${localityName}, Pune within ${dispatchTime}`,
+    },
+  };
+}
+
+export function getBrandServiceSchema({
+  brandName,
+  slug,
+  logoUrl,
+  locale = "en",
+}: {
+  brandName: string;
+  slug: string;
+  logoUrl?: string;
+  locale?: string;
+}) {
+  const safeLocale = (["en", "hi", "mr"].includes(locale) ? locale : "en") as
+    | "en"
+    | "hi"
+    | "mr";
+  const siteUrl = siteConfig.url.replace(/\/$/, "");
+  const fullLogoUrl = logoUrl && logoUrl.trim()
+    ? logoUrl.startsWith("http://") || logoUrl.startsWith("https://")
+      ? logoUrl
+      : `${siteUrl}${logoUrl.startsWith("/") ? "" : "/"}${logoUrl}`
+    : `${siteUrl}${siteConfig.defaultOgImage}`;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${siteUrl}/${safeLocale}/brands/${slug}#service`,
+    name: `${brandName} Smartphone Repair in Pune`,
+    description: `Expert doorstep pickup and certified lab repairs for ${brandName} smartphones in Pune. Screen, battery, charging port, and motherboard fixes with 90-day warranty.`,
+    image: fullLogoUrl,
+    provider: {
+      "@type": "LocalBusiness",
+      name: contactConfig.brand,
+      telephone: contactConfig.phone.display,
+      address: contactConfig.address.full,
+      url: `${siteUrl}/${safeLocale}`,
+    },
+    areaServed: {
+      "@type": "City",
+      name: "Pune",
+    },
+    serviceType: `${brandName} Phone Repair`,
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: "INR",
+      lowPrice: "699",
+      priceValidUntil: "2027-12-31",
+      availability: "https://schema.org/InStock",
+      url: `${siteUrl}/${safeLocale}/brands/${slug}`,
+    },
+  };
+}
+
+export function getContactPageSchema(locale: string = "en") {
+  const safeLocale = (["en", "hi", "mr"].includes(locale) ? locale : "en") as
+    | "en"
+    | "hi"
+    | "mr";
+  const siteUrl = siteConfig.url.replace(/\/$/, "");
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "@id": `${siteUrl}/${safeLocale}/contact#webpage`,
+    name: `Contact ${contactConfig.brand} | Doorstep Phone Repair Pune`,
+    description: `Contact ${contactConfig.brand} for doorstep smartphone repair pickup across Pune. Call ${contactConfig.phone.display} or visit our central lab in Sadashiv Peth.`,
+    url: `${siteUrl}/${safeLocale}/contact`,
+    mainEntity: {
+      "@id": `${siteUrl}/#business`,
+    },
+  };
+}
+
+export function getWebPageSchema({
+  title,
+  description,
+  path,
+  locale = "en",
+}: {
+  title: string;
+  description: string;
+  path: string;
+  locale?: string;
+}) {
+  const safeLocale = (["en", "hi", "mr"].includes(locale) ? locale : "en") as
+    | "en"
+    | "hi"
+    | "mr";
+  const siteUrl = siteConfig.url.replace(/\/$/, "");
+  const cleanPath = path.startsWith("/") ? path : `/${path}`;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${siteUrl}/${safeLocale}${cleanPath}#webpage`,
+    name: title,
+    description,
+    url: `${siteUrl}/${safeLocale}${cleanPath}`,
+    isPartOf: {
+      "@id": `${siteUrl}/#website`,
+    },
+    about: {
+      "@id": `${siteUrl}/#business`,
+    },
+  };
+}
+
+export function getItemListSchema({
+  name,
+  description,
+  url,
+  items,
+}: {
+  name: string;
+  description: string;
+  url: string;
+  items: { name: string; url: string; description?: string; image?: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name,
+    description,
+    url,
+    numberOfItems: items.length,
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      url: item.url,
+      description: item.description,
+      image: item.image,
+    })),
   };
 }
 

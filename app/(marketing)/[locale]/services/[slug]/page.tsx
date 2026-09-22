@@ -3,6 +3,7 @@ import {
   AspectBox,
   Container,
   CTABlock,
+  FaqHelpCard,
   PageHero,
   ProcessStepGrid,
   Section,
@@ -11,6 +12,7 @@ import contactConfig from "@/config/contact";
 import {
   getBreadcrumbSchema,
   getServiceDetailPageSchema,
+  getFaqPageSchema,
 } from "@/config/jsonld";
 import { getServiceSeoMetadata, siteConfig } from "@/config/seo";
 import { Link } from "@/i18n/navigation";
@@ -57,7 +59,7 @@ export async function generateMetadata({
 
   if (!service) {
     return {
-      title: "Service Not Found | QuickFixMobile.in",
+      title: "Service Not Found | Quick Fix",
     };
   }
 
@@ -67,7 +69,7 @@ export async function generateMetadata({
     turnaroundMinutes: service.estimatedTimeMinutes,
     locale,
     slug: service.slug,
-    image: service.image,
+    image: service.image || siteConfig.defaultOgImage,
   });
 }
 
@@ -135,10 +137,14 @@ export default async function ServiceDetailPage({
     },
   ];
 
+  const faqSchema = getFaqPageSchema(
+    serviceFaqs.map((f) => ({ question: f.q, answer: f.a }))
+  );
+
   return (
     <div className="flex flex-col w-full bg-clean-white">
       <JsonLd
-        schema={[breadcrumbSchema, serviceSchema]}
+        schema={[breadcrumbSchema, serviceSchema, faqSchema]}
         id={`service-${service.slug}-structured-data`}
       />
 
@@ -279,21 +285,35 @@ export default async function ServiceDetailPage({
             </p>
           </div>
 
-          <div className="max-w-4xl space-y-4">
-            {serviceFaqs.map((faq, idx) => (
-              <div
-                key={idx}
-                className="rounded-2xl border border-border-default bg-clean-white p-5 sm:p-6 shadow-2xs"
-              >
-                <h3 className="font-heading text-base font-bold text-tech-slate flex items-start gap-2.5">
-                  <HelpCircle className="h-5 w-5 text-flash-orange shrink-0 mt-0.5" />
-                  <span>{faq.q}</span>
-                </h3>
-                <p className="mt-2.5 text-xs sm:text-sm text-text-muted leading-relaxed pl-7.5">
-                  {faq.a}
-                </p>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+            {/* FAQs List */}
+            <div className="lg:col-span-7 xl:col-span-7 space-y-4">
+              {serviceFaqs.map((faq, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-2xl border border-border-default bg-clean-white p-5 sm:p-6 shadow-2xs hover:border-flash-orange/30 transition-colors"
+                >
+                  <h3 className="font-heading text-base font-bold text-tech-slate flex items-start gap-2.5">
+                    <HelpCircle className="h-5 w-5 text-flash-orange shrink-0 mt-0.5" />
+                    <span>{faq.q}</span>
+                  </h3>
+                  <p className="mt-2.5 text-xs sm:text-sm text-text-muted leading-relaxed pl-7.5">
+                    {faq.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Question Graphic Support Card */}
+            <div className="lg:col-span-5 xl:col-span-5 w-full lg:sticky lg:top-24">
+              <FaqHelpCard
+                title={t("faqs.helpCardTitle")}
+                subtitle={t("faqs.helpCardSubtitle")}
+                serviceName={service.name}
+                whatsappLabel={t("faqs.askEngineer")}
+                phoneLabel={contactConfig.phone.display}
+              />
+            </div>
           </div>
         </Container>
       </Section>

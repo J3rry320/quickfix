@@ -3,11 +3,21 @@ import { Smartphone, ArrowRight, ShieldCheck, Clock, Zap } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { getBrandsHubSeoMetadata, siteConfig } from "@/config/seo";
-import { getBreadcrumbSchema } from "@/config/jsonld";
+import { getBreadcrumbSchema, getItemListSchema } from "@/config/jsonld";
 import { getDbBrands, getAllDbModels, getPopularDbModels } from "@/lib/db/catalogue";
 import JsonLd from "@/components/seo/JsonLd";
-import { Container, Section, CTABlock, PageHero, AspectBox } from "@/components/ui";
+import {
+  Container,
+  Section,
+  CTABlock,
+  PageHero,
+  AspectBox,
+  BrandLogo,
+} from "@/components/ui";
+import BrandsShowcase from "@/components/landing/BrandsShowcase";
 import { ModelsScrollSection } from "@/components/models";
+import { getTranslations } from "next-intl/server";
+import { cacheLife, cacheTag } from "next/cache";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -22,8 +32,6 @@ export async function generateMetadata({
   return getBrandsHubSeoMetadata({ locale });
 }
 
-import { cacheLife, cacheTag } from "next/cache";
-
 export default async function BrandsHubPage({
   params,
 }: {
@@ -35,11 +43,28 @@ export default async function BrandsHubPage({
 
   const { locale } = await params;
 
-  const [brands, allModels, popularModels] = await Promise.all([
+  const [brands, allModels, popularModels, t] = await Promise.all([
     getDbBrands(),
     getAllDbModels(),
     getPopularDbModels(24),
+    getTranslations({ locale, namespace: "BrandsHub" }),
   ]);
+
+  // Filter brands that actually have models in popularModels for the filter tabs
+  const popularBrandSlugs = new Set(
+    popularModels
+      .map((m) =>
+        typeof m.brand === "object" && m.brand
+          ? (m.brand as { slug: string }).slug
+          : typeof m.brand === "string"
+            ? m.brand.toLowerCase()
+            : ""
+      )
+      .filter(Boolean)
+  );
+  const supportedPopularBrands = brands.filter((b) =>
+    popularBrandSlugs.has(b.slug)
+  );
 
   // Group models by brand id / slug
   const modelsByBrandSlug: Record<string, string[]> = {};
@@ -54,111 +79,169 @@ export default async function BrandsHubPage({
 
   const siteUrl = siteConfig.url.replace(/\/$/, "");
   const breadcrumbSchema = getBreadcrumbSchema([
-    { name: "Home", url: `${siteUrl}/${locale}` },
-    { name: "Brands", url: `${siteUrl}/${locale}/brands` },
+    { name: t("breadcrumbs.home"), url: `${siteUrl}/${locale}` },
+    { name: t("breadcrumbs.brands"), url: `${siteUrl}/${locale}/brands` },
   ]);
+
+  const brandsCatalogSchema = getItemListSchema({
+    name: "Smartphone Brands Repaired in Pune",
+    description: "All smartphone brands supported for certified doorstep pickup and repair across Pune by Quick Fix",
+    url: `${siteUrl}/${locale}/brands`,
+    items: brands.map((b) => ({
+      name: `${b.name} Repair`,
+      url: `${siteUrl}/${locale}/brands/${b.slug}`,
+      description: `Doorstep mobile repair and genuine OEM parts for ${b.name} devices in Pune`,
+      image: b.logoUrl
+        ? b.logoUrl.startsWith("http://") || b.logoUrl.startsWith("https://")
+          ? b.logoUrl
+          : `${siteUrl}${b.logoUrl.startsWith("/") ? "" : "/"}${b.logoUrl}`
+        : `${siteUrl}${siteConfig.defaultOgImage}`,
+    })),
+  });
 
   return (
     <div className="flex flex-col w-full bg-clean-white">
-      <JsonLd schema={breadcrumbSchema} id="brands-hub-structured-data" />
+      <JsonLd
+        schema={[breadcrumbSchema, brandsCatalogSchema]}
+        id="brands-hub-structured-data"
+      />
 
       {/* 1. Unified Page Hero */}
       <PageHero
         breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "Brands" },
+          { label: t("breadcrumbs.home"), href: "/" },
+          { label: t("breadcrumbs.brands") },
         ]}
-        title="Smartphone Brands We Repair in Pune"
-        subtitle="Select your phone brand to explore model-specific repairs, authentic OEM pricing estimates, and convenient doorstep pickup scheduling across Pune."
+        title={t("hero.title")}
+        subtitle={t("hero.subtitle")}
         align="left"
         media={
           <AspectBox
             aspectRatio="4/3"
             variant="solid"
-            badge="OEM Verified"
+            badge={t("hero.media.badge")}
             fallbackType="brand"
-            title="Multi-Brand Service Center"
-            label="Expert chip-level repairs for Apple, Samsung, OnePlus, Xiaomi & more in Pune"
+            title={t("hero.media.title")}
+            label={t("hero.media.label")}
             className="shadow-xl"
           />
         }
         highlights={[
           {
             icon: Smartphone,
-            label: "Brands",
-            value: `${brands.length} Brands`,
+            label: t("hero.highlights.brands"),
+            value: t("hero.highlights.brandsCount", { count: brands.length }),
             color: "text-flash-orange",
           },
           {
             icon: Zap,
-            label: "Models",
-            value: `${allModels.length}+ Models`,
+            label: t("hero.highlights.models"),
+            value: t("hero.highlights.modelsCount", { count: allModels.length }),
             color: "text-electric-amber",
           },
           {
             icon: Clock,
-            label: "Turnaround",
-            value: "Same-Day Return",
+            label: t("hero.highlights.turnaround"),
+            value: t("hero.highlights.turnaroundVal"),
             color: "text-info",
           },
           {
             icon: ShieldCheck,
-            label: "Warranty",
-            value: "90-Day Guarantee",
+            label: t("hero.highlights.warranty"),
+            value: t("hero.highlights.warrantyVal"),
             color: "text-success",
           },
         ]}
       />
 
-      {/* 2. Brands Directory Grid (Loaded from DB) */}
+      {/* 2. Quick Brand Strip Reused from Landing */}
+      <BrandsShowcase
+        initialBrands={brands}
+        title={t("showcase.title")}
+        subtitle={t("showcase.subtitle")}
+        badge={t("showcase.badge")}
+        variant="white"
+        showBorder={true}
+      />
+
+      {/* 3. Brands Directory Grid (Enhanced with DB Logos, Badges, and Clean Card Styling) */}
       <Section variant="muted" padding="default">
         <Container>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="max-w-3xl mb-8">
+            <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
+              {t("directory.title")}
+            </h2>
+            <p className="mt-2 text-xs sm:text-sm text-text-secondary">
+              {t("directory.subtitle")}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {brands.map((brand) => {
               const brandModels = modelsByBrandSlug[brand.slug] || [];
               return (
                 <Link
                   key={brand.slug}
                   href={`/brands/${brand.slug}`}
-                  className="p-5 rounded-2xl bg-clean-white border border-border-default/90 hover:border-flash-orange/50 hover:shadow-md transition-all group flex flex-col justify-between"
+                  className="group relative flex flex-col justify-between rounded-2xl sm:rounded-3xl border border-border-default bg-clean-white p-5 sm:p-6 shadow-xs hover:border-flash-orange/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
                 >
+                  {/* Subtle ambient hover background accent */}
+                  <div className="absolute top-0 right-0 h-32 w-32 bg-flash-orange/5 rounded-full blur-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity" />
+
                   <div>
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-mist-gray border border-border-default font-heading font-black text-sm text-tech-slate">
-                        {brand.name.slice(0, 2).toUpperCase()}
+                    {/* Brand Header with Database Logo & Popular Badge */}
+                    <div className="flex items-start justify-between gap-3 mb-4">
+                      <div className="flex items-center gap-3.5">
+                        <BrandLogo
+                          src={brand.logoUrl}
+                          brandName={brand.name}
+                          size="md"
+                          className="shadow-2xs border border-border-default bg-clean-white"
+                        />
+                        <div>
+                          <h3 className="font-heading text-base sm:text-lg font-extrabold text-tech-slate group-hover:text-flash-orange transition-colors">
+                            {brand.name}
+                          </h3>
+                          <span className="text-2xs font-semibold text-text-muted">
+                            {brandModels.length > 0
+                              ? t("directory.modelsSupported", { count: brandModels.length })
+                              : t("directory.allModelsSupported")}
+                          </span>
+                        </div>
                       </div>
-                      <div>
-                        <h2 className="font-heading text-lg font-bold text-tech-slate group-hover:text-flash-orange transition-colors">
-                          {brand.name}
-                        </h2>
-                        <span className="text-xs text-text-muted">
-                          {brandModels.length > 0 ? `${brandModels.length} models supported` : "All models supported"}
+
+                      {brand.isPopular && (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-flash-orange/10 px-2.5 py-0.5 text-3xs font-extrabold uppercase tracking-wider text-flash-orange border border-flash-orange/20 shrink-0">
+                          <span className="h-1.5 w-1.5 rounded-full bg-flash-orange animate-pulse" />
+                          <span>{t("directory.popularBadge")}</span>
                         </span>
-                      </div>
+                      )}
                     </div>
 
+                    {/* Popular Models Tags Preview */}
                     {brandModels.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 mb-4">
                         {brandModels.slice(0, 4).map((modelName) => (
                           <span
                             key={modelName}
-                            className="text-[11px] font-semibold text-text-secondary bg-mist-gray/80 px-2 py-0.5 rounded"
+                            className="text-[11px] font-semibold text-text-secondary bg-mist-gray/90 group-hover:bg-mist-gray border border-border-default/60 px-2.5 py-1 rounded-lg transition-colors"
                           >
                             {modelName}
                           </span>
                         ))}
                         {brandModels.length > 4 && (
-                          <span className="text-[11px] font-semibold text-text-muted px-2 py-0.5">
-                            +{brandModels.length - 4} more
+                          <span className="text-[11px] font-bold text-flash-orange bg-flash-orange/5 border border-flash-orange/20 px-2 py-1 rounded-lg">
+                            {t("directory.moreModels", { count: brandModels.length - 4 })}
                           </span>
                         )}
                       </div>
                     )}
                   </div>
 
-                  <div className="pt-3 border-t border-border-subtle flex items-center justify-between text-xs font-bold text-flash-orange">
-                    <span>View Models & Pricing</span>
-                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                  {/* Card Action Link */}
+                  <div className="pt-3.5 border-t border-border-subtle flex items-center justify-between text-xs font-bold text-flash-orange">
+                    <span>{t("directory.viewModels")}</span>
+                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1.5 transition-transform" />
                   </div>
                 </Link>
               );
@@ -167,25 +250,26 @@ export default async function BrandsHubPage({
         </Container>
       </Section>
 
-      {/* 2.5 Popular Models Across Brands */}
+      {/* 4. Popular Models Across Brands */}
       {popularModels.length > 0 && (
         <ModelsScrollSection
           models={popularModels}
-          brands={brands}
+          brands={supportedPopularBrands}
+          allBrandsLabel={t("popularModels.allBrands")}
           showBrandFilter={true}
-          badge="Popular Across Brands"
-          title="Top Repaired Phone Models in Pune"
-          subtitle="Explore authentic replacement costs, genuine parts stock, and quick turnaround times for Pune's most popular smartphones."
+          badge={t("popularModels.badge")}
+          title={t("popularModels.title")}
+          subtitle={t("popularModels.subtitle")}
           sectionVariant="white"
         />
       )}
 
-      {/* 3. Reusable CTA */}
+      {/* 5. Reusable CTA */}
       <Section variant="muted" padding="default">
         <Container>
           <CTABlock
-            title="Don't See Your Specific Smartphone Model?"
-            subtitle="We service all major and emerging smartphone brands in India. Book a free on-site diagnostic in Pune."
+            title={t("cta.title")}
+            subtitle={t("cta.subtitle")}
           />
         </Container>
       </Section>

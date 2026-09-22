@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 
 export const siteConfig = {
-  name: "QuickFixMobile.in",
-  legalName: "QuickFix Mobile Solutions",
+  name: "Quick Fix",
+  legalName: "Quick Fix Mobile Solutions",
+  domain: "quickfixmobile.in",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://quickfixmobile.in",
   defaultOgImage: "/logo.png",
   supportedLocales: ["en", "hi", "mr"] as const,
@@ -367,6 +368,7 @@ export function getSeoMetadata({
     description: entry.description,
     keywords: entry.keywords,
     metadataBase: new URL(siteUrl),
+    manifest: "/manifest.json",
     alternates: {
       canonical: currentUrl,
       languages: {
@@ -383,9 +385,9 @@ export function getSeoMetadata({
       siteName: siteConfig.name,
       images: [
         {
-          url: siteConfig.defaultOgImage,
-          width: 1000,
-          height: 1000,
+          url: `${siteUrl}${siteConfig.defaultOgImage}`,
+          width: 1200,
+          height: 630,
           alt: `${siteConfig.name} - Pune Doorstep Mobile Repair`,
           type: "image/png",
         },
@@ -397,7 +399,7 @@ export function getSeoMetadata({
       card: "summary_large_image",
       title: entry.title,
       description: entry.description,
-      images: [siteConfig.defaultOgImage],
+      images: [`${siteUrl}${siteConfig.defaultOgImage}`],
     },
     robots: {
       index: true,
@@ -449,17 +451,19 @@ export function getCustomSeoMetadata({
     mr: "mr_IN",
   };
 
-  const imageUrl = image
-    ? image.startsWith("http://") || image.startsWith("https://")
-      ? image
-      : `${siteUrl}${image.startsWith("/") ? "" : "/"}${image}`
-    : `${siteUrl}${siteConfig.defaultOgImage}`;
+  const imageUrl =
+    image && image.trim()
+      ? image.startsWith("http://") || image.startsWith("https://")
+        ? image
+        : `${siteUrl}${image.startsWith("/") ? "" : "/"}${image}`
+      : `${siteUrl}${siteConfig.defaultOgImage}`;
 
   return {
     title,
     description,
     keywords,
     metadataBase: new URL(siteUrl),
+    manifest: "/manifest.json",
     alternates: {
       canonical: currentUrl,
       languages: {
@@ -526,9 +530,9 @@ export function getServiceSeoMetadata({
   const safeLocale = ["en", "hi", "mr"].includes(locale) ? locale : "en";
 
   const titles = {
-    en: `${serviceName} in Pune | Doorstep in ${turnaroundMinutes} Mins | QuickFixMobile.in`,
-    hi: `${serviceName} पुणे | ${turnaroundMinutes} मिनट में डोरस्टेप रिपेयर | QuickFixMobile.in`,
-    mr: `${serviceName} पुणे | ${turnaroundMinutes} मिनिटांत डोअरस्टेप दुरुस्ती | QuickFixMobile.in`,
+    en: `${serviceName} in Pune | Doorstep in ${turnaroundMinutes} Mins | Quick Fix`,
+    hi: `${serviceName} पुणे | ${turnaroundMinutes} मिनट में डोरस्टेप रिपेयर | Quick Fix`,
+    mr: `${serviceName} पुणे | ${turnaroundMinutes} मिनिटांत डोअरस्टेप दुरुस्ती | Quick Fix`,
   };
 
   const descriptions = {
@@ -556,17 +560,19 @@ export function getBrandSeoMetadata({
   brandName,
   locale = "en",
   slug,
+  image,
 }: {
   brandName: string;
   locale?: string;
   slug: string;
+  image?: string;
 }): Metadata {
   const safeLocale = ["en", "hi", "mr"].includes(locale) ? locale : "en";
 
   const titles = {
-    en: `${brandName} Phone Repair Pune | Doorstep Service & OEM Parts | QuickFixMobile.in`,
-    hi: `${brandName} फोन रिपेयर पुणे | डोरस्टेप सर्विस व असली पार्ट्स | QuickFixMobile.in`,
-    mr: `${brandName} मोबाईल दुरुस्ती पुणे | डोअरस्टेप सेवा व अस्सल पार्ट्स | QuickFixMobile.in`,
+    en: `${brandName} Phone Repair Pune | Doorstep Service & OEM Parts | Quick Fix`,
+    hi: `${brandName} फोन रिपेयर पुणे | डोरस्टेप सर्विस व असली पार्ट्स | Quick Fix`,
+    mr: `${brandName} मोबाईल दुरुस्ती पुणे | डोअरस्टेप सेवा व अस्सल पार्ट्स | Quick Fix`,
   };
 
   const descriptions = {
@@ -585,32 +591,36 @@ export function getBrandSeoMetadata({
     ],
     locale: safeLocale,
     path: `/brands/${slug}`,
+    image,
   });
 }
 
 export function getLocationSeoMetadata({
   localityName,
-  zoneName: _zoneName,
+  zoneName,
   dispatchTime = "30 Mins",
   locale = "en",
   slug,
+  image,
 }: {
   localityName: string;
   zoneName?: string;
   dispatchTime?: string;
   locale?: string;
   slug: string;
+  image?: string;
 }): Metadata {
   const safeLocale = ["en", "hi", "mr"].includes(locale) ? locale : "en";
+  const zoneInfo = zoneName ? ` (${zoneName} Zone)` : "";
 
   const titles = {
-    en: `Doorstep Mobile Repair in ${localityName}, Pune | ${dispatchTime} Pickup | QuickFixMobile.in`,
-    hi: `${localityName}, पुणे में डोरस्टेप मोबाइल पिकअप व रिपेयर | ${dispatchTime} में पिकअप | QuickFixMobile.in`,
-    mr: `${localityName}, पुणे येथे डोअरस्टेप मोबाईल दुरुस्ती | ${dispatchTime} पिकअप | QuickFixMobile.in`,
+    en: `Doorstep Mobile Repair in ${localityName}, Pune | ${dispatchTime} Pickup | Quick Fix`,
+    hi: `${localityName}, पुणे में डोरस्टेप मोबाइल पिकअप व रिपेयर | ${dispatchTime} में पिकअप | Quick Fix`,
+    mr: `${localityName}, पुणे येथे डोअरस्टेप मोबाईल दुरुस्ती | ${dispatchTime} पिकअप | Quick Fix`,
   };
 
   const descriptions = {
-    en: `Need fast smartphone repair in ${localityName}, Pune? Convenient doorstep pickup within ${dispatchTime}. Screen, battery, and motherboard repairs at our Sadashiv Peth lab with 90-day warranty.`,
+    en: `Need fast smartphone repair in ${localityName}, Pune${zoneInfo}? Convenient doorstep pickup within ${dispatchTime}. Screen, battery, and motherboard repairs at our Sadashiv Peth lab with 90-day warranty.`,
     hi: `${localityName}, पुणे में अपने घर से मोबाइल पिकअप करवाएं। ${dispatchTime} में पिकअप, 90 दिनों की वारंटी और नो फिक्स नो फीस।`,
     mr: `${localityName}, पुणे येथे तुमच्या घरून फोन पिकअप. ${dispatchTime} मध्ये पिकअप, ९० दिवसांची वॉरंटी आणि मोफत व्हिजिट.`,
   };
@@ -625,6 +635,7 @@ export function getLocationSeoMetadata({
     ],
     locale: safeLocale,
     path: `/locations/${slug}`,
+    image: image || `/locations/${slug}/opengraph-image`,
   });
 }
 
@@ -634,19 +645,21 @@ export function getModelSeoMetadata({
   brandSlug,
   modelSlug,
   locale = "en",
+  image,
 }: {
   brandName: string;
   modelName: string;
   brandSlug: string;
   modelSlug: string;
   locale?: string;
+  image?: string;
 }): Metadata {
   const safeLocale = ["en", "hi", "mr"].includes(locale) ? locale : "en";
 
   const titles = {
-    en: `${modelName} Repair in Pune | Doorstep Pickup from ₹699 | QuickFixMobile.in`,
-    hi: `${modelName} रिपेयर पुणे | डोरस्टेप पिकअप ₹699 से | QuickFixMobile.in`,
-    mr: `${modelName} दुरुस्ती पुणे | डोअरस्टेप पिकअप ₹699 पासून | QuickFixMobile.in`,
+    en: `${modelName} Repair in Pune | Doorstep Pickup from ₹699 | Quick Fix`,
+    hi: `${modelName} रिपेयर पुणे | डोरस्टेप पिकअप ₹699 से | Quick Fix`,
+    mr: `${modelName} दुरुस्ती पुणे | डोअरस्टेप पिकअप ₹699 पासून | Quick Fix`,
   };
 
   const descriptions = {
@@ -666,6 +679,7 @@ export function getModelSeoMetadata({
     ],
     locale: safeLocale,
     path: `/brands/${brandSlug}/${modelSlug}`,
+    image,
   });
 }
 
@@ -677,9 +691,9 @@ export function getServicesHubSeoMetadata({
   const safeLocale = ["en", "hi", "mr"].includes(locale) ? locale : "en";
 
   const titles = {
-    en: "All Smartphone Repair Services in Pune | QuickFixMobile.in",
-    hi: "पुणे में सभी स्मार्टफोन रिपेयर सेवाएं | QuickFixMobile.in",
-    mr: "पुण्यातील सर्व स्मार्टफोन दुरुस्ती सेवा | QuickFixMobile.in",
+    en: "All Smartphone Repair Services in Pune | Quick Fix",
+    hi: "पुणे में सभी स्मार्टफोन रिपेयर सेवाएं | Quick Fix",
+    mr: "पुण्यातील सर्व स्मार्टफोन दुरुस्ती सेवा | Quick Fix",
   };
 
   const descriptions = {
@@ -709,9 +723,9 @@ export function getBrandsHubSeoMetadata({
   const safeLocale = ["en", "hi", "mr"].includes(locale) ? locale : "en";
 
   const titles = {
-    en: "All Smartphone Brands We Repair in Pune | QuickFixMobile.in",
-    hi: "पुणे में सभी स्मार्टफोन ब्रांड रिपेयर | QuickFixMobile.in",
-    mr: "पुण्यात सर्व स्मार्टफोन ब्रँड दुरुस्ती | QuickFixMobile.in",
+    en: "All Smartphone Brands We Repair in Pune | Quick Fix",
+    hi: "पुणे में सभी स्मार्टफोन ब्रांड रिपेयर | Quick Fix",
+    mr: "पुण्यात सर्व स्मार्टफोन ब्रँड दुरुस्ती | Quick Fix",
   };
 
   const descriptions = {

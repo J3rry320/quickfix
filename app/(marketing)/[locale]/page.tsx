@@ -75,6 +75,7 @@ export default async function MarketingPage({
         <ModelsScrollSection
           models={popularModels}
           brands={brands}
+          allBrandsLabel={tModels("allBrands")}
           showBrandFilter={true}
           badge={tModels("badge")}
           title={tModels("title")}

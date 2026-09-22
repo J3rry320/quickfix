@@ -4,7 +4,11 @@ import { getTranslations } from "next-intl/server";
 import { Phone, MessageSquare, Mail, MapPin, Clock, ShieldCheck, Navigation } from "lucide-react";
 import { routing } from "@/i18n/routing";
 import { getSeoMetadata, siteConfig } from "@/config/seo";
-import { getOrganizationAndLocalBusinessSchema, getBreadcrumbSchema } from "@/config/jsonld";
+import {
+  getOrganizationAndLocalBusinessSchema,
+  getBreadcrumbSchema,
+  getContactPageSchema,
+} from "@/config/jsonld";
 import JsonLd from "@/components/seo/JsonLd";
 import contactConfig from "@/config/contact";
 import ContactForm from "@/components/contact/ContactForm";
@@ -41,6 +45,7 @@ export default async function ContactPage({
   const t = await getTranslations({ locale, namespace: "ContactPage" });
   const siteUrl = siteConfig.url.replace(/\/$/, "");
 
+  const contactPageSchema = getContactPageSchema(locale);
   const localBusinessSchema = getOrganizationAndLocalBusinessSchema(locale);
   const breadcrumbSchema = getBreadcrumbSchema([
     { name: "Home", url: `${siteUrl}/${locale}` },
@@ -49,7 +54,10 @@ export default async function ContactPage({
 
   return (
     <div className="flex flex-col w-full bg-clean-white min-h-[calc(100vh-4rem)]">
-      <JsonLd schema={[localBusinessSchema, breadcrumbSchema]} id="contact-structured-data" />
+      <JsonLd
+        schema={[contactPageSchema, localBusinessSchema, breadcrumbSchema]}
+        id="contact-structured-data"
+      />
 
       {/* 1. Unified Page Hero */}
       <PageHero

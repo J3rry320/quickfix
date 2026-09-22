@@ -1,4 +1,53 @@
 {
+  "BrandsHub": {
+    "breadcrumbs": {
+      "home": "Home",
+      "brands": "Brands"
+    },
+    "hero": {
+      "title": "Smartphone Brands We Repair in Pune",
+      "subtitle": "Select your phone brand to explore model-specific repairs, authentic OEM pricing estimates, and convenient doorstep pickup scheduling across Pune.",
+      "media": {
+        "badge": "OEM Verified",
+        "title": "Multi-Brand Service Center",
+        "label": "Expert chip-level repairs for Apple, Samsung, OnePlus, Xiaomi & more in Pune"
+      },
+      "highlights": {
+        "brands": "Brands",
+        "brandsCount": "{count} Brands",
+        "models": "Models",
+        "modelsCount": "{count}+ Models",
+        "turnaround": "Turnaround",
+        "turnaroundVal": "Same-Day Return",
+        "warranty": "Warranty",
+        "warrantyVal": "90-Day Guarantee"
+      }
+    },
+    "showcase": {
+      "badge": "Express Dispatch",
+      "title": "All Supported Brands Across Pune",
+      "subtitle": "Tap any brand to view exact model pricing, genuine part inventory, and book door-to-door technician pickup."
+    },
+    "directory": {
+      "title": "Browse by Brand Catalog",
+      "subtitle": "Certified doorstep repair and laboratory servicing available for every major smartphone brand.",
+      "popularBadge": "Popular in Pune",
+      "modelsSupported": "{count} models supported",
+      "allModelsSupported": "All models supported",
+      "moreModels": "+{count} more",
+      "viewModels": "View Models & Pricing"
+    },
+    "popularModels": {
+      "badge": "Popular Across Brands",
+      "title": "Top Repaired Phone Models in Pune",
+      "subtitle": "Explore authentic replacement costs, genuine parts stock, and quick turnaround times for Pune's most popular smartphones.",
+      "allBrands": "All Brands"
+    },
+    "cta": {
+      "title": "Don't See Your Specific Smartphone Model?",
+      "subtitle": "We service all major and emerging smartphone brands in India. Book a free on-site diagnostic in Pune."
+    }
+  },
   "BrandDetail": {
     "breadcrumbs": {
       "home": "Home",
@@ -23,7 +72,12 @@
         "callUs": "Call {phone}"
       },
       "logoAlt": "{brandName} Official Logo",
-      "logoFallback": "{brandName}"
+      "logoFallback": "{brandName}",
+      "media": {
+        "badge": "{brandName} Authorized Specs",
+        "title": "{brandName} Repairs",
+        "label": "OEM-grade components, 90-day warranty & 30-min express turnaround in Pune"
+      }
     },
     "models": {
       "title": "Select Your {brandName} Model",
@@ -47,6 +101,13 @@
       "liveDesc": "Fast doorstep pickup with precision ESD-safe lab repair in Sadashiv Peth and same-day delivery back.",
       "warrantyTitle": "90-Day Replacement Warranty",
       "warrantyDesc": "Instant digital warranty card provided. If any touch or battery malfunction occurs, we replace it at no charge."
+    },
+    "services": {
+      "title": "Popular Repairs for {brandName} Phones",
+      "subtitle": "All services performed live on-site with zero hidden diagnostic fees.",
+      "startingFrom": "From ₹{price}",
+      "expressTime": "{minutes} mins express",
+      "viewDetails": "View Details"
     },
     "process": {
       "title": "Our 4-Step Repair Experience in Pune",

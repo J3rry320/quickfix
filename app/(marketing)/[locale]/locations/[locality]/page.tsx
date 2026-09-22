@@ -8,7 +8,7 @@ import {
 } from "@/components/ui";
 import { LOCALITIES_CATALOG } from "@/config/catalogue-data";
 import contactConfig from "@/config/contact";
-import { getBreadcrumbSchema } from "@/config/jsonld";
+import { getBreadcrumbSchema, getLocalityServiceSchema } from "@/config/jsonld";
 import { getLocationSeoMetadata, siteConfig } from "@/config/seo";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
@@ -23,6 +23,7 @@ import {
   Zap,
 } from "lucide-react";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 export function generateStaticParams() {
@@ -45,7 +46,7 @@ export async function generateMetadata({
 
   if (!loc) {
     return {
-      title: "Location Not Found | QuickFixMobile.in",
+      title: "Location Not Found | Quick Fix",
     };
   }
 
@@ -55,6 +56,7 @@ export async function generateMetadata({
     dispatchTime: loc.dispatchTime,
     locale,
     slug: loc.slug,
+    image: `/locations/${loc.slug}/opengraph-image`,
   });
 }
 
@@ -76,52 +78,64 @@ export default async function LocalityPage({
     notFound();
   }
 
-  const [services, brands] = await Promise.all([
+  const [services, brands, t] = await Promise.all([
     getDbServices(),
     getDbBrands(),
+    getTranslations({ locale, namespace: "LocalityPage" }),
   ]);
 
   const siteUrl = siteConfig.url.replace(/\/$/, "");
   const breadcrumbSchema = getBreadcrumbSchema([
-    { name: "Home", url: `${siteUrl}/${locale}` },
+    { name: t("breadcrumbs.home"), url: `${siteUrl}/${locale}` },
     { name: loc.name, url: `${siteUrl}/${locale}/locations/${loc.slug}` },
   ]);
+
+  const localityServiceSchema = getLocalityServiceSchema({
+    localityName: loc.name,
+    zoneName: loc.zone,
+    dispatchTime: loc.dispatchTime,
+    slug: loc.slug,
+    locale,
+  });
 
   return (
     <div className="flex flex-col w-full bg-clean-white">
       <JsonLd
-        schema={breadcrumbSchema}
+        schema={[breadcrumbSchema, localityServiceSchema]}
         id={`locality-${loc.slug}-structured-data`}
       />
 
-      {/* 1. Unified Page Hero with Spectacular Coverage Map View */}
+      {/* 1. Unified Page Hero with Clean Coverage Map View */}
       <PageHero
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: loc.name }]}
-        title={`Doorstep Mobile Pickup & Certified Lab Repair in ${loc.name}, Pune`}
-        subtitle={`Broke your smartphone screen or struggling with a dead battery in ${loc.name}? QuickFix provides rapid doorstep pickup within ${loc.dispatchTime}, certified lab repair in Sadashiv Peth, and safe same-day return with a 90-day warranty.`}
+        breadcrumbs={[{ label: t("breadcrumbs.home"), href: "/" }, { label: loc.name }]}
+        title={t("hero.title", { name: loc.name })}
+        subtitle={t("hero.subtitle", {
+          name: loc.name,
+          dispatchTime: loc.dispatchTime,
+        })}
         highlights={[
           {
             icon: Navigation,
-            label: "Dispatch Zone",
+            label: t("hero.dispatchZone"),
             value: loc.zone,
             color: "text-flash-orange",
           },
           {
             icon: Zap,
-            label: "Pickup SLA",
+            label: t("hero.pickupSla"),
             value: loc.dispatchTime,
             color: "text-electric-amber",
           },
           {
             icon: MapPin,
-            label: "Landmark",
+            label: t("hero.landmark"),
             value: loc.landmark,
             color: "text-info",
           },
           {
             icon: ShieldCheck,
-            label: "Warranty",
-            value: "90 Days Hassle-Free",
+            label: t("hero.warranty"),
+            value: t("hero.warrantyValue"),
             color: "text-success",
           },
         ]}
@@ -131,7 +145,7 @@ export default async function LocalityPage({
               href="/book-repair"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-flash-orange-hover active:scale-95 transition-all"
             >
-              <span>Book Pickup in {loc.name}</span>
+              <span>{t("hero.bookPickup", { name: loc.name })}</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
 
@@ -140,7 +154,7 @@ export default async function LocalityPage({
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-border-strong text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
             >
               <Phone className="h-4 w-4 text-flash-orange" />
-              <span>Call {contactConfig.phone.display}</span>
+              <span>{t("hero.callNow", { phone: contactConfig.phone.display })}</span>
             </a>
           </>
         }
@@ -159,11 +173,10 @@ export default async function LocalityPage({
         <Container>
           <div className="max-w-3xl mb-8">
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
-              Neighborhoods We Visit in & around {loc.name}
+              {t("neighborhoods.title", { name: loc.name })}
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-text-secondary">
-              Zero extra travel charges anywhere within this radius. Safe
-              doorstep pickup and return with tamper-proof transit bags.
+              {t("neighborhoods.subtitle")}
             </p>
           </div>
 
@@ -186,11 +199,10 @@ export default async function LocalityPage({
         <Container>
           <div className="max-w-3xl mb-8">
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
-              Top Smartphone Repairs Ordered in {loc.name}
+              {t("repairs.title", { name: loc.name })}
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-text-secondary">
-              Repairs are performed by certified engineers in our Sadashiv Peth
-              cleanroom lab with a 90-day replacement warranty.
+              {t("repairs.subtitle")}
             </p>
           </div>
 
@@ -207,18 +219,21 @@ export default async function LocalityPage({
                       {service.name.split("&")[0].trim()}
                     </span>
                     <span className="text-xs font-bold text-text-muted">
-                      from ₹{service.startingPrice}
+                      {t("repairs.fromPrice", { price: service.startingPrice })}
                     </span>
                   </div>
                   <h3 className="font-heading text-base font-bold text-tech-slate group-hover:text-flash-orange transition-colors">
-                    {service.name} in {loc.name}
+                    {t("repairs.serviceInLocality", {
+                      serviceName: service.name,
+                      name: loc.name,
+                    })}
                   </h3>
                   <p className="mt-1.5 text-xs text-text-secondary leading-relaxed line-clamp-2">
                     {service.description}
                   </p>
                 </div>
                 <div className="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between text-xs font-bold text-flash-orange">
-                  <span>View Details & Pricing</span>
+                  <span>{t("repairs.viewDetails")}</span>
                   <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
@@ -230,8 +245,8 @@ export default async function LocalityPage({
       {/* 4. Supported Smartphone Brands in Locality */}
       <BrandsShowcase
         initialBrands={brands}
-        title={`Smartphone Brands We Service in ${loc.name}`}
-        subtitle={`Doorstep pickup and certified lab repair available for all major brands across ${loc.name} and ${loc.zone}.`}
+        title={t("brands.title", { name: loc.name })}
+        subtitle={t("brands.subtitle", { name: loc.name, zone: loc.zone })}
         variant="white"
       />
 
@@ -239,8 +254,8 @@ export default async function LocalityPage({
       <Section variant="muted" padding="default">
         <Container>
           <CTABlock
-            title={`Doorstep Smartphone Pickup & Lab Repair in ${loc.name}`}
-            subtitle={`Technicians active in ${loc.zone}. Book in 60 seconds or call our central Pune hotline.`}
+            title={t("cta.title", { name: loc.name })}
+            subtitle={t("cta.subtitle", { zone: loc.zone })}
           />
         </Container>
       </Section>

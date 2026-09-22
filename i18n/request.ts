@@ -16,7 +16,7 @@ export default getRequestConfig(async ({ locale }) => {
   }
 
   // Load and merge modular translation files
-  const [common, landing, repair, about, contact, services, brands] = await Promise.all([
+  const [common, landing, repair, about, contact, services, brands, locations] = await Promise.all([
     import(`../messages/${locale}/common.json`).then((m) => m.default),
     import(`../messages/${locale}/landing.json`).then((m) => m.default),
     import(`../messages/${locale}/repair.json`).then((m) => m.default),
@@ -24,6 +24,7 @@ export default getRequestConfig(async ({ locale }) => {
     import(`../messages/${locale}/contact.json`).then((m) => m.default).catch(() => ({})),
     import(`../messages/${locale}/services.json`).then((m) => m.default).catch(() => ({})),
     import(`../messages/${locale}/brands.json`).then((m) => m.default).catch(() => ({})),
+    import(`../messages/${locale}/locations.json`).then((m) => m.default).catch(() => ({})),
   ]);
 
   return {
@@ -36,6 +37,7 @@ export default getRequestConfig(async ({ locale }) => {
       ...contact,
       ...services,
       ...brands,
+      ...locations,
     },
   };
 });

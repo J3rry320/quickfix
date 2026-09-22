@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { ShieldCheck, Clock, CheckCircle2, AlertCircle } from "lucide-react";
+import { ShieldCheck, CheckCircle2 } from "lucide-react";
 import { getSeoMetadata, siteConfig } from "@/config/seo";
-import { getBreadcrumbSchema } from "@/config/jsonld";
+import { getBreadcrumbSchema, getWebPageSchema } from "@/config/jsonld";
 import JsonLd from "@/components/seo/JsonLd";
 import { Container, Section, CTABlock, PageHero } from "@/components/ui";
 import contactConfig from "@/config/contact";
@@ -37,9 +37,19 @@ export default async function TermsPage({
     { name: "Terms of Service", url: `${siteUrl}/${locale}/terms` },
   ]);
 
+  const termsSchema = getWebPageSchema({
+    title: "Terms of Service | Quick Fix",
+    description: "Terms and conditions for doorstep mobile repair services provided by Quick Fix across Pune, including 90-day warranty and service guarantees.",
+    path: "/terms",
+    locale,
+  });
+
   return (
     <div className="flex flex-col w-full bg-clean-white">
-      <JsonLd schema={breadcrumbSchema} id="terms-structured-data" />
+      <JsonLd
+        schema={[breadcrumbSchema, termsSchema]}
+        id="terms-structured-data"
+      />
 
       <PageHero
         breadcrumbs={[

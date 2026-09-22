@@ -1,4 +1,84 @@
 {
+  "ServicesHub": {
+    "breadcrumbs": {
+      "home": "Home",
+      "services": "Services"
+    },
+    "hero": {
+      "title": "Smartphone Repair Services in Pune",
+      "subtitle": "Doorstep smartphone pickup across Pune with precision repairs in our Sadashiv Peth cleanroom lab, authentic OEM parts, and a 90-day replacement warranty.",
+      "media": {
+        "badge": "Certified Repair",
+        "title": "Express Mobile Diagnostics",
+        "label": "Doorstep pickup & ESD-safe lab repair across all Pune & PCMC zones"
+      },
+      "highlights": {
+        "repairs": {
+          "label": "Repairs",
+          "value": "{count} Core Services"
+        },
+        "turnaround": {
+          "label": "Turnaround",
+          "value": "Same-Day Return"
+        },
+        "warranty": {
+          "label": "Warranty",
+          "value": "90-Day Coverage"
+        }
+      },
+      "actions": {
+        "bookRepair": "Book Doorstep Repair",
+        "callHelpline": "Call Helpline: {phone}"
+      }
+    },
+    "grid": {
+      "title": "All Smartphone Repair Services",
+      "subtitle": "Select any repair to inspect symptoms, turnaround times, and pricing.",
+      "fromPrice": "from ₹{price}",
+      "estimatedTime": "{minutes} mins",
+      "warrantyDays": "{days}-day warranty"
+    },
+    "comparison": {
+      "title": "Why Doorstep Repair Wins Over Local Shops",
+      "subtitle": "Save hours of travel time and protect your confidential mobile data with live doorstep service.",
+      "headers": {
+        "feature": "Service Feature",
+        "quickfix": "QuickFix Doorstep",
+        "localShop": "Traditional Local Shop"
+      },
+      "features": {
+        "logistics": {
+          "name": "Service Logistics",
+          "quickfix": "Free doorstep pickup & same-day return in Pune",
+          "localShop": "You commute in traffic & leave phone for days"
+        },
+        "security": {
+          "name": "Data Security & Privacy",
+          "quickfix": "100% safe — zero passcodes needed & sealed transit",
+          "localShop": "Password required / unattended device risk"
+        },
+        "turnaround": {
+          "name": "Repair Turnaround",
+          "quickfix": "Same-day express return to your doorstep",
+          "localShop": "2 to 5 days delay"
+        },
+        "parts": {
+          "name": "Parts Quality",
+          "quickfix": "Certified OEM-grade factory tested",
+          "localShop": "Unknown duplicate / refurbished clones"
+        },
+        "warranty": {
+          "name": "Warranty",
+          "quickfix": "Up to 90 days replacement warranty",
+          "localShop": "Zero warranty or 7 days verbal"
+        }
+      }
+    },
+    "cta": {
+      "title": "Need An Immediate On-Site Diagnostic?",
+      "subtitle": "Our Pune dispatch hub operates 7 days a week. Book online in 60 seconds."
+    }
+  },
   "ServiceDetail": {
     "breadcrumbs": {
       "home": "Home",
@@ -44,7 +124,10 @@
       "partsQ": "Are replacement components OEM grade?",
       "partsA": "Yes. We source verified, factory-tested OEM-grade components that match original factory specifications for refresh rates, touch sensitivity, thermal stability, and battery capacity.",
       "timeQ": "How long does the repair and doorstep delivery take?",
-      "timeA": "Most repairs are completed within {minutes} minutes in our lab and delivered back to your doorstep on the very same day across Pune."
+      "timeA": "Most repairs are completed within {minutes} minutes in our lab and delivered back to your doorstep on the very same day across Pune.",
+      "helpCardTitle": "Have More Questions?",
+      "helpCardSubtitle": "Need clarity on spare parts, same-day slots, or exact pricing? Our lab technicians are ready to assist.",
+      "askEngineer": "Chat on WhatsApp"
     },
     "cta": {
       "title": "Schedule Your {serviceName} Today",

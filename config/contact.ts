@@ -5,8 +5,9 @@
 
 export const contactConfig = {
   ownerName: "Samadhan Patil",
-  brand: "QuickFixMobile.in",
-  legalName: "QuickFix Mobile Solutions",
+  brand: "Quick Fix",
+  legalName: "Quick Fix Mobile Solutions",
+  domain: "quickfixmobile.in",
   tagline: "Doorstep Mobile Repair in Pune",
 
   phone: {

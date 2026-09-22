@@ -54,8 +54,11 @@ export async function generateMetadata({
   const match = await getDbModelBySlug(slug, modelSlug);
 
   if (!match) {
-    return { title: "Model Not Found | QuickFixMobile.in" };
+    return { title: "Model Not Found | Quick Fix" };
   }
+
+  const modelImage =
+    match.model.imageUrl || match.brand.logoUrl || siteConfig.defaultOgImage;
 
   return getModelSeoMetadata({
     brandName: match.brand.name,
@@ -63,6 +66,7 @@ export async function generateMetadata({
     brandSlug: slug,
     modelSlug,
     locale,
+    image: modelImage,
   });
 }
 
@@ -140,6 +144,7 @@ export default async function ModelDetailPage({
     modelSlug: model.slug,
     startingPrice: minPrice,
     locale,
+    image: model.imageUrl || brand.logoUrl || siteConfig.defaultOgImage,
   });
 
   return (

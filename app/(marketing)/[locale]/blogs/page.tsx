@@ -14,7 +14,7 @@ import {
   PageHero,
   Section,
 } from "@/components/ui";
-import { getBreadcrumbSchema } from "@/config/jsonld";
+import { getBreadcrumbSchema, getWebPageSchema } from "@/config/jsonld";
 import { siteConfig } from "@/config/seo";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
@@ -47,7 +47,7 @@ export async function generateMetadata({
 
   return {
     title:
-      "Smartphone Repair Guides, Battery & Screen Tips | QuickFixMobile.in Pune",
+      "Smartphone Repair Guides, Battery & Screen Tips | Quick Fix Pune",
     description:
       "Expert smartphone repair tutorials, lithium battery health guides, OLED screen replacement comparisons, and water damage first aid from Pune's leading doorstep technicians.",
     alternates: {
@@ -59,11 +59,26 @@ export async function generateMetadata({
       },
     },
     openGraph: {
-      title: "Smartphone Repair Guides & Tips | QuickFixMobile.in Pune",
+      title: "Smartphone Repair Guides & Tips | Quick Fix Pune",
       description:
         "Comprehensive guides and troubleshooting advice from certified technicians. Same-day doorstep pickup and lab repair across Pune.",
       url: `${siteUrl}/${locale}/blogs`,
       type: "website",
+      images: [
+        {
+          url: `${siteUrl}${siteConfig.defaultOgImage}`,
+          width: 1200,
+          height: 630,
+          alt: "Quick Fix Smartphone Repair Guides & Tech Tips",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Smartphone Repair Guides & Tips | Quick Fix Pune",
+      description:
+        "Comprehensive guides and troubleshooting advice from certified technicians. Same-day doorstep pickup and lab repair across Pune.",
+      images: [`${siteUrl}${siteConfig.defaultOgImage}`],
     },
   };
 }
@@ -260,9 +275,19 @@ export default async function BlogIndexPage({
     { name: "Articles & Repair Guides", url: `${siteUrl}/${locale}/blogs` },
   ]);
 
+  const blogHubSchema = getWebPageSchema({
+    title: "Smartphone Repair Guides & Tips | Quick Fix Pune",
+    description: "Expert smartphone repair tutorials, battery care guides, and screen replacement tips from Quick Fix Pune technicians.",
+    path: "/blogs",
+    locale,
+  });
+
   return (
     <div className="flex flex-col w-full bg-clean-white">
-      <JsonLd schema={breadcrumbSchema} id="blogs-index-breadcrumbs" />
+      <JsonLd
+        schema={[breadcrumbSchema, blogHubSchema]}
+        id="blogs-index-breadcrumbs"
+      />
 
       {/* 1. Common Unified Page Hero */}
       <PageHero

@@ -150,8 +150,19 @@
     "qf5": "Transparent, upfront OEM rates",
     "sc5": "2x to 3x higher cost",
     "ls5": "Hidden costs & cheap duplicate parts",
-    "mediaTitle": "Certified Pune Lab & Secure Transit",
-    "mediaBadge": "4:3 Image Placeholder"
+    "recommended": "Recommended",
+    "mobileCardTitle": "QuickFix.in Pickup & Lab",
+    "workbenchBadge": "Precision Lab",
+    "workbenchTitle": "Sadashiv Peth Lab Workbench",
+    "workbenchLabel": "Calibrated microscopes, micro-soldering & ESD-safe diagnostic stations",
+    "workbenchAlt": "QuickFix Pune repair technician precision workbench and diagnostic tools",
+    "guaranteeTitle": "Certified Pune Lab & Secure Transit",
+    "guaranteeDesc": "Our doorstep technicians inspect your device, issue an official handover receipt with IMEI verification, and safely transport it to our Sadashiv Peth precision lab.",
+    "point1": "Free doorstep pickup & same-day return in Pune",
+    "point2": "ESD-safe precision repair lab in Sadashiv Peth",
+    "point3": "Zero passcode or pattern lock required",
+    "point4": "Same-day doorstep delivery with 90-day warranty",
+    "privacyGuaranteed": "100% Privacy & Zero Data Access Guaranteed"
   },
   "BookingSection": {
     "badge": "Doorstep Booking",
