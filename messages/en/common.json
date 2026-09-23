@@ -60,5 +60,34 @@
       "contactCta": "Contact Support",
       "checkBackLater": "Check back soon"
     }
+  },
+  "NotFound": {
+    "badge": "404 • Page Not Found",
+    "title": "Oops! This Page is Off the Map",
+    "description": "The page you're searching for might have been moved, renamed, or is temporarily unavailable. Don't worry, Pune's premier doorstep mobile repair team has you covered.",
+    "backHome": "Back to Homepage",
+    "bookRepair": "Book Doorstep Repair",
+    "callSupport": "Call Pune Helpline",
+    "quickLinksTitle": "Helpful Quick Links",
+    "links": {
+      "screenRepair": "Screen Replacement",
+      "batteryRepair": "Battery Replacement",
+      "trackRepair": "Track Repair Status",
+      "serviceAreas": "Pune Service Areas",
+      "contactUs": "Sadashiv Peth Lab & Desk"
+    },
+    "urgentHelp": "Need urgent doorstep repair anywhere in Pune?",
+    "phone": "+91 83086 86454"
+  },
+  "ErrorPage": {
+    "badge": "System Alert • Error",
+    "title": "Something Went Unexpectedly Wrong",
+    "description": "We encountered an unexpected error while loading this page. Our technical team has been alerted. You can retry the action or connect immediately with our Pune support team.",
+    "retry": "Try Again",
+    "contactSupport": "Contact Support Desk",
+    "whatsappSupport": "Chat on WhatsApp",
+    "callHelpline": "Call Pune Hotline",
+    "backHome": "Back to Homepage",
+    "referenceCode": "Error Reference Code"
   }
 }
