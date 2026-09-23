@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import contactConfig from "@/config/contact";
 import { Link } from "@/i18n/navigation";
 import {
@@ -17,6 +18,11 @@ import Image from "next/image";
 
 export default function Footer() {
   const t = useTranslations("Footer");
+  const [currentYear, setCurrentYear] = useState<number>(2026);
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
 
   return (
     <footer className="bg-tech-slate text-clean-white pt-12 sm:pt-16 pb-24 md:pb-12 border-t border-border-dark">
@@ -352,7 +358,7 @@ export default function Footer() {
         {/* Bottom Strip: Copyright & Privacy Links paired together on left, Credit on right */}
         <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-clean-white/70 text-center md:text-left">
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
-            <p>{t("copyright")}</p>
+            <p>{t("copyright", { year: currentYear })}</p>
             <span className="hidden sm:inline text-clean-white/30">•</span>
             <div className="flex items-center gap-3 text-xs font-medium">
               <Link

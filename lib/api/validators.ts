@@ -1,5 +1,11 @@
 import { z } from "zod";
 import { RepairRequest } from "@/models/RepairRequest";
+import {
+  getIstDateString,
+  parseIstDateMidday,
+  getIstMinutesFromMidnight,
+  CUTOFFS,
+} from "@/lib/date";
 
 /**
  * Utility to generate URL-safe slugs from strings
@@ -172,30 +178,45 @@ export const updateContactStatusSchema = z.object({
 // -------------------------------------------------------------
 
 export const customerSchema = z.object({
-  name: z.string().min(2, "Customer name is required").trim(),
+  name: z
+    .string()
+    .trim()
+    .min(2, "Customer name must be at least 2 characters")
+    .max(100, "Customer name cannot exceed 100 characters")
+    .regex(/^[a-zA-Z\s.'-]+$/, "Customer name should contain only valid letters"),
   phone: z
     .string()
     .trim()
-    .regex(/^[6-9]\d{9}$/, "Please enter a valid 10-digit mobile number"),
-  email: z.string().email().optional().or(z.literal("")),
+    .regex(/^[6-9]\d{9}$/, "Please enter a valid 10-digit Indian mobile number"),
+  email: z.string().email("Invalid email address").optional().or(z.literal("")),
 });
 
 export const deviceSchema = z.object({
-  brand: z.string().min(1, "Device brand is required").trim(),
-  model: z.string().min(1, "Device model is required").trim(),
-  color: z.string().optional(),
+  brand: z
+    .string()
+    .trim()
+    .min(1, "Device brand is required")
+    .max(60, "Brand name is too long"),
+  model: z
+    .string()
+    .trim()
+    .min(1, "Device model is required")
+    .max(80, "Model name is too long"),
+  color: z.string().trim().max(40).optional(),
 });
 
 export const addressSchema = z.object({
   area: z
     .string()
     .trim()
+    .max(100)
     .optional()
     .default("Pune")
     .transform((v) => (v && v.trim().length > 0 ? v.trim() : "Pune")),
   streetAddress: z
     .string()
     .trim()
+    .max(200)
     .optional()
     .default("To be confirmed via phone call")
     .transform((v) => (v && v.trim().length > 0 ? v.trim() : "To be confirmed via phone call")),
@@ -206,22 +227,72 @@ export const addressSchema = z.object({
     .default("411030")
     .transform((v) => (v && v.trim().length > 0 ? v.trim() : "411030"))
     .refine((val) => /^411\d{3}$/.test(val), {
-      message: "Please provide a valid 6-digit Pune pincode (411xxx)",
+      message: "Please provide a valid 6-digit Pune pincode starting with 411 (e.g. 411030)",
     }),
-  landmark: z.string().optional(),
-  city: z.string().default("Pune"),
+  landmark: z.string().trim().max(100).optional(),
+  city: z.string().trim().default("Pune"),
 });
 
-export const preferredSlotSchema = z.object({
-  date: z.coerce.date({ message: "Valid repair date is required" }),
-  timeSlot: z.string().min(1, "Preferred time slot is required").trim(),
-});
+export const preferredSlotSchema = z
+  .object({
+    date: z
+      .union([z.string(), z.date()])
+      .transform((val) => parseIstDateMidday(val))
+      .refine((date) => !isNaN(date.getTime()), {
+        message: "A valid repair date is required",
+      })
+      .refine(
+        (date) => {
+          const todayIst = getIstDateString(0);
+          const startOfTodayIst = new Date(`${todayIst}T00:00:00+05:30`);
+          return date >= startOfTodayIst;
+        },
+        {
+          message: "Repair booking date cannot be in the past",
+        }
+      )
+      .refine(
+        (date) => {
+          const maxIst = getIstDateString(30);
+          const endOfMaxIst = new Date(`${maxIst}T23:59:59+05:30`);
+          return date <= endOfMaxIst;
+        },
+        {
+          message: "Repair booking date cannot be more than 30 days in advance",
+        }
+      ),
+    timeSlot: z
+      .string()
+      .trim()
+      .min(3, "Preferred time slot is required (at least 3 characters)")
+      .max(100, "Time slot description is too long"),
+  })
+  .superRefine((slot, ctx) => {
+    const todayIst = getIstDateString(0);
+    const slotIstDate = getIstDateString(0, slot.date);
+    const istMinutes = getIstMinutesFromMidnight();
+
+    if (slotIstDate === todayIst) {
+      if (istMinutes > CUTOFFS.EXPRESS_MINUTES) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["date"],
+          message:
+            "Same-day doorstep repair dispatch closes at 8:15 PM IST. Please select tomorrow or a future date.",
+        });
+      }
+    }
+  });
 
 export const createRepairRequestSchema = z.object({
   customer: customerSchema,
   device: deviceSchema,
   service: z.string().optional(),
-  issueDescription: z.string().min(2, "Please select or describe the repair issue").trim(),
+  issueDescription: z
+    .string()
+    .trim()
+    .min(2, "Please select or describe the repair issue")
+    .max(1000, "Issue description is too long (maximum 1000 characters)"),
   serviceMode: z
     .enum(["doorstep", "pickup_drop", "walk_in"])
     .default("doorstep"),

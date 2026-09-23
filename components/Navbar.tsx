@@ -1,26 +1,26 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import { useTranslations } from "next-intl";
-import { Link, usePathname } from "@/i18n/navigation";
 import contactConfig from "@/config/contact";
-import LanguageSwitcher from "./LanguageSwitcher";
+import { Link, usePathname } from "@/i18n/navigation";
 import {
   ArrowRight,
-  ChevronDown,
-  Phone,
-  Menu,
-  X,
-  Search,
-  Star,
   BookOpen,
   Building2,
+  ChevronDown,
   MapPin,
+  Menu,
   MessageSquare,
+  Phone,
+  Search,
   Smartphone,
+  Star,
   Wrench,
+  X,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 interface ServiceNav {
   name: string;
@@ -35,11 +35,31 @@ interface BrandNav {
 }
 
 const TOP_SERVICES: ServiceNav[] = [
-  { name: "Screen Replacement", href: "/services/screen-replacement", startingPrice: "₹1,499" },
-  { name: "Battery Replacement", href: "/services/battery-replacement", startingPrice: "₹999" },
-  { name: "Charging Port Repair", href: "/services/charging-port", startingPrice: "₹699" },
-  { name: "Camera Module Repair", href: "/services/front-rear-camera", startingPrice: "₹899" },
-  { name: "Motherboard Diagnostic", href: "/services/motherboard-chip-level", startingPrice: "₹1,999" },
+  {
+    name: "Screen Replacement",
+    href: "/services/screen-replacement",
+    startingPrice: "₹1,499",
+  },
+  {
+    name: "Battery Replacement",
+    href: "/services/battery-replacement",
+    startingPrice: "₹999",
+  },
+  {
+    name: "Charging Port Repair",
+    href: "/services/charging-port",
+    startingPrice: "₹699",
+  },
+  {
+    name: "Camera Module Repair",
+    href: "/services/front-rear-camera",
+    startingPrice: "₹899",
+  },
+  {
+    name: "Motherboard Diagnostic",
+    href: "/services/motherboard-chip-level",
+    startingPrice: "₹1,999",
+  },
 ];
 
 const TOP_BRANDS: BrandNav[] = [
@@ -121,14 +141,9 @@ export default function Navbar() {
             <div className="flex items-baseline">
               <span className="font-heading text-lg font-extrabold tracking-tight text-tech-slate">
                 QuickFix<span className="text-flash-orange">Mobile</span>
-                <span className="text-xs font-semibold text-text-muted">.in</span>
               </span>
             </div>
           </Link>
-
-          <span className="hidden xl:inline-flex items-center rounded-full bg-mist-gray px-2 py-0.5 text-[11px] font-bold text-text-secondary border border-border-default whitespace-nowrap">
-            {t("city")}
-          </span>
         </div>
 
         {/* Center: Desktop Nav Links */}
@@ -143,7 +158,9 @@ export default function Navbar() {
               onClick={() => toggleDropdown("services")}
               onMouseEnter={() => setOpenDropdown("services")}
               className={`flex items-center gap-1 py-2 hover:text-flash-orange transition-colors whitespace-nowrap cursor-pointer ${
-                pathname.startsWith("/services") ? "text-flash-orange font-bold" : ""
+                pathname.startsWith("/services")
+                  ? "text-flash-orange font-bold"
+                  : ""
               }`}
               aria-expanded={openDropdown === "services"}
             >
@@ -197,7 +214,9 @@ export default function Navbar() {
               onClick={() => toggleDropdown("brands")}
               onMouseEnter={() => setOpenDropdown("brands")}
               className={`flex items-center gap-1 py-2 hover:text-flash-orange transition-colors whitespace-nowrap cursor-pointer ${
-                pathname.startsWith("/brands") ? "text-flash-orange font-bold" : ""
+                pathname.startsWith("/brands")
+                  ? "text-flash-orange font-bold"
+                  : ""
               }`}
               aria-expanded={openDropdown === "brands"}
             >
@@ -249,7 +268,9 @@ export default function Navbar() {
             href="/reviews"
             onClick={closeMenus}
             className={`hover:text-flash-orange transition-colors whitespace-nowrap ${
-              pathname.startsWith("/reviews") ? "text-flash-orange font-bold" : ""
+              pathname.startsWith("/reviews")
+                ? "text-flash-orange font-bold"
+                : ""
             }`}
           >
             {t("nav.reviews")}
@@ -285,7 +306,9 @@ export default function Navbar() {
               onClick={() => toggleDropdown("company")}
               onMouseEnter={() => setOpenDropdown("company")}
               className={`flex items-center gap-1 py-2 hover:text-flash-orange transition-colors whitespace-nowrap cursor-pointer ${
-                ["/about", "/contact", "/locations"].some((p) => pathname.startsWith(p))
+                ["/about", "/contact", "/locations"].some((p) =>
+                  pathname.startsWith(p),
+                )
                   ? "text-flash-orange font-bold"
                   : ""
               }`}
@@ -343,7 +366,9 @@ export default function Navbar() {
             title="Call QuickFix Pune Helpline"
           >
             <Phone className="h-3.5 w-3.5 text-flash-orange shrink-0" />
-            <span className="hidden xl:inline">{contactConfig.phone.display}</span>
+            <span className="hidden xl:inline">
+              {contactConfig.phone.display}
+            </span>
             <span className="xl:hidden">{t("actions.callNow")}</span>
           </a>
 

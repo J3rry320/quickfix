@@ -30,6 +30,10 @@ export const POST = withPublicApi(
         bookingReference: repairRequest.bookingReference,
         status: repairRequest.status,
         requestId: repairRequest._id,
+        preferredSlot: {
+          date: repairRequest.preferredSlot.date,
+          timeSlot: repairRequest.preferredSlot.timeSlot,
+        },
       },
       201
     );

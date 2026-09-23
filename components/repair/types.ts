@@ -45,6 +45,8 @@ export interface ServiceItem {
 export interface BookingSuccessData {
   bookingReference: string;
   message: string;
+  slotDate?: string;
+  timeSlot?: string;
 }
 
 export interface QuickSlot {

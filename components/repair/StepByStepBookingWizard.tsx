@@ -2,8 +2,9 @@
 
 import React, { useEffect, useRef } from "react";
 import { AlertCircle, Phone } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import contactConfig from "@/config/contact";
+import { formatIstDisplayDate } from "@/lib/date";
 import {
   BookingWizardProvider,
   useBookingWizard,
@@ -17,6 +18,7 @@ import { FormLoadingState, FormSuccessState } from "@/components/ui/form-states"
 
 function BookingWizardContent() {
   const t = useTranslations("RepairPage.status");
+  const locale = useLocale();
   const {
     currentStage,
     errorMessage,
@@ -48,6 +50,10 @@ function BookingWizardContent() {
 
   if (bookingSuccess) {
     const estimatedCost = dynamicPrice || selectedService?.startingPrice || 0;
+    const confirmedDateStr = bookingSuccess.slotDate || formData.date;
+    const formattedDate = formatIstDisplayDate(confirmedDateStr, locale);
+    const confirmedTimeSlot = bookingSuccess.timeSlot || formData.timeSlot;
+
     return (
       <FormSuccessState
         title={t("successTitle")}
@@ -57,7 +63,7 @@ function BookingWizardContent() {
         summaryDetails={[
           { label: t("summaryDevice"), value: `${formData.brand} ${formData.model}`.trim() },
           { label: t("summaryRepair"), value: formData.issueDescription || t("defaultRepairDesc") },
-          { label: t("summarySlot"), value: `${formData.date} • ${formData.timeSlot}` },
+          { label: t("summarySlot"), value: `${formattedDate} • ${confirmedTimeSlot}` },
           {
             label: t("summaryAddress"),
             value: formData.streetAddress?.trim() || t("tobeConfirmedOnCall"),

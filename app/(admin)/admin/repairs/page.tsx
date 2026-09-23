@@ -11,6 +11,7 @@ import AdminPagination from "@/components/admin/ui/AdminPagination";
 import AdminStatusBadge from "@/components/admin/ui/AdminStatusBadge";
 import AdminModal from "@/components/admin/ui/AdminModal";
 import JobSheetModal from "@/components/admin/repairs/JobSheetModal";
+import { formatIstDisplayDate } from "@/lib/date";
 
 interface RepairItem {
   _id: string;
@@ -188,15 +189,7 @@ export default function AdminRepairsPage() {
 
   const formatSlotDate = (dateVal?: string) => {
     if (!dateVal) return "-";
-    try {
-      return new Date(dateVal).toLocaleDateString("en-IN", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-      });
-    } catch {
-      return dateVal;
-    }
+    return formatIstDisplayDate(dateVal, "en") || dateVal;
   };
 
   return (

@@ -17,6 +17,11 @@ import {
   stageConfirmSchema,
   formatZodIssues,
 } from "@/lib/validations/booking";
+import {
+  getIstDateString,
+  getIstMinutesFromMidnight,
+  CUTOFFS,
+} from "@/lib/date";
 
 export const QUICK_SLOTS: QuickSlot[] = [
   {
@@ -82,6 +87,7 @@ interface BookingWizardContextType {
   todayStr: string;
   tomorrowStr: string;
   minSelectableDate: string;
+  maxSelectableDate: string;
   currentTimeInMinutes: number | null;
   isSlotAvailable: (slotId: string) => boolean;
   getSlotDisabledReason: (slotId: string) => string | null;
@@ -137,34 +143,23 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
   const [modelInput, setModelInput] = useState<string>("");
   const [hasPreFilled, setHasPreFilled] = useState<boolean>(false);
 
-  // Date constants (local timezone, initialized to stable date during prerender and synchronized on mount)
-  const [todayDate, setTodayDate] = useState<Date>(() => new Date("2026-01-01T00:00:00Z"));
-  const [tomorrowDate, setTomorrowDate] = useState<Date>(() => new Date("2026-01-02T00:00:00Z"));
+  // Dynamic IST Dates (Asia/Kolkata timezone, initialized with prerender-safe defaults and synchronized on mount)
+  const [todayStr, setTodayStr] = useState<string>("2026-09-23");
+  const [tomorrowStr, setTomorrowStr] = useState<string>("2026-09-24");
+  const [maxSelectableDate, setMaxSelectableDate] = useState<string>("2026-10-23");
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const t = new Date();
-      setTodayDate(t);
-      const tm = new Date();
-      tm.setDate(tm.getDate() + 1);
-      setTomorrowDate(tm);
-    }, 0);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const todayStr = useMemo(() => todayDate.toISOString().split("T")[0], [todayDate]);
-  const tomorrowStr = useMemo(() => tomorrowDate.toISOString().split("T")[0], [tomorrowDate]);
-
-  // Client time tracking (minutes from midnight, client-only to avoid SSR hydration mismatches)
+  // Client time tracking (minutes from midnight in IST)
   const [currentTimeInMinutes, setCurrentTimeInMinutes] = useState<number | null>(null);
 
   useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setCurrentTimeInMinutes(now.getHours() * 60 + now.getMinutes());
+    const updateTimeAndDates = () => {
+      setTodayStr(getIstDateString(0));
+      setTomorrowStr(getIstDateString(1));
+      setMaxSelectableDate(getIstDateString(30));
+      setCurrentTimeInMinutes(getIstMinutesFromMidnight());
     };
-    updateTime();
-    const interval = setInterval(updateTime, 60000);
+    updateTimeAndDates();
+    const interval = setInterval(updateTimeAndDates, 60000);
     return () => clearInterval(interval);
   }, []);
 
@@ -174,14 +169,14 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
       if (currentTimeInMinutes === null) return true;
       switch (slotId) {
         case "today-express":
-          // Express dispatch operating cutoff: 8:15 PM (20:15 = 1215 mins)
-          return currentTimeInMinutes <= 1215;
+          // Express dispatch operating cutoff: 8:15 PM (1215 mins)
+          return currentTimeInMinutes <= CUTOFFS.EXPRESS_MINUTES;
         case "today-afternoon":
-          // Afternoon cutoff: 3:30 PM (15:30 = 930 mins)
-          return currentTimeInMinutes < 930;
+          // Afternoon cutoff: 3:30 PM (930 mins)
+          return currentTimeInMinutes < CUTOFFS.AFTERNOON_MINUTES;
         case "today-evening":
-          // Evening cutoff: 7:30 PM (19:30 = 1170 mins)
-          return currentTimeInMinutes < 1170;
+          // Evening cutoff: 7:30 PM (1170 mins)
+          return currentTimeInMinutes < CUTOFFS.EVENING_MINUTES;
         case "tomorrow-morning":
           return true;
         default:
@@ -196,11 +191,11 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
       if (currentTimeInMinutes === null) return null;
       switch (slotId) {
         case "today-express":
-          return currentTimeInMinutes > 1215 ? "Closed for today" : null;
+          return currentTimeInMinutes > CUTOFFS.EXPRESS_MINUTES ? "Closed for today" : null;
         case "today-afternoon":
-          return currentTimeInMinutes >= 930 ? "Slot passed" : null;
+          return currentTimeInMinutes >= CUTOFFS.AFTERNOON_MINUTES ? "Slot passed" : null;
         case "today-evening":
-          return currentTimeInMinutes >= 1170 ? "Slot passed" : null;
+          return currentTimeInMinutes >= CUTOFFS.EVENING_MINUTES ? "Slot passed" : null;
         default:
           return null;
       }
@@ -213,13 +208,13 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
       if (dateStr !== todayStr || currentTimeInMinutes === null) return true;
       const windowLower = timeWindow.toLowerCase();
       if (windowLower.includes("morning")) {
-        return currentTimeInMinutes < 750; // 12:30 PM cutoff
+        return currentTimeInMinutes < CUTOFFS.MORNING_MINUTES; // 12:30 PM cutoff
       }
       if (windowLower.includes("afternoon")) {
-        return currentTimeInMinutes < 930; // 3:30 PM cutoff
+        return currentTimeInMinutes < CUTOFFS.AFTERNOON_MINUTES; // 3:30 PM cutoff
       }
       if (windowLower.includes("evening")) {
-        return currentTimeInMinutes < 1170; // 7:30 PM cutoff
+        return currentTimeInMinutes < CUTOFFS.EVENING_MINUTES; // 7:30 PM cutoff
       }
       return true;
     },
@@ -227,7 +222,7 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
   );
 
   const minSelectableDate = useMemo(() => {
-    if (currentTimeInMinutes !== null && currentTimeInMinutes > 1215) {
+    if (currentTimeInMinutes !== null && currentTimeInMinutes > CUTOFFS.EXPRESS_MINUTES) {
       return tomorrowStr;
     }
     return todayStr;
@@ -237,14 +232,14 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
   const [selectedSlotId, setSelectedSlotId] = useState<string>("today-express");
   const [useCustomSlot, setUseCustomSlot] = useState<boolean>(false);
 
-  // Form State
+  // Form State initialized with prerender-safe default, synchronized with live IST on client mount
   const [formData, setFormData] = useState<BookingFormData>({
     brand: "",
     model: "",
     issueDescription: "",
     additionalNotes: "",
     serviceMode: "doorstep",
-    date: todayStr,
+    date: "2026-09-23",
     timeSlot: "Express (Within 45 Mins)",
     area: "",
     streetAddress: "",
@@ -268,13 +263,23 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
     [todayStr, tomorrowStr]
   );
 
-  // Auto-switch to earliest available slot based on current time
+  // Auto-switch to earliest available slot and keep formData.date synchronized
   useEffect(() => {
-    if (currentTimeInMinutes === null || useCustomSlot) return;
+    if (currentTimeInMinutes === null) return;
 
-    const isExpressAvail = currentTimeInMinutes <= 1215;
-    const isAfternoonAvail = currentTimeInMinutes < 930;
-    const isEveningAvail = currentTimeInMinutes < 1170;
+    if (useCustomSlot) {
+      if (formData.date < minSelectableDate) {
+        setFormData((prev) => ({
+          ...prev,
+          date: minSelectableDate,
+        }));
+      }
+      return;
+    }
+
+    const isExpressAvail = currentTimeInMinutes <= CUTOFFS.EXPRESS_MINUTES;
+    const isAfternoonAvail = currentTimeInMinutes < CUTOFFS.AFTERNOON_MINUTES;
+    const isEveningAvail = currentTimeInMinutes < CUTOFFS.EVENING_MINUTES;
 
     const earliestAvailableSlot: QuickSlot = isExpressAvail
       ? QUICK_SLOTS[0]
@@ -290,13 +295,27 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
       (selectedSlotId === "today-evening" && isEveningAvail) ||
       selectedSlotId === "tomorrow-morning";
 
+    const targetSlot = isCurrentlySelectedValid
+      ? QUICK_SLOTS.find((s) => s.id === selectedSlotId) || earliestAvailableSlot
+      : earliestAvailableSlot;
+
+    const targetDate = targetSlot.dateOffset === 0 ? todayStr : tomorrowStr;
+
     if (!isCurrentlySelectedValid) {
-      const timer = setTimeout(() => {
-        handleSelectQuickSlot(earliestAvailableSlot);
-      }, 0);
-      return () => clearTimeout(timer);
+      setSelectedSlotId(targetSlot.id);
     }
-  }, [currentTimeInMinutes, selectedSlotId, useCustomSlot, handleSelectQuickSlot]);
+
+    setFormData((prev) => {
+      if (prev.date !== targetDate || prev.timeSlot !== targetSlot.slot) {
+        return {
+          ...prev,
+          date: targetDate,
+          timeSlot: targetSlot.slot,
+        };
+      }
+      return prev;
+    });
+  }, [currentTimeInMinutes, selectedSlotId, useCustomSlot, minSelectableDate, todayStr, tomorrowStr, formData.date]);
 
   // 1. Initial Data Load from Database APIs
   useEffect(() => {
@@ -710,7 +729,7 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
           city: "Pune",
         },
         preferredSlot: {
-          date: new Date(formData.date),
+          date: formData.date,
           timeSlot: formData.timeSlot,
         },
         locale,
@@ -744,6 +763,8 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
       setBookingSuccess({
         bookingReference: data.data.bookingReference,
         message: data.data.message,
+        slotDate: formData.date,
+        timeSlot: formData.timeSlot,
       });
       window.scrollTo({ top: 60, behavior: "smooth" });
     } catch (err) {
@@ -768,7 +789,7 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
     setFieldErrors({});
     setUseCustomSlot(false);
 
-    const isAllTodayClosed = currentTimeInMinutes !== null && currentTimeInMinutes > 1215;
+    const isAllTodayClosed = currentTimeInMinutes !== null && currentTimeInMinutes > CUTOFFS.EXPRESS_MINUTES;
     const defaultSlot = isAllTodayClosed ? QUICK_SLOTS[3] : QUICK_SLOTS[0];
     const initialDate = isAllTodayClosed ? tomorrowStr : todayStr;
 
@@ -816,6 +837,7 @@ export function BookingWizardProvider({ children }: { children: React.ReactNode 
       todayStr,
       tomorrowStr,
       minSelectableDate,
+      maxSelectableDate,
       currentTimeInMinutes,
       isSlotAvailable,
       getSlotDisabledReason,
