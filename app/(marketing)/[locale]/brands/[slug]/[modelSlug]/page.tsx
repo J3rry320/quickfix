@@ -1,3 +1,5 @@
+import { ModelsScrollSection } from "@/components/models";
+import DoorstepPickupAssurance from "@/components/landing/DoorstepPickupAssurance";
 import JsonLd from "@/components/seo/JsonLd";
 import {
   AspectBox,
@@ -7,7 +9,7 @@ import {
   ProcessStepGrid,
   Section,
 } from "@/components/ui";
-import { ModelsScrollSection } from "@/components/models";
+import { ServiceCard } from "@/components/services";
 import contactConfig from "@/config/contact";
 import { getBreadcrumbSchema, getModelDetailPageSchema } from "@/config/jsonld";
 import { getModelSeoMetadata, siteConfig } from "@/config/seo";
@@ -19,13 +21,7 @@ import {
   getDbServices,
   getStaticModelParams,
 } from "@/lib/db/catalogue";
-import {
-  ArrowRight,
-  Clock,
-  Phone,
-  ShieldCheck,
-  Zap,
-} from "lucide-react";
+import { ArrowRight, Clock, Phone, ShieldCheck, Zap } from "lucide-react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -111,12 +107,19 @@ export default async function ModelDetailPage({
 
   const modelServices = allServices.map((srv) => {
     const customPricing = pricingMap.get(srv.slug);
+    const price = customPricing ? customPricing.price : srv.startingPrice;
+    const time = customPricing ? customPricing.time : srv.estimatedTimeMinutes;
     return {
+      _id: srv._id,
       slug: srv.slug,
       name: srv.name,
       description: srv.description,
-      price: customPricing ? customPricing.price : srv.startingPrice,
-      time: customPricing ? customPricing.time : srv.estimatedTimeMinutes,
+      image: srv.image,
+      isPopular: srv.isPopular,
+      price,
+      startingPrice: price,
+      time,
+      estimatedTimeMinutes: time,
       warrantyDays: srv.warrantyDays,
     };
   });
@@ -169,7 +172,7 @@ export default async function ModelDetailPage({
             icon: Clock,
             label: t("hero.highlights.turnaround"),
             value: t("hero.highlights.turnaroundVal"),
-            color: "text-flash-orange",
+            color: "text-flash-orange-text",
           },
           {
             icon: ShieldCheck,
@@ -187,7 +190,7 @@ export default async function ModelDetailPage({
             icon: Zap,
             label: t("hero.highlights.startingFrom"),
             value: `₹${minPrice}`,
-            color: "text-electric-amber",
+            color: "text-electric-amber-text",
           },
         ]}
         actions={
@@ -223,7 +226,7 @@ export default async function ModelDetailPage({
             fallbackType="model"
             title={`${brand.name} ${model.name}`}
             label={t("hero.media.fallbackLabel", { modelName: model.name })}
-            aspectRatio="1/1"
+            aspectRatio="4/3"
             className="shadow-md"
             preload={true}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 448px, 512px"
@@ -243,51 +246,22 @@ export default async function ModelDetailPage({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {modelServices.map((service) => (
-              <div
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+            {modelServices.map((service, idx) => (
+              <ServiceCard
                 key={service.slug}
-                className="p-5 rounded-2xl bg-clean-white border border-border-default/90 hover:border-flash-orange/50 hover:shadow-md transition-all flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <span className="text-xs font-bold text-flash-orange uppercase tracking-wider">
-                      {service.name.split("&")[0].trim()}
-                    </span>
-                    <span className="font-heading text-base font-black text-tech-slate">
-                      ₹{service.price}
-                    </span>
-                  </div>
-                  <h3 className="font-heading text-sm sm:text-base font-bold text-tech-slate">
-                    {service.name}
-                  </h3>
-                  <p className="mt-1.5 text-xs text-text-secondary leading-relaxed line-clamp-2">
-                    {service.description}
-                  </p>
-                </div>
-
-                <div className="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between">
-                  <div className="flex items-center gap-3 text-[11px] text-text-muted font-semibold">
-                    <span className="flex items-center gap-1">
-                      <Clock className="h-3 w-3" />
-                      {t("pricing.mins", { minutes: service.time })}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <ShieldCheck className="h-3 w-3" />
-                      {t("pricing.daysWarranty", {
-                        days: service.warrantyDays,
-                      })}
-                    </span>
-                  </div>
-
-                  <Link
-                    href={`/book-repair?brand=${brand.slug}&model=${encodeURIComponent(model.name)}&service=${service.slug}`}
-                    className="text-xs font-bold text-flash-orange hover:underline inline-flex items-center gap-0.5"
-                  >
-                    <span>{t("pricing.bookService")}</span>
-                  </Link>
-                </div>
-              </div>
+                service={service}
+                href={`/book-repair?brand=${brand.slug}&model=${encodeURIComponent(model.name)}&service=${service.slug}`}
+                fromPriceLabel={`₹${service.startingPrice}`}
+                estimatedTimeLabel={t("pricing.mins", {
+                  minutes: service.estimatedTimeMinutes,
+                })}
+                warrantyDaysLabel={t("pricing.daysWarranty", {
+                  days: service.warrantyDays,
+                })}
+                actionLabel={t("pricing.bookService").replace(/→|\s*→/g, "").trim()}
+                priority={idx < 3}
+              />
             ))}
           </div>
         </Container>
@@ -314,6 +288,13 @@ export default async function ModelDetailPage({
           sectionVariant="muted"
         />
       )}
+
+      {/* 4.5 Cleanroom Lab & Doorstep Pickup Assurance */}
+      <DoorstepPickupAssurance
+        variant="section"
+        videoSrc="/assets/videos/quickfixabout.mp4"
+        posterSrc="/logo.png"
+      />
 
       {/* 5. CTA Block */}
       <Section variant="white" padding="default">

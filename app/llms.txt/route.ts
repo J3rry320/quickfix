@@ -2,8 +2,6 @@ import { siteConfig } from "@/config/seo";
 import { LOCALITIES_CATALOG } from "@/config/catalogue-data";
 import { getDbBrands, getDbServices } from "@/lib/db/catalogue";
 
-export const revalidate = 86400; // 24 hours
-
 export async function GET() {
   const siteUrl = siteConfig.url.replace(/\/$/, "");
 

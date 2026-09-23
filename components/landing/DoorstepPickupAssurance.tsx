@@ -19,12 +19,22 @@ interface DoorstepPickupAssuranceProps {
   className?: string;
   variant?: "card" | "section";
   showCta?: boolean;
+  videoSrc?: string;
+  posterSrc?: string;
+  title?: string;
+  subtitle?: string;
+  badge?: string;
 }
 
 export default function DoorstepPickupAssurance({
   className = "",
   variant = "card",
   showCta = true,
+  videoSrc = "/assets/videos/QuickFIxLanding.mp4",
+  posterSrc = "/logo.png",
+  title,
+  subtitle,
+  badge,
 }: DoorstepPickupAssuranceProps) {
   const t = useTranslations("DoorstepAssurance");
 
@@ -32,9 +42,11 @@ export default function DoorstepPickupAssurance({
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const [hasLoaded, setHasLoaded] = useState(false);
+  const [isInViewport, setIsInViewport] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
+  // Lazy load video only when user scrolls near the component
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -42,28 +54,37 @@ export default function DoorstepPickupAssurance({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          // User scrolled within range (200px margin for smooth load)
           setHasLoaded(true);
-          if (videoRef.current) {
-            videoRef.current
-              .play()
-              .then(() => setIsPlaying(true))
-              .catch(() => {
-                setIsPlaying(false);
-              });
-          }
+          setIsInViewport(true);
         } else {
+          setIsInViewport(false);
           if (videoRef.current && !videoRef.current.paused) {
             videoRef.current.pause();
             setIsPlaying(false);
           }
         }
       },
-      { threshold: 0.25 }
+      { rootMargin: "200px 0px", threshold: 0.15 }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
+
+  // Auto-play when video is loaded and actively visible in viewport
+  useEffect(() => {
+    if (!hasLoaded || !isInViewport) return;
+    const video = videoRef.current;
+    if (!video) return;
+
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(false));
+    }
+  }, [hasLoaded, isInViewport]);
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -97,14 +118,23 @@ export default function DoorstepPickupAssurance({
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         {/* Left Column: Descriptive Assurance Content */}
         <div className="lg:col-span-7 xl:col-span-8 flex flex-col justify-center">
+          {badge && (
+            <div className="mb-3">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-flash-orange/10 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-flash-orange-text border border-flash-orange/20">
+                <ShieldCheck className="h-3.5 w-3.5 text-flash-orange" />
+                <span>{badge}</span>
+              </span>
+            </div>
+          )}
+
           {/* Heading */}
           <h3 className="font-heading text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-extrabold text-tech-slate tracking-tight leading-tight">
-            {t("title")}
+            {title || t("title")}
           </h3>
 
           {/* Subtitle */}
           <p className="mt-3 text-xs sm:text-sm lg:text-base text-text-secondary font-body leading-relaxed max-w-2xl">
-            {t("subtitle")}
+            {subtitle || t("subtitle")}
           </p>
 
           {/* Trust Points Grid */}
@@ -156,7 +186,8 @@ export default function DoorstepPickupAssurance({
             {/* Video Element */}
             <video
               ref={videoRef}
-              src={hasLoaded ? "/assets/videos/QuickFIxLanding.mp4" : undefined}
+              src={hasLoaded ? videoSrc : undefined}
+              poster={posterSrc}
               preload={hasLoaded ? "auto" : "none"}
               muted={isMuted}
               loop

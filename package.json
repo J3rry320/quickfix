@@ -7,7 +7,6 @@
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
-    "seed:data": "node --env-file=.env --experimental-strip-types scripts/seed-data.ts",
     "seed:blogs": "node --env-file=.env --experimental-strip-types scripts/seed-blogs.ts",
     "sync:images": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/sync-device-images.ts"
   },

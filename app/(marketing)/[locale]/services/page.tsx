@@ -11,7 +11,8 @@ import contactConfig from "@/config/contact";
 import JsonLd from "@/components/seo/JsonLd";
 import DoorstepPickupAssurance from "@/components/landing/DoorstepPickupAssurance";
 import BrandsShowcase from "@/components/landing/BrandsShowcase";
-import { Container, Section, CTABlock, PageHero, AspectBox } from "@/components/ui";
+import { Container, Section, CTABlock, PageHero } from "@/components/ui";
+import { ServiceCard } from "@/components/services";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -100,7 +101,7 @@ export default async function ServicesHubPage({
         id="services-hub-structured-data"
       />
 
-      {/* 1. Unified Page Hero with Media */}
+      {/* 1. Unified Page Hero (Clean, centered without media) */}
       <PageHero
         breadcrumbs={[
           { label: t("breadcrumbs.home"), href: "/" },
@@ -108,24 +109,13 @@ export default async function ServicesHubPage({
         ]}
         title={t("hero.title")}
         subtitle={t("hero.subtitle")}
-        align="left"
-        media={
-          <AspectBox
-            aspectRatio="4/3"
-            variant="solid"
-            badge={t("hero.media.badge")}
-            fallbackType="service"
-            title={t("hero.media.title")}
-            label={t("hero.media.label")}
-            className="shadow-xl"
-          />
-        }
+        align="center"
         highlights={[
           {
             icon: Wrench,
             label: t("hero.highlights.repairs.label"),
             value: t("hero.highlights.repairs.value", { count: services.length }),
-            color: "text-flash-orange",
+            color: "text-flash-orange-text",
           },
           {
             icon: Clock,
@@ -137,14 +127,14 @@ export default async function ServicesHubPage({
             icon: ShieldCheck,
             label: t("hero.highlights.warranty.label"),
             value: t("hero.highlights.warranty.value"),
-            color: "text-success",
+            color: "text-success-text",
           },
         ]}
         actions={
-          <>
+          <div className="flex flex-wrap items-center justify-center gap-3.5">
             <Link
               href="/book-repair"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-flash-orange-hover active:scale-95 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg shadow-flash-orange/20 hover:bg-flash-orange-hover active:scale-95 transition-all cursor-pointer"
             >
               <span>{t("hero.actions.bookRepair")}</span>
               <ArrowRight className="h-4 w-4" />
@@ -152,12 +142,12 @@ export default async function ServicesHubPage({
 
             <a
               href={`tel:${contactConfig.phone.value}`}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-border-strong text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-border-strong text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all cursor-pointer shadow-2xs"
             >
               <Phone className="h-4 w-4 text-flash-orange" />
               <span>{t("hero.actions.callHelpline", { phone: contactConfig.phone.display })}</span>
             </a>
-          </>
+          </div>
         }
       />
 
@@ -173,43 +163,16 @@ export default async function ServicesHubPage({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {services.map((service) => (
-              <Link
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+            {services.map((service, idx) => (
+              <ServiceCard
                 key={service.slug}
-                href={`/services/${service.slug}`}
-                className="p-5 rounded-2xl bg-clean-white border border-border-default/90 hover:border-flash-orange/50 hover:shadow-md transition-all flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <span className="text-xs font-bold text-flash-orange uppercase tracking-wider">
-                      {service.name.split("&")[0].trim()}
-                    </span>
-                    <span className="text-xs font-bold text-text-muted">
-                      {t("grid.fromPrice", { price: service.startingPrice })}
-                    </span>
-                  </div>
-                  <h3 className="font-heading text-base font-bold text-tech-slate group-hover:text-flash-orange transition-colors">
-                    {service.name}
-                  </h3>
-                  <p className="mt-1.5 text-xs text-text-secondary leading-relaxed line-clamp-2">
-                    {service.description}
-                  </p>
-                </div>
-                <div className="mt-4 pt-3 border-t border-border-default flex items-center justify-between">
-                  <div className="flex items-center gap-3 text-[11px] text-text-muted font-semibold">
-                    <span className="flex items-center gap-1">
-                      <Clock className="h-3 w-3" />
-                      {t("grid.estimatedTime", { minutes: service.estimatedTimeMinutes })}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <ShieldCheck className="h-3 w-3" />
-                      {t("grid.warrantyDays", { days: service.warrantyDays })}
-                    </span>
-                  </div>
-                  <ArrowRight className="h-3.5 w-3.5 text-flash-orange group-hover:translate-x-1 transition-transform" />
-                </div>
-              </Link>
+                service={service}
+                fromPriceLabel={t("grid.fromPrice", { price: service.startingPrice })}
+                estimatedTimeLabel={t("grid.estimatedTime", { minutes: service.estimatedTimeMinutes })}
+                warrantyDaysLabel={t("grid.warrantyDays", { days: service.warrantyDays })}
+                priority={idx < 3}
+              />
             ))}
           </div>
         </Container>
@@ -218,7 +181,10 @@ export default async function ServicesHubPage({
       {/* 3. Doorstep Pickup Assurance Banner */}
       <Section variant="muted" padding="default">
         <Container>
-          <DoorstepPickupAssurance />
+          <DoorstepPickupAssurance
+            videoSrc="/assets/videos/quickfixabout.mp4"
+            posterSrc="/logo.png"
+          />
         </Container>
       </Section>
 
@@ -238,7 +204,7 @@ export default async function ServicesHubPage({
             <div className="grid grid-cols-12 bg-tech-slate text-clean-white p-4 font-heading text-xs sm:text-sm font-bold uppercase tracking-wider">
               <div className="col-span-4 sm:col-span-4">{t("comparison.headers.feature")}</div>
               <div className="col-span-4 sm:col-span-4 text-success-light font-black">{t("comparison.headers.quickfix")}</div>
-              <div className="col-span-4 sm:col-span-4 text-text-muted">{t("comparison.headers.localShop")}</div>
+              <div className="col-span-4 sm:col-span-4 text-border-strong font-bold">{t("comparison.headers.localShop")}</div>
             </div>
 
             <div className="divide-y divide-border-default text-xs sm:text-sm">
@@ -251,7 +217,7 @@ export default async function ServicesHubPage({
                     <Check className="h-4 w-4 text-success shrink-0" />
                     <span>{row.quickfix}</span>
                   </div>
-                  <div className="col-span-4 sm:col-span-4 text-text-muted flex items-center gap-1.5">
+                  <div className="col-span-4 sm:col-span-4 text-text-secondary flex items-center gap-1.5">
                     <X className="h-4 w-4 text-error shrink-0" />
                     <span>{row.localShop}</span>
                   </div>

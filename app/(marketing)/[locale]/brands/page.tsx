@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Smartphone, ArrowRight, ShieldCheck, Clock, Zap } from "lucide-react";
+import { Smartphone, ArrowRight, ShieldCheck, Clock, Zap, Phone } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { getBrandsHubSeoMetadata, siteConfig } from "@/config/seo";
+import contactConfig from "@/config/contact";
 import { getBreadcrumbSchema, getItemListSchema } from "@/config/jsonld";
 import { getDbBrands, getAllDbModels, getPopularDbModels } from "@/lib/db/catalogue";
 import JsonLd from "@/components/seo/JsonLd";
@@ -11,7 +12,6 @@ import {
   Section,
   CTABlock,
   PageHero,
-  AspectBox,
   BrandLogo,
 } from "@/components/ui";
 import BrandsShowcase from "@/components/landing/BrandsShowcase";
@@ -106,7 +106,7 @@ export default async function BrandsHubPage({
         id="brands-hub-structured-data"
       />
 
-      {/* 1. Unified Page Hero */}
+      {/* 1. Unified Page Hero (Clean, centered without media) */}
       <PageHero
         breadcrumbs={[
           { label: t("breadcrumbs.home"), href: "/" },
@@ -114,30 +114,19 @@ export default async function BrandsHubPage({
         ]}
         title={t("hero.title")}
         subtitle={t("hero.subtitle")}
-        align="left"
-        media={
-          <AspectBox
-            aspectRatio="4/3"
-            variant="solid"
-            badge={t("hero.media.badge")}
-            fallbackType="brand"
-            title={t("hero.media.title")}
-            label={t("hero.media.label")}
-            className="shadow-xl"
-          />
-        }
+        align="center"
         highlights={[
           {
             icon: Smartphone,
             label: t("hero.highlights.brands"),
             value: t("hero.highlights.brandsCount", { count: brands.length }),
-            color: "text-flash-orange",
+            color: "text-flash-orange-text",
           },
           {
             icon: Zap,
             label: t("hero.highlights.models"),
             value: t("hero.highlights.modelsCount", { count: allModels.length }),
-            color: "text-electric-amber",
+            color: "text-electric-amber-text",
           },
           {
             icon: Clock,
@@ -149,9 +138,28 @@ export default async function BrandsHubPage({
             icon: ShieldCheck,
             label: t("hero.highlights.warranty"),
             value: t("hero.highlights.warrantyVal"),
-            color: "text-success",
+            color: "text-success-text",
           },
         ]}
+        actions={
+          <div className="flex flex-wrap items-center justify-center gap-3.5">
+            <Link
+              href="/book-repair"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg shadow-flash-orange/20 hover:bg-flash-orange-hover active:scale-95 transition-all cursor-pointer"
+            >
+              <span>Schedule Doorstep Repair</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+
+            <a
+              href={`tel:${contactConfig.phone.value}`}
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-border-strong text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all cursor-pointer shadow-2xs"
+            >
+              <Phone className="h-4 w-4 text-flash-orange" />
+              <span>Call Helpline: {contactConfig.phone.display}</span>
+            </a>
+          </div>
+        }
       />
 
       {/* 2. Quick Brand Strip Reused from Landing */}
@@ -211,7 +219,7 @@ export default async function BrandsHubPage({
                       </div>
 
                       {brand.isPopular && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-flash-orange/10 px-2.5 py-0.5 text-3xs font-extrabold uppercase tracking-wider text-flash-orange border border-flash-orange/20 shrink-0">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-flash-orange/10 px-2.5 py-0.5 text-3xs font-extrabold uppercase tracking-wider text-flash-orange-text border border-flash-orange/20 shrink-0">
                           <span className="h-1.5 w-1.5 rounded-full bg-flash-orange animate-pulse" />
                           <span>{t("directory.popularBadge")}</span>
                         </span>
@@ -230,7 +238,7 @@ export default async function BrandsHubPage({
                           </span>
                         ))}
                         {brandModels.length > 4 && (
-                          <span className="text-[11px] font-bold text-flash-orange bg-flash-orange/5 border border-flash-orange/20 px-2 py-1 rounded-lg">
+                          <span className="text-[11px] font-bold text-flash-orange-text bg-flash-orange/5 border border-flash-orange/20 px-2 py-1 rounded-lg">
                             {t("directory.moreModels", { count: brandModels.length - 4 })}
                           </span>
                         )}
@@ -239,7 +247,7 @@ export default async function BrandsHubPage({
                   </div>
 
                   {/* Card Action Link */}
-                  <div className="pt-3.5 border-t border-border-subtle flex items-center justify-between text-xs font-bold text-flash-orange">
+                  <div className="pt-3.5 border-t border-border-subtle flex items-center justify-between text-xs font-bold text-flash-orange-text">
                     <span>{t("directory.viewModels")}</span>
                     <ArrowRight className="h-4 w-4 group-hover:translate-x-1.5 transition-transform" />
                   </div>

@@ -118,7 +118,7 @@ export default function ModelCard({
 
         {/* Brand & Release Year Header */}
         <div className="flex items-center justify-between gap-2 mb-1">
-          <span className="text-3xs font-bold uppercase tracking-wider text-text-muted truncate">
+          <span className="text-3xs font-bold uppercase tracking-wider text-text-secondary truncate">
             {brandName}
           </span>
           {model.releaseYear && (
@@ -129,7 +129,7 @@ export default function ModelCard({
         </div>
 
         {/* Model Name */}
-        <h3 className="font-heading font-bold text-sm sm:text-base text-tech-slate group-hover:text-flash-orange transition-colors line-clamp-1">
+        <h3 className="font-heading font-bold text-sm sm:text-base text-tech-slate group-hover:text-flash-orange-text transition-colors line-clamp-1">
           {model.name}
         </h3>
       </div>
@@ -137,14 +137,14 @@ export default function ModelCard({
       {/* Pricing & CTA Footer */}
       <div className="mt-3.5 pt-3 border-t border-border-default/60 flex items-center justify-between text-xs">
         <div>
-          <span className="text-3xs font-medium text-text-muted block">
+          <span className="text-3xs font-medium text-text-secondary block">
             {startingPriceLabel}
           </span>
           <span className="font-heading font-bold text-tech-slate text-xs sm:text-sm">
             {minPrice ? `₹${minPrice.toLocaleString("en-IN")}` : "Genuine Parts"}
           </span>
         </div>
-        <span className="inline-flex items-center gap-1 font-bold text-flash-orange text-xs group-hover:translate-x-0.5 transition-transform">
+        <span className="inline-flex items-center gap-1 font-bold text-flash-orange-text text-xs group-hover:translate-x-0.5 transition-transform">
           <span>{viewDetailsLabel}</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </span>

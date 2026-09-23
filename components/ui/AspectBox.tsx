@@ -88,6 +88,7 @@ export default function AspectBox({
         <video
           src={videoSrc}
           poster={poster || (src || undefined)}
+          preload="none"
           playsInline
           loop
           muted

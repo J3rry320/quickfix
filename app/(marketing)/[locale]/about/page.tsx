@@ -1,4 +1,5 @@
 import TrustBadges from "@/components/landing/TrustBadges";
+import DoorstepPickupAssurance from "@/components/landing/DoorstepPickupAssurance";
 import JsonLd from "@/components/seo/JsonLd";
 import {
   AspectBox,
@@ -386,6 +387,14 @@ export default async function AboutPage({
           </div>
         </Container>
       </Section>
+
+      {/* 5.5 Cleanroom Lab & Precision Micro-Soldering in Action */}
+      <DoorstepPickupAssurance
+        variant="section"
+        videoSrc="/assets/videos/quickfixabout.mp4"
+        posterSrc="/logo.png"
+        badge="Sadashiv Peth Lab Footage"
+      />
 
       {/* 6. Founder Spotlight: Editorial Vision & Pledge (Media-free, high-contrast) */}
       <Section variant="white" padding="default">

@@ -5,9 +5,11 @@
   /* Brand Accents */
   --color-flash-orange: #FF5722;
   --color-flash-orange-hover: #E64A19;
+  --color-flash-orange-text: #C2410C;
   --color-flash-orange-subtle: #FFF3EE;
   --color-electric-amber: #FFA000;
   --color-electric-amber-hover: #FF8F00;
+  --color-electric-amber-text: #B45309;
 
   /* Dark / Tech Neutrals */
   --color-tech-slate: #181B20;
@@ -31,9 +33,9 @@
   /* Typography / Text */
   --color-text-primary: #181B20;
   --color-text-secondary: #52525B;
-  --color-text-muted: #71717A;
+  --color-text-muted: #595964;
   --color-text-disabled: #A1A1AA;
-  --color-caption: #71717A;
+  --color-caption: #595964;
 
   /* Status - Success */
   --color-success: #16A34A;

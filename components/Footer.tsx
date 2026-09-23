@@ -34,11 +34,11 @@ export default function Footer() {
               />
               <span className="font-heading text-xl font-black text-clean-white tracking-tight">
                 QuickFix<span className="text-flash-orange">Mobile</span>
-                <span className="text-text-muted text-sm font-semibold">.in</span>
+                <span className="text-clean-white/60 text-sm font-semibold">.in</span>
               </span>
             </Link>
 
-            <p className="mt-4 text-xs sm:text-sm text-text-muted font-body leading-relaxed max-w-sm">
+            <p className="mt-4 text-xs sm:text-sm text-clean-white/75 font-body leading-relaxed max-w-sm">
               {t("brandDesc")}
             </p>
 
@@ -49,7 +49,7 @@ export default function Footer() {
 
             {/* Social Media Links from contactConfig */}
             <div className="mt-5">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-text-muted mb-2">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-clean-white/70 mb-2">
                 Follow & Connect
               </p>
               <div className="flex items-center gap-2">
@@ -57,7 +57,7 @@ export default function Footer() {
                   href={contactConfig.social.instagram.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-8 w-8 items-center justify-center rounded-lg bg-tech-slate-dark text-text-secondary hover:bg-flash-orange hover:text-clean-white transition-colors"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-border-dark bg-tech-slate-dark text-clean-white/80 hover:bg-flash-orange hover:text-clean-white hover:border-flash-orange transition-colors"
                   aria-label="Instagram"
                   title="Instagram"
                 >
@@ -69,7 +69,7 @@ export default function Footer() {
                   href={contactConfig.social.youtube.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-8 w-8 items-center justify-center rounded-lg bg-tech-slate-dark text-text-secondary hover:bg-flash-orange hover:text-clean-white transition-colors"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-border-dark bg-tech-slate-dark text-clean-white/80 hover:bg-flash-orange hover:text-clean-white hover:border-flash-orange transition-colors"
                   aria-label="YouTube"
                   title="YouTube"
                 >
@@ -86,7 +86,7 @@ export default function Footer() {
             <h4 className="font-heading text-xs font-extrabold uppercase tracking-wider text-clean-white mb-4">
               {t("quickLinks")}
             </h4>
-            <ul className="space-y-2.5 text-xs sm:text-sm text-text-muted font-medium">
+            <ul className="space-y-2.5 text-xs sm:text-sm text-clean-white/75 font-medium">
               <li>
                 <Link
                   href="/about"
@@ -175,7 +175,7 @@ export default function Footer() {
             <h4 className="font-heading text-xs font-extrabold uppercase tracking-wider text-clean-white mb-4">
               {t("services")}
             </h4>
-            <ul className="space-y-2.5 text-xs sm:text-sm text-text-muted font-medium">
+            <ul className="space-y-2.5 text-xs sm:text-sm text-clean-white/75 font-medium">
               <li>
                 <Link
                   href="/services/screen-replacement"
@@ -227,7 +227,7 @@ export default function Footer() {
               <li className="pt-2 border-t border-border-dark/80">
                 <Link
                   href="/services"
-                  className="inline-flex items-center gap-1.5 font-bold text-flash-orange hover:text-flash-orange-hover transition-colors"
+                  className="inline-flex items-center gap-1.5 font-bold text-flash-orange hover:text-clean-white transition-colors"
                 >
                   <span>{t("viewAllServices")}</span>
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -241,7 +241,7 @@ export default function Footer() {
             <h4 className="font-heading text-xs font-extrabold uppercase tracking-wider text-clean-white mb-4">
               {t("brands")}
             </h4>
-            <ul className="space-y-2.5 text-xs sm:text-sm text-text-muted font-medium">
+            <ul className="space-y-2.5 text-xs sm:text-sm text-clean-white/75 font-medium">
               <li>
                 <Link
                   href="/brands/apple"
@@ -285,7 +285,7 @@ export default function Footer() {
               <li className="pt-2 border-t border-border-dark/80">
                 <Link
                   href="/brands"
-                  className="inline-flex items-center gap-1.5 font-bold text-flash-orange hover:text-flash-orange-hover transition-colors"
+                  className="inline-flex items-center gap-1.5 font-bold text-flash-orange hover:text-clean-white transition-colors"
                 >
                   <span>{t("viewAllBrands")}</span>
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -299,7 +299,7 @@ export default function Footer() {
             <h4 className="font-heading text-xs font-extrabold uppercase tracking-wider text-clean-white mb-4">
               {t("contactInfo")}
             </h4>
-            <div className="space-y-3 text-xs sm:text-sm text-text-secondary">
+            <div className="space-y-3 text-xs sm:text-sm text-clean-white/80">
               <div className="flex items-center gap-2.5">
                 <Phone className="h-4 w-4 text-flash-orange shrink-0" />
                 <a
@@ -331,17 +331,17 @@ export default function Footer() {
               </div>
               <div className="flex items-start gap-2.5">
                 <Clock className="h-4 w-4 text-flash-orange shrink-0 mt-0.5" />
-                <span>{contactConfig.hours.display}</span>
+                <span className="text-clean-white/80">{contactConfig.hours.display}</span>
               </div>
               <div className="flex items-start gap-2.5">
                 <MapPin className="h-4 w-4 text-flash-orange shrink-0 mt-0.5" />
-                <span className="text-text-muted text-xs">
+                <span className="text-clean-white/75 text-xs leading-relaxed">
                   {contactConfig.address.full}
                 </span>
               </div>
               <div className="flex items-start gap-2.5">
-                <ShieldCheck className="h-4 w-4 text-success shrink-0 mt-0.5" />
-                <span className="text-text-muted text-xs">
+                <ShieldCheck className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                <span className="text-clean-white/75 text-xs">
                   {contactConfig.serviceAreas.doorstepSla}
                 </span>
               </div>
@@ -350,21 +350,21 @@ export default function Footer() {
         </div>
 
         {/* Bottom Strip: Copyright & Privacy Links paired together on left, Credit on right */}
-        <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-text-muted text-center md:text-left">
+        <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-clean-white/70 text-center md:text-left">
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
             <p>{t("copyright")}</p>
-            <span className="hidden sm:inline text-border-strong">•</span>
+            <span className="hidden sm:inline text-clean-white/30">•</span>
             <div className="flex items-center gap-3 text-xs font-medium">
               <Link
                 href="/privacy"
-                className="hover:text-clean-white hover:underline transition-colors"
+                className="text-clean-white/75 hover:text-clean-white hover:underline transition-colors"
               >
                 {t("privacyPolicy")}
               </Link>
-              <span className="text-border-strong">•</span>
+              <span className="text-clean-white/30">•</span>
               <Link
                 href="/terms"
-                className="hover:text-clean-white hover:underline transition-colors"
+                className="text-clean-white/75 hover:text-clean-white hover:underline transition-colors"
               >
                 {t("termsOfService")}
               </Link>
@@ -372,14 +372,14 @@ export default function Footer() {
           </div>
 
           {/* Multilingual Developer Credit with clean brand link */}
-          <p className="flex items-center justify-center gap-1 text-text-muted">
+          <p className="flex items-center justify-center gap-1 text-clean-white/70">
             {t.rich("designedAndDeveloped", {
               heart: () => (
                 <span
-                  className="inline-flex items-center text-error mx-0.5 align-middle"
+                  className="inline-flex items-center text-rose-400 mx-0.5 align-middle"
                   title="love"
                 >
-                  <Heart className="h-3.5 w-3.5 fill-error shrink-0 inline" />
+                  <Heart className="h-3.5 w-3.5 fill-rose-400 shrink-0 inline" />
                   <span className="sr-only">&lt;3</span>
                 </span>
               ),
@@ -388,7 +388,7 @@ export default function Footer() {
                   href="https://codemedialabs.in"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-bold text-text-secondary hover:text-flash-orange hover:underline transition-colors ml-0.5"
+                  className="font-bold text-clean-white hover:text-flash-orange hover:underline transition-colors ml-0.5"
                 >
                   {chunks}
                 </a>

@@ -1,3 +1,5 @@
+import BrandsShowcase from "@/components/landing/BrandsShowcase";
+import DoorstepPickupAssurance from "@/components/landing/DoorstepPickupAssurance";
 import JsonLd from "@/components/seo/JsonLd";
 import {
   AspectBox,
@@ -11,8 +13,8 @@ import {
 import contactConfig from "@/config/contact";
 import {
   getBreadcrumbSchema,
-  getServiceDetailPageSchema,
   getFaqPageSchema,
+  getServiceDetailPageSchema,
 } from "@/config/jsonld";
 import { getServiceSeoMetadata, siteConfig } from "@/config/seo";
 import { Link } from "@/i18n/navigation";
@@ -31,7 +33,6 @@ import {
   ShieldCheck,
   Tag,
 } from "lucide-react";
-import BrandsShowcase from "@/components/landing/BrandsShowcase";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -138,7 +139,7 @@ export default async function ServiceDetailPage({
   ];
 
   const faqSchema = getFaqPageSchema(
-    serviceFaqs.map((f) => ({ question: f.q, answer: f.a }))
+    serviceFaqs.map((f) => ({ question: f.q, answer: f.a })),
   );
 
   return (
@@ -262,6 +263,13 @@ export default async function ServiceDetailPage({
           />
         </Container>
       </Section>
+
+      {/* 3.5 Reusable Cleanroom Lab & Doorstep Assurance Banner */}
+      <DoorstepPickupAssurance
+        variant="section"
+        videoSrc="/assets/videos/quickfixabout.mp4"
+        posterSrc="/logo.png"
+      />
 
       {/* 4. Supported Brands for this Service (Fetched from DB) */}
       {supportedBrands && supportedBrands.length > 0 && (

@@ -14,6 +14,7 @@ import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { getDbServices, getDbBrands } from "@/lib/db/catalogue";
 import BrandsShowcase from "@/components/landing/BrandsShowcase";
+import DoorstepPickupAssurance from "@/components/landing/DoorstepPickupAssurance";
 import {
   ArrowRight,
   MapPin,
@@ -248,6 +249,13 @@ export default async function LocalityPage({
         title={t("brands.title", { name: loc.name })}
         subtitle={t("brands.subtitle", { name: loc.name, zone: loc.zone })}
         variant="white"
+      />
+
+      {/* 4.5 Cleanroom Lab & Doorstep Pickup Assurance */}
+      <DoorstepPickupAssurance
+        variant="section"
+        videoSrc="/assets/videos/quickfixabout.mp4"
+        posterSrc="/logo.png"
       />
 
       {/* 5. Reusable CTA Block */}
