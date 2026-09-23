@@ -96,6 +96,7 @@ export default async function ReviewsPage({
   const reviewsSchema = getReviewsPageSchema(locale, {
     avgRating: initialAvgRating,
     totalReviews: initialTotal,
+    reviews: initialReviews,
   });
   const breadcrumbSchema = getBreadcrumbSchema([
     { name: "Home", url: `${siteUrl}/${locale}` },

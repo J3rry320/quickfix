@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getSeoMetadata } from "@/config/seo";
-import { getFaqPageSchema } from "@/config/jsonld";
+import { getFaqPageSchema, getBlogSectionSchema } from "@/config/jsonld";
 import JsonLd from "@/components/seo/JsonLd";
 import Hero from "@/components/Hero";
 import TrustBadges from "@/components/landing/TrustBadges";
@@ -16,6 +16,7 @@ import BlogHighlights from "@/components/landing/BlogHighlights";
 import QuickContactForm from "@/components/landing/QuickContactForm";
 import { ModelsScrollSection } from "@/components/models";
 import { getPopularDbModels, getDbBrands } from "@/lib/db/catalogue";
+import { getDbPublishedBlogs } from "@/lib/db/blogs";
 
 export async function generateMetadata({
   params,
@@ -33,11 +34,12 @@ export default async function MarketingPage({
 }) {
   const { locale } = await params;
 
-  const [tFaq, tModels, popularModels, brands] = await Promise.all([
+  const [tFaq, tModels, popularModels, brands, blogData] = await Promise.all([
     getTranslations({ locale, namespace: "Faq" }),
     getTranslations({ locale, namespace: "PopularModels" }),
     getPopularDbModels(24),
     getDbBrands(),
+    getDbPublishedBlogs({ limit: 12 }),
   ]);
 
   const faqSchema = getFaqPageSchema([
@@ -48,9 +50,14 @@ export default async function MarketingPage({
     { question: tFaq("q5"), answer: tFaq("a5") },
   ]);
 
+  const blogSectionSchema = getBlogSectionSchema({
+    locale,
+    posts: blogData.posts,
+  });
+
   return (
     <div className="flex flex-col w-full overflow-hidden">
-      <JsonLd schema={faqSchema} id="landing-faq-structured-data" />
+      <JsonLd schema={[faqSchema, blogSectionSchema]} id="landing-structured-data" />
 
       {/* 1. Hero Section: Minimal & Punchy */}
       <Hero />
@@ -94,7 +101,7 @@ export default async function MarketingPage({
       <FaqSection />
 
       {/* 11. Smartphone Care Guides & Blog Articles */}
-      <BlogHighlights />
+      <BlogHighlights initialPosts={blogData.posts} />
 
       {/* 12. General Enquiry / 5-Minute Callback Form */}
       <QuickContactForm />

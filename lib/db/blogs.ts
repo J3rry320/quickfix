@@ -23,6 +23,8 @@ export async function getDbPublishedBlogs(options: GetBlogsOptions = {}): Promis
   total: number;
   totalPages: number;
   page: number;
+  limit: number;
+  hasMore: boolean;
 }> {
   "use cache";
   cacheLife("hours");
@@ -67,11 +69,16 @@ export async function getDbPublishedBlogs(options: GetBlogsOptions = {}): Promis
       BlogPost.countDocuments(filter),
     ]);
 
+    const totalPages = Math.ceil(total / limit) || 1;
+    const hasMore = page < totalPages;
+
     return {
       posts: JSON.parse(JSON.stringify(posts)),
       total,
-      totalPages: Math.ceil(total / limit) || 1,
+      totalPages,
       page,
+      limit,
+      hasMore,
     };
   } catch (error) {
     console.error("Error fetching published blogs from DB:", error);
@@ -80,6 +87,8 @@ export async function getDbPublishedBlogs(options: GetBlogsOptions = {}): Promis
       total: 0,
       totalPages: 1,
       page: 1,
+      limit: 10,
+      hasMore: false,
     };
   }
 }

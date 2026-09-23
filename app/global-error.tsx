@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect } from "react";
 import { RotateCcw, PhoneCall, MessageCircle, Home, AlertTriangle } from "lucide-react";
 import "@/app/globals.css";
@@ -66,13 +67,13 @@ export default function GlobalError({
               <RotateCcw className="w-4 h-4" />
               <span>Try Again</span>
             </button>
-            <a
+            <Link
               href="/en"
               className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-tech-slate hover:bg-tech-slate-hover text-clean-white font-semibold text-sm shadow-md transition-all active:scale-[0.98]"
             >
               <Home className="w-4 h-4 text-clean-white" />
               <span>Return Home</span>
-            </a>
+            </Link>
             <a
               href="https://wa.me/918308686454?text=Hi%20QuickFix%20support%2C%20I%20encountered%20an%20error%20on%20your%20website."
               target="_blank"

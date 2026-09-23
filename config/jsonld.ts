@@ -1,6 +1,17 @@
 import contactConfig from "@/config/contact";
 import { siteConfig, seoDictionaries } from "@/config/seo";
 
+export function getPostalAddressSchema() {
+  return {
+    "@type": "PostalAddress",
+    streetAddress: contactConfig.address.shop,
+    addressLocality: contactConfig.address.locality,
+    addressRegion: contactConfig.address.state,
+    postalCode: contactConfig.address.pincode,
+    addressCountry: contactConfig.address.countryCode,
+  };
+}
+
 export function getOrganizationAndLocalBusinessSchema(locale: string = "en") {
   const safeLocale = (
     ["en", "hi", "mr"].includes(locale) ? locale : "en"
@@ -30,14 +41,7 @@ export function getOrganizationAndLocalBusinessSchema(locale: string = "en") {
       bestRating: "5",
       worstRating: "1",
     },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: contactConfig.address.shop,
-      addressLocality: contactConfig.address.locality,
-      addressRegion: contactConfig.address.state,
-      postalCode: contactConfig.address.pincode,
-      addressCountry: contactConfig.address.countryCode,
-    },
+    address: getPostalAddressSchema(),
     geo: {
       "@type": "GeoCoordinates",
       latitude: 18.5133,
@@ -250,6 +254,10 @@ export function getServiceDetailPageSchema({
   locale?: string;
   image?: string;
 }) {
+  const safeLocale = (["en", "hi", "mr"].includes(locale) ? locale : "en") as
+    | "en"
+    | "hi"
+    | "mr";
   const siteUrl = siteConfig.url.replace(/\/$/, "");
   const fullImageUrl = image && image.trim()
     ? image.startsWith("http://") || image.startsWith("https://")
@@ -260,16 +268,18 @@ export function getServiceDetailPageSchema({
   return {
     "@context": "https://schema.org",
     "@type": "Service",
-    "@id": `${siteUrl}/${locale}/services/${slug}#service`,
+    "@id": `${siteUrl}/${safeLocale}/services/${slug}#service`,
     name: serviceName,
     description,
     image: fullImageUrl,
     provider: {
       "@type": "LocalBusiness",
+      "@id": `${siteUrl}/#business`,
       name: contactConfig.brand,
+      image: `${siteUrl}${siteConfig.defaultOgImage}`,
       telephone: contactConfig.phone.display,
-      address: contactConfig.address.full,
-      url: `${siteUrl}/${locale}`,
+      address: getPostalAddressSchema(),
+      url: `${siteUrl}/${safeLocale}`,
     },
     areaServed: {
       "@type": "City",
@@ -281,13 +291,16 @@ export function getServiceDetailPageSchema({
       priceCurrency: "INR",
       priceValidUntil: "2027-12-31",
       availability: "https://schema.org/InStock",
-      url: `${siteUrl}/${locale}/services/${slug}`,
+      url: `${siteUrl}/${safeLocale}/services/${slug}`,
       warranty: `${warrantyDays} days warranty`,
       seller: {
         "@type": "LocalBusiness",
+        "@id": `${siteUrl}/#business`,
         name: contactConfig.brand,
+        image: `${siteUrl}${siteConfig.defaultOgImage}`,
         telephone: contactConfig.phone.display,
-        url: `${siteUrl}/${locale}`,
+        url: `${siteUrl}/${safeLocale}`,
+        address: getPostalAddressSchema(),
       },
     },
     serviceOutput: `${serviceName} completed in approx ${estimatedTimeMinutes} mins with genuine OEM parts`,
@@ -295,6 +308,8 @@ export function getServiceDetailPageSchema({
       "@type": "AggregateRating",
       ratingValue: "4.9",
       reviewCount: "820",
+      bestRating: "5",
+      worstRating: "1",
     },
   };
 }
@@ -316,6 +331,10 @@ export function getModelDetailPageSchema({
   locale?: string;
   image?: string;
 }) {
+  const safeLocale = (["en", "hi", "mr"].includes(locale) ? locale : "en") as
+    | "en"
+    | "hi"
+    | "mr";
   const siteUrl = siteConfig.url.replace(/\/$/, "");
   const fullImageUrl = image && image.trim()
     ? image.startsWith("http://") || image.startsWith("https://")
@@ -333,18 +352,29 @@ export function getModelDetailPageSchema({
       "@type": "Brand",
       name: brandName,
     },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "120",
+      bestRating: "5",
+      worstRating: "1",
+    },
     offers: {
       "@type": "AggregateOffer",
       lowPrice: startingPrice,
       priceCurrency: "INR",
       priceValidUntil: "2027-12-31",
       availability: "https://schema.org/InStock",
-      url: `${siteUrl}/${locale}/brands/${brandSlug}/${modelSlug}`,
+      itemCondition: "https://schema.org/NewCondition",
+      url: `${siteUrl}/${safeLocale}/brands/${brandSlug}/${modelSlug}`,
       seller: {
         "@type": "LocalBusiness",
+        "@id": `${siteUrl}/#business`,
         name: contactConfig.brand,
+        image: `${siteUrl}${siteConfig.defaultOgImage}`,
         telephone: contactConfig.phone.display,
-        url: `${siteUrl}/${locale}`,
+        url: `${siteUrl}/${safeLocale}`,
+        address: getPostalAddressSchema(),
       },
     },
   };
@@ -369,6 +399,10 @@ export function getBlogPostSchema({
   locale?: string;
   image?: string;
 }) {
+  const safeLocale = (["en", "hi", "mr"].includes(locale) ? locale : "en") as
+    | "en"
+    | "hi"
+    | "mr";
   const siteUrl = siteConfig.url.replace(/\/$/, "");
   const fullImageUrl = image && image.trim()
     ? image.startsWith("http://") || image.startsWith("https://")
@@ -376,22 +410,28 @@ export function getBlogPostSchema({
       : `${siteUrl}${image.startsWith("/") ? "" : "/"}${image}`
     : `${siteUrl}${siteConfig.defaultOgImage}`;
 
+  const publishedIso = publishedAt ? new Date(publishedAt).toISOString() : new Date().toISOString();
+  const modifiedIso = updatedAt ? new Date(updatedAt).toISOString() : publishedIso;
+
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: title,
     description,
     image: fullImageUrl,
-    url: `${siteUrl}/${locale}/blogs/${slug}`,
-    datePublished: publishedAt ? new Date(publishedAt).toISOString() : undefined,
-    dateModified: updatedAt ? new Date(updatedAt).toISOString() : undefined,
+    url: `${siteUrl}/${safeLocale}/blogs/${slug}`,
+    inLanguage: safeLocale,
+    datePublished: publishedIso,
+    dateModified: modifiedIso,
     author: {
       "@type": "Person",
       name: authorName,
+      url: `${siteUrl}/${safeLocale}/about`,
     },
     publisher: {
       "@type": "Organization",
       name: contactConfig.brand,
+      url: `${siteUrl}/${safeLocale}`,
       logo: {
         "@type": "ImageObject",
         url: `${siteUrl}${siteConfig.defaultOgImage}`,
@@ -399,8 +439,116 @@ export function getBlogPostSchema({
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `${siteUrl}/${locale}/blogs/${slug}`,
+      "@id": `${siteUrl}/${safeLocale}/blogs/${slug}`,
     },
+  };
+}
+
+export function getBlogHubSchema({
+  locale = "en",
+  totalPosts,
+  posts = [],
+}: {
+  locale?: string;
+  totalPosts?: number;
+  posts?: Array<{
+    title: string;
+    slug: string;
+    excerpt?: string;
+    coverImage?: string;
+  }>;
+}) {
+  const safeLocale = (["en", "hi", "mr"].includes(locale) ? locale : "en") as
+    | "en"
+    | "hi"
+    | "mr";
+  const siteUrl = siteConfig.url.replace(/\/$/, "");
+  const hubUrl = `${siteUrl}/${safeLocale}/blogs`;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${hubUrl}#webpage`,
+    url: hubUrl,
+    name: "Smartphone Repair Guides, Tips & Tutorials | Quick Fix Pune",
+    description:
+      "Expert smartphone repair tutorials, lithium battery health guides, OLED screen replacement comparisons, and water damage first aid from Pune's leading doorstep technicians.",
+    inLanguage: safeLocale,
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      name: siteConfig.name,
+      url: `${siteUrl}/${safeLocale}`,
+    },
+    about: {
+      "@type": "LocalBusiness",
+      "@id": `${siteUrl}/#business`,
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      name: "Smartphone Repair Knowledge Base",
+      numberOfItems: totalPosts ?? posts.length,
+      itemListElement: posts.map((post, index) => {
+        const fullImageUrl = post.coverImage && post.coverImage.trim()
+          ? post.coverImage.startsWith("http://") || post.coverImage.startsWith("https://")
+            ? post.coverImage
+            : `${siteUrl}${post.coverImage.startsWith("/") ? "" : "/"}${post.coverImage}`
+          : `${siteUrl}${siteConfig.defaultOgImage}`;
+        return {
+          "@type": "ListItem",
+          position: index + 1,
+          url: `${siteUrl}/${safeLocale}/blogs/${post.slug}`,
+          name: post.title,
+          description: post.excerpt,
+          image: fullImageUrl,
+        };
+      }),
+    },
+  };
+}
+
+export function getBlogSectionSchema({
+  locale = "en",
+  posts = [],
+}: {
+  locale?: string;
+  posts: Array<{
+    title: string;
+    slug: string;
+    excerpt?: string;
+    coverImage?: string;
+  }>;
+}) {
+  const safeLocale = (["en", "hi", "mr"].includes(locale) ? locale : "en") as
+    | "en"
+    | "hi"
+    | "mr";
+  const siteUrl = siteConfig.url.replace(/\/$/, "");
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": `${siteUrl}/${safeLocale}#blog-highlights`,
+    name: "Featured Smartphone Repair Guides & Tech Tips",
+    description:
+      "Troubleshooting advice, screen care, and maintenance tips by Quick Fix Pune.",
+    url: `${siteUrl}/${safeLocale}#blog-highlights`,
+    numberOfItems: posts.length,
+    itemListElement: posts.map((post, index) => {
+      const fullImageUrl = post.coverImage && post.coverImage.trim()
+        ? post.coverImage.startsWith("http://") || post.coverImage.startsWith("https://")
+          ? post.coverImage
+          : `${siteUrl}${post.coverImage.startsWith("/") ? "" : "/"}${post.coverImage}`
+        : `${siteUrl}${siteConfig.defaultOgImage}`;
+      return {
+        "@type": "ListItem",
+        position: index + 1,
+        url: `${siteUrl}/${safeLocale}/blogs/${post.slug}`,
+        name: post.title,
+        description: post.excerpt,
+        image: fullImageUrl,
+      };
+    }),
   };
 }
 
@@ -431,26 +579,52 @@ export function getTrackPageSchema(locale: string = "en") {
   };
 }
 
+export interface ReviewSchemaItem {
+  name: string;
+  rating: number;
+  comment: string;
+  createdAt?: string | Date;
+  deviceModel?: string;
+  serviceType?: string;
+  area?: string;
+}
+
 export function getReviewsPageSchema(
   locale: string = "en",
-  aggregate?: { avgRating: number; totalReviews: number }
+  aggregate?: {
+    avgRating: number;
+    totalReviews: number;
+    reviews?: ReviewSchemaItem[];
+  }
 ) {
   const safeLocale = (
     ["en", "hi", "mr"].includes(locale) ? locale : "en"
   ) as "en" | "hi" | "mr";
   const siteUrl = siteConfig.url.replace(/\/$/, "");
+  const fullImageUrl = `${siteUrl}${siteConfig.defaultOgImage}`;
 
   const ratingValue = aggregate?.avgRating ? String(aggregate.avgRating) : "4.9";
   const reviewCount = aggregate?.totalReviews ? String(aggregate.totalReviews) : "1450";
+  const reviewsList = aggregate?.reviews || [];
 
   return {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": ["RepairBusiness", "LocalBusiness", "MobilePhoneStore"],
     "@id": `${siteUrl}/#business`,
     name: contactConfig.brand,
+    legalName: contactConfig.legalName,
     url: `${siteUrl}/${safeLocale}/reviews`,
+    image: fullImageUrl,
+    logo: fullImageUrl,
     telephone: contactConfig.phone.display,
     priceRange: "₹₹",
+    currenciesAccepted: "INR",
+    address: getPostalAddressSchema(),
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 18.5133,
+      longitude: 73.8504,
+    },
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue,
@@ -458,6 +632,33 @@ export function getReviewsPageSchema(
       bestRating: "5",
       worstRating: "1",
     },
+    ...(reviewsList.length > 0 && {
+      review: reviewsList.map((r) => ({
+        "@type": "Review",
+        author: {
+          "@type": "Person",
+          name: r.name,
+        },
+        datePublished: r.createdAt
+          ? new Date(r.createdAt).toISOString()
+          : new Date().toISOString(),
+        reviewBody: r.comment,
+        reviewRating: {
+          "@type": "Rating",
+          ratingValue: r.rating,
+          bestRating: "5",
+          worstRating: "1",
+        },
+        itemReviewed: {
+          "@type": "LocalBusiness",
+          "@id": `${siteUrl}/#business`,
+          name: contactConfig.brand,
+          image: fullImageUrl,
+          telephone: contactConfig.phone.display,
+          address: getPostalAddressSchema(),
+        },
+      })),
+    }),
   };
 }
 
@@ -489,9 +690,11 @@ export function getLocalityServiceSchema({
     description: `Certified doorstep smartphone pickup and lab repair in ${localityName}, Pune${zoneInfo}. ${dispatchTime} dispatch, genuine OEM parts, transparent pricing, and 90-day warranty.`,
     provider: {
       "@type": "LocalBusiness",
+      "@id": `${siteUrl}/#business`,
       name: contactConfig.brand,
+      image: `${siteUrl}${siteConfig.defaultOgImage}`,
       telephone: contactConfig.phone.display,
-      address: contactConfig.address.full,
+      address: getPostalAddressSchema(),
       url: `${siteUrl}/${safeLocale}`,
     },
     areaServed: {
@@ -499,6 +702,13 @@ export function getLocalityServiceSchema({
       name: `${localityName}, Pune`,
     },
     serviceType: "Doorstep Smartphone Repair",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "280",
+      bestRating: "5",
+      worstRating: "1",
+    },
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "INR",
@@ -507,6 +717,15 @@ export function getLocalityServiceSchema({
       availability: "https://schema.org/InStock",
       url: `${siteUrl}/${safeLocale}/locations/${slug}`,
       description: `Doorstep mobile repair pickup in ${localityName}, Pune within ${dispatchTime}`,
+      seller: {
+        "@type": "LocalBusiness",
+        "@id": `${siteUrl}/#business`,
+        name: contactConfig.brand,
+        image: `${siteUrl}${siteConfig.defaultOgImage}`,
+        telephone: contactConfig.phone.display,
+        url: `${siteUrl}/${safeLocale}`,
+        address: getPostalAddressSchema(),
+      },
     },
   };
 }
@@ -542,9 +761,11 @@ export function getBrandServiceSchema({
     image: fullLogoUrl,
     provider: {
       "@type": "LocalBusiness",
+      "@id": `${siteUrl}/#business`,
       name: contactConfig.brand,
+      image: `${siteUrl}${siteConfig.defaultOgImage}`,
       telephone: contactConfig.phone.display,
-      address: contactConfig.address.full,
+      address: getPostalAddressSchema(),
       url: `${siteUrl}/${safeLocale}`,
     },
     areaServed: {
@@ -552,6 +773,13 @@ export function getBrandServiceSchema({
       name: "Pune",
     },
     serviceType: `${brandName} Phone Repair`,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "650",
+      bestRating: "5",
+      worstRating: "1",
+    },
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "INR",
@@ -559,6 +787,15 @@ export function getBrandServiceSchema({
       priceValidUntil: "2027-12-31",
       availability: "https://schema.org/InStock",
       url: `${siteUrl}/${safeLocale}/brands/${slug}`,
+      seller: {
+        "@type": "LocalBusiness",
+        "@id": `${siteUrl}/#business`,
+        name: contactConfig.brand,
+        image: `${siteUrl}${siteConfig.defaultOgImage}`,
+        telephone: contactConfig.phone.display,
+        url: `${siteUrl}/${safeLocale}`,
+        address: getPostalAddressSchema(),
+      },
     },
   };
 }

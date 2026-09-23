@@ -89,5 +89,13 @@
     "callHelpline": "Call Pune Hotline",
     "backHome": "Back to Homepage",
     "referenceCode": "Error Reference Code"
+  },
+  "BlogsHub": {
+    "title": "Smartphone Repair Guides & Tech Tips",
+    "subtitle": "Expert guides, battery maintenance tips, and display troubleshooting from Pune's trusted doorstep mobile repair technicians.",
+    "breadcrumbs": {
+      "home": "Home",
+      "blogs": "Blogs & Guides"
+    }
   }
 }

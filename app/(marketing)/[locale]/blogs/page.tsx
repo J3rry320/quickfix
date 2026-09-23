@@ -1,35 +1,14 @@
+import BlogInfiniteGrid from "@/components/blog/BlogInfiniteGrid";
 import JsonLd from "@/components/seo/JsonLd";
-import {
-  AspectBox,
-  Badge,
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-  Container,
-  CTABlock,
-  EmptyState,
-  PageHero,
-  Section,
-} from "@/components/ui";
-import { getBreadcrumbSchema, getWebPageSchema } from "@/config/jsonld";
+import { Container, CTABlock, PageHero, Section } from "@/components/ui";
+import { getBlogHubSchema, getBreadcrumbSchema } from "@/config/jsonld";
 import { siteConfig } from "@/config/seo";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { getDbBlogCategories, getDbPublishedBlogs } from "@/lib/db/blogs";
-import {
-  ArrowRight,
-  BookOpen,
-  Calendar,
-  Clock,
-  ShieldCheck,
-  Wrench,
-  Zap,
-} from "lucide-react";
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { getTranslations } from "next-intl/server";
 
 export const instant = false;
 
@@ -46,8 +25,7 @@ export async function generateMetadata({
   const siteUrl = siteConfig.url.replace(/\/$/, "");
 
   return {
-    title:
-      "Smartphone Repair Guides, Battery & Screen Tips | Quick Fix Pune",
+    title: "Smartphone Repair Guides, Battery & Screen Tips | Quick Fix Pune",
     description:
       "Expert smartphone repair tutorials, lithium battery health guides, OLED screen replacement comparisons, and water damage first aid from Pune's leading doorstep technicians.",
     alternates: {
@@ -117,8 +95,10 @@ function BlogListSkeleton() {
 
 async function BlogListingSection({
   searchParams,
+  locale,
 }: {
   searchParams: Promise<{ category?: string; search?: string; page?: string }>;
+  locale: string;
 }) {
   const { category, search, page } = await searchParams;
 
@@ -130,7 +110,7 @@ async function BlogListingSection({
       category: activeCategory,
       search,
       page: currentPage,
-      limit: 12,
+      limit: 9,
     }),
     getDbBlogCategories(),
   ]);
@@ -164,98 +144,17 @@ async function BlogListingSection({
           })}
         </div>
 
-        {/* Posts Grid using Common Card & Badge Components */}
-        {blogData.posts.length === 0 ? (
-          <div className="mx-auto max-w-xl py-12">
-            <EmptyState
-              icon={BookOpen}
-              title="No Articles Found"
-              description="There are currently no published articles matching this category. Please check back shortly."
-              actionLabel="View All Articles"
-              actionHref="/blogs"
-            />
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {blogData.posts.map((post) => {
-              const formattedDate = post.publishedAt
-                ? new Date(post.publishedAt).toLocaleDateString("en-IN", {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                  })
-                : new Date(post.createdAt).toLocaleDateString("en-IN", {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                  });
-
-              return (
-                <Card key={post._id} hoverable className="group overflow-hidden">
-                  <Link href={`/blogs/${post.slug}`} className="block">
-                    <AspectBox
-                      aspectRatio="16/9"
-                      src={post.coverImage}
-                      alt={post.title}
-                      fallbackType="blog"
-                      className="rounded-b-none border-0 border-b border-border-default/60"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 384px"
-                    />
-                  </Link>
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between gap-2 mb-3">
-                      <Badge variant="accent" size="sm">
-                        {post.category}
-                      </Badge>
-                      <div className="flex items-center gap-1 text-2xs font-semibold text-text-muted">
-                        <Clock className="h-3 w-3 text-flash-orange" />
-                        <span>{post.readingTimeMinutes || 4} min read</span>
-                      </div>
-                    </div>
-                    <CardTitle className="group-hover:text-flash-orange transition-colors line-clamp-2 text-base sm:text-lg">
-                      <Link
-                        href={`/blogs/${post.slug}`}
-                        className="hover:underline"
-                      >
-                        {post.title}
-                      </Link>
-                    </CardTitle>
-                  </CardHeader>
-
-                  <CardContent className="flex-1 pb-4 flex flex-col justify-between">
-                    <CardDescription className="line-clamp-3 mb-4">
-                      {post.excerpt}
-                    </CardDescription>
-
-                    {post.tags && post.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 mt-auto">
-                        {post.tags.slice(0, 3).map((t, idx) => (
-                          <Badge key={idx} variant="default" size="sm">
-                            #{t}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
-                  </CardContent>
-
-                  <CardFooter className="pt-3 border-t border-border-default/60 flex items-center justify-between text-xs">
-                    <div className="flex items-center gap-1.5 text-text-muted text-2xs">
-                      <Calendar className="h-3 w-3" />
-                      <span>{formattedDate}</span>
-                    </div>
-                    <Link
-                      href={`/blogs/${post.slug}`}
-                      className="inline-flex items-center gap-1 font-bold text-flash-orange hover:text-flash-orange-hover hover:translate-x-0.5 transition-all"
-                    >
-                      <span>Read Article</span>
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </Link>
-                  </CardFooter>
-                </Card>
-              );
-            })}
-          </div>
-        )}
+        {/* IntersectionObserver Infinite Scrolling Grid */}
+        <BlogInfiniteGrid
+          key={`${activeCategory}-${search || ""}`}
+          initialPosts={blogData.posts}
+          initialHasMore={blogData.hasMore}
+          initialPage={currentPage}
+          total={blogData.total}
+          category={activeCategory}
+          search={search}
+          locale={locale}
+        />
       </Container>
     </Section>
   );
@@ -269,17 +168,19 @@ export default async function BlogIndexPage({
   searchParams: Promise<{ category?: string; search?: string; page?: string }>;
 }) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "BlogsHub" });
   const siteUrl = siteConfig.url.replace(/\/$/, "");
   const breadcrumbSchema = getBreadcrumbSchema([
-    { name: "Home", url: `${siteUrl}/${locale}` },
-    { name: "Articles & Repair Guides", url: `${siteUrl}/${locale}/blogs` },
+    { name: t("breadcrumbs.home"), url: `${siteUrl}/${locale}` },
+    { name: t("breadcrumbs.blogs"), url: `${siteUrl}/${locale}/blogs` },
   ]);
 
-  const blogHubSchema = getWebPageSchema({
-    title: "Smartphone Repair Guides & Tips | Quick Fix Pune",
-    description: "Expert smartphone repair tutorials, battery care guides, and screen replacement tips from Quick Fix Pune technicians.",
-    path: "/blogs",
+  const initialBlogs = await getDbPublishedBlogs({ limit: 12 });
+
+  const blogHubSchema = getBlogHubSchema({
     locale,
+    totalPosts: initialBlogs.total,
+    posts: initialBlogs.posts,
   });
 
   return (
@@ -292,53 +193,17 @@ export default async function BlogIndexPage({
       {/* 1. Common Unified Page Hero */}
       <PageHero
         breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "Blogs & Guides" },
+          { label: t("breadcrumbs.home"), href: "/" },
+          { label: t("breadcrumbs.blogs") },
         ]}
-        title="Smartphone Repair Guides & Tech Tips"
+        title={t("title")}
+        subtitle={t("subtitle")}
         align="left"
-        media={
-          <AspectBox
-            aspectRatio="4/3"
-            variant="solid"
-            badge="Technical Insights"
-            fallbackType="blog"
-            title="Pune Repair Knowledge Base"
-            label="Step-by-step troubleshooting, battery calibration & hardware guides written by lab engineers"
-            className="shadow-xl"
-          />
-        }
-        highlights={[
-          {
-            icon: BookOpen,
-            label: "Articles",
-            value: "10+ Guides",
-            color: "text-flash-orange",
-          },
-          {
-            icon: Wrench,
-            label: "Repairs",
-            value: "Sadashiv Peth Lab",
-            color: "text-info",
-          },
-          {
-            icon: ShieldCheck,
-            label: "Data Safety",
-            value: "Zero Access Policy",
-            color: "text-success",
-          },
-          {
-            icon: Zap,
-            label: "Coverage",
-            value: "All Pune & PCMC",
-            color: "text-electric-amber",
-          },
-        ]}
       />
 
       {/* 2. Filter Bar & Articles Grid inside Suspense for Dynamic SearchParams */}
       <Suspense fallback={<BlogListSkeleton />}>
-        <BlogListingSection searchParams={searchParams} />
+        <BlogListingSection searchParams={searchParams} locale={locale} />
       </Suspense>
 
       {/* 3. Common CTA Block */}
