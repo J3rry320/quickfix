@@ -127,7 +127,12 @@ export default async function ModelDetailPage({
   const siblingModels = brandModels
     .filter((m) => m.slug !== modelSlug)
     .slice(0, 8);
-  const minPrice = Math.min(...modelServices.map((s) => s.price));
+  const prices = modelServices
+    .map((s) => s.price)
+    .filter((p) => typeof p === "number" && !isNaN(p));
+  const minPrice = prices.length > 0 ? Math.min(...prices) : 699;
+  const maxPrice = prices.length > 0 ? Math.max(...prices) : 4999;
+  const offerCount = modelServices.length > 0 ? modelServices.length : 6;
 
   const siteUrl = siteConfig.url.replace(/\/$/, "");
   const breadcrumbSchema = getBreadcrumbSchema([
@@ -146,6 +151,8 @@ export default async function ModelDetailPage({
     brandSlug: brand.slug,
     modelSlug: model.slug,
     startingPrice: minPrice,
+    highPrice: maxPrice,
+    offerCount,
     locale,
     image: model.imageUrl || brand.logoUrl || siteConfig.defaultOgImage,
   });

@@ -20,7 +20,7 @@ export function getOrganizationAndLocalBusinessSchema(locale: string = "en") {
 
   return {
     "@context": "https://schema.org",
-    "@type": ["RepairBusiness", "LocalBusiness", "MobilePhoneStore"],
+    "@type": "RepairBusiness",
     "@id": `${siteUrl}/#business`,
     name: contactConfig.brand,
     legalName: contactConfig.legalName,
@@ -34,13 +34,6 @@ export function getOrganizationAndLocalBusinessSchema(locale: string = "en") {
     priceRange: "₹₹",
     paymentAccepted: ["Cash", "Credit Card", "Debit Card", "UPI", "Google Pay", "PhonePe", "Paytm"],
     currenciesAccepted: "INR",
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "1450",
-      bestRating: "5",
-      worstRating: "1",
-    },
     address: getPostalAddressSchema(),
     geo: {
       "@type": "GeoCoordinates",
@@ -304,13 +297,6 @@ export function getServiceDetailPageSchema({
       },
     },
     serviceOutput: `${serviceName} completed in approx ${estimatedTimeMinutes} mins with genuine OEM parts`,
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "820",
-      bestRating: "5",
-      worstRating: "1",
-    },
   };
 }
 
@@ -320,6 +306,8 @@ export function getModelDetailPageSchema({
   brandSlug,
   modelSlug,
   startingPrice = 699,
+  highPrice = 4999,
+  offerCount = 6,
   locale = "en",
   image,
 }: {
@@ -328,6 +316,8 @@ export function getModelDetailPageSchema({
   brandSlug: string;
   modelSlug: string;
   startingPrice?: number;
+  highPrice?: number;
+  offerCount?: number;
   locale?: string;
   image?: string;
 }) {
@@ -362,6 +352,8 @@ export function getModelDetailPageSchema({
     offers: {
       "@type": "AggregateOffer",
       lowPrice: startingPrice,
+      highPrice: highPrice >= startingPrice ? highPrice : startingPrice,
+      offerCount,
       priceCurrency: "INR",
       priceValidUntil: "2027-12-31",
       availability: "https://schema.org/InStock",
@@ -609,7 +601,7 @@ export function getReviewsPageSchema(
 
   return {
     "@context": "https://schema.org",
-    "@type": ["RepairBusiness", "LocalBusiness", "MobilePhoneStore"],
+    "@type": "RepairBusiness",
     "@id": `${siteUrl}/#business`,
     name: contactConfig.brand,
     legalName: contactConfig.legalName,
@@ -637,7 +629,7 @@ export function getReviewsPageSchema(
         "@type": "Review",
         author: {
           "@type": "Person",
-          name: r.name,
+          name: r.name || "Customer",
         },
         datePublished: r.createdAt
           ? new Date(r.createdAt).toISOString()
@@ -648,14 +640,6 @@ export function getReviewsPageSchema(
           ratingValue: r.rating,
           bestRating: "5",
           worstRating: "1",
-        },
-        itemReviewed: {
-          "@type": "LocalBusiness",
-          "@id": `${siteUrl}/#business`,
-          name: contactConfig.brand,
-          image: fullImageUrl,
-          telephone: contactConfig.phone.display,
-          address: getPostalAddressSchema(),
         },
       })),
     }),
@@ -702,17 +686,12 @@ export function getLocalityServiceSchema({
       name: `${localityName}, Pune`,
     },
     serviceType: "Doorstep Smartphone Repair",
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "280",
-      bestRating: "5",
-      worstRating: "1",
-    },
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "INR",
       lowPrice: "299",
+      highPrice: "4999",
+      offerCount: "10",
       priceValidUntil: "2027-12-31",
       availability: "https://schema.org/InStock",
       url: `${siteUrl}/${safeLocale}/locations/${slug}`,
@@ -773,17 +752,12 @@ export function getBrandServiceSchema({
       name: "Pune",
     },
     serviceType: `${brandName} Phone Repair`,
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "650",
-      bestRating: "5",
-      worstRating: "1",
-    },
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "INR",
       lowPrice: "699",
+      highPrice: "6999",
+      offerCount: "10",
       priceValidUntil: "2027-12-31",
       availability: "https://schema.org/InStock",
       url: `${siteUrl}/${safeLocale}/brands/${slug}`,
