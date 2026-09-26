@@ -1,7 +1,63 @@
 {
+  "LocationsHub": {
+    "breadcrumbs": {
+      "home": "Home",
+      "locations": "Service Areas"
+    },
+    "hero": {
+      "title": "Pune Doorstep Mobile Repair Service Areas",
+      "subtitle": "Certified technicians deployed across East, West, Central, South, and PCMC Pune. Rapid doorstep pickup within 15 to 40 minutes, cleanroom lab precision in Sadashiv Peth, and same-day return with a 90-day warranty.",
+      "highlights": {
+        "zones": {
+          "label": "Coverage Zones",
+          "value": "5 Pune Zones"
+        },
+        "dispatch": {
+          "label": "Pickup SLA",
+          "value": "15-40 Mins"
+        },
+        "warranty": {
+          "label": "Warranty",
+          "value": "90 Days Hassle-Free"
+        },
+        "pricing": {
+          "label": "Travel Charges",
+          "value": "Zero Extra Fee"
+        }
+      },
+      "actions": {
+        "bookRepair": "Book Doorstep Pickup",
+        "callHelpline": "Call Pune Hotline: {phone}"
+      }
+    },
+    "directory": {
+      "title": "Browse Pune Neighborhoods by Zone",
+      "subtitle": "Select your locality to view exact dispatch SLAs, local landmarks, and popular smartphone repairs.",
+      "allZones": "All Pune Zones",
+      "localitiesCount": "{count} Pune Localities Served",
+      "searchPlaceholder": "Search locality or pincode (e.g. Kothrud, Baner, 411038)...",
+      "noResultsTitle": "No Matching Localities Found",
+      "noResultsDesc": "Don't see your specific area? We cover all of Pune and PCMC. Contact our helpline for custom doorstep pickup.",
+      "viewLocality": "View Locality & Pricing",
+      "doorstepSla": "{time} Pickup"
+    },
+    "repairs": {
+      "title": "Popular Smartphone Repairs Across Pune",
+      "subtitle": "All repairs are conducted in our ESD-safe cleanroom lab in Sadashiv Peth with genuine OEM parts."
+    },
+    "brands": {
+      "title": "Brands Serviced Across All Pune Localities",
+      "subtitle": "Doorstep pickup and lab repair for Apple iPhone, Samsung, OnePlus, Xiaomi, Pixel & more."
+    },
+    "cta": {
+      "title": "Need Urgent Smartphone Pickup Anywhere in Pune?",
+      "subtitle": "Our background-verified engineers are on the road right now. Book pickup in 60 seconds with tamper-proof security bags."
+    }
+  },
   "LocalityPage": {
     "breadcrumbs": {
-      "home": "Home"
+      "home": "Home",
+      "locations": "Service Areas"
     },
     "hero": {
       "title": "Doorstep Mobile Pickup & Certified Lab Repair in {name}, Pune",

@@ -746,3 +746,40 @@ export function getBrandsHubSeoMetadata({
     path: "/brands",
   });
 }
+
+export function getLocationsHubSeoMetadata({
+  locale = "en",
+}: {
+  locale?: string;
+}): Metadata {
+  const safeLocale = ["en", "hi", "mr"].includes(locale) ? locale : "en";
+
+  const titles = {
+    en: "Pune Mobile Repair Service Areas & Doorstep Coverage | Quick Fix",
+    hi: "पुणे में मोबाइल रिपेयर सेवा क्षेत्र व डोरस्टेप कवरेज | Quick Fix",
+    mr: "पुण्यातील मोबाईल दुरुस्ती सेवा परिसर आणि डोअरस्टेप कव्हरेज | Quick Fix",
+  };
+
+  const descriptions = {
+    en: "Find certified doorstep mobile repair pickup across 30+ Pune localities in West, East, Central, South, and PCMC Pune. Rapid 15-40 min pickup, genuine OEM parts, and 90-day warranty.",
+    hi: "पश्चिम, पूर्व, मध्य, दक्षिण और PCMC पुणे के 30+ इलाकों में प्रमाणित डोरस्टेप मोबाइल रिपेयर पिकअप। 15-40 मिनट में पिकअप, OEM पार्ट्स और 90 दिनों की वारंटी।",
+    mr: "पश्चिम, पूर्व, मध्य, दक्षिण आणि PCMC पुण्यातील ३०+ भागांमध्ये प्रमाणित डोअरस्टेप मोबाईल दुरुस्ती पिकअप. १५-४० मिनिटांत पिकअप, OEM पार्ट्स आणि ९० दिवसांची वॉरंटी.",
+  };
+
+  return getCustomSeoMetadata({
+    title: titles[safeLocale as "en" | "hi" | "mr"],
+    description: descriptions[safeLocale as "en" | "hi" | "mr"],
+    keywords: [
+      "mobile repair pune locations",
+      "phone repair service areas pune",
+      "doorstep phone repair pune",
+      "kothrud mobile repair",
+      "baner mobile repair",
+      "wakad mobile repair",
+      "hadapsar mobile repair",
+      "viman nagar mobile repair",
+    ],
+    locale: safeLocale,
+    path: "/locations",
+  });
+}

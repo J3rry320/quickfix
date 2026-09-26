@@ -1,148 +1,121 @@
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import { cacheLife, cacheTag } from "next/cache";
+import {
+  Navigation,
+  Zap,
+  ShieldCheck,
+  Tag,
+  ArrowRight,
+  Phone,
+} from "lucide-react";
+import { Link } from "@/i18n/navigation";
+import { routing } from "@/i18n/routing";
+import { getLocationsHubSeoMetadata, siteConfig } from "@/config/seo";
+import { getBreadcrumbSchema, getItemListSchema } from "@/config/jsonld";
+import { LOCALITIES_CATALOG } from "@/config/catalogue-data";
+import contactConfig from "@/config/contact";
+import { getDbServices, getDbBrands } from "@/lib/db/catalogue";
 import JsonLd from "@/components/seo/JsonLd";
 import {
   Container,
-  CoverageMapView,
+  Section,
   CTABlock,
   PageHero,
-  Section,
+  CoverageMapView,
 } from "@/components/ui";
-import { LOCALITIES_CATALOG } from "@/config/catalogue-data";
-import contactConfig from "@/config/contact";
-import { getBreadcrumbSchema, getLocalityServiceSchema } from "@/config/jsonld";
-import { getLocationSeoMetadata, siteConfig } from "@/config/seo";
-import { Link } from "@/i18n/navigation";
-import { routing } from "@/i18n/routing";
-import { getDbServices, getDbBrands } from "@/lib/db/catalogue";
-import BrandsShowcase from "@/components/landing/BrandsShowcase";
 import DoorstepPickupAssurance from "@/components/landing/DoorstepPickupAssurance";
-import {
-  ArrowRight,
-  MapPin,
-  Navigation,
-  Phone,
-  ShieldCheck,
-  Zap,
-} from "lucide-react";
-import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
-import { notFound } from "next/navigation";
+import BrandsShowcase from "@/components/landing/BrandsShowcase";
+import LocationsDirectoryClient from "@/components/locations/LocationsDirectoryClient";
 
 export function generateStaticParams() {
-  const params: { locale: string; locality: string }[] = [];
-  for (const locale of routing.locales) {
-    for (const loc of LOCALITIES_CATALOG) {
-      params.push({ locale, locality: loc.slug });
-    }
-  }
-  return params;
+  return routing.locales.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: string; locality: string }>;
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale, locality } = await params;
-  const loc = LOCALITIES_CATALOG.find((l) => l.slug === locality);
-
-  if (!loc) {
-    return {
-      title: "Location Not Found | Quick Fix",
-    };
-  }
-
-  return getLocationSeoMetadata({
-    localityName: loc.name,
-    zoneName: loc.zone,
-    dispatchTime: loc.dispatchTime,
-    locale,
-    slug: loc.slug,
-    image: `/locations/${loc.slug}/opengraph-image`,
-  });
+  const { locale } = await params;
+  return getLocationsHubSeoMetadata({ locale });
 }
 
-import { cacheLife, cacheTag } from "next/cache";
-
-export default async function LocalityPage({
+export default async function LocationsHubPage({
   params,
 }: {
-  params: Promise<{ locale: string; locality: string }>;
+  params: Promise<{ locale: string }>;
 }) {
   "use cache";
   cacheLife("days");
+  cacheTag("locations");
 
-  const { locale, locality } = await params;
-  cacheTag("locations", `location-${locality}`, "brands");
-
-  const loc = LOCALITIES_CATALOG.find((l) => l.slug === locality);
-  if (!loc) {
-    notFound();
-  }
+  const { locale } = await params;
 
   const [services, brands, t] = await Promise.all([
     getDbServices(),
     getDbBrands(),
-    getTranslations({ locale, namespace: "LocalityPage" }),
+    getTranslations({ locale, namespace: "LocationsHub" }),
   ]);
 
   const siteUrl = siteConfig.url.replace(/\/$/, "");
+
   const breadcrumbSchema = getBreadcrumbSchema([
     { name: t("breadcrumbs.home"), url: `${siteUrl}/${locale}` },
     { name: t("breadcrumbs.locations"), url: `${siteUrl}/${locale}/locations` },
-    { name: loc.name, url: `${siteUrl}/${locale}/locations/${loc.slug}` },
   ]);
 
-  const localityServiceSchema = getLocalityServiceSchema({
-    localityName: loc.name,
-    zoneName: loc.zone,
-    dispatchTime: loc.dispatchTime,
-    slug: loc.slug,
-    locale,
+  const locationsCatalogSchema = getItemListSchema({
+    name: "Doorstep Mobile Repair Service Areas in Pune",
+    description:
+      "Certified doorstep smartphone pickup and lab repair services across 30+ Pune localities with 90-day warranty.",
+    url: `${siteUrl}/${locale}/locations`,
+    items: LOCALITIES_CATALOG.map((loc) => ({
+      name: `Mobile Repair in ${loc.name}, Pune`,
+      url: `${siteUrl}/${locale}/locations/${loc.slug}`,
+      description: `Rapid doorstep pickup within ${loc.dispatchTime} in ${loc.name}, Pune (${loc.zone}). Cleanroom lab repair in Sadashiv Peth with 90-day warranty.`,
+    })),
   });
 
   return (
     <div className="flex flex-col w-full bg-clean-white">
       <JsonLd
-        schema={[breadcrumbSchema, localityServiceSchema]}
-        id={`locality-${loc.slug}-structured-data`}
+        schema={[breadcrumbSchema, locationsCatalogSchema]}
+        id="locations-hub-structured-data"
       />
 
-      {/* 1. Unified Page Hero with Clean Coverage Map View */}
+      {/* 1. Page Hero with Coverage Map */}
       <PageHero
         breadcrumbs={[
           { label: t("breadcrumbs.home"), href: "/" },
-          { label: t("breadcrumbs.locations"), href: "/locations" },
-          { label: loc.name },
+          { label: t("breadcrumbs.locations") },
         ]}
-        title={t("hero.title", { name: loc.name })}
-        subtitle={t("hero.subtitle", {
-          name: loc.name,
-          dispatchTime: loc.dispatchTime,
-        })}
+        title={t("hero.title")}
+        subtitle={t("hero.subtitle")}
         highlights={[
           {
             icon: Navigation,
-            label: t("hero.dispatchZone"),
-            value: loc.zone,
+            label: t("hero.highlights.zones.label"),
+            value: t("hero.highlights.zones.value"),
             color: "text-flash-orange",
           },
           {
             icon: Zap,
-            label: t("hero.pickupSla"),
-            value: loc.dispatchTime,
+            label: t("hero.highlights.dispatch.label"),
+            value: t("hero.highlights.dispatch.value"),
             color: "text-electric-amber",
           },
           {
-            icon: MapPin,
-            label: t("hero.landmark"),
-            value: loc.landmark,
-            color: "text-info",
+            icon: ShieldCheck,
+            label: t("hero.highlights.warranty.label"),
+            value: t("hero.highlights.warranty.value"),
+            color: "text-success",
           },
           {
-            icon: ShieldCheck,
-            label: t("hero.warranty"),
-            value: t("hero.warrantyValue"),
-            color: "text-success",
+            icon: Tag,
+            label: t("hero.highlights.pricing.label"),
+            value: t("hero.highlights.pricing.value"),
+            color: "text-info",
           },
         ]}
         actions={
@@ -151,7 +124,7 @@ export default async function LocalityPage({
               href="/book-repair"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-flash-orange px-7 py-3.5 text-sm font-extrabold text-clean-white shadow-lg hover:bg-flash-orange-hover active:scale-95 transition-all"
             >
-              <span>{t("hero.bookPickup", { name: loc.name })}</span>
+              <span>{t("hero.actions.bookRepair")}</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
 
@@ -160,52 +133,46 @@ export default async function LocalityPage({
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-clean-white border border-border-strong text-tech-slate px-6 py-3.5 text-sm font-extrabold hover:bg-mist-gray active:scale-95 transition-all"
             >
               <Phone className="h-4 w-4 text-flash-orange" />
-              <span>{t("hero.callNow", { phone: contactConfig.phone.display })}</span>
+              <span>
+                {t("hero.actions.callHelpline", {
+                  phone: contactConfig.phone.display,
+                })}
+              </span>
             </a>
           </>
         }
         media={
           <CoverageMapView
-            localityName={loc.name}
-            zoneName={loc.zone}
-            dispatchTime={loc.dispatchTime}
-            pincode={loc.pincode}
+            localityName="Pune City"
+            zoneName="5 Zones"
+            dispatchTime="15-40 Mins"
+            pincode="411030"
           />
         }
       />
 
-      {/* 2. Neighborhoods & Societies Served */}
+      {/* 2. Interactive Locality Directory with Search and Zone Filter */}
       <Section variant="muted" padding="default">
         <Container>
           <div className="max-w-3xl mb-8">
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
-              {t("neighborhoods.title", { name: loc.name })}
+              {t("directory.title")}
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-text-secondary">
-              {t("neighborhoods.subtitle")}
+              {t("directory.subtitle")}
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-2 sm:gap-2.5">
-            {loc.popularNeighborhoods.map((area, idx) => (
-              <span
-                key={idx}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-clean-white border border-border-default px-3.5 py-2 text-xs font-semibold text-tech-slate shadow-2xs"
-              >
-                <MapPin className="h-3.5 w-3.5 text-flash-orange shrink-0" />
-                <span>{area}</span>
-              </span>
-            ))}
-          </div>
+          <LocationsDirectoryClient localities={LOCALITIES_CATALOG} />
         </Container>
       </Section>
 
-      {/* 3. Popular Repairs in this locality (Loaded from DB) */}
+      {/* 3. Top Smartphone Repairs Available Across Localities */}
       <Section variant="white" padding="default">
         <Container>
           <div className="max-w-3xl mb-8">
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-tech-slate tracking-tight">
-              {t("repairs.title", { name: loc.name })}
+              {t("repairs.title")}
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-text-secondary">
               {t("repairs.subtitle")}
@@ -225,21 +192,18 @@ export default async function LocalityPage({
                       {service.name.split("&")[0].trim()}
                     </span>
                     <span className="text-xs font-bold text-text-muted">
-                      {t("repairs.fromPrice", { price: service.startingPrice })}
+                      from ₹{service.startingPrice}
                     </span>
                   </div>
                   <h3 className="font-heading text-base font-bold text-tech-slate group-hover:text-flash-orange transition-colors">
-                    {t("repairs.serviceInLocality", {
-                      serviceName: service.name,
-                      name: loc.name,
-                    })}
+                    {service.name}
                   </h3>
                   <p className="mt-1.5 text-xs text-text-secondary leading-relaxed line-clamp-2">
                     {service.description}
                   </p>
                 </div>
                 <div className="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between text-xs font-bold text-flash-orange">
-                  <span>{t("repairs.viewDetails")}</span>
+                  <span>View Details & Pricing</span>
                   <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
@@ -248,27 +212,27 @@ export default async function LocalityPage({
         </Container>
       </Section>
 
-      {/* 4. Supported Smartphone Brands in Locality */}
+      {/* 4. Supported Smartphone Brands */}
       <BrandsShowcase
         initialBrands={brands}
-        title={t("brands.title", { name: loc.name })}
-        subtitle={t("brands.subtitle", { name: loc.name, zone: loc.zone })}
-        variant="white"
+        title={t("brands.title")}
+        subtitle={t("brands.subtitle")}
+        variant="muted"
       />
 
-      {/* 4.5 Cleanroom Lab & Doorstep Pickup Assurance */}
+      {/* 5. Cleanroom Lab & Doorstep Pickup Assurance */}
       <DoorstepPickupAssurance
         variant="section"
         videoSrc="/assets/videos/quickfixabout.mp4"
         posterSrc="/logo.png"
       />
 
-      {/* 5. Reusable CTA Block */}
+      {/* 6. Reusable Call to Action Block */}
       <Section variant="muted" padding="default">
         <Container>
           <CTABlock
-            title={t("cta.title", { name: loc.name })}
-            subtitle={t("cta.subtitle", { zone: loc.zone })}
+            title={t("cta.title")}
+            subtitle={t("cta.subtitle")}
           />
         </Container>
       </Section>
