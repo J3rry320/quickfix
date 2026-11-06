@@ -41,3 +41,6 @@ export { default as HeroMediaImage } from "./HeroMediaImage";
 export { default as BrandLogo } from "./BrandLogo";
 export { default as FaqHelpCard } from "./FaqHelpCard";
 export type { FaqHelpCardProps } from "./FaqHelpCard";
+
+export { default as TopLoadingBar, startTopLoader, completeTopLoader } from "./TopLoadingBar";
+export type { TopLoadingBarProps } from "./TopLoadingBar";

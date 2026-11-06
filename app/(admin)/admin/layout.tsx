@@ -1,6 +1,7 @@
 import "@/app/globals.css";
 import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { TopLoadingBar } from "@/components/ui";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -41,6 +42,7 @@ export default function AdminLayout({
   return (
     <html lang="en" className={`${plusJakartaSans.variable} ${inter.variable}`}>
       <body className="antialiased min-h-screen bg-mist-gray text-tech-slate font-body flex flex-col w-full max-w-full overflow-x-hidden">
+        <TopLoadingBar />
         {children}
       </body>
     </html>

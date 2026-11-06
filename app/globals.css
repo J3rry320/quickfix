@@ -102,3 +102,16 @@
   }
 }
 
+@keyframes topLoaderShimmer {
+  0% {
+    transform: translateX(-150%);
+  }
+  100% {
+    transform: translateX(250%);
+  }
+}
+
+.top-loader-shimmer {
+  animation: topLoaderShimmer 1.8s ease-in-out infinite;
+}
+

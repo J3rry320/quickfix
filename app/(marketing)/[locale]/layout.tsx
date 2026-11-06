@@ -15,6 +15,7 @@ import Footer from "@/components/Footer";
 import WhatsAppFab from "@/components/WhatsAppFab";
 import MobileActionBar from "@/components/MobileActionBar";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
+import { TopLoadingBar } from "@/components/ui";
 import "@/app/globals.css";
 
 export const viewport: Viewport = {
@@ -79,6 +80,7 @@ export default async function MarketingLayout({
       className={`${figtree.variable} ${plusJakartaSans.variable}`}
     >
       <body className="antialiased min-h-screen bg-base-surface text-dark-neutral font-body flex flex-col">
+        <TopLoadingBar />
         <JsonLd
           schema={[localBusinessSchema, websiteSchema]}
           id="root-structured-data"
