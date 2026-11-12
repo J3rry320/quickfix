@@ -8,19 +8,21 @@
     "start": "next start",
     "lint": "eslint",
     "seed:blogs": "node --env-file=.env --experimental-strip-types scripts/seed-blogs.ts",
-    "sync:images": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/sync-device-images.ts"
+    "sync:images": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/sync-device-images.ts",
+    "cleanup:models": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON --env-file=.env --experimental-strip-types scripts/cleanup-models.ts",
+    "dedupe:models": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON --env-file=.env --experimental-strip-types scripts/cleanup-models.ts"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.9.0",
     "@upstash/ratelimit": "^2.2.0",
     "@upstash/redis": "^1.41.0",
-    "firebase": "^13.2.0",
-    "firebase-admin": "^14.5.0",
+    "firebase": "^13.3.0",
+    "firebase-admin": "^14.5.1",
     "lenis": "^1.3.27",
-    "lucide-react": "^1.70.0",
-    "mongoose": "^9.12.0",
-    "next": "16.4.5",
-    "next-intl": "^4.14.9",
+    "lucide-react": "^1.72.0",
+    "mongoose": "^9.12.1",
+    "next": "16.4.6",
+    "next-intl": "^4.15.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "zod": "^4.6.7"
@@ -31,7 +33,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.4.5",
+    "eslint-config-next": "16.4.6",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
